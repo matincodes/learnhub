@@ -6,8 +6,10 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "build": "npm run generate-routes && ...",
-    "dev": "npm run watch-routes && ..."
+    "build": "npm run generate-routes && vite build",
+    "dev": "npm run watch-routes && vite",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "npm run generate-routes && vite preview"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
