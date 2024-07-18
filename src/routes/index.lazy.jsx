@@ -1,8 +1,11 @@
-import './App.css'
+import { createLazyFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 
-function App() {
+export const Route = createLazyFileRoute('/')({
+  component: <App />,
+})
 
+export default function App() {
   return (
     <>
       <h1 className='text-xl bg-red-300'>Hello Vite + React!</h1>
@@ -10,5 +13,3 @@ function App() {
     </>
   )
 }
-
-export default App
