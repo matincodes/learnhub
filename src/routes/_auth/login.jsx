@@ -5,9 +5,9 @@ export const Route = createFileRoute('/_auth/login')({
 })
 
 const Login = () => (
-  <div className="relative place-content-center items-center p-[20px]">
-    <div className="flex overflow-hidden rounded-l-xl ">
-      <div className="relative lg:flex hidden basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4]">
+  <div className="relative grid p-[20px]">
+    <div className="flex overflow-hidden rounded-l-xl h-[90lvh] w-full">
+      <div className="relative lg:flex hidden  basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4]">
         {/* Logo */}
         <img
           src="/assets/learnhub-logo.svg"
