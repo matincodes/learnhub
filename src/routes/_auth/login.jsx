@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute('/_auth/login')({
   component: () => Login()
@@ -65,13 +66,8 @@ const Login = () => (
               >
                 Email address
               </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter email address"
-                className="text-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
-              />
+              <Input type="email" name="email" id='email' placeholder="Email" className="placeholder:leading-loose font-san text-[#AAAAAA]"/>
+             
             </div>
             {/* Email */}
 
@@ -83,15 +79,9 @@ const Login = () => (
               >
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Enter password"
-                className="text-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
-              />
+              <Input type="password" name="password" id='password' placeholder="Enter password" className="placeholder:leading-loose font-san text-[#AAAAAA]"/>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center space-x-1">
                   <input
                     type="checkbox"
