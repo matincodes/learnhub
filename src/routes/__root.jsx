@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react'
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
 
 const TanStackRouterDevtools =
   import.meta.env.PROD === 'production'
@@ -17,7 +17,6 @@ const TanStackRouterDevtools =
 export const Route = createRootRoute({
   component: () => (
     <>
-      <hr />
       <Outlet />
       <Suspense>
         <TanStackRouterDevtools />
