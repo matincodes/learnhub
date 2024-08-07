@@ -109,14 +109,11 @@ const Login = () => (
           </button>
 
           <p className="font-san">
-            Don&apos;t have an account?{' '}
-            <a
-              href="/signup"
+            Don&apos;t have an account?
+            <Link
+              to={`/signup`}
               className="font-semibold text-normal_green underline"
-            >
-              {' '}
-              Sign Up
-            </a>{' '}
+            > Sign Up </Link>
           </p>
         </form>
       </div>
