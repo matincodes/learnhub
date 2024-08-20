@@ -7,9 +7,9 @@ const Inventory = ({ title, image, metrics, analytics }) => {
       </div>
 
       <div className="flex w-full items-center justify-between">
-        <p className="flex items-center text-xl font-bold sm:text-2xl">
+        <div className="flex items-center text-xl font-bold sm:text-2xl">
           {metrics}
-        </p>
+        </div>
 
         {analytics && <div className="hidden sm:block">{analytics}</div>}
       </div>
