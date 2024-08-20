@@ -16,12 +16,12 @@ const TopNav = ({ title, paragraph }) => {
         </div>
         <div className="flex flex-col items-start justify-start">
           <h2 className="flex text-sm font-semibold sm:text-lg">
-            Welcome Back, Abisola{title}
+            {title}
             <span className="ml-1">
               <img src={'/assets/hand.png'} alt="wave" />
             </span>
           </h2>
-          {paragraph && <p>{paragraph}What would you love to learn today?</p>}
+          {paragraph && <p>{paragraph}</p>}
         </div>
       </div>
       <div className="hidden w-full items-center justify-between lg:flex">
