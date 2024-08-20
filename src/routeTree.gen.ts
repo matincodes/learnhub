@@ -13,7 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DashboardImport } from './routes/dashboard'
+import { Route as RootDashboardImport } from './routes/_root/dashboard'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 
@@ -23,15 +23,15 @@ const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const DashboardRoute = DashboardImport.update({
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const RootDashboardRoute = RootDashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
   path: '/signup',
@@ -54,13 +54,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -75,6 +68,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/_root/dashboard': {
+      id: '/_root/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof RootDashboardImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -82,9 +82,9 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  DashboardRoute,
   AuthLoginRoute,
   AuthSignupRoute,
+  RootDashboardRoute,
 })
 
 /* prettier-ignore-end */
@@ -96,22 +96,22 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/dashboard",
         "/_auth/login",
-        "/_auth/signup"
+        "/_auth/signup",
+        "/_root/dashboard"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
-    },
-    "/dashboard": {
-      "filePath": "dashboard.jsx"
     },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
     },
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
+    },
+    "/_root/dashboard": {
+      "filePath": "_root/dashboard.jsx"
     }
   }
 }
