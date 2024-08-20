@@ -3,8 +3,6 @@ import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 
-import PropTypes from 'prop-types'
-
 const SideNav = ({ close, isNav }) => {
   return (
     <div
@@ -48,7 +46,7 @@ const SideNav = ({ close, isNav }) => {
                         <>
                           {isActive && (
                             <img
-                              src="assets/line-25.svg"
+                              src="/assets/line-25.svg"
                               alt="active"
                               className="absolute left-[-4px]"
                             />
@@ -103,11 +101,6 @@ const SideNav = ({ close, isNav }) => {
       </div>
     </div>
   )
-}
-
-SideNav.propTypes = {
-  close: PropTypes.func,
-  isNav: PropTypes.bool,
 }
 
 export default SideNav
