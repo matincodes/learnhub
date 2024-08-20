@@ -1,6 +1,7 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
 
 import PropTypes from 'prop-types'
 
@@ -23,10 +24,10 @@ const SideNav = ({ close, isNav }) => {
         onClick={e => {
           e.stopPropagation()
         }}
-        className="relative flex h-full w-[250px] cursor-pointer flex-col items-center overflow-y-auto bg-white py-3 shadow sm:py-4"
+        className="relative my-5 flex h-full w-[250px] cursor-pointer flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
       >
         <div className="relative flex h-full w-full flex-col items-center px-3">
-          <div className="flex w-full items-start gap-x-3 border-b-2 pb-3">
+          <div className="flex w-full items-start gap-x-3 pb-3">
             <img src={'/assets/user.png'} alt="" />
             <div className="space-y-1">
               <p className="font-medium">Abisola Elizabeth</p>
@@ -34,7 +35,9 @@ const SideNav = ({ close, isNav }) => {
             </div>
           </div>
 
-          <ul className="mt-6 flex w-full flex-col items-start justify-start gap-y-1 px-3">
+          <Separator className="my-4 bg-[#98989A]" />
+
+          <ul className="mt-6 flex w-full flex-col items-start justify-start gap-y-4 px-3">
             {navLinks.map(({ link, name, iconImage }) => {
               return (
                 <li key={name} className={'w-full'}>
@@ -42,12 +45,25 @@ const SideNav = ({ close, isNav }) => {
                     onClick={close}
                     to={link}
                     activeProps={{
-                      className: 'border-l-4 border-[#F7AE30] bg-gray-200',
+                      className: 'rounded-xl bg-gray-200',
                     }}
-                    className="flex w-full items-center gap-x-2 p-3 font-medium"
+                    className="relative flex w-full items-center px-3 py-4"
                   >
-                    <img src={iconImage} alt="" />
-                    <span>{name}</span>
+                    {({ isActive }) => (
+                      <>
+                        {isActive && (
+                          <img
+                            src="assets/line-25.svg"
+                            alt="active"
+                            className="absolute left-[-4px]"
+                          />
+                        )}
+                        <div className="flex w-full items-center space-x-7 font-medium">
+                          <img src={iconImage} alt="icon" />
+                          <span>{name}</span>
+                        </div>
+                      </>
+                    )}
                   </Link>
                 </li>
               )
@@ -70,7 +86,8 @@ const SideNav = ({ close, isNav }) => {
           </div>
 
           <div className="absolute bottom-3 w-full px-3">
-            <div className="flex w-full items-center justify-center border-t-2 pt-3">
+            <Separator className="my-4 bg-[#98989A]" />
+            <div className="flex w-full items-center justify-center pt-3">
               <img src={'/assets/learnhub.png'} alt="" />
             </div>
           </div>
