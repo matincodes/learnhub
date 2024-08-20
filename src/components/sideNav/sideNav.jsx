@@ -1,4 +1,4 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
@@ -6,7 +6,6 @@ import { Separator } from '@/components/ui/separator'
 import PropTypes from 'prop-types'
 
 const SideNav = ({ close, isNav }) => {
-  const { pathname } = useLocation()
 
   return (
     <div
@@ -14,11 +13,7 @@ const SideNav = ({ close, isNav }) => {
         e.stopPropagation()
         close()
       }}
-      className={`modal swipeInLeft fixed inset-y-0 left-0 z-[70] h-full ${
-        isNav
-          ? 'w-full bg-white/50 min-[1024px]:w-[250px]'
-          : 'w-[250px] max-[1024px]:hidden'
-      }`}
+      className={`modal swipeInLeft fixed inset-y-0 left-0 z-[70] hidden h-full lg:block`}
     >
       <div
         onClick={e => {
@@ -74,14 +69,26 @@ const SideNav = ({ close, isNav }) => {
             <Link
               onClick={close}
               to={'/settings'}
-              className={cn(
-                'flex w-full items-center gap-x-2 rounded-xl p-3 font-medium',
-                '/settings' === pathname &&
-                  'border border-l-2 border-[#F7AE30]',
-              )}
+              activeProps={{
+                className: 'rounded-xl bg-gray-200',
+              }}
+              className="relative flex w-full items-center px-3 py-4"
             >
-              <img src={'/assets/settings.png'} alt="" />
-              <span>Setings</span>
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <img
+                      src="assets/line-25.svg"
+                      alt="active"
+                      className="absolute left-[-4px]"
+                    />
+                  )}
+                  <div className="flex w-full items-center space-x-7 font-medium">
+                    <img src={'/assets/settings.png'} alt="" />
+                    <span>Setings</span>
+                  </div>
+                </>
+              )}
             </Link>
           </div>
 
