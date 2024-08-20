@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 export const Route = createFileRoute('/_auth/signup')({
-  component: () => SignUp()
+  component: () => SignUp(),
 })
 
 const SignUp = () => (
@@ -37,7 +37,7 @@ const SignUp = () => (
         {/* Bottom Left Image */}
       </div>
 
-      <div className="flex lg:flex-row flex-col lg:basis-[55%] basis-[100%] place-content-center lg:items-center">
+      <div className="flex basis-[100%] flex-col place-content-center lg:basis-[55%] lg:flex-row lg:items-center">
         {/* Logo */}
         <div className="flex place-content-center lg:hidden">
           <img

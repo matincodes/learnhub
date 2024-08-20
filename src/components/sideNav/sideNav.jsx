@@ -1,12 +1,11 @@
-import { Link, useLocation } from "@tanstack/react-router"
-import { navLinks } from "@/data/sideNav"
-import { cn } from "@/lib/utils"
+import { Link, useLocation } from '@tanstack/react-router'
+import { navLinks } from '@/data/sideNav'
+import { cn } from '@/lib/utils'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const SideNav = ({ close, isNav }) => {
   const { pathname } = useLocation()
-
 
   return (
     <div
@@ -42,8 +41,10 @@ const SideNav = ({ close, isNav }) => {
                   <Link
                     onClick={close}
                     to={link}
-                    activeProps={{ className: 'border-l-4 border-[#F7AE30] bg-gray-200' }}
-                    className='flex w-full items-center gap-x-2 p-3 font-medium'
+                    activeProps={{
+                      className: 'border-l-4 border-[#F7AE30] bg-gray-200',
+                    }}
+                    className="flex w-full items-center gap-x-2 p-3 font-medium"
                   >
                     <img src={iconImage} alt="" />
                     <span>{name}</span>
@@ -59,7 +60,8 @@ const SideNav = ({ close, isNav }) => {
               to={'/settings'}
               className={cn(
                 'flex w-full items-center gap-x-2 rounded-xl p-3 font-medium',
-                '/settings' === pathname && 'border border-l-2 border-[#F7AE30]'
+                '/settings' === pathname &&
+                  'border border-l-2 border-[#F7AE30]',
               )}
             >
               <img src={'/assets/settings.png'} alt="" />
@@ -80,7 +82,7 @@ const SideNav = ({ close, isNav }) => {
 
 SideNav.propTypes = {
   close: PropTypes.func,
-  isNav: PropTypes.bool
+  isNav: PropTypes.bool,
 }
 
 export default SideNav

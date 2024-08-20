@@ -1,8 +1,8 @@
-import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindcssAnimate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: ['class'],
   content: [
     './index.html',
     './pages/**/*.{js,jsx}',
@@ -10,14 +10,14 @@ module.exports = {
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
   ],
-  prefix: "",
+  prefix: '',
   theme: {
     extend: {
       fontFamily: {
-        'san': 'Work Sans',
-        'montserrat': 'Montserrat',
-        'manule': 'Manuale',
-        'inter': 'Inter',
+        san: 'Work Sans',
+        montserrat: 'Montserrat',
+        manule: 'Manuale',
+        inter: 'Inter',
       },
       colors: {
         light_green: '#D9E7E1',
@@ -29,20 +29,20 @@ module.exports = {
         paragraph: '#4b4b4bc9',
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require('tailwindcss-animate')],
 }

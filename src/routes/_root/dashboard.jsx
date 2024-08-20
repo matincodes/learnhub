@@ -5,11 +5,10 @@ import RecentCourseCard from '@/components/dashboard/widgets/recent_course_card'
 import { recentCourses } from '@/data/dashboard'
 
 export const Route = createFileRoute('/_root/dashboard')({
-  component: () => <Dashboard />
+  component: () => <Dashboard />,
 })
 
 const Dashboard = () => {
-
   return (
     <DashboardLayout>
       <div className="w-full space-y-6 sm:space-y-10">
