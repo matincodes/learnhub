@@ -7,7 +7,7 @@
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
     "build": "npm run generate-routes && vite build",
-    "dev": "conc \"npm:watch-routes\" \"vite\"",
+    "dev": "conc \"npm:watch-routes\" \"vite --host\"",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "npm run generate-routes && vite preview"
   },
