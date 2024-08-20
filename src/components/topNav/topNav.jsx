@@ -7,15 +7,18 @@ const TopNav = ({ title, paragraph }) => {
     <div
       className={`right-0 z-50 flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-250px)] lg:px-10 min-[1024px]:float-right`}
     >
-      <div className="flex w-full flex-col items-start gap-y-4 lg:hidden">
+      <div className="flex w-full flex-col items-start p-2 gap-y-4 lg:hidden">
         <div className="flex w-full items-center justify-between">
           <img src={'/assets/learnhub-nobg.png'} alt="" />
-          <button>
-            <img src={'/assets/fi-br-menu-burger.png'} alt="" />
-          </button>
+          <div className="flex space-x-9">
+            <CiSearch className="text-[25px] font-extrabold" />
+            <button>
+              <img src={'/assets/fi-br-menu-burger.png'} alt="" />
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col items-start justify-start">
-          <h2 className="flex text-sm font-semibold sm:text-lg">
+        <div className="flex flex-col my-5 items-start justify-start">
+          <h2 className="flex text-lg font-semibold sm:text-2xl">
             {title}
             <span className="ml-1">
               <img src={'/assets/hand.png'} alt="wave" />
@@ -26,7 +29,7 @@ const TopNav = ({ title, paragraph }) => {
       </div>
       <div className="hidden w-full items-center justify-between lg:flex">
         <div className="flex flex-col items-start justify-start">
-          <h2 className="flex text-sm font-semibold sm:text-lg">
+          <h2 className="flex text-nowrap text-3xl font-semibold lg:text-2xl">
             {title}
             <span className="ml-1">
               <img src={'/assets/hand.png'} alt="" />
