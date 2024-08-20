@@ -42,11 +42,8 @@ const SideNav = ({ close, isNav }) => {
                   <Link
                     onClick={close}
                     to={link}
-                    className={cn(
-                      'flex w-full items-center gap-x-2 p-3 font-medium',
-                      link === pathname &&
-                        'rounded-xl border-l-4 border-[#F7AE30] bg-gray-200'
-                    )}
+                    activeProps={{ className: 'border-l-4 border-[#F7AE30] bg-gray-200' }}
+                    className='flex w-full items-center gap-x-2 p-3 font-medium'
                   >
                     <img src={iconImage} alt="" />
                     <span>{name}</span>
