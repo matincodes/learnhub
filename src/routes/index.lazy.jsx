@@ -20,10 +20,10 @@ import {
 } from '@/components/ui/card'
 
 export const Route = createLazyFileRoute('/')({
-  component: () => <App />,
+  component: App,
 })
 
-export default function App() {
+function App() {
   return (
     <>
       <NavBar />
