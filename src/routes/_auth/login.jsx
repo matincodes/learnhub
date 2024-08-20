@@ -1,13 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Input } from "@/components/ui/input";
+import { Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/login')({
   component: () => Login()
 })
 
 const Login = () => (
-  <div className="relative place-content-center items-center p-[20px]">
-    <div className="flex h-[90lvh] overflow-hidden rounded-l-xl">
-      <div className="relative flex basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4]">
+  <div className="relative grid p-[20px]">
+    <div className="flex overflow-hidden rounded-l-xl h-[90lvh] w-full">
+      <div className="relative lg:flex hidden  basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4]">
         {/* Logo */}
         <img
           src="/assets/learnhub-logo.svg"
@@ -20,7 +22,7 @@ const Login = () => (
         <img
           src="/assets/mockups/login_bottom_mockup.svg"
           alt="MockupImage"
-          className="absolute right-0 top-0 w-[280px]"
+          className="absolute -right-8 -top-7 w-[280px] "
         />
         {/* Top Right Image */}
 
@@ -37,11 +39,22 @@ const Login = () => (
         {/* Bottom Left Image */}
       </div>
 
-      <div className="flex basis-[55%] place-content-center items-center">
+      <div className="flex lg:flex-row flex-col lg:basis-[55%] basis-[100%] place-content-center lg:items-center">
+           
+           {/* Logo */}
+       <div className="flex lg:hidden place-content-center">
+           <img
+          src="/assets/learnhub-logo.svg"
+          alt="Logo"
+          className="w-[150px]"
+        />
+       </div>
+          {/* Logo */}
+
         <form
           action=""
           method="post"
-          className="basis-[60%] space-y-9 p-[10px]"
+          className="lg:basis-[60%] width-[100%] space-y-9 p-[10px]"
         >
           <h3 className="font-san text-[38px] font-semibold">Log in</h3>
 
@@ -54,13 +67,8 @@ const Login = () => (
               >
                 Email address
               </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Enter email address"
-                className="text-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
-              />
+              <Input type="email" name="email" id='email' placeholder="Email" className="placeholder:leading-loose font-san text-[#AAAAAA]"/>
+             
             </div>
             {/* Email */}
 
@@ -72,15 +80,9 @@ const Login = () => (
               >
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Enter password"
-                className="text-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
-              />
+              <Input type="password" name="password" id='password' placeholder="Enter password" className="placeholder:leading-loose font-san text-[#AAAAAA]"/>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 <div className="flex items-center space-x-1">
                   <input
                     type="checkbox"
@@ -108,14 +110,11 @@ const Login = () => (
           </button>
 
           <p className="font-san">
-            Don&apos;t have an account?{' '}
-            <a
-              href="/signup"
+            Don&apos;t have an account?
+            <Link
+              to={`/signup`}
               className="font-semibold text-normal_green underline"
-            >
-              {' '}
-              Sign Up
-            </a>{' '}
+            > Sign Up </Link>
           </p>
         </form>
       </div>

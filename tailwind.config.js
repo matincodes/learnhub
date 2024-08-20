@@ -16,15 +16,17 @@ module.exports = {
       fontFamily: {
         'san': 'Work Sans',
         'montserrat': 'Montserrat',
-        'manule': 'Manuale'
+        'manule': 'Manuale',
+        'inter': 'Inter',
       },
       colors: {
-        light_green: '#d9e7e1',
+        light_green: '#D9E7E1',
         normal_green: '#006038',
-        dark_green: '#002214',
+        dark_green: '#051911',
         light_yellow: '#fde6bf',
         normal_yellow: '#f7ae30',
         dark_yellow: '#b98324',
+        paragraph: '#4b4b4bc9',
       },
       keyframes: {
         "accordion-down": {

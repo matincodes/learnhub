@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
-
+import { Link } from '@tanstack/react-router'
 export const Route = createFileRoute('/_auth/signup')({
   component: () => SignUp()
-});
+})
 
 const SignUp = () => (
   <div className="relative place-content-center items-center p-[20px]">
-    <div className="flex h-[90lvh] flex-row-reverse overflow-hidden rounded-l-xl">
-      <div className="relative flex basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4]">
+    <div className="flex flex-row-reverse overflow-hidden rounded-r-xl">
+      <div className="relative hidden basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4] lg:flex">
         {/* Logo */}
         <img
           src="/assets/learnhub-logo.svg"
@@ -20,7 +20,7 @@ const SignUp = () => (
         <img
           src="/assets/mockups/signup_top_mockup.svg"
           alt="MockupImage"
-          className="absolute left-0 top-[-10px] w-[450px]"
+          className="absolute left-0 top-[-10px] w-[350px]"
         />
         {/* Top Right Image */}
 
@@ -32,22 +32,32 @@ const SignUp = () => (
         <img
           src="/assets/mockups/signup_bottom_mockup.svg"
           alt="MockupImage"
-          className="absolute -right-1 bottom-[-80px] w-[500px]"
+          className="absolute -right-1 bottom-[-80px] w-[400px]"
         />
         {/* Bottom Left Image */}
       </div>
 
-      <div className="flex basis-[55%] place-content-center items-center">
+      <div className="flex lg:flex-row flex-col lg:basis-[55%] basis-[100%] place-content-center lg:items-center">
+        {/* Logo */}
+        <div className="flex place-content-center lg:hidden">
+          <img
+            src="/assets/learnhub-logo.svg"
+            alt="Logo"
+            className="w-[150px]"
+          />
+        </div>
+        {/* Logo */}
+
         <form
           action=""
           method="post"
-          className="basis-[70%] space-y-9 p-[10px]"
+          className="basis-[100%] space-y-5 p-[5px] lg:basis-[75%]"
         >
           <h3 className="font-san text-[38px] font-semibold">Sign Up</h3>
 
           <div className="space-y-5">
             {/* First Name and Last Name */}
-            <div className="inputs grid grid-cols-2 space-x-3">
+            <div className="inputs grid lg:grid-cols-2 lg:space-x-3">
               <div className="inputs grid space-y-2">
                 <label
                   htmlFor="firstName"
@@ -142,14 +152,13 @@ const SignUp = () => (
           </button>
 
           <p className="font-san">
-            Already have an account?{' '}
-            <a
-              href="/login"
+            Already have an account?
+            <Link
+              to={`/login`}
               className="font-semibold text-normal_green underline"
             >
-              {' '}
               Log in
-            </a>{' '}
+            </Link>
           </p>
         </form>
       </div>
