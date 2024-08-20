@@ -7,7 +7,7 @@
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
     "build": "npm run generate-routes && vite build",
-    "dev": "npm run watch-routes & vite",
+    "dev": "conc \"npm:watch-routes\" \"vite\"",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "npm run generate-routes && vite preview"
   },
@@ -38,6 +38,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
