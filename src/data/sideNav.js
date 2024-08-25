@@ -5,22 +5,22 @@ export const navLinks = [
     iconImage: '/assets/dashboard.png',
   },
   {
-    link: '/my-courses',
+    link: '/dashboard/my-courses',
     name: 'My Courses',
     iconImage: '/assets/courses.png',
   },
   {
-    link: '/analytics',
+    link: '/dashboard/analytics',
     name: 'Analytics',
     iconImage: '/assets/fi-br-list-check.png',
   },
   {
-    link: '/leaderboard',
+    link: '/dashboard/leaderboard',
     name: 'Leader Board',
     iconImage: '/assets/fi-br-trophy.png',
   },
   {
-    link: '/quizzes',
+    link: '/dashboard/quizzes',
     name: 'Quizzes',
     iconImage: '/assets/fi-br-notebook.png',
   },
