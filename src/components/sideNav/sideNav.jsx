@@ -16,17 +16,20 @@ const SideNav = ({ close, isNav }) => {
         onClick={e => {
           e.stopPropagation()
         }}
-        className="my-5 flex h-full w-[250px] cursor-pointer flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
+        className="my-5 flex h-full w-[250px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
       >
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
           <div>
-            <div className="flex w-full items-start gap-x-3 pb-3">
+            <Link
+              to="/dashboard/profile"
+              className="flex w-full items-start gap-x-3 pb-3"
+            >
               <img src={'/assets/user.png'} alt="" />
               <div className="space-y-1">
                 <p className="font-medium">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
-            </div>
+            </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
@@ -67,7 +70,7 @@ const SideNav = ({ close, isNav }) => {
           <div className="flex w-full items-center justify-center px-6">
             <Link
               onClick={close}
-              to={'/settings'}
+              to={'/dashboard/settings'}
               activeProps={{
                 className: 'rounded-xl bg-gray-200',
               }}
