@@ -1,8 +1,9 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
+import { topNavData } from '@/data/topNav'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardComponent,
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/dashboard')({
 
 function DashboardComponent() {
   const [isNav, setNav] = useState(false)
+  const { pathname } = useLocation()
 
   function onClose() {
     setNav(!isNav)
@@ -18,8 +20,8 @@ function DashboardComponent() {
   return (
     <div className="h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       <TopNav
-        title="Welcome Back, Abisola"
-        paragraph="What would you love to learn today?"
+        title={topNavData[pathname].title}
+        paragraph={topNavData[pathname].paragraph}
       />
 
       <div
