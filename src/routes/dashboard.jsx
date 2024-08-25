@@ -20,8 +20,8 @@ function DashboardComponent() {
   return (
     <div className="h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       <TopNav
-        title={topNavData[pathname].title}
-        paragraph={topNavData[pathname].paragraph}
+        title={topNavData[pathname]?.title}
+        paragraph={topNavData[pathname]?.paragraph}
       />
 
       <div
