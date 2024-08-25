@@ -20,9 +20,6 @@ const TopNav = ({ title, paragraph }) => {
         <div className="flex flex-col my-5 items-start justify-start">
           <h2 className="flex text-lg font-semibold sm:text-2xl">
             {title}
-            <span className="ml-1">
-              <img src={'/assets/hand.png'} alt="wave" />
-            </span>
           </h2>
           {paragraph && <p>{paragraph}</p>}
         </div>
