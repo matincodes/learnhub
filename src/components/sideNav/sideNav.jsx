@@ -1,9 +1,15 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 
+const isActive = (pathname, link) => {
+  return pathname.split('/').at(-1) === link.split('/').at(-1)
+}
+
 const SideNav = ({ close, isNav }) => {
+  const { pathname } = useLocation()
+
   return (
     <div
       onClick={e => {
@@ -40,26 +46,27 @@ const SideNav = ({ close, isNav }) => {
                     <Link
                       onClick={close}
                       to={link}
-                      activeProps={{
-                        className: 'rounded-xl bg-gray-200',
-                      }}
-                      className="relative flex w-full items-center p-3"
-                    >
-                      {({ isActive }) => (
-                        <>
-                          {isActive && (
-                            <img
-                              src="/assets/line-25.svg"
-                              alt="active"
-                              className="absolute left-[-4px]"
-                            />
-                          )}
-                          <div className="flex w-full items-center space-x-7 font-medium">
-                            <img src={iconImage} alt="icon" />
-                            <span>{name}</span>
-                          </div>
-                        </>
+                      className={cn(
+                        'relative flex w-full items-center p-3 font-medium',
+                        {
+                          'rounded-xl bg-gray-200 font-semibold': isActive(
+                            pathname,
+                            link,
+                          ),
+                        },
                       )}
+                    >
+                      {isActive(pathname, link) && (
+                        <img
+                          src="/assets/line-25.svg"
+                          alt="active"
+                          className="absolute left-[-4px]"
+                        />
+                      )}
+                      <div className="flex w-full items-center space-x-7">
+                        <img src={iconImage} alt="icon" />
+                        <span>{name}</span>
+                      </div>
                     </Link>
                   </li>
                 )
