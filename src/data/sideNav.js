@@ -1,6 +1,6 @@
 export const navLinks = [
   {
-    link: '/dashboard/',
+    link: '/dashboard',
     name: 'Dashboard',
     iconImage: '/assets/dashboard.png',
   },
