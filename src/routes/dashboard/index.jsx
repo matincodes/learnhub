@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import Inventory from '@/components/inventory/inventory'
-import RecentCourseCard from '@/components/dashboard/widgets/recent_course_card'
+import RecentCourseCard from '@/components/widgets/recent_course_card'
 import { recentCourses } from '@/data/dashboard'
 
 export const Route = createFileRoute('/dashboard/')({
