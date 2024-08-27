@@ -79,22 +79,22 @@ const SideNav = ({ close, isNav }) => {
               onClick={close}
               to={'/dashboard/settings'}
               activeProps={{
-                className: 'rounded-xl bg-gray-200',
+                className: 'rounded-xl bg-gray-200 font-semibold',
               }}
-              className="relative flex w-full items-center justify-center px-3 py-4"
+              className="relative flex w-full items-center justify-center px-3 py-4 font-medium"
             >
               {({ isActive }) => (
                 <>
                   {isActive && (
                     <img
-                      src="assets/line-25.svg"
+                      src="/assets/line-25.svg"
                       alt="active"
                       className="absolute left-[-4px]"
                     />
                   )}
-                  <div className="flex w-full items-center space-x-7 font-medium">
+                  <div className="flex w-full items-center space-x-7">
                     <img src={'/assets/settings.png'} alt="" />
-                    <span>Setings</span>
+                    <span>Settings</span>
                   </div>
                 </>
               )}
