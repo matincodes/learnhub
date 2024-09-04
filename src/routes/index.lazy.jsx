@@ -1,10 +1,10 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import NavBar from "@/components/navBar/navBar"
-import Header from '../components/header/header'
-import TestimonialCard from '../components/testimonialCard/testimonialCard'
-import { cardSectionOne, cardSectionTwo, paymentSection, testimonialSection } from '../data/HomePageCard'
-import Footer from '../components/footer/footer'
+import Header from '@/components/header/header'
+import TestimonialCard from '@/components/testimonialCard/testimonialCard'
+import { cardSectionOne, cardSectionTwo, paymentSection, testimonialSection } from '@/data/HomePageCard'
+import Footer from '@/components/footer/footer'
 
 import {
   Card,
@@ -141,7 +141,7 @@ export default function App() {
           <div className="lg:flex grid place-content-center p-[40px] space-y-14 lg:space-y-0 lg:gap-12">
           {paymentSection.map(content=>(
             <>
-              <Card className={`basis-[37%] relative lg:h-[105lvh] p-2 border-[5px] rounded-2xl ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}>
+              <Card key={content.id} className={`basis-[37%] relative lg:h-[105lvh] p-2 border-[5px] rounded-2xl ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}>
                   <CardHeader className="p-0">
                       <img src={content.image} alt=""/>
                   </CardHeader>
