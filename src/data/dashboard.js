@@ -1,5 +1,7 @@
 export const recentCourses = [
-  { title: 'UI/UX Design Principles', image: '/assets/recent1.png' },
+  { title: 'UI/UX Design Principles', 
+    image: '/assets/recent1.png' 
+  },
   {
     title: 'Mobile App Development with React-Native',
     image: '/assets/recent2.png',
