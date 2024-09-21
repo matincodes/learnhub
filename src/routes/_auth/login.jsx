@@ -1,4 +1,3 @@
-import { Input } from '@/components/ui/input'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 
@@ -13,7 +12,15 @@ const Login = () => {
     // formState: { errors },
   } = useForm()
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = async data => {
+    await fetch('https://coderina-learnhub.onrender.com/api/students/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+  }
 
   return (
     <div className="relative grid p-[20px]">
@@ -74,12 +81,12 @@ const Login = () => {
                 >
                   Email address
                 </label>
-                <Input
+                <input
                   type="email"
                   {...register('email', { required: true })}
                   id="email"
                   placeholder="Email"
-                  className="font-san placeholder:leading-loose placeholder:text-[#AAAAAA] focus:text-black focus:outline-none focus-visible:ring-black"
+                  className="font-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
                 />
               </div>
               {/* Email */}
@@ -92,12 +99,12 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <Input
+                <input
                   type="password"
                   {...register('password', { required: true })}
                   id="password"
                   placeholder="Enter password"
-                  className="font-san placeholder:leading-loose placeholder:text-[#AAAAAA] focus:text-black focus:outline-none focus-visible:ring-black"
+                  className="font-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
                 />
 
                 <div className="mt-1 flex items-center justify-between">
