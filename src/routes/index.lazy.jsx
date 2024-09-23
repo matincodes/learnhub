@@ -140,18 +140,9 @@ export default function App() {
 
         <div className="lg:flex grid place-content-center p-[40px] space-y-14 lg:space-y-0 lg:gap-12">
           {paymentSection.map(content => (
-            <>
-<<<<<<< HEAD
               <Card key={content.id} className={`basis-[37%] relative lg:h-[105lvh] p-2 border-[5px] rounded-2xl ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}>
-                  <CardHeader className="p-0">
-                      <img src={content.image} alt=""/>
-                  </CardHeader>
-                  <CardContent className='flex flex-col text-center items-center space-y-3 mt-3'>
-                    <h2 className='font-inter font-extrabold lg:text-[50px] text-[25px] '> NGN {content.price}<span className='font-san font-normal text-[18px]'>/monthly</span> </h2>
-                    <p className='font-san  lg:w-[80%]'>With this plan you will have access to variety of courses for a month</p>
-                  </CardContent>
-=======
-              <Card className={`basis-[37%] relative lg:h-[105lvh] p-2 border-[5px] rounded-2xl ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}>
+            
+              {/* <Card className={`basis-[37%] relative lg:h-[105lvh] p-2 border-[5px] rounded-2xl ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}> */}
                 <CardHeader className="p-0">
                   <img src={content.image} alt="" />
                 </CardHeader>
@@ -159,13 +150,11 @@ export default function App() {
                   <h2 className='font-inter font-extrabold lg:text-[50px] text-[25px] '> NGN {content.price}<span className='font-san font-normal text-[18px]'>/monthly</span> </h2>
                   <p className='font-san  lg:w-[80%]'>With this plan you will have access to variety of courses for a month</p>
                 </CardContent>
->>>>>>> 7d3e9eabeb996d8a30127a862dd8d7ca654bbdb4
 
                 <CardFooter className='lg:absolute lg:w-[96%] mt-7 bottom-1 text-center p-0 grid items-center'>
                   <p className={`w-full p-5 rounded-b-lg  font-san text-[18px] font-semibold ${content.id === 2 ? 'bg-[#F9FBFA] text-[#3A4D41]' : 'text-white bg-dark_green'}`}>{content.plan}</p>
                 </CardFooter>
               </Card>
-            </>
           ))}
         </div>
       </div>
