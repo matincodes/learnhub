@@ -24,7 +24,7 @@ const navBar = () =>{
                          <DropdownMenuTrigger asChild className='lg:flex hidden'>
                          <Button className='font-normal font-san'>Open</Button>
                          </DropdownMenuTrigger>
-                         <DropdownMenuContent className="w-14 bg-white">
+                         <DropdownMenuContent className="w-14 bg-transparent lg:bg-white">
 
                               {navLinks.map(links=>(
                                    <>
