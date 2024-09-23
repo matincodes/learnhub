@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Input } from "@/components/ui/input";
+import { Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/login')({
   component: () => Login()
@@ -109,14 +110,11 @@ const Login = () => (
           </button>
 
           <p className="font-san">
-            Don&apos;t have an account?{' '}
-            <a
-              href="/signup"
+            Don&apos;t have an account?
+            <Link
+              to={`/signup`}
               className="font-semibold text-normal_green underline"
-            >
-              {' '}
-              Sign Up
-            </a>{' '}
+            > Sign Up </Link>
           </p>
         </form>
       </div>

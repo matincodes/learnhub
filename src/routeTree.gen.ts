@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 
@@ -21,6 +22,11 @@ import { Route as AuthLoginImport } from './routes/_auth/login'
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const DashboardRoute = DashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -48,6 +54,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -69,6 +82,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
+  DashboardRoute,
   AuthLoginRoute,
   AuthSignupRoute,
 })
@@ -82,12 +96,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/dashboard",
         "/_auth/login",
         "/_auth/signup"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/dashboard": {
+      "filePath": "dashboard.jsx"
     },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
