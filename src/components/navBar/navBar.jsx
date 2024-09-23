@@ -1,16 +1,40 @@
+import { useRef } from 'react'
 import { Link } from '@tanstack/react-router'
 import { Input } from '@/components/ui/input'
 import { Button } from  '@/components/ui/button'
 import { CiSearch  } from "react-icons/ci"
 import { navLinks } from '@/data/NavBar'
-import { FiMenu } from 'react-icons/fi'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { FiMenu, FiX } from 'react-icons/fi'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
+const NavBar = () => {
 
-const navBar = () =>{
-     return(
-          <>
-          
+  const openMenu = useRef(null)
+
+  const OpenMenu = () =>{
+    openMenu.current.style.background === 'orange'
+  }
+
+  return (
+    
+      <div className="top-0 sticky flex items-center justify-around p-8 lg:p-5 bg-white z-40">
+        <img
+          src="/assets/learnhub-logo.svg" 
+          className="absolute w-[120px] lg:relative lg:w-[150px]"
+        />
+        <FiMenu className="absolute right-4 text-[23px] items-center text-[#374957] lg:hidden" onClick={OpenMenu} cursor={'pointer'}/>
+        {/* <FiX className="absolute right-4 text-[23px] items-center text-[#374957] lg:hidden" onClick={OpenMenu} cursor={'pointer'} /> */}
+
           <div className='lg:p-2 p-8 flex justify-around items-center relative'>
                <img src='/assets/learnhub-logo.svg' className='lg:relative  absolute lg:w-[150px] w-[120px] ' />
                <FiMenu className='lg:hidden absolute right-4 text-[23px] text-[#374957]'/>
@@ -65,8 +89,10 @@ const navBar = () =>{
                     </Button>
                </div>
       </div>
-          </>
+      </div>
+
      )
 }
 
-export default navBar
+
+export default NavBar
