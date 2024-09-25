@@ -13,7 +13,9 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as RootDashboardImport } from './routes/_root/dashboard'
+import { Route as DashboardImport } from './routes/dashboard'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 
@@ -23,14 +25,24 @@ const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
+const DashboardRoute = DashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const RootDashboardRoute = RootDashboardImport.update({
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
+const DashboardIndexRoute = DashboardIndexImport.update({
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardAnalyticsRoute = DashboardAnalyticsImport.update({
+  path: '/analytics',
+  getParentRoute: () => DashboardRoute,
 } as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
@@ -54,6 +66,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -68,12 +87,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
-    '/_root/dashboard': {
-      id: '/_root/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof RootDashboardImport
-      parentRoute: typeof rootRoute
+    '/dashboard/analytics': {
+      id: '/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof DashboardImport
     }
   }
 }
@@ -82,9 +108,12 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
+  DashboardRoute: DashboardRoute.addChildren({
+    DashboardAnalyticsRoute,
+    DashboardIndexRoute,
+  }),
   AuthLoginRoute,
   AuthSignupRoute,
-  RootDashboardRoute,
 })
 
 /* prettier-ignore-end */
@@ -96,13 +125,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
+        "/dashboard",
         "/_auth/login",
-        "/_auth/signup",
-        "/_root/dashboard"
+        "/_auth/signup"
       ]
     },
     "/": {
       "filePath": "index.lazy.jsx"
+    },
+    "/dashboard": {
+      "filePath": "dashboard.jsx",
+      "children": [
+        "/dashboard/analytics",
+        "/dashboard/"
+      ]
     },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
@@ -110,8 +146,13 @@ export const routeTree = rootRoute.addChildren({
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
     },
-    "/_root/dashboard": {
-      "filePath": "_root/dashboard.jsx"
+    "/dashboard/analytics": {
+      "filePath": "dashboard/analytics.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.jsx",
+      "parent": "/dashboard"
     }
   }
 }
