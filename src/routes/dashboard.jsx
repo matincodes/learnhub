@@ -26,7 +26,7 @@ function DashboardComponent() {
 
       <div
         className={cn(
-          'h-fit bg-gray-100 px-2 pb-14 sm:px-4 lg:float-right lg:w-[calc(100%-250px)] lg:px-10 lg:pt-28',
+          'h-fit bg-gray-100 px-2 pb-14 sm:px-4 lg:float-right lg:w-[calc(100%-280px)] lg:px-10 lg:pt-28',
         )}
       >
         <Outlet />

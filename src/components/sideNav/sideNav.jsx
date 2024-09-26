@@ -22,7 +22,7 @@ const SideNav = ({ close, isNav }) => {
         onClick={e => {
           e.stopPropagation()
         }}
-        className="my-5 flex h-full w-[250px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
+        className="my-5 flex h-full w-[280px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
       >
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
           <div>
@@ -39,7 +39,7 @@ const SideNav = ({ close, isNav }) => {
 
             <Separator className="my-4 bg-[#98989A]" />
 
-            <ul className="mt-6 flex w-full flex-col gap-y-1 px-3">
+            <ul className="mt-6 flex w-full flex-col gap-y-1 ">
               {navLinks.map(({ link, name, iconImage }) => {
                 return (
                   <li key={name} className={'w-full'}>
@@ -49,7 +49,7 @@ const SideNav = ({ close, isNav }) => {
                       className={cn(
                         'relative flex w-full items-center p-3 font-medium',
                         {
-                          'rounded-xl bg-gray-200 font-semibold': isActive(
+                          'rounded-xl bg-[#F7F7F7] font-semibold': isActive(
                             pathname,
                             link,
                           ),
@@ -63,7 +63,7 @@ const SideNav = ({ close, isNav }) => {
                           className="absolute left-[-4px]"
                         />
                       )}
-                      <div className="flex w-full items-center space-x-7">
+                      <div className="flex w-full items-center gap-x-3">
                         <img src={iconImage} alt="icon" />
                         <span>{name}</span>
                       </div>

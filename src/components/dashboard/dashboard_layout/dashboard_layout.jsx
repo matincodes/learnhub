@@ -11,7 +11,7 @@ const DashboardLayout = ({ children }) => {
   }
 
   return (
-    <div className="h-full w-full bg-gray-200 font-montserrat text-[13px] sm:text-[15px]">
+    <div className="h-full w-full bg-[#F7F7F7] font-montserrat text-[13px] sm:text-[15px]">
       <div
         className={`right-0 z-50 flex w-full items-center justify-between border-gray-200 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-250px)] lg:border-b lg:bg-white min-[1024px]:float-right`}
       >
@@ -52,7 +52,7 @@ const DashboardLayout = ({ children }) => {
       </div>
       <div
         className={cn(
-          'h-fit bg-gray-200 px-2 pb-14 sm:px-4 lg:float-right lg:w-[calc(100%-250px)] lg:pt-28',
+          'h-fit bg-[#F7F7F7] px-2 pb-14 sm:px-4 lg:float-right lg:w-[calc(100%-250px)] lg:pt-28',
         )}
       >
         <div className="w-full">{children}</div>
