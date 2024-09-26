@@ -19,6 +19,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from '@tanstack/react-router'
 
 
 export const Route = createLazyFileRoute('/')({
@@ -27,47 +29,103 @@ export const Route = createLazyFileRoute('/')({
 
 
 function App() {
+  const stopNav = useRef(null)
+  const [navStatus, setNavStatus] = useState('sticky')
+
+  const performAction = () => {
+    console.log("You've reached the target section!");
+    // Add your custom action here (e.g., API call, animation, etc.)
+  };
+
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY; // Keep track of the last scroll position
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // When the section is intersecting and scrolling downwards
+          if (window.scrollY > lastScrollY) {
+            setNavStatus('static');
+          }
+        } else {
+          // When leaving the section while scrolling upwards
+          if (window.scrollY < lastScrollY) {
+            setNavStatus('sticky');
+          }
+        }
+      });
+
+      // Update the last scroll position
+      lastScrollY = window.scrollY;
+      console.log(navStatus, lastScrollY)
+    },
+    {
+      threshold: 0.1, // Trigger when 99% of the section is visible
+    }
+  );
+
+  if (stopNav.current) {
+    observer.observe(stopNav.current);
+  }
+  // Cleanup observer on component unmount
+  return () => {
+    if (stopNav.current) {
+      observer.unobserve(stopNav.current);
+    }
+  };
+}, []);
+
+
+
+
+
   return (
     <>
-      <NavBar />
+      <NavBar NavStatus={navStatus} />
       {/* Banner */}
-      <div className="flex flex-col items-center justify-center space-y-8 lg:space-y-10 p-[30px] text-center">
-        <div className="lg:space-y-4 space-y-0 ">
-          <h1 className="text-[40px] font-san font-extrabold text-dark_green  lg:text-[64px] leading-[40px] lg:leading-[50px]">
+      <div className="flex flex-col items-center justify-center space-y-8 lg:space-y-14 p-[30px] text-center">
+        <div className="">
+          <h1 className="text-[40px] font-san font-extrabold text-dark_green  lg:text-[60px] leading-[40px] lg:leading-[50px]">
           Unlock New Tech Skills with
           </h1>
-          <h1 className=" w-full text-[40px] font-san font-extrabold text-dark_green lg:text-[64px] leading-[40px] lg:leading-[50px]">
+          <h1 className=" w-full text-[40px] font-san font-extrabold text-dark_green lg:text-[60px] leading-[40px] lg:leading-[50px] mt-2 mb-6 ">
           Coderina LearnHub
           </h1>
-        </div>
-        <p className="lg:text-[20px] text-[16px] p-0">
+          
+        <p className="lg:text-[20px] text-[16px] p-0 text-[#848484b7] font-san leading-7  ">
         Build new skills with hands-on courses and interactive <br /> learning. Start your journey today.
         </p>
+        </div>
 
 
-        <Button className="w-fit bg-normal_green font-san text-white p-[25px] text-[16px]">
-          Get Started
+        <Button className="w-fit bg-normal_green font-san text-white p-[25px] text-[16px]" asChild>
+          <Link to='/signup'> Get Started </Link>
         </Button>
 
 
-        <div className="grid w-full place-content-center">
+        <div className="grid w-full place-content-center" >
           <img
             src="/assets/mockups/desktop_banner_mockup.svg"
             alt=""
             className="hidden lg:flex"
-          />
+            
+            />
           <img
             src="/assets/mockups/desktop_responsive_banner_mockup.svg"
             alt=""
             className="mt-12 flex lg:hidden"
+            
           />
         </div>
       </div>
       {/* Banner */}
 
 
+
       {/* Why Choose Us */}
-      <div className="">
+      <div>
         {/* Header */}
         <Header
           main_text="Why Choose Coderina LearnHub"
@@ -75,13 +133,17 @@ function App() {
         {/* Header */}
 
 
+      
+
         {/* Card 1 */}
-        <div className="grid gap-6 lg:p-[65px] p-[10px] font-san z-10 relative">
+              <div className="grid gap-6 lg:p-[65px] p-[10px] font-san z-10 relative">
+              
           {cardSectionOne.map(content => (
             <Card
               key={content.id}
-              className={`flex h-[60vh] w-full flex-col bg-[#D7E4DE] outline-none rounded-2xl sticky top-[0px] ${content.id === 2 ? 'bg-dark_green text-white' : '' } ${content.id === 3 ? 'col-span-12 top-[350px] ' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'}  overflow-hidden `}
+              className={`flex h-[60vh] w-full flex-col bg-[#D7E4DE] outline-none  rounded-2xl sticky top-[0px] ${content.id === 2 ? 'bg-dark_green text-white' : '' } ${content.id === 3 ? 'col-span-12 top-[350px] ' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'}  overflow-hidden ` } 
             >
+
             {content.id === 1 ? (<>
               <img
                 src={'/assets/mockups/Courses_1.png'}
@@ -140,14 +202,15 @@ function App() {
             }
 
 
-              <div className={`absolute ${content.id === 1 ? '' : ''}  w-full`}>
-                <CardHeader>
+              <div className={`absolute ${content.id === 1 ? '' : ''} w-full`}>
+              
+                <CardHeader >
                   <div
                     className={`h-[60px] w-[60px] rounded-full bg-dark_green lg:hidden ${content.id === 1 ? 'hidden' : 'grid place-content-center'}`}
                   >
                     <img src="/assets/shield.svg" className="w-[20px]" alt="" />
                   </div>
-                  <CardTitle className="lg:text-[35px] lg:w-full w-[40%] leading-[30px]">{content.title}</CardTitle>
+                  <CardTitle className="lg:text-[35px] lg:w-full w-[40%] leading-[30px]" >{content.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p
@@ -156,7 +219,9 @@ function App() {
                   >
                     {content.description}
                   </p>
+                {content.id===1 ? (<div ref={stopNav}></div>) : (<></>)}
                 </CardContent>
+
               </div>
             </Card>
           ))}
@@ -164,12 +229,13 @@ function App() {
         {/* Card 1 */}
 
 
+
         {/* Card 2 */}
-        <div className="grid gap-8 lg:p-[50px] p-[10px] font-san lg:grid-cols-3 z-30 relative bg-transparent">
+        <div className="grid gap-8 lg:p-[50px] p-[10px] font-san lg:grid-cols-3 z-30 relative bg-transparent ">
           {cardSectionTwo.map(content => (
             <Card
               key={content.id}
-              className={`h-[40lvh] overflow-hidden rounded-2xl text-white bg-dark_green outline-none lg:h-[85lvh] ${content.id === 3 ? 'grid items-center lg:place-content-center' : content.id===2 ? 'bg-[#D7E4DE] text-normal_green' : ''} sticky top-[0px]`}
+              className={`h-[40lvh] overflow-hidden rounded-2xl text-white bg-dark_green outline-none lg:h-[85lvh] ${content.id === 3 ? 'grid items-center lg:place-content-center' : content.id===2 ? 'bg-[#D7E4DE]  text-normal_green' : ''} sticky top-[0px]`}
             >
               {content.id === 1 ? (
                 <div className="absolute h-full w-[100%] overflow-hidden">
@@ -267,6 +333,7 @@ function App() {
         </div>
         {/* Card 2 */}
       </div>
+      {/* </div> */}
       {/* Why Choose Us */}
 
 
@@ -299,7 +366,7 @@ function App() {
           <img
             src="/assets/mockups/mockup_left.svg"
             alt=""
-            className="hidden w-[550px] lg:flex"
+            className="hidden w-[600px] lg:flex"
           />
           <img
             src="/assets/mockups/courses_mini_1.svg"
@@ -326,7 +393,7 @@ function App() {
           <img
             src="/assets/mockups/mockup_right.svg"
             alt=""
-            className="absolute -bottom-16 hidden basis-[50%] lg:flex"
+            className="absolute -bottom-12 hidden basis-[50%] lg:flex"
           />
         </div>
       </div>
