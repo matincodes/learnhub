@@ -19,27 +19,22 @@ import {
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
 
 const NavBar = e => {
   const [navState, setNavState] = useState('none')
 
-  const openMenu = useRef(null)
+  // const openMenu = useRef(null)
 
-  const OpenMenu = () => {
-    setNavState((openMenu.current.style.display = 'flex'))
-  }
-  const CloseMenu = () => {
-    setNavState((openMenu.current.style.display = 'none'))
-  }
-  console.log(navState)
+  // const OpenMenu = () => {
+  //   setNavState((openMenu.current.style.display = 'flex'))
+  // }
+  // const CloseMenu = () => {
+  //   setNavState((openMenu.current.style.display = 'none'))
+  // }
+  // console.log(navState)
 
   return (
     <>

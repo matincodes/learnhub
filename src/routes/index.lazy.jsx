@@ -306,6 +306,26 @@ function App() {
                 </div>
               )}
 
+                  <img
+                    src={`/assets/mockups/learnhub_5_right_responsive.svg`}
+                    className="absolute -right-[25px] flex h-full w-[340px] outline-none lg:hidden"
+                    alt=""
+                  />
+                {/* </div> */}
+              ) : (
+                <div className="absolute h-full w-full">
+                  <img
+                    src={`/assets/mockups/product_1.png`}
+                    className="absolute bottom-0 w-[250px] outline-none"
+                    alt=""
+                  />
+                  <img
+                    src={`/assets/mockups/product_2.png`}
+                    className="absolute right-0 top-0 w-[200px] outline-none"
+                    alt=""
+                  />
+                </div>
+              )}
 
               <div
                 className={`absolute ${  content.id === 3 ? 'relative place-items-end' : 'bottom-0 lg:top-0'}`}
@@ -339,7 +359,6 @@ function App() {
 
      
 
-
       {/* Testimonial */}
       <div className="">
         <Header
@@ -360,7 +379,6 @@ function App() {
       </div>
       {/* Testimonial */}
 
-
       <div className="relative mt-12 flex h-[70vh] flex-col bg-[#F9FBFA] lg:h-full lg:flex-row">
         <div className="lg:basis-[50%]">
           <img
@@ -374,7 +392,6 @@ function App() {
             className="flex w-[250px] lg:hidden"
           />
         </div>
-
 
         <div className="absolute flex h-full w-full flex-col items-center justify-center space-y-4 text-center lg:relative lg:h-auto lg:basis-[50%]">
           <p className="font-san text-[35px] font-semibold leading-10 text-[#303031] lg:font-medium">
@@ -402,7 +419,6 @@ function App() {
       {/* Gradient */}
       <div className="relative z-10 h-[11vh] bg-gradient-to-tr from-[#fff]"></div>
       {/* Gradient */}
-
 
       <Footer />
     </>

@@ -6,18 +6,22 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
+    "dev": "conc \"npm:watch-routes\" \"vite --host\"",
     "build": "npm run generate-routes && vite build",
-    "dev": "npm run watch-routes & vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "npm run generate-routes && vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@tanstack/react-query": "^5.51.9",
     "@tanstack/react-router": "^1.45.4",
+    "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.408.0",
@@ -25,9 +29,11 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
     "react-icons": "^5.2.1",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.10",
@@ -39,6 +45,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",

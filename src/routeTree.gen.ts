@@ -14,6 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 
@@ -32,6 +34,16 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardAnalyticsRoute = DashboardAnalyticsImport.update({
+  path: '/analytics',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
   path: '/signup',
@@ -75,6 +87,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/analytics': {
+      id: '/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof DashboardImport
+    }
   }
 }
 
@@ -82,7 +108,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  DashboardRoute,
+  DashboardRoute: DashboardRoute.addChildren({
+    DashboardAnalyticsRoute,
+    DashboardIndexRoute,
+  }),
   AuthLoginRoute,
   AuthSignupRoute,
 })
@@ -105,13 +134,25 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "index.lazy.jsx"
     },
     "/dashboard": {
-      "filePath": "dashboard.jsx"
+      "filePath": "dashboard.jsx",
+      "children": [
+        "/dashboard/analytics",
+        "/dashboard/"
+      ]
     },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
     },
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
+    },
+    "/dashboard/analytics": {
+      "filePath": "dashboard/analytics.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.jsx",
+      "parent": "/dashboard"
     }
   }
 }
