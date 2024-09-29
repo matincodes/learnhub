@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardQuizzesImport } from './routes/dashboard/quizzes'
+import { Route as DashboardProfileImport } from './routes/dashboard/profile'
 import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
 import { Route as DashboardLeaderboardImport } from './routes/dashboard/leaderboard'
 import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
@@ -45,6 +46,11 @@ const DashboardIndexRoute = DashboardIndexImport.update({
 
 const DashboardQuizzesRoute = DashboardQuizzesImport.update({
   path: '/quizzes',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardProfileRoute = DashboardProfileImport.update({
+  path: '/profile',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -126,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMyCoursesImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/quizzes': {
       id: '/dashboard/quizzes'
       path: '/quizzes'
@@ -151,6 +164,7 @@ export const routeTree = rootRoute.addChildren({
     DashboardAnalyticsRoute,
     DashboardLeaderboardRoute,
     DashboardMyCoursesRoute,
+    DashboardProfileRoute,
     DashboardQuizzesRoute,
     DashboardIndexRoute,
   }),
@@ -181,6 +195,7 @@ export const routeTree = rootRoute.addChildren({
         "/dashboard/analytics",
         "/dashboard/leaderboard",
         "/dashboard/my-courses",
+        "/dashboard/profile",
         "/dashboard/quizzes",
         "/dashboard/"
       ]
@@ -201,6 +216,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard/my-courses": {
       "filePath": "dashboard/my-courses.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/profile": {
+      "filePath": "dashboard/profile.jsx",
       "parent": "/dashboard"
     },
     "/dashboard/quizzes": {
