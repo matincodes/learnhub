@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/signup')({
-  component: () => <div>Hello /_auth/signup!</div>
-})ponent: () => SignUp(),
+  component: () => SignUp(),
 })
 
 const SignUp = () => {
