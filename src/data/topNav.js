@@ -3,7 +3,7 @@ export const topNavData = {
     title: 'Welcome Back, Abisola 👋',
     paragraph: 'What would you love to learn today?',
   },
-  '/dashboard/courses': {
+  '/dashboard/my-courses': {
     title: 'Courses',
   },
   '/dashboard/analytics': {
