@@ -141,7 +141,7 @@ function App() {
           {cardSectionOne.map(content => (
             <Card
               key={content.id}
-              className={`flex h-[60vh] w-full flex-col bg-[#D7E4DE] outline-none  rounded-2xl sticky top-[0px] ${content.id === 2 ? 'bg-dark_green text-white' : '' } ${content.id === 3 ? 'col-span-12 top-[350px] ' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'}  overflow-hidden ` } 
+              className={`flex h-[40vh] w-full flex-col bg-[#D7E4DE] outline-none  rounded-2xl sticky top-[0px] ${content.id === 2 ? 'bg-dark_green text-white' : '' } ${content.id === 3 ? 'col-span-12 top-[350px] ' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'}  overflow-hidden ` } 
             >
 
             {content.id === 1 ? (<>
