@@ -25,13 +25,13 @@ const SideNav = ({ close, isNav }) => {
         className="my-5 flex h-full w-[280px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
       >
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
-          <div>
+          <div className='w-full px-4'>
             <Link
               to="/dashboard/profile"
               className="flex w-full items-start gap-x-3 pb-3"
             >
               <img src={'/assets/user.png'} alt="" />
-              <div className="space-y-1">
+              <div className="w-full space-y-1">
                 <p className="font-medium">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
@@ -74,7 +74,7 @@ const SideNav = ({ close, isNav }) => {
             </ul>
           </div>
 
-          <div className="flex w-full items-center justify-center px-6">
+          <div className="flex w-full items-center justify-center px-3">
             <Link
               onClick={close}
               to={'/dashboard/settings'}

@@ -16,6 +16,10 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardSearchImport } from './routes/dashboard/search'
+import { Route as DashboardQuizzesImport } from './routes/dashboard/quizzes'
+import { Route as DashboardProfileImport } from './routes/dashboard/profile'
+import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
+import { Route as DashboardLeaderboardImport } from './routes/dashboard/leaderboard'
 import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
@@ -43,6 +47,26 @@ const DashboardIndexRoute = DashboardIndexImport.update({
 
 const DashboardSearchRoute = DashboardSearchImport.update({
   path: '/search',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardQuizzesRoute = DashboardQuizzesImport.update({
+  path: '/quizzes',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardProfileRoute = DashboardProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardMyCoursesRoute = DashboardMyCoursesImport.update({
+  path: '/my-courses',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardLeaderboardRoute = DashboardLeaderboardImport.update({
+  path: '/leaderboard',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -100,6 +124,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalyticsImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/leaderboard': {
+      id: '/dashboard/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/dashboard/leaderboard'
+      preLoaderRoute: typeof DashboardLeaderboardImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/my-courses': {
+      id: '/dashboard/my-courses'
+      path: '/my-courses'
+      fullPath: '/dashboard/my-courses'
+      preLoaderRoute: typeof DashboardMyCoursesImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/quizzes': {
+      id: '/dashboard/quizzes'
+      path: '/quizzes'
+      fullPath: '/dashboard/quizzes'
+      preLoaderRoute: typeof DashboardQuizzesImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/search': {
       id: '/dashboard/search'
       path: '/search'
@@ -123,6 +175,10 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   DashboardRoute: DashboardRoute.addChildren({
     DashboardAnalyticsRoute,
+    DashboardLeaderboardRoute,
+    DashboardMyCoursesRoute,
+    DashboardProfileRoute,
+    DashboardQuizzesRoute,
     DashboardSearchRoute,
     DashboardIndexRoute,
   }),
@@ -151,6 +207,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "dashboard.jsx",
       "children": [
         "/dashboard/analytics",
+        "/dashboard/leaderboard",
+        "/dashboard/my-courses",
+        "/dashboard/profile",
+        "/dashboard/quizzes",
         "/dashboard/search",
         "/dashboard/"
       ]
@@ -163,6 +223,22 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard/analytics": {
       "filePath": "dashboard/analytics.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/leaderboard": {
+      "filePath": "dashboard/leaderboard.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/my-courses": {
+      "filePath": "dashboard/my-courses.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/profile": {
+      "filePath": "dashboard/profile.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/quizzes": {
+      "filePath": "dashboard/quizzes.jsx",
       "parent": "/dashboard"
     },
     "/dashboard/search": {
