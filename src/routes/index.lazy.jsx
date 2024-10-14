@@ -32,10 +32,6 @@ function App() {
   const stopNav = useRef(null)
   const [navStatus, setNavStatus] = useState('sticky')
 
-  const performAction = () => {
-    console.log("You've reached the target section!");
-    // Add your custom action here (e.g., API call, animation, etc.)
-  };
 
 
   useEffect(() => {
@@ -59,7 +55,6 @@ function App() {
 
       // Update the last scroll position
       lastScrollY = window.scrollY;
-      console.log(navStatus, lastScrollY)
     },
     {
       threshold: 0.1, // Trigger when 99% of the section is visible
@@ -325,7 +320,7 @@ function App() {
                     alt=""
                   />
                 </div>
-              )}
+              )
 
               <div
                 className={`absolute ${  content.id === 3 ? 'relative place-items-end' : 'bottom-0 lg:top-0'}`}

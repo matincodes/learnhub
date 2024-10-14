@@ -9,7 +9,11 @@ import { v4 as uuidv4 } from 'uuid'
 const RecentSearch = () => {
 
      const [recentCourses, setRecentCourses] = useState([])
-     console.log(recentCourses)
+
+    const clearRecentSearch = () =>{
+       setRecentCourses([])
+       
+    }
    
      useEffect(() => {
        setRecentCourses(recentSearchedCourses)
@@ -20,7 +24,7 @@ const RecentSearch = () => {
           <div className="flex justify-between">
             <p className="text-[14px] font-[600]">Recent Searches</p>
 
-            <button className="text-[13px] font-[600] transition-all ease-in-out hover:text-red-700">
+            <button onClick={clearRecentSearch} className="text-[13px] font-[600] transition-all ease-in-out hover:text-red-700">
               Clear recent searches
             </button>
           </div>

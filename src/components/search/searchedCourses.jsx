@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 
 
-const SearchedCourse = () => {
+const SearchedCourse = (e) => {
 
      const [searchedCourse, setSearchedCourses] = useState([])
-     console.log(searchedCourse)
    
      useEffect(() => {
-          setSearchedCourses(searchedCourses)
-     }, [])
+          setSearchedCourses(e.courseResult)
+     }, [e.courseResult])
+
 
      return (
           <div className="relative z-50 space-y-12 rounded-lg bg-white p-6">

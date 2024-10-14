@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import RecentSearch from '@/components/search/recentSearch'
 import SearchedCourse from '@/components/search/searchedCourses'
-import { searchedCourses } from '@/data/dashboard'
+import { searchedCourses, recentSearchedCourses } from '@/data/dashboard'
 import { useEffect, useState } from 'react'
 
 
@@ -13,6 +13,7 @@ function Search() {
   const [openSearchStatus, setOpenSearchStatus] = useState(window.localStorage.getItem('openSearchStatus'))
   const [search, setSearch] = useState(openSearchStatus) // When the search field is active
   const [typeSearch, setTypeSearch] = useState([])  // This is when the user has typed for what they are searching for
+  const [searchValue, setSearchValue] = useState([])
 
   // Get the Current State of the search button
   useEffect(() => {
@@ -29,29 +30,36 @@ function Search() {
     };
   }, [openSearchStatus]);
 
-
-  // const filterCourses = () =>{
-  //   searchedCourses.filter(courses =>{
-  //     console.log(courses)
-  //   })
-  // }
-
   useEffect(()=>{
-    setTypeSearch(searchedCourses)
+   const intervalId = setInterval(() => {
+      const searchedValue = window.localStorage.getItem('searchValue').toLowerCase()
+      setSearchValue(searchedValue)
+    }, 100)
+
+    return () => {
+      clearInterval(intervalId)
+    }
   }, [])
 
+  const filterRecentCourses = recentSearchedCourses.filter(courses => courses.title.toLowerCase().includes(searchValue))
+  const filterCourses = searchedCourses.filter(courses => courses.title.toLowerCase().includes(searchValue))
+  
+  
+  useEffect(()=>{
+    setTypeSearch(filterCourses)
+  }, [searchValue])
+  
 
   return (
     <div className='relative h-[77vh]'>
 
-    {search === true ? 
-    (
-        <div>
-        <RecentSearch />
-      </div>
-      )
+    {
+      search === true && searchValue.length > 0 && filterCourses.length > 0 ?
+      (
 
-      :
+        <SearchedCourse courseResult={typeSearch} />
+      )
+      : search === true && filterCourses.length === 0 ?
       (
         <div className="top-0 w-full h-full relative flex flex-col ">
           {typeSearch.length <= 0 ? 
@@ -69,11 +77,23 @@ function Search() {
             </div>
             </>
           )
-           : (
-              <SearchedCourse />
-            )}
+          :
+          (
+            <div className="border border-orange-500">gg</div>
+          )
+            }
         </div>
-      )}
+      )
+      :  search === true ?
+      (
+        <div>
+        <RecentSearch />
+      </div>
+      )
+    : ('')
+      
+
+      }
       {/* Main search */}
 
     </div>

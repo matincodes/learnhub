@@ -16,7 +16,7 @@ export const recentCourses = [
 
 
 export const recentSearchedCourses = [
-  { title: 'Software Development with Javascript and libaries', 
+  { title: '12W', 
     image: '/assets/recent1.png',
     lesson: '9',
     duration: '3hrs',
