@@ -14,6 +14,7 @@ function Search() {
   const [search, setSearch] = useState(openSearchStatus) // When the search field is active
   const [typeSearch, setTypeSearch] = useState([])  // This is when the user has typed for what they are searching for
   const [searchValue, setSearchValue] = useState([])
+  const prevRoute = window.localStorage.getItem('prevRoute')
 
   // Get the Current State of the search button
   useEffect(() => {
@@ -73,7 +74,7 @@ function Search() {
             <div className="h-full flex flex-col justify-center items-center text-center">
               <img src="/assets/mockups/no_course.png" alt="" />
               <p className='lg:w-[36%] mt-2 mb-4 font-inter text-[#808080] font-[400]'>Oops! We couldn't find your search in the collection. Please check for typos or try again.</p>
-              <button className='border-2 border-[#F7AE30] px-4 py-1 rounded-xl font-san text-[#F7AE30] font-[600] '>Go back</button>
+              <a href={prevRoute} className='border-2 border-[#F7AE30] px-4 py-1 rounded-xl font-san text-[#F7AE30] font-[600] '>Go back</a>
             </div>
             </>
           )

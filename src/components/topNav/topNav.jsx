@@ -20,6 +20,7 @@ const TopNav = ({ title, paragraph }) => {
   const routeApi = getRouteApi('/dashboard')
 
   const { prevRoute } = routeApi.useSearch()
+  window.localStorage.setItem('prevRoute', prevRoute)
 
   // const prevRoute = pathname
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
