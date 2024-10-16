@@ -29,7 +29,7 @@ const Login = () => {
         <div className="relative hidden basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4] lg:flex">
           {/* Logo */}
           <img
-            src="/assets/learnhub-logo.svg"
+            src="/assets/learnhub.png"
             alt="Logo"
             className="absolute left-0 top-0 m-[15px] w-[150px]"
           />

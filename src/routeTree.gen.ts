@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as DashboardSearchImport } from './routes/dashboard/search'
 import { Route as DashboardQuizzesImport } from './routes/dashboard/quizzes'
 import { Route as DashboardProfileImport } from './routes/dashboard/profile'
 import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
@@ -41,6 +42,11 @@ const IndexLazyRoute = IndexLazyImport.update({
 
 const DashboardIndexRoute = DashboardIndexImport.update({
   path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardSearchRoute = DashboardSearchImport.update({
+  path: '/search',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -146,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardQuizzesImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/search': {
+      id: '/dashboard/search'
+      path: '/search'
+      fullPath: '/dashboard/search'
+      preLoaderRoute: typeof DashboardSearchImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
@@ -166,6 +179,7 @@ export const routeTree = rootRoute.addChildren({
     DashboardMyCoursesRoute,
     DashboardProfileRoute,
     DashboardQuizzesRoute,
+    DashboardSearchRoute,
     DashboardIndexRoute,
   }),
   AuthLoginRoute,
@@ -197,6 +211,7 @@ export const routeTree = rootRoute.addChildren({
         "/dashboard/my-courses",
         "/dashboard/profile",
         "/dashboard/quizzes",
+        "/dashboard/search",
         "/dashboard/"
       ]
     },
@@ -224,6 +239,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard/quizzes": {
       "filePath": "dashboard/quizzes.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/search": {
+      "filePath": "dashboard/search.jsx",
       "parent": "/dashboard"
     },
     "/dashboard/": {

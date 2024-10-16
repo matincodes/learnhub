@@ -1,20 +1,15 @@
-const Header = e => {
-  return (
-    <div className="relative mt-16 flex flex-col items-center p-4 text-center">
-      <h1 className="font-san text-[40px] font-semibold leading-[40px] text-[#12141D] lg:text-[50px]">
-        {' '}
-        {e.main_text}{' '}
-      </h1>
-      <h2 className="mt-4 font-san text-[40px] font-bold leading-[40px] text-normal_green lg:-mt-5 lg:text-[56px] lg:leading-loose">
-        {' '}
-        {e.mini_text}{' '}
-      </h2>
-      <p className="mt-5 font-inter text-paragraph lg:w-[40%]">
-        {' '}
-        {e.paragraph}{' '}
-      </p>
-    </div>
-  )
+const Header = (e) =>{
+     return(
+          <div className="p-4 flex flex-col mt-16 items-left relative" >
+
+          <div className="lg:ml-14 lg:w-[40%] w-full">
+
+               <h1 className="font-san text-[#12141D] lg:text-[50px] text-[30px] leading-[52px] font-bold"> {e.main_text} </h1>
+          </div>
+               {/* <h2 className="font-san text-normal_green lg:text-[56px] text-[40px] font-bold lg:leading-loose leading-[40px] lg:-mt-5 mt-4 "> {e.mini_text} </h2> */}
+               {/* <p className="lg:w-[40%] font-inter text-paragraph mt-5"> {e.paragraph} </p> */}
+          </div>
+     )
 }
 
 export default Header
