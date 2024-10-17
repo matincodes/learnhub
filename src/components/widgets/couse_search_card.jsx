@@ -1,4 +1,4 @@
-import { Dot } from 'lucide-react'
+
 const SearchCourseCard = ({ image, title, lesson, duration }) => {
   return (
     <div className="grid space-y-1">

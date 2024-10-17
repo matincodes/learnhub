@@ -16,13 +16,14 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardSearchImport } from './routes/dashboard/search'
-import { Route as DashboardQuizzesImport } from './routes/dashboard/quizzes'
 import { Route as DashboardProfileImport } from './routes/dashboard/profile'
 import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
 import { Route as DashboardLeaderboardImport } from './routes/dashboard/leaderboard'
 import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
+import { Route as DashboardQuizzesIndexImport } from './routes/dashboard/quizzes/index'
+import { Route as DashboardQuizzesIdImport } from './routes/dashboard/quizzes/$id'
 
 // Create Virtual Routes
 
@@ -47,11 +48,6 @@ const DashboardIndexRoute = DashboardIndexImport.update({
 
 const DashboardSearchRoute = DashboardSearchImport.update({
   path: '/search',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardQuizzesRoute = DashboardQuizzesImport.update({
-  path: '/quizzes',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -83,6 +79,16 @@ const AuthSignupRoute = AuthSignupImport.update({
 const AuthLoginRoute = AuthLoginImport.update({
   path: '/login',
   getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardQuizzesIndexRoute = DashboardQuizzesIndexImport.update({
+  path: '/quizzes/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardQuizzesIdRoute = DashboardQuizzesIdImport.update({
+  path: '/quizzes/$id',
+  getParentRoute: () => DashboardRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -145,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProfileImport
       parentRoute: typeof DashboardImport
     }
-    '/dashboard/quizzes': {
-      id: '/dashboard/quizzes'
-      path: '/quizzes'
-      fullPath: '/dashboard/quizzes'
-      preLoaderRoute: typeof DashboardQuizzesImport
-      parentRoute: typeof DashboardImport
-    }
     '/dashboard/search': {
       id: '/dashboard/search'
       path: '/search'
@@ -166,6 +165,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/quizzes/$id': {
+      id: '/dashboard/quizzes/$id'
+      path: '/quizzes/$id'
+      fullPath: '/dashboard/quizzes/$id'
+      preLoaderRoute: typeof DashboardQuizzesIdImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/quizzes/': {
+      id: '/dashboard/quizzes/'
+      path: '/quizzes'
+      fullPath: '/dashboard/quizzes'
+      preLoaderRoute: typeof DashboardQuizzesIndexImport
+      parentRoute: typeof DashboardImport
+    }
   }
 }
 
@@ -178,9 +191,10 @@ export const routeTree = rootRoute.addChildren({
     DashboardLeaderboardRoute,
     DashboardMyCoursesRoute,
     DashboardProfileRoute,
-    DashboardQuizzesRoute,
     DashboardSearchRoute,
     DashboardIndexRoute,
+    DashboardQuizzesIdRoute,
+    DashboardQuizzesIndexRoute,
   }),
   AuthLoginRoute,
   AuthSignupRoute,
@@ -210,9 +224,10 @@ export const routeTree = rootRoute.addChildren({
         "/dashboard/leaderboard",
         "/dashboard/my-courses",
         "/dashboard/profile",
-        "/dashboard/quizzes",
         "/dashboard/search",
-        "/dashboard/"
+        "/dashboard/",
+        "/dashboard/quizzes/$id",
+        "/dashboard/quizzes/"
       ]
     },
     "/_auth/login": {
@@ -237,16 +252,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "dashboard/profile.jsx",
       "parent": "/dashboard"
     },
-    "/dashboard/quizzes": {
-      "filePath": "dashboard/quizzes.jsx",
-      "parent": "/dashboard"
-    },
     "/dashboard/search": {
       "filePath": "dashboard/search.jsx",
       "parent": "/dashboard"
     },
     "/dashboard/": {
       "filePath": "dashboard/index.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/quizzes/$id": {
+      "filePath": "dashboard/quizzes/$id.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/quizzes/": {
+      "filePath": "dashboard/quizzes/index.jsx",
       "parent": "/dashboard"
     }
   }
