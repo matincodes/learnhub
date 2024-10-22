@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/dashboard/profile')({
 const Profile = () => {
   const [profile, setProfile] = useState(null)
   const [buttonState, setButtonState] = useState(false)
-  const [inputFocusState, setInputFocusState] = useState(true)
+  const [editFormState, setEditFormState] = useState(false)
   const userProfileImage = useRef()
   const firstNameRef = useRef()
   const lastNameRef = useRef()
@@ -21,9 +21,12 @@ const Profile = () => {
     setProfile(userProfileImage.current.files[0])
   }
 
-  const handleInputText = (inputRef) =>{
-    setInputFocusState(false)
-    inputRef.current.focus()
+  const handleInputText = () =>{
+    setEditFormState(true)
+  }
+
+  const handlebackState = () =>{
+    setEditFormState(false)
   }
   
   const handleInputTextChange = (inputRef) =>{
@@ -32,7 +35,7 @@ const Profile = () => {
       setButtonState(true)
     }
     else if(inputLength.length === 0){
-      setInputFocusState(true)
+      // setInputFocusState(true)
       setButtonState(false)
     }
   }
@@ -46,11 +49,18 @@ const Profile = () => {
 
 
   return (
-    <div className="lg:flex grid gap-6 ">
+    <div className="lg:flex grid gap-6 relative">
       {/* Left */}
-      <div className="left basis-[40%] space-y-[50px] overflow-hidden rounded-2xl border bg-white p-5">
+      <div className={`lg:basis-[40%] space-y-[50px] overflow-hidden ${editFormState ? 'lg:grid hidden' : ''} rounded-2xl bg-white lg:p-5 p-1 z-20`}>          
         {/* User Profile */}
-        <div className="flex flex-col space-y-5 p-2">
+
+        <div className="flex flex-col space-y-5 p-2 relative">
+
+        <button  className='absolute bg-[#ebe9e9f8] rounded-2xl py-2 px-3 right-3 flex items-center justify-center gap-3 font-san text-[#bbbbbbaf]' onClick={ () => handleInputText(lastNameRef)}>
+        <img src="/assets/mockups/edit.svg" alt="" width={'13px'} className='cursor-pointer text-[#bbbbbbaf]' />
+         Edit Details 
+         </button>
+
           {/* Image and name */}
           <div className="flex flex-col items-center justify-center space-y-2">
             <div className="grid h-[100px] w-[100px] justify-center overflow-hidden rounded-full ">
@@ -89,7 +99,7 @@ const Profile = () => {
         <div className="flex flex-col space-y-5 p-2">
           <p className="font-san text-[18px] font-medium">Achievements</p>
 
-          <div className="grid grid-cols-4 gap-x-10 gap-y-7 items-center place-content-center">  
+          <div className="grid lg:grid-cols-4 grid-cols-3 gap-x-10 gap-y-7 items-center place-content-center">  
           {achievements.map(achievement => (
               <div key={uuidv4()} className="flex flex-col items-center justify-center text-center space-y-2 p-0">
                 
@@ -98,9 +108,9 @@ const Profile = () => {
                     alt=""
                     className="w-[60px]"
                   />
-                  <p className="text-[16px] font-semibold font-montserrat">{achievement.title}</p>
+                  <p className="lg:text-[16px] text-[14px] font-semibold font-montserrat">{achievement.title}</p>
                 
-                <p className="text-[7px] font-medium font-montserrat">{achievement.description}</p>
+                <p className="lg:text-[7px] text-[4px] font-medium font-montserrat">{achievement.description}</p>
               </div>
             )
           )}
@@ -114,11 +124,19 @@ const Profile = () => {
 
 
       {/* ## Right */}
-      <div className="left basis-[60%] lg:space-y-24 space-y-4 rounded-2xl border bg-white p-5">
-        <p className="font-san text-[25px] font-medium p-3">My Details</p>
 
-        <div className="relative lg:flex hidden items-center justify-center">
-          <div className="absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
+      {editFormState === false ? 
+      (<div className=' basis-[60%] lg:grid place-content-center font-san text-center space-y-3'>
+        <p className='text-[20px] text-[#37495780] font-[500]'>No Information Available</p>
+        <p className='text-[15px] text-[#37495780]'>Click Edit Details</p>
+      </div>) 
+      : 
+      <div className={`absolute top-0 left-0 lg:relative lg:basis-[60%] grid lg:space-y-24 space-y-4 rounded-2xl  bg-white w-[100%] p-5 lg:z-0 z-50`}>
+        <p className="font-san text-[25px] font-medium p-3 lg:flex hidden ">My Details</p>
+        <p className="font-san text-[18px] font-medium lg:hidden flex cursor-pointer items-center p-2 space-x-2" onClick={handlebackState}> <img src="/assets/mockups/angle-left.png" alt="" />  Back</p>
+
+        <div className="relative flex items-center justify-center">
+          <div className="lg:absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
             <img
               src={profileImage}
               alt=""
@@ -127,10 +145,10 @@ const Profile = () => {
           </div>
           {/* Change Image */}
           <input type="file" name="changeUserImage" id="file-input" className='hidden' ref={userProfileImage} onChange={handleImageChange} />
-          <label htmlFor="file-input">
-          <div className="relative bottom-[-70px] right-[-70px] z-30 flex h-[50px] w-[50px] place-content-center items-center overflow-hidden rounded-full bg-[#F7F7F7] cursor-pointer">
+          <label htmlFor="file-input" className=' relative bottom-[-70px] lg:right-[-60px] right-[60px]'>
+          <div className="z-30 flex h-[50px] w-[50px] place-content-center items-center overflow-hidden rounded-full bg-[#F7F7F7] cursor-pointer ">
             <img
-              src="/assets/mockups/camera.svg"
+              src="/assets/mockups/edit.svg"
               alt=""
               className="object-cover"
               width={'20px'}
@@ -140,74 +158,71 @@ const Profile = () => {
           {/* Change Image */}
         </div>
 
-        <form className="space-y-[60px] lg:p-6 lg:pb-[90px] p-2">
+        <form className="lg:space-y-[60px] space-y-7 left-0 lg:p-6 pb-[90px] p-2 w-full">
           {/* FirstName */}
-          <div className="space-y-7 lg:border lg:border-l-0 lg:border-r-0 lg:border-t-0 lg:grid flex items-end">
+          <div className="grid space-y-3">
             <label
               htmlFor="firstName"
-              className="font-san text-[17px] lg:font-medium tracking-wide lg:text-[#000] text-[#AAAAAA] lg:basis-0 basis-[40%] lg:p-0 pb-3"
+              className="font-san text-[17px] lg:font-medium tracking-wide text-[#000] lg:basis-0 basis-[40%] lg:p-0 pb-3"
             >
               First Name
             </label>
-            <div className="basis-full flex justify-between p-3 gap-4">
+            <div className="basis-full flex justify-between gap-4">
             <input
               id="firstName"
               placeholder="Abisola"
               type="text"
               ref={firstNameRef}
               onChange={() => handleInputTextChange(firstNameRef)}
-              readOnly = {inputFocusState}
-              className="lg:w-full  lg:pb-1 font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] lg:placeholder:text-[#aaaa] font-semibold text-[#000] lg:text-[#AAAAAA] outline-none "
+              // readOnly = {inputFocusState}
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
             />
-            <img src="/assets/mockups/edit.svg" alt="" width={'18px'} className='cursor-pointer' onClick={ () => handleInputText(firstNameRef)}/>
             </div>
           </div>
           {/* FirstName */}
           {/* LastName */}
-          <div className="space-y-7 lg:border lg:border-l-0 lg:border-r-0 lg:border-t-0 lg:grid flex items-end">
+          <div className="grid space-y-3">
             <label
               htmlFor="firstName"
-              className="font-san text-[17px] lg:font-medium tracking-wide lg:text-[#000] text-[#AAAAAA] lg:basis-0 basis-[40%] lg:p-0 pb-3"
+              className="font-san text-[17px] lg:font-medium tracking-wide text-[#000] lg:basis-0 basis-[40%] lg:p-0 pb-3"
             >
               Last Name
             </label>
             
-            <div className="basis-full flex justify-between p-3 gap-4">
+            <div className="basis-full flex justify-between gap-4">
             <input
               id="lastName"
               placeholder="Elizabeth"
               type="text"
               ref={lastNameRef}
               onChange={() => handleInputTextChange(lastNameRef)}
-              readOnly = {inputFocusState}
-              className="lg:w-full  lg:pb-1 font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] lg:placeholder:text-[#aaaa] font-semibold text-[#000] lg:text-[#AAAAAA] outline-none "
+              // readOnly = {inputFocusState}
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
             />
-            <label htmlFor="lastName">
-            <img src="/assets/mockups/edit.svg" alt="" width={'18px'} className='cursor-pointer' onClick={ () => handleInputText(lastNameRef)}  />
-            </label>
+          
             </div>
 
           </div>
           {/* LastName */}
           {/* Email */}
-          <div className="space-y-7 lg:border lg:border-l-0 lg:border-r-0 lg:border-t-0 lg:grid flex items-end">
+          <div className="grid space-y-3">
             <label
               htmlFor="email"
-              className="font-san text-[17px] lg:font-medium tracking-wide lg:text-[#000] text-[#AAAAAA] lg:basis-0 basis-[40%] lg:p-0 pb-3"
+              className="font-san text-[17px] lg:font-medium tracking-wide text-[#000] lg:basis-0 basis-[40%] lg:p-0 pb-3"
             >
               Email
             </label>
-          <div className="basis-full flex justify-between p-3 gap-4">
+          <div className="basis-full flex justify-between gap-4">
             <input
               id="email"
               placeholder="Anifowsekb@gmail.com"
               type="email"
               ref={emailRef}
               onChange={() => handleInputTextChange(emailRef)}
-              readOnly = {inputFocusState}
-              className="lg:w-full  lg:pb-1 font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] lg:placeholder:text-[#aaaa] font-semibold text-[#000] lg:text-[#AAAAAA] outline-none "
+              // readOnly = {inputFocusState}
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
             />
-            <img src="/assets/mockups/edit.svg" alt="" width={'18px'} className='cursor-pointer' onClick={ () => handleInputText(emailRef)}  />
+            
             </div>
 
           </div>
@@ -218,6 +233,7 @@ const Profile = () => {
           </button>
         </form>
       </div>
+      }
       {/* Right */}
     </div>
   )
