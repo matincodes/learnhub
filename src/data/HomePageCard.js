@@ -22,13 +22,13 @@ const cardSectionOne = [
 const cardSectionTwo = [
   {
     id: 1,
-    title: 'Responsive Design',
+    title: 'Smart Dashboard',
     description:
       'Security testing is a type of software testing that is focused determining if an information.',
   },
   {
     id: 2,
-    title: 'Smart Dashboard',
+    title: 'Responsive Design',
     description:
       'Security testing is a type of software testing that is focused determining if an information.',
   },

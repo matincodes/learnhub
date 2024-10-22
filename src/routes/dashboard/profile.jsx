@@ -228,7 +228,9 @@ const Profile = () => {
           </div>
           {/* Email */}
 
-          <button className={`rounded-lg border-none ${buttonState ? 'bg-normal_yellow' : 'bg-[#FDE6BF]' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
+          <button
+          // disabled = {buttonState}
+           className={`rounded-lg border-none ${buttonState ? 'bg-normal_yellow' : 'bg-[#FDE6BF] disabled:cursor-not-allowed' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
             Save Changes
           </button>
         </form>
