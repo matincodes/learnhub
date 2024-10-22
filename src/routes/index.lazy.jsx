@@ -170,13 +170,13 @@ function App() {
               ) : content.id === 3 ? (
                 <div className="relative flex h-full ">
                   <img
-                    src={'/assets/mockups/Courses_3_lg.png'}
-                    className="absolute bottom-[-60px] right-[0px] hidden w-[500px] rounded-br-xl border-none outline-none lg:flex"
+                    src={'/assets/mockups/Courses_3_lg.svg'}
+                    className="absolute bottom-[-270px] right-[-460px] 2xl:bottom-[-360px] 2xl:right-[-600px] hidden 2xl:w-[1590px] lg:w-[1200px] rounded-br-xl border-none outline-none lg:flex"
                     alt=""
                   />
                   {/* <img
-                src={'/assets/mockups/Courses_3_sm.png'}
-                className="absolute lg:flex hidden bottom-[0px] right-[320px] w-[250px] border-none outline-none"
+                src={'/assets/mockups/achievements.png'}
+                className="absolute lg:flex hidden right-[2px] border-none outline-none"
                 alt=""
               /> */}
                 </div>
@@ -186,13 +186,13 @@ function App() {
 
               <div className={`absolute  lg:top-0 bottom-0 ${content.id === 1 ? '' : ''} w-full`}>
                 <CardHeader className='p-[10px] lg:p-[15px]'>
-                  <CardTitle className="w-[50%] leading-[30px] p-0 text-[20px] lg:w-full lg:text-[35px]">
+                  <CardTitle className="w-[50%] leading-[30px] p-0 text-[25px] lg:w-full lg:text-[35px]">
                     {content.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className='p-[10px] lg:p-[15px]'>
                   <p
-                    className={`w-[65%] lg:text-[20px] text-[12px] ${content.id === 3 ? 'lg:w-[40%]' : 'lg:w-[60%]'} ${
+                    className={`w-[65%] lg:text-[20px] text-[14px] ${content.id === 3 ? 'lg:w-[40%]' : 'lg:w-[60%]'} ${
                       content.id === 2 ? 'text-[#ffffff]' : ''
                     } text-[#292929]`}
                   >
@@ -280,14 +280,14 @@ function App() {
               >
                 <CardHeader className='p-[10px] lg:p-[15px]'>
                   <CardTitle
-                    className={` leading-[30px] lg:w-full ${content.id === 3 ? ' w-[75%] leading-10 text-[30px] lg:text-[40px]' : 'w-[40%] text-[20px] lg:text-[30px]'}`}
+                    className={` leading-[30px] lg:w-full ${content.id === 3 ? ' w-[75%] leading-10 text-[30px] lg:text-[40px]' : 'w-[40%] text-[25px] lg:text-[30px]'}`}
                   >
                     {content.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-[10px] lg:p-[15px]">
                   <p
-                    className={`text-[12px] w-[70%] ${content.id === 1 ? 'text-[#CCCCCC]' : 'text-paragraph '} leading-[30px] lg:w-full lg:text-[17px]`}
+                    className={`text-[14px] w-[70%] ${content.id === 1 ? 'text-[#CCCCCC]' : 'text-paragraph '} leading-[30px] lg:w-full lg:text-[17px]`}
                   >
                     {content.description}
                   </p>
@@ -338,11 +338,11 @@ function App() {
           />
         </div>
 
-        <div className="absolute flex h-full w-full flex-col items-center justify-center space-y-4 text-center lg:relative lg:h-auto lg:basis-[50%]">
+        <div className="absolute flex h-[40lvh] w-full flex-col items-center justify-center space-y-4 text-center lg:relative lg:h-auto lg:basis-[50%]">
           <p className="font-san text-[35px] font-semibold leading-10 text-[#303031] lg:font-medium">
             The course content you <br /> need, ready for you
           </p>
-          <Button className="w-fit rounded-xl bg-normal_green font-san font-semibold text-white hover:bg-[#FAFFFD] hover:text-normal_green">
+          <Button className="w-fit rounded-xl bg-normal_green font-san font-semibold text-white hover:bg-[#FAFFFD] hover:text-normal_green z-20">
             Get Started
           </Button>
 
@@ -360,7 +360,7 @@ function App() {
       </div>
 
       {/* Gradient */}
-      <div className="relative z-10 h-[11vh] bg-gradient-to-tr from-[#fff]"></div>
+      <div className="relative z-10 lg:h-[11vh] bg-gradient-to-tr from-[#fff]"></div>
       {/* Gradient */}
 
       <Footer />
