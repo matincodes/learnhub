@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button'
 import NavBar from '@/components/navBar/navBar'
 import Header from '@/components/header/header'
 import TestimonialCard from '@/components/testimonialCard/testimonialCard'
+import { Courses } from '@/data/courses'
+import CourseOption from '@/components/options/options'
+import SearchCourseCard from '@/components/widgets/couse_search_card' 
+
 import {
   cardSectionOne,
   cardSectionTwo,
@@ -28,6 +32,16 @@ export const Route = createLazyFileRoute('/')({
 function App() {
   const stopNav = useRef(null)
   const [navStatus, setNavStatus] = useState('sticky')
+  const [courseOption, setCourseOption] = useState('FrontEnd Development')
+
+  // For Filtering Courses
+  const getOptionValue = (e) =>{
+    setCourseOption(e.target.value)
+  }
+  
+  // useEffect(() =>{
+  //   console.log(getOption)
+  // }, [getOption])
 
   useEffect(() => {
     let lastScrollY = window.scrollY // Keep track of the last scroll position
@@ -86,12 +100,20 @@ function App() {
           </p>
         </div>
 
-        <Button
-          className="w-fit bg-normal_green p-[25px] font-san text-[16px] text-white"
-          asChild
-        >
-          <Link to="/signup"> Get Started </Link>
-        </Button>
+        <div className="space-x-[50px]">
+          <Button
+            className="w-fit border-2 border-normal_green bg-normal_green px-[15px] py-[25px] font-san text-[16px] text-white"
+            asChild
+          >
+            <Link to="/signup"> Get Started </Link>
+          </Button>
+          <Button
+            className="w-fit border-2 border-normal_green px-[15px] py-[25px] font-san text-[16px] text-normal_green"
+            asChild
+          >
+            <Link to="/signup"> View Pricing </Link>
+          </Button>
+        </div>
 
         <div className="grid w-full place-content-center">
           <img
@@ -108,18 +130,49 @@ function App() {
       </div>
       {/* Banner */}
 
+      {/* Explore Courses */}
+      <div className="grid place-content-center">
+        <Header
+          main_text="Explore various Courses with Coderina LearnHub"
+          width="50%"
+        />
+        
+        <div className="flex place-content-center space-x-6 p-4">
+          {Courses.map(courseTitle => (
+            <CourseOption key={courseTitle.id} category={courseTitle.category} getOptionValue={getOptionValue} active={courseOption} />  
+          ))}
+        </div>
+
+        <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:p-6">
+          <div className="no-scrollbar w-full overflow-x-auto  ">
+              <div className="flex w-full min-w-max items-start gap-x-5 sm:gap-x-8">
+                {Courses.map(category => (
+                  courseOption === category.category ? 
+                  
+                  category.courses.map((item, index) =>(
+                  <SearchCourseCard key={index} image={item.image} title={item.title} lesson={item.lesson} duration={item.duration} />
+                  )) 
+                  : '' 
+                ))}
+              </div>
+          </div>
+        </div>
+
+      </div>
+      {/* Explore Courses */}
+
       {/* Why Choose Us */}
       <div>
         {/* Header */}
-        <Header main_text="Why Choose Coderina LearnHub" />
+        <Header main_text="Why Choose Coderina LearnHub" width="40%" paragraph={'Explore a variety of features designed to enhance your learning experience. Discover tools that learning engaging and effective!'} />
         {/* Header */}
 
         {/* Card 1 */}
-        <div className="relative z-10 grid gap-6 p-[10px] font-san lg:p-[65px]">
+        <div className="relative z-10 grid gap-6 p-[10px] font-san lg:p-[70px] ">
           {cardSectionOne.map(content => (
             <Card
               key={content.id}
-              className={`sticky top-[0px] flex h-[35vh] w-full flex-col rounded-2xl bg-[#D7E4DE] outline-none ${content.id === 2 ? 'bg-dark_green text-white' : ''} ${content.id === 3 ? 'top-[350px] col-span-12 lg:h-[60vh]' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'} overflow-hidden `}
+              className={`sticky top-[0px] flex h-[35vh] w-full flex-col rounded-2xl bg-[#D7E4DE] outline-none ${content.id === 2 ? 'bg-dark_green text-white' : ''} ${content.id === 3 ? 'top-[350px] col-span-12 lg:h-[60vh]' : 'col-span-12 lg:col-span-6 lg:h-[60lvh]'} overflow-hidden`}
             >
               {content.id === 1 ? (
                 <>
@@ -132,7 +185,7 @@ function App() {
                   {/* Responsivness */}
                   <img
                     src={'/assets/mockups/Courses_1_Responsive.svg'}
-                    className="absolute right-0 bottom-[0px] w-[120px] flex  border-none outline-none lg:hidden"
+                    className="absolute bottom-[0px] right-0 flex w-[120px] border-none outline-none lg:hidden"
                     alt=""
                   />
                   {/* Responsivness */}
@@ -141,37 +194,35 @@ function App() {
                 <div className="relative flex h-full">
                   <img
                     src={'/assets/mockups/Courses_2_lg.png'}
-                    className="absolute bottom-[10px] right-[10px] hidden w-full rounded-br-xl border-none outline-none lg:flex"
+                    className="absolute bottom-[10px] w-[550px] right-[10px] hidden rounded-br-xl border-none outline-none lg:flex"
                     alt=""
                   />
 
                   <img
                     src={'/assets/mockups/Courses_2_sm.png'}
-                    className="absolute bottom-[-5px] border-none outline-none right-0 lg:right-[140px] lg:flex 2xl:right-[160px] hidden"
+                    className="absolute bottom-[-10px] right-0 hidden border-none outline-none lg:right-[140px] lg:flex 2xl:right-[160px]"
                     alt=""
                   />
 
-
-                {/* Responsiveness */}
-                <img
+                  {/* Responsiveness */}
+                  <img
                     src={'/assets/mockups/Courses_2_lg_responsive.svg'}
-                    className="absolute bottom-[10px] right-[10px] lg:hidden w-[170px] rounded-br-xl border-none outline-none flex z-0"
+                    className="absolute bottom-[10px] right-[10px] z-0 flex w-[170px] rounded-br-xl border-none outline-none lg:hidden"
                     alt=""
                   />
 
                   <img
                     src={'/assets/mockups/Courses_2_sm.png'}
-                    className="absolute bottom-[-5px] border-none outline-none right-0 lg:hidden flex w-[130px]"
+                    className="absolute bottom-[-5px] right-0 flex w-[130px] border-none outline-none lg:hidden"
                     alt=""
                   />
-                {/* Responsiveness */}
-
+                  {/* Responsiveness */}
                 </div>
               ) : content.id === 3 ? (
-                <div className="relative flex h-full ">
+                <div className="relative flex h-full">
                   <img
                     src={'/assets/mockups/Courses_3_lg.svg'}
-                    className="absolute bottom-[-270px] right-[-460px] 2xl:bottom-[-360px] 2xl:right-[-600px] hidden 2xl:w-[1590px] lg:w-[1200px] rounded-br-xl border-none outline-none lg:flex"
+                    className="absolute bottom-[-270px] right-[-460px] hidden rounded-br-xl border-none outline-none lg:flex lg:w-[1200px] 2xl:bottom-[-360px] 2xl:right-[-600px] 2xl:w-[1590px]"
                     alt=""
                   />
                   {/* <img
@@ -184,15 +235,17 @@ function App() {
                 ''
               )}
 
-              <div className={`absolute  lg:top-0 bottom-0 ${content.id === 1 ? '' : ''} w-full`}>
-                <CardHeader className='p-[10px] lg:p-[15px]'>
-                  <CardTitle className="w-[50%] leading-[30px] p-0 text-[25px] lg:w-full lg:text-[35px]">
+              <div
+                className={`absolute bottom-0 lg:top-0 ${content.id === 1 ? '' : ''} w-full  p-2`}
+              >
+                <CardHeader className=" p-[10px] lg:pt-[45px] ">
+                  <CardTitle className="w-[50%] p-0 text-[25px] leading-[30px] lg:w-full lg:text-[35px]">
                     {content.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className='p-[10px] lg:p-[15px]'>
+                <CardContent className="p-[10px] lg:p-[15px]">
                   <p
-                    className={`w-[65%] lg:text-[20px] text-[14px] ${content.id === 3 ? 'lg:w-[40%]' : 'lg:w-[60%]'} ${
+                    className={`w-[55%] text-[15px] ${content.id === 3 ? 'lg:w-[40%]' : 'lg:w-[60%]'} ${
                       content.id === 2 ? 'text-[#ffffff]' : ''
                     } text-[#292929]`}
                   >
@@ -207,24 +260,24 @@ function App() {
         {/* Card 1 */}
 
         {/* Card 2 */}
-        <div className="relative z-30 grid gap-8 bg-transparent p-[10px] font-san lg:grid-cols-3 lg:p-[50px]">
+        <div className="relative z-30 grid gap-8 bg-transparent p-[10px] font-san lg:grid-cols-3 lg:p-[70px]">
           {cardSectionTwo.map(content => (
             <Card
               key={content.id}
               className={`h-[40lvh] overflow-hidden rounded-2xl bg-dark_green text-white outline-none lg:h-[75lvh] ${content.id === 3 ? 'grid items-center lg:place-content-center' : content.id === 2 ? 'bg-[#D7E4DE] text-normal_green' : ''} sticky top-[0px]`}
             >
               {content.id === 1 ? (
-                <div className="absolute h-full w-[100%] overflow-hidden">
+                <div className="absolute  h-full w-[100%] overflow-hidden">
                   <img
-                    src={`/assets/mockups/learnhub_4.png`}
-                    className="absolute bottom-2 right-2 hidden rounded-br-xl outline-none lg:flex"
+                    src={`/assets/mockups/learnhub_4_large.png`}
+                    className="absolute bottom-2 w-[270px] right-2 hidden rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
 
                   {/* Responsive images */}
                   <img
                     src={'/assets/mockups/learnhub_4_large_responsive.svg'}
-                    className="absolute right-[-20px] bottom-[0px] w-[200px] flex  border-none outline-none lg:hidden"
+                    className="absolute bottom-[0px] right-[-20px] flex w-[200px] border-none outline-none lg:hidden"
                     alt=""
                   />
                   {/* <img
@@ -237,26 +290,25 @@ function App() {
                 <div className="relative flex h-full overflow-hidden lg:w-[100%]">
                   <img
                     src={`/assets/mockups/learnhub_4.png`}
-                    className="absolute bottom-2 right-2 hidden rounded-br-xl outline-none lg:flex "
+                    className="absolute bottom-2 right-2 w-[350px] hidden rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
 
                   <img
                     src={`/assets/mockups/Courses_3_sm.png`}
-                    className="absolute right-2 bottom-1 hidden outline-none lg:flex w-[250px]"
+                    className="absolute bottom-1 right-2 hidden w-[220px] outline-none lg:flex"
                     alt=""
                   />
-
 
                   {/* Responsive images */}
                   <img
                     src={'/assets/mockups/learnhub_5_large_responsive.svg'}
-                    className="absolute right-[-20px] bottom-[0px] w-[270px] flex  border-none outline-none lg:hidden"
+                    className="absolute bottom-[0px] right-[-20px] flex w-[270px] border-none outline-none lg:hidden"
                     alt=""
                   />
-                   <img
+                  <img
                     src={'/assets/mockups/learnhub_5_small_responsive.svg'}
-                    className="absolute right-[-0px] bottom-[0px] w-[160px] flex  border-none outline-none lg:hidden"
+                    className="absolute bottom-[0px] right-[-0px] flex w-[160px] border-none outline-none lg:hidden"
                     alt=""
                   />
                 </div>
@@ -276,18 +328,18 @@ function App() {
               )}
 
               <div
-                className={`absolute ${content.id === 3 ? 'relative place-items-end' : 'bottom-0 lg:top-0'} `}
+                className={`absolute ${content.id === 3 ? 'relative place-items-end' : 'bottom-0 lg:top-0'} p-2`}
               >
-                <CardHeader className='p-[10px] lg:p-[15px]'>
+                <CardHeader className="p-[10px] lg:pt-[45px]">
                   <CardTitle
-                    className={` leading-[30px] lg:w-full ${content.id === 3 ? ' w-[75%] leading-10 text-[30px] lg:text-[40px]' : 'w-[40%] text-[25px] lg:text-[30px]'}`}
-                  >
+                    className={`leading-[30px] lg:w-full ${content.id === 3 ? 'w-[75%] text-[30px] leading-10 lg:text-[40px]' : 'w-[40%] text-[25px] lg:text-[30px]'}`}
+                  >               
                     {content.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-[10px] lg:p-[15px]">
+                <CardContent className="p-[10px] lg:p-[13px]">
                   <p
-                    className={`text-[14px] w-[70%] ${content.id === 1 ? 'text-[#CCCCCC]' : 'text-paragraph '} leading-[30px] lg:w-full lg:text-[17px]`}
+                    className={`w-[70%] text-[14px] ${content.id === 1 ? 'text-[#CCCCCC]' : 'text-paragraph'} leading-[30px] lg:w-full`}
                   >
                     {content.description}
                   </p>
@@ -310,7 +362,12 @@ function App() {
 
       {/* Testimonial */}
       <div className="">
-        <Header main_text="What the community says about LearnHub" position />
+        <Header
+          main_text="What Users Say About Coderina LearnHub"
+          position
+          width="50%"
+          paragraph={'See how we transformed learning for our users. hear their feedbacks and experiences!'}
+        />
 
         <div className="grid place-content-center gap-12 p-[10px] lg:grid-cols-2 lg:gap-8 lg:p-[50px]">
           {testimonialSection.map(content => (
@@ -342,7 +399,7 @@ function App() {
           <p className="font-san text-[35px] font-semibold leading-10 text-[#303031] lg:font-medium">
             The course content you <br /> need, ready for you
           </p>
-          <Button className="w-fit rounded-xl bg-normal_green font-san font-semibold text-white hover:bg-[#FAFFFD] hover:text-normal_green z-20">
+          <Button className="z-20 w-fit rounded-xl bg-normal_green font-san font-semibold text-white hover:bg-[#FAFFFD] hover:text-normal_green">
             Get Started
           </Button>
 
@@ -360,7 +417,7 @@ function App() {
       </div>
 
       {/* Gradient */}
-      <div className="relative z-10 lg:h-[11vh] bg-gradient-to-tr from-[#fff]"></div>
+      <div className="relative z-10 bg-gradient-to-tr from-[#fff] lg:h-[11vh]"></div>
       {/* Gradient */}
 
       <Footer />

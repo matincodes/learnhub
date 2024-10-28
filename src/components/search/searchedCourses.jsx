@@ -20,7 +20,7 @@ const SearchedCourse = (e) => {
           <div className="flex justify-between">
             <p className="text-[14px] font-[600]">Search Result</p>
           </div>
-          <div className="relative grid gap-14 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="relative grid gap-[100px] border border-red-500 sm:grid-cols-2 lg:grid-cols-4">
             {searchedCourse.map(courses => (
               <SearchCourseCard
                 key={uuidv4()}

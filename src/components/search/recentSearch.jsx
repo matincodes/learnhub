@@ -28,7 +28,7 @@ const RecentSearch = () => {
               Clear recent searches
             </button>
           </div>
-          <div className="relative grid gap-14 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="relative grid gap-[100px] sm:grid-cols-2 lg:grid-cols-4">
             {recentCourses.map(courses => (
               <SearchCourseCard
                 key={uuidv4()}

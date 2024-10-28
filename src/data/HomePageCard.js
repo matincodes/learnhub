@@ -1,36 +1,42 @@
+
+// const coursesSection = [
+
+// ]
+
+
 const cardSectionOne = [
   {
     id: 1,
     title: 'Course Catalog',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Access a wide range of courses tailored to diverse learning needs, all in one place.',
   },
   {
     id: 2,
     title: 'Instructor Engagement',
     description:
-      'With the Google Meet integrated feature book sessions with instructors, to enhancing your learning experience',
+      'Easily book sessions with instructors using the integrated Google Meet feature to enhance your learning experience.',
   },
   {
     id: 3,
-    title: 'Gamified Learning',
+    title: 'Smart Dashboard',
     description:
-      'Earn badges, XP, and climb the leaderboard in our gamified structure to boost engagement and motivation',
+      'Track progress, manage sessions, and stay updated with a dashboard designed for streamlined learning.',
   },
 ]
 
 const cardSectionTwo = [
   {
     id: 1,
-    title: 'Smart Dashboard',
+    title: 'Gamified Learning',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Earn badges, XP, and climb the leaderboard in our gamified structure to boost engagement and motivation',
   },
   {
     id: 2,
     title: 'Responsive Design',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Enjoy a seamless learning experience on any device, from desktop to mobile.',
   },
   {
     id: 3,
