@@ -1,10 +1,10 @@
 const CourseOption = (e) =>{
      return (
           <>
-               <div className="">
+               <div className="grid place-content-center">
             <label
               htmlFor={e.category}
-              className={`w-fit rounded-full border-2 border-normal_green px-[20px] py-[10px] text-center font-san text-[15px] text-normal_green ${e.category == e.active ? 'bg-normal_green text-white' : ''}`}
+              className={`w-fit rounded-full border-2 border-normal_green px-[30px] lg:px-[20px] py-[10px] cursor-pointer text-center font-san lg:text-[15px] text-[8px] grid place-content-center text-normal_green ${e.category == e.active ? 'bg-normal_green text-white' : ''}`}
             >
               {e.category}
             </label>

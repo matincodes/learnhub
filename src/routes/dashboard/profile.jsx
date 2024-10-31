@@ -54,9 +54,9 @@ const Profile = () => {
       <div className={`lg:basis-[40%] space-y-[50px] overflow-hidden ${editFormState ? 'lg:grid hidden' : ''} rounded-2xl bg-white lg:p-5 p-1 z-20`}>          
         {/* User Profile */}
 
-        <div className="flex flex-col space-y-5 p-2 relative">
+        <div className="flex flex-col space-y-5 p-2 relative ">
 
-        <button  className='absolute bg-[#ebe9e9f8] rounded-2xl py-2 px-3 right-3 flex items-center justify-center gap-3 font-san text-[#bbbbbbaf]' onClick={ () => handleInputText(lastNameRef)}>
+        <button  className='absolute bg-[#ebe9e9f8] rounded-2xl py-2 px-3 lg:-right-2 right-3 flex items-center justify-center gap-3 font-san text-[#bbbbbbaf]' onClick={ () => handleInputText(lastNameRef)}>
         <img src="/assets/mockups/edit.svg" alt="" width={'13px'} className='cursor-pointer text-[#bbbbbbaf]' />
          Edit Details 
          </button>

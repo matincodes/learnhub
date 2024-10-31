@@ -1,6 +1,6 @@
 const TestimonialCard = e => (
-  <div className="item-center flex flex-col justify-around space-y-4 rounded-xl bg-[#F9FBFA] p-[20px] font-san lg:p-[40px]">
-    <i className="text-[20px] font-normal tracking-tight text-dark_green">
+  <div className="item-center flex flex-col justify-around space-y-4 rounded-xl bg-[#F9FBFA] p-[20px] lg:p-[40px]">
+    <i className="text-[20px] font-normal font-san tracking-tight text-dark_green">
       {' '}
       “{e.testimony}”
     </i>

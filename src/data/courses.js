@@ -8,8 +8,26 @@ export const coursesFilter = [
 export const Courses = [
   {
     id: 1,
-    category: 'FrontEnd Development',
+    category: 'Frontend Development',
     courses: [
+      {
+        title: 'Javascript: The Complete Guide for Developers',
+        image: '/assets/recent1.png',
+        lesson: '78',
+        duration: '10 hours 45 Minutes',
+      },
+      {
+        title: 'Javascript: The Complete Guide for Developers',
+        image: '/assets/recent2.png',
+        lesson: '78',
+        duration: '10 hours 45 Minutes',
+      },
+      {
+        title: 'Javascript: The Complete Guide for Developers',
+        image: '/assets/recent3.png',
+        lesson: '78',
+        duration: '10 hours 45 Minutes',
+      },
       {
         title: 'Javascript: The Complete Guide for Developers',
         image: '/assets/recent3.png',
@@ -50,7 +68,7 @@ export const Courses = [
   },
   {
     id: 2,
-    category: 'BackEnd Development',
+    category: 'Backend Development',
     courses: [
       {
         title: 'Javascript: The Complete Guide for Developers',

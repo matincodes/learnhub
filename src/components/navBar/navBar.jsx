@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { navLinks } from '@/data/NavBar'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { FiMenu } from 'react-icons/fi'
 import { v4 as uuidv4 } from 'uuid'
@@ -22,15 +22,44 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 const NavBar = e => {
   const [navState, setNavState] = useState('none')
 
-  // const openMenu = useRef(null)
 
-  // const OpenMenu = () => {
-  //   setNavState((openMenu.current.style.display = 'flex'))
-  // }
-  // const CloseMenu = () => {
-  //   setNavState((openMenu.current.style.display = 'none'))
-  // }
-  // console.log(navState)
+  // useEffect(() => {
+  //   let lastScrollY = window.scrollY // Keep track of the last scroll position
+
+  //   const observer = new IntersectionObserver(
+  //     entries => {
+  //       entries.forEach(entry => {
+  //         if (entry.isIntersecting) {
+  //           // When the section is intersecting and scrolling downwards
+  //           if (window.scrollY > lastScrollY) {
+  //             setNavStatus('static')
+  //           }
+  //         } else {
+  //           // When leaving the section while scrolling upwards
+  //           if (window.scrollY < lastScrollY) {
+  //             setNavStatus('sticky')
+  //           }
+  //         }
+  //       })
+
+  //       // Update the last scroll position
+  //       lastScrollY = window.scrollY
+  //     },
+  //     {
+  //       threshold: 0.1, // Trigger when 99% of the section is visible
+  //     },
+  //   )
+
+  //   if (e.stopNav.current) {
+  //     observer.observe(e.stopNav.current)
+  //   }
+  //   // Cleanup observer on component unmount
+  //   return () => {
+  //     if (e.stopNav.current) {
+  //       observer.unobserve(e.stopNav.current)
+  //     }
+  //   }
+  // }, [])
 
   return (
     <>
@@ -49,18 +78,18 @@ const NavBar = e => {
                 className="items-center text-[25px] text-[#374957] lg:hidden"
                 cursor={'pointer'}
               />
-              {/* {navState === 'none' ? <FiMenu className="text-[25px] items-center text-[#374957]  lg:hidden" onClick={OpenMenu} cursor={'pointer'} /> : <FiX className="text-[25px] items-center text-[#374957] lg:hidden" onClick={CloseMenu} cursor={'pointer'} /> } */}
+             
             </SheetTrigger>
           </div>
 
           {/* NavLinks and SearchBar */}
-          <div className="flex basis-[50%] items-center p-0 lg:relative">
+          <div className="flex basis-[50%]  items-center p-0 lg:relative">
             <div className="absolute left-0 top-[64px] hidden h-screen w-full backdrop-blur-sm lg:relative lg:top-0 lg:flex lg:h-0 lg:w-[80%]">
               {/* Desktop */}
               <div className="absolute left-0 top-[60px] flex w-full flex-col rounded-b-3xl bg-white pb-7 pl-6 shadow-lg transition-all lg:relative lg:top-0 lg:flex lg:flex-row lg:items-center lg:justify-evenly lg:space-y-0 lg:p-[0]">
                 <Link
                   to="/"
-                  className="bg-white p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
+                  className=" p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
                 >
                   Home
                 </Link>
@@ -83,7 +112,7 @@ const NavBar = e => {
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                           <DropdownMenuSubContent
-                            className="bg-white"
+                            className=""
                           >
                             <DropdownMenuLabel className="font-normal text-[#848484]">
                               Sub Courses
@@ -101,8 +130,8 @@ const NavBar = e => {
                 </DropdownMenu>
 
                 <Link
-                  to="/"
-                  className="bg-white p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
+                  to="/pricing"
+                  className=" p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
                 >
                   Pricing
                 </Link>
@@ -133,7 +162,7 @@ const NavBar = e => {
                 {/* <div className="absolute left-0 flex w-full flex-col rounded-b-3xl bg-white pb-7 pl-6 shadow-lg transition-all lg:relative top-[60px] lg:top-0 lg:flex lg:flex-row lg:items-center lg:justify-evenly lg:space-y-0 lg:p-[0]"> */}
                 <Link
                   to="/"
-                  className="bg-white p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
+                  className=" p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
                 >
                   Home
                 </Link>
@@ -156,7 +185,7 @@ const NavBar = e => {
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent
-                              className="bg-white"
+                              className=""
                             >
                               <DropdownMenuLabel className="font-normal text-[#848484]">
                                 Sub Courses
@@ -174,8 +203,8 @@ const NavBar = e => {
                 </DropdownMenu>
 
                 <Link
-                  to="/"
-                  className="bg-white p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
+                  to="/pricing"
+                  className=" p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
                 >
                   Pricing
                 </Link>

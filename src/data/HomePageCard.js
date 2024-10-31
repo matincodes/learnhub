@@ -52,14 +52,16 @@ const paymentSection = [
     description:
       'With this plan you will have access to variety of courses for a month',
     plan: '1 Month subscription',
+    durationPlan: 'monthly'
   },
   {
     id: 2,
     image: '/assets/mockups/yearly.png',
-    price: '20,000',
+    price: '240,000',
     description:
-      'With this plan you will have access to variety of courses for a month',
+      'With this plan you will get to save 17% from the monthly plan in a year',
     plan: '1 Year subscription',
+    durationPlan: 'yearly'
   },
 ]
 
