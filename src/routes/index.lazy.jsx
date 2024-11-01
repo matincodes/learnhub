@@ -162,7 +162,7 @@ function App() {
                 course.category === category.category
                   ? category.courses.map((item, index) => (
                       <CarouselItem
-                        className="basis-[60%] lg:basis-[23%]"
+                        className="basis-[80%] min-[500px]:basis-[60%] lg:basis-[23%]"
                         key={index}
                       >
                         <SearchCourseCard
