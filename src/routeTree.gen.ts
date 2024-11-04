@@ -18,6 +18,7 @@ import { Route as DashboardImport } from './routes/dashboard'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardSearchImport } from './routes/dashboard/search'
 import { Route as DashboardProfileImport } from './routes/dashboard/profile'
+import { Route as DashboardNotificationsImport } from './routes/dashboard/notifications'
 import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
 import { Route as DashboardLeaderboardImport } from './routes/dashboard/leaderboard'
 import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
@@ -59,6 +60,11 @@ const DashboardSearchRoute = DashboardSearchImport.update({
 
 const DashboardProfileRoute = DashboardProfileImport.update({
   path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardNotificationsRoute = DashboardNotificationsImport.update({
+  path: '/notifications',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -157,6 +163,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMyCoursesImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/notifications': {
+      id: '/dashboard/notifications'
+      path: '/notifications'
+      fullPath: '/dashboard/notifications'
+      preLoaderRoute: typeof DashboardNotificationsImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/profile': {
       id: '/dashboard/profile'
       path: '/profile'
@@ -203,6 +216,7 @@ export const routeTree = rootRoute.addChildren({
     DashboardAnalyticsRoute,
     DashboardLeaderboardRoute,
     DashboardMyCoursesRoute,
+    DashboardNotificationsRoute,
     DashboardProfileRoute,
     DashboardSearchRoute,
     DashboardIndexRoute,
@@ -238,6 +252,7 @@ export const routeTree = rootRoute.addChildren({
         "/dashboard/analytics",
         "/dashboard/leaderboard",
         "/dashboard/my-courses",
+        "/dashboard/notifications",
         "/dashboard/profile",
         "/dashboard/search",
         "/dashboard/",
@@ -264,6 +279,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard/my-courses": {
       "filePath": "dashboard/my-courses.jsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/notifications": {
+      "filePath": "dashboard/notifications.jsx",
       "parent": "/dashboard"
     },
     "/dashboard/profile": {
