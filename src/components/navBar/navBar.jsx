@@ -20,46 +20,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 const NavBar = e => {
-  const [navState, setNavState] = useState('none')
-
-
-  // useEffect(() => {
-  //   let lastScrollY = window.scrollY // Keep track of the last scroll position
-
-  //   const observer = new IntersectionObserver(
-  //     entries => {
-  //       entries.forEach(entry => {
-  //         if (entry.isIntersecting) {
-  //           // When the section is intersecting and scrolling downwards
-  //           if (window.scrollY > lastScrollY) {
-  //             setNavStatus('static')
-  //           }
-  //         } else {
-  //           // When leaving the section while scrolling upwards
-  //           if (window.scrollY < lastScrollY) {
-  //             setNavStatus('sticky')
-  //           }
-  //         }
-  //       })
-
-  //       // Update the last scroll position
-  //       lastScrollY = window.scrollY
-  //     },
-  //     {
-  //       threshold: 0.1, // Trigger when 99% of the section is visible
-  //     },
-  //   )
-
-  //   if (e.stopNav.current) {
-  //     observer.observe(e.stopNav.current)
-  //   }
-  //   // Cleanup observer on component unmount
-  //   return () => {
-  //     if (e.stopNav.current) {
-  //       observer.unobserve(e.stopNav.current)
-  //     }
-  //   }
-  // }, [])
+  const [navState, setNavState] = useState('none')  
+  const data = window.localStorage.getItem('user')
+  const user = JSON.parse(data)
 
   return (
     <>
@@ -78,18 +41,17 @@ const NavBar = e => {
                 className="items-center text-[25px] text-[#374957] lg:hidden"
                 cursor={'pointer'}
               />
-             
             </SheetTrigger>
           </div>
 
           {/* NavLinks and SearchBar */}
-          <div className="flex basis-[50%]  items-center p-0 lg:relative">
+          <div className="flex basis-[50%] items-center p-0 lg:relative">
             <div className="absolute left-0 top-[64px] hidden h-screen w-full backdrop-blur-sm lg:relative lg:top-0 lg:flex lg:h-0 lg:w-[80%]">
               {/* Desktop */}
               <div className="absolute left-0 top-[60px] flex w-full flex-col rounded-b-3xl bg-white pb-7 pl-6 shadow-lg transition-all lg:relative lg:top-0 lg:flex lg:flex-row lg:items-center lg:justify-evenly lg:space-y-0 lg:p-[0]">
                 <Link
                   to="/"
-                  className=" p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
+                  className="p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
                 >
                   Home
                 </Link>
@@ -111,9 +73,7 @@ const NavBar = e => {
                           {links.name}{' '}
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
-                          <DropdownMenuSubContent
-                            className=""
-                          >
+                          <DropdownMenuSubContent className="">
                             <DropdownMenuLabel className="font-normal text-[#848484]">
                               Sub Courses
                             </DropdownMenuLabel>
@@ -131,26 +91,10 @@ const NavBar = e => {
 
                 <Link
                   to="/pricing"
-                  className=" p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
+                  className="p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
                 >
                   Pricing
                 </Link>
-
-                <div className="mt-4 grid space-y-7 lg:hidden">
-                  <Button asChild className="w-fit lg:hidden">
-                    <Link to="/login" className="border bg-[#FAFFFD] font-san">
-                      Log in
-                    </Link>
-                  </Button>
-                  <Button asChild className="w-fit bg-normal_green lg:hidden">
-                    <Link
-                      to="/signup"
-                      className="rounded-lg font-san text-white shadow-md lg:hidden"
-                    >
-                      Sign Up
-                    </Link>
-                  </Button>
-                </div>
               </div>
               {/* Desktop */}
 
@@ -162,7 +106,7 @@ const NavBar = e => {
                 {/* <div className="absolute left-0 flex w-full flex-col rounded-b-3xl bg-white pb-7 pl-6 shadow-lg transition-all lg:relative top-[60px] lg:top-0 lg:flex lg:flex-row lg:items-center lg:justify-evenly lg:space-y-0 lg:p-[0]"> */}
                 <Link
                   to="/"
-                  className=" p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
+                  className="p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
                 >
                   Home
                 </Link>
@@ -178,51 +122,63 @@ const NavBar = e => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-14 bg-white">
                     {navLinks.map(links => (
-                        <DropdownMenuSub key={uuidv4()}>
-                          <DropdownMenuSubTrigger>
-                            {' '}
-                            {links.name}{' '}
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent
-                              className=""
-                            >
-                              <DropdownMenuLabel className="font-normal text-[#848484]">
-                                Sub Courses
-                              </DropdownMenuLabel>
-                              {links.subcourses.map(item => (
-                                  <DropdownMenuItem key={uuidv4()}>
-                                    <Link to={'/'}> {item.name} </Link>
-                                  </DropdownMenuItem>
-                              ))}
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
+                      <DropdownMenuSub key={uuidv4()}>
+                        <DropdownMenuSubTrigger>
+                          {' '}
+                          {links.name}{' '}
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                          <DropdownMenuSubContent className="">
+                            <DropdownMenuLabel className="font-normal text-[#848484]">
+                              Sub Courses
+                            </DropdownMenuLabel>
+                            {links.subcourses.map(item => (
+                              <DropdownMenuItem key={uuidv4()}>
+                                <Link to={'/'}> {item.name} </Link>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                      </DropdownMenuSub>
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
 
                 <Link
                   to="/pricing"
-                  className=" p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
+                  className="p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
                 >
                   Pricing
                 </Link>
 
                 <div className="mt-4 grid space-y-7 lg:hidden">
-                  <Button asChild className="w-fit lg:hidden">
-                    <Link to="/login" className="border bg-[#FAFFFD] font-san">
-                      Log in
-                    </Link>
-                  </Button>
-                  <Button asChild className="w-fit bg-normal_green lg:hidden">
-                    <Link
-                      to="/signup"
-                      className="rounded-lg font-san text-white shadow-md lg:hidden"
-                    >
-                      Sign Up
-                    </Link>
-                  </Button>
+                  {user === null ? (
+                    <>
+                      <Button asChild className="w-fit lg:hidden">
+                        <Link
+                          to="/login"
+                          className="border bg-[#FAFFFD] font-san"
+                        >
+                          Log in
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        className="w-fit bg-normal_green lg:hidden"
+                      >
+                        <Link
+                          to="/signup"
+                          className="rounded-lg font-san text-white shadow-md lg:hidden"
+                        >
+                          Sign Up
+                        </Link>
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
+                      <img src={user.image} className="w-full object-[center_90%]" />
+                    </div>
+                  )}
                 </div>
                 {/* </div> */}
               </SheetContent>
@@ -247,19 +203,29 @@ const NavBar = e => {
         </Sheet>
 
         <div className="hidden w-[15%] justify-around lg:flex">
-          <Button asChild>
-            <Link to="/login" className="bg-[#e5f5ee59] font-san">
-              Log in
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link
-              to="/signup"
-              className="rounded-xl bg-normal_green font-san text-white shadow-md"
-            >
-              Sign Up
-            </Link>
-          </Button>
+          {user === null ? (
+            <>
+              <Button asChild>
+                <Link to="/login" className="bg-[#e5f5ee59] font-san">
+                  Log in
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link
+                  to="/signup"
+                  className="rounded-xl bg-normal_green font-san text-white shadow-md"
+                >
+                  Sign Up
+                </Link>
+              </Button>
+            </>
+          ) : (
+            
+          <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
+            <img src={user.image} className="w-full object-[center_90%]" />
+          </div>
+          )}
+
         </div>
       </div>
     </>

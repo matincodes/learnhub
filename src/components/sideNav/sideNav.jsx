@@ -2,12 +2,20 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
+import { useEffect, useState } from 'react'
 
 const isActive = (pathname, link) => {
   return pathname.split('/').at(-1) === link.split('/').at(-1)
 }
 
 const SideNav = ({ close, isNav }) => {
+  const [user, setUser] = useState('')
+  const data = window.localStorage.getItem('user')
+  
+  useEffect(()=>{
+    setUser(JSON.parse(data))
+  }, [data])
+
   const { pathname } = useLocation()
 
   return (
@@ -25,21 +33,23 @@ const SideNav = ({ close, isNav }) => {
         className="my-5 flex h-full w-[280px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
       >
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
-          <div className='w-full px-4'>
+          <div className="w-full px-4">
             <Link
               to="/dashboard/profile"
-              className="flex w-full items-start gap-x-3 pb-3"
+              className="flex items-center justify-center gap-x-3 "
             >
-              <img src={'/assets/user.png'} alt="" />
-              <div className="w-full space-y-1">
-                <p className="font-medium">Abisola Elizabeth</p>
+              <div className="grid w-[60px] h-[50px] place-content-center overflow-hidden rounded-[100%]">
+                <img src={user.image} className="object-cover" />
+              </div>
+              <div className="w-full ">
+                <p className="font-semibold">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
             </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
-            <ul className="mt-6 flex w-full flex-col gap-y-1 ">
+            <ul className="mt-6 flex w-full flex-col gap-y-1">
               {navLinks.map(({ link, name, iconImage }) => {
                 return (
                   <li key={name} className={'w-full'}>

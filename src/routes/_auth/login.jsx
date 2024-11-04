@@ -12,13 +12,13 @@ const Login = () => {
   } = useForm()
 
   const onSubmit = async data => {
-    // await fetch('https://coderina-learnhub.onrender.com/api/students/login/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
+    await fetch('https://coderina-learnhub.onrender.com/api/students/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
 
     console.log(data)
   }

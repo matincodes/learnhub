@@ -9,16 +9,29 @@ export const Route = createFileRoute('/dashboard/profile')({
 })
 
 const Profile = () => {
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState('')
   const [buttonState, setButtonState] = useState(false)
   const [editFormState, setEditFormState] = useState(false)
-  const userProfileImage = useRef()
+  const userprofile = useRef()
   const firstNameRef = useRef()
   const lastNameRef = useRef()
   const emailRef = useRef()
 
+
+  // Change Image
   const handleImageChange = () =>{
-    setProfile(userProfileImage.current.files[0])
+    const image = (userprofile.current.files[0])
+    if(image){
+      const reader = new FileReader()
+      reader.onloadend = () =>{
+        const base64String = reader.result
+        setProfile(base64String)
+        window.localStorage.setItem('user', JSON.stringify({ image: base64String }))
+      }
+      reader.readAsDataURL(image)
+
+    }
+
   }
 
   const handleInputText = () =>{
@@ -41,9 +54,19 @@ const Profile = () => {
   }
   
   
-  // Set the profile Image
-  window.localStorage.setItem('userProfile', profile ?  URL.createObjectURL(profile) : '/assets/profile.png') 
-  const profileImage = window.localStorage.getItem('userProfile')
+  // Initial Profile Image
+  useEffect(()=>{
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    if(user && user.image){
+      setProfile(user.image)
+    }
+    else{
+      window.localStorage.setItem('user', JSON.stringify({ image: '/assets/profile.png' }))
+      const user = JSON.parse(window.localStorage.getItem('user'))
+        setProfile(user.image)
+    }
+  }, [])
+
 
 
 
@@ -65,7 +88,7 @@ const Profile = () => {
           <div className="flex flex-col items-center justify-center space-y-2">
             <div className="grid h-[100px] w-[100px] justify-center overflow-hidden rounded-full ">
               <img
-                src={profileImage}
+                src={profile}
                 alt=""
                 className="w-full h-full object-cover"
               />
@@ -138,13 +161,13 @@ const Profile = () => {
         <div className="relative flex items-center justify-center">
           <div className="lg:absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
             <img
-              src={profileImage}
+              src={profile}
               alt=""
               className="w-full h-full object-cover"
             />
           </div>
           {/* Change Image */}
-          <input type="file" name="changeUserImage" id="file-input" className='hidden' ref={userProfileImage} onChange={handleImageChange} />
+          <input type="file" name="changeUserImage" accept="image/*" id="file-input" className='hidden' ref={userprofile} onChange={handleImageChange} />
           <label htmlFor="file-input" className=' relative bottom-[-70px] lg:right-[-60px] right-[60px]'>
           <div className="z-30 flex h-[50px] w-[50px] place-content-center items-center overflow-hidden rounded-full bg-[#F7F7F7] cursor-pointer ">
             <img

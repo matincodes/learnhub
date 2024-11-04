@@ -2,7 +2,6 @@ import { useLocation } from "@tanstack/react-router"
 
 const Header = e => {
   const location = useLocation()
-  console.log(location.pathname)
 
   return (
     <div className={`relative ${location.pathname === '/pricing' ? 'lg:mt-[40px] space-y-2 ' : 'lg:mt-[190px] mt-[90px] space-y-[30px]'}  flex flex-col items-center p-4`}>

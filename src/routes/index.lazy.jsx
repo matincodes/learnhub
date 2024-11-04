@@ -49,6 +49,11 @@ function App() {
     setCourseOption(e.target.value)
   }
 
+
+  // User Image
+  const data = window.localStorage.getItem('user')
+  const user = JSON.parse(data)
+
   return (
     <>
     {/* NavBar */}
@@ -73,6 +78,8 @@ function App() {
         </div>
 
         <div className="space-x-[30px] mt-[40px] mb-[70px]">
+        {user === null ? 
+          <>
           <Button
             className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
             asChild
@@ -85,6 +92,15 @@ function App() {
           >
             <Link to="/pricing"> View Pricing </Link>
           </Button>
+         </> 
+          :
+          <Button
+            className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
+            asChild
+          >
+            <Link to="/"> Continue Learning </Link>
+          </Button>
+        }
         </div>
 
         <div className="grid w-full place-content-center">
@@ -466,44 +482,7 @@ function App() {
       {/* Content */}
       <Content />
       {/* Content */}
-      {/* <div className="relative mt-12 flex h-[70vh] flex-col bg-[#F9FBFA] lg:h-full lg:flex-row">
-        <div className="lg:basis-[50%]">
-          <img
-            src="/assets/mockups/mockup_left.svg"
-            alt=""
-            className="hidden w-[600px] lg:flex"
-          />
-          <img
-            src="/assets/mockups/courses_mini_1.svg"
-            alt=""
-            className="flex w-[250px] lg:hidden"
-          />
-        </div>
-
-        <div className="absolute flex h-[40lvh] w-full flex-col items-center justify-center space-y-4 text-center lg:relative lg:h-auto lg:basis-[50%]">
-          <p className="font-san text-[35px] font-semibold leading-10 text-[#303031] lg:font-medium">
-            The course content you <br /> need, ready for you
-          </p>
-          <Button className="z-20 w-fit rounded-xl bg-normal_green font-san font-semibold text-white hover:bg-[#FAFFFD] hover:text-normal_green">
-            Get Started
-          </Button>
-
-          <img
-            src="/assets/mockups/courses_mini_2.svg"
-            alt=""
-            className="absolute -bottom-[120px] right-0 flex basis-[50%] lg:hidden"
-          />
-          <img
-            src="/assets/mockups/mockup_right.svg"
-            alt=""
-            className="absolute -bottom-12 hidden basis-[50%] lg:flex"
-          />
-        </div>
-      </div>
-
-      {/* Gradient */}
-      {/* <div className="relative z-10 bg-gradient-to-tr from-[#fff] lg:h-[11vh]"></div> */}
-      {/* Gradient */}
+     
 
       <Footer />
     </>
