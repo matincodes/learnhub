@@ -9,10 +9,12 @@ import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
 import { Input } from '@/components/ui/input'
 import { useEffect, useRef, useState } from 'react'
+import NotificationModal from './notificationModal'
 
 const TopNav = ({ title, paragraph }) => {
   const [openSearchStatus, setOpenSearchStatus] = useState(false)
   const [searchInputValue, setSearchInputValue] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
   const inputState = useRef()
   const navigates = useNavigate({ from: '/dashboard/search' })
@@ -57,6 +59,9 @@ const TopNav = ({ title, paragraph }) => {
     localStorage.setItem('searchValue', searchInputValue)
   }, [openSearchStatus, searchInputValue])
 
+  function onToggle() {
+    setIsOpen(!isOpen)
+  }
   return (
     <div
       className={`right-0 z-50 flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right`}
@@ -124,10 +129,10 @@ const TopNav = ({ title, paragraph }) => {
             
           </div>
         </div>
-        <div className="my-5 flex flex-col items-start justify-start">
+       {title && <div className="my-5 flex flex-col items-start justify-start">
           <h2 className="flex text-lg font-semibold sm:text-2xl">{title}</h2>
           {paragraph && <p>{paragraph}</p>}
-        </div>
+        </div>}
       </div>
 
 
@@ -178,9 +183,13 @@ const TopNav = ({ title, paragraph }) => {
             <p className="font-semibold">10</p>
             <img src="/assets/fire.svg" alt="" />
           </button>
-          <Link href="" className="rounded-full bg-white p-[10px]  grid place-content-center">
+          <button
+          onClick={onToggle}
+          className="rounded-full relative bg-white p-[10px]  grid place-content-center">
             <img src="/assets/Vector.svg" alt="" className='w-[23px]'/>
-          </Link>
+
+            {isOpen && <NotificationModal close={onToggle}/>}
+          </button>
         </div>
       </div>
     </div>
