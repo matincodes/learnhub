@@ -4,6 +4,7 @@ import {
   Link,
   useLocation,
   useNavigate,
+  useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
@@ -16,8 +17,11 @@ const TopNav = ({ title, paragraph }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
   const inputState = useRef()
-  const navigates = useNavigate({ from: '/dashboard/search' })
-  const { pathname } = useLocation()
+  const router = useRouter()
+  const pathname = useLocation({
+    select: location => location.pathname,
+  })
+  const navigate = useNavigate({ from: pathname })
   const routeApi = getRouteApi('/dashboard')
 
   const { prevRoute } = routeApi.useSearch()
@@ -25,9 +29,9 @@ const TopNav = ({ title, paragraph }) => {
 
   // const prevRoute = pathname
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
-  const openSeach = () => {
+  const openSearch = () => {
     setOpenSearchStatus(true)
-    navigates({
+    navigate({
       to: '/dashboard/search',
       search: { prevRoute: pathname },
     })
@@ -44,7 +48,7 @@ const TopNav = ({ title, paragraph }) => {
   const closeSearchButton = () => {
     if (openSearchStatus === true && inputLength === 0) {
       setOpenSearchStatus(false)
-      navigates({ to: `${prevRoute}` })
+      navigate({ to: `${prevRoute}` })
     } else if (openSearchStatus === true && inputLength > 0) {
       setOpenSearchStatus(true)
       setSearchInputValue('')
@@ -81,7 +85,7 @@ const TopNav = ({ title, paragraph }) => {
                   strokeWidth={2}
                   color="#303031"
                   className="cursor-pointer"
-                  onClick={openSeach}
+                  onClick={openSearch}
                 />
               </div>
             ) : (
@@ -95,7 +99,7 @@ const TopNav = ({ title, paragraph }) => {
                   className="border-none bg-transparent outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
                   autoFocus
                   ref={inputState}
-                  onClick={openSeach}
+                  onClick={openSearch}
                   onChange={getLength}
                 />
 
@@ -134,15 +138,23 @@ const TopNav = ({ title, paragraph }) => {
         )}
       </div>
 
+      {/* Desktop View */}
       <div className="hidden w-full items-center justify-between lg:flex">
         <div className="flex flex-col items-start justify-start">
-          <h2 className="flex text-nowrap text-3xl font-semibold lg:text-2xl">
+          <h2 className="flex items-center text-nowrap text-3xl font-semibold lg:text-2xl">
+            {pathname != '/dashboard' && (
+              <img
+                src="/assets/arrow-left-01.svg"
+                onClick={() => router.history.back()}
+                className="cursor-pointer"
+                alt="arrow left"
+              />
+            )}
             {title}
           </h2>
           <p className="empty:hidden">{paragraph}</p>
         </div>
 
-        {/* Desktop View */}
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
           <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-[#F7AE30]">
             <Input
@@ -151,7 +163,7 @@ const TopNav = ({ title, paragraph }) => {
               placeholder="Search here"
               className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
               ref={inputState}
-              onChange={getLength}
+              onFocus={openSearch}
             />
 
             <HiXMark
