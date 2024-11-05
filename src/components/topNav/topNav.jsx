@@ -1,14 +1,13 @@
+import { Input } from '@/components/ui/input'
 import {
-  Link,
-  useRouter,
-  useNavigate,
-  useLocation,
   getRouteApi,
+  Link,
+  useLocation,
+  useNavigate,
 } from '@tanstack/react-router'
+import { useEffect, useRef, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
-import { Input } from '@/components/ui/input'
-import { useEffect, useRef, useState } from 'react'
 import NotificationModal from './notificationModal'
 
 const TopNav = ({ title, paragraph }) => {
@@ -63,57 +62,58 @@ const TopNav = ({ title, paragraph }) => {
     setIsOpen(!isOpen)
   }
   return (
-    <div
-      className={`right-0 z-50 flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right`}
-    >
+    <div className="right-0 z-50 flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right">
       <div className="flex w-full flex-col items-start gap-y-4 p-2 lg:hidden">
-        <div className="flex items-center justify-between w-full ">
-
-          {openSearchStatus === false ? (<img src={'/assets/learnhub-nobg.png'} alt="" />) : ('') }
+        <div className="flex w-full items-center justify-between">
+          {openSearchStatus === false && (
+            <img src={'/assets/learnhub-nobg.png'} alt="" />
+          )}
 
           {/* response */}
-          <div className={` items-center ${openSearchStatus === false ? 'flex items-center gap-3 w-full justify-end ' : 'w-full'}`}>
+          <div
+            className={`items-center ${openSearchStatus === false ? 'flex w-full items-center justify-end gap-3' : 'w-full'}`}
+          >
             {/* responsive Input Search */}
             {openSearchStatus === false ? (
-            <div className="rounded-full bg-white p-[7px]">
-              <CiSearch
-                size={28}
-                strokeWidth={2}
-                color="#303031"
-                className="cursor-pointer"
-                onClick={openSeach}
-              />
-            </div>
-            )
-               : 
-              (
-            <div className={`'w-full left-0 flex h-10 items-center justify-evenly overflow-hidden border-4 border-t-0 border-l-0 border-r-0 border-b-[#848484]'}`}>
-              <Input
-                type="text"
-                id="search"
-                placeholder="Search here"
-                className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484] bg-transparent"
-                autoFocus
-                ref={inputState}
-                onClick={openSeach}
-                onChange={getLength}
-              />
-
-              <div className="">
-                <HiXMark
+              <div className="rounded-full bg-white p-[7px]">
+                <CiSearch
                   size={28}
-                  strokeWidth={0}
+                  strokeWidth={2}
                   color="#303031"
                   className="cursor-pointer"
-                  onClick={closeSearchButton}
+                  onClick={openSeach}
                 />
               </div>
-            </div>
+            ) : (
+              <div
+                className={`'w-full border-b-[#848484]'} left-0 flex h-10 items-center justify-evenly overflow-hidden border-4 border-l-0 border-r-0 border-t-0`}
+              >
+                <Input
+                  type="text"
+                  id="search"
+                  placeholder="Search here"
+                  className="border-none bg-transparent outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
+                  autoFocus
+                  ref={inputState}
+                  onClick={openSeach}
+                  onChange={getLength}
+                />
+
+                <div className="">
+                  <HiXMark
+                    size={28}
+                    strokeWidth={0}
+                    color="#303031"
+                    className="cursor-pointer"
+                    onClick={closeSearchButton}
+                  />
+                </div>
+              </div>
             )}
             {/* responsive Input Search */}
 
             {openSearchStatus === false ? (
-              <div className='flex items-center justify-evenly space-x-3'>
+              <div className="flex items-center justify-evenly space-x-3">
                 <Link href="" className="rounded-full bg-white p-[7px]">
                   <img src="/assets/Vector.svg" alt="" />
                 </Link>
@@ -121,74 +121,58 @@ const TopNav = ({ title, paragraph }) => {
                   <img src={'/assets/fi-br-menu-burger.png'} alt="" />
                 </button>
               </div>
-            )
-            : (
-              <div className=" hidden"></div>
-            )
-            }
-            
+            ) : (
+              <div className="hidden"></div>
+            )}
           </div>
         </div>
-       {title && <div className="my-5 flex flex-col items-start justify-start">
-          <h2 className="flex text-lg font-semibold sm:text-2xl">{title}</h2>
-          {paragraph && <p>{paragraph}</p>}
-        </div>}
+        {title && (
+          <div className="my-5 flex flex-col items-start justify-start">
+            <h2 className="flex text-lg font-semibold sm:text-2xl">{title}</h2>
+            <p className="empty:hidden">{paragraph}</p>
+          </div>
+        )}
       </div>
-
 
       <div className="hidden w-full items-center justify-between lg:flex">
         <div className="flex flex-col items-start justify-start">
           <h2 className="flex text-nowrap text-3xl font-semibold lg:text-2xl">
             {title}
           </h2>
-          {paragraph && <p>{paragraph}</p>}
+          <p className="empty:hidden">{paragraph}</p>
         </div>
 
         {/* Desktop View */}
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
-          {openSearchStatus === false ? (
-            <div className="rounded-full bg-white p-[7px]">
-              <CiSearch
-                size={28}
-                strokeWidth={2}
-                color="#303031"
-                className="cursor-pointer"
-                onClick={openSeach}
-              />
-            </div>
-          ) : (
-            <div className="flex h-10 items-center justify-between overflow-hidden rounded-lg border border-[#F7AE30] bg-white pr-2 w-full">
-              <Input
-                type="text"
-                id="search"
-                placeholder="Search here"
-                className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-                autoFocus
-                ref={inputState}
-                onChange={getLength}
-              />
+          <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-[#F7AE30]">
+            <Input
+              type="text"
+              id="search"
+              placeholder="Search here"
+              className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
+              ref={inputState}
+              onChange={getLength}
+            />
 
-              <div className="">
-                <HiXMark
-                  size={28}
-                  strokeWidth={0}
-                  color="#303031"
-                  className="cursor-pointer"
-                  onClick={closeSearchButton}
-                />
-              </div>
-            </div>
-          )}
-          <button className="flex h-10 items-center justify-center gap-1   rounded-full bg-white p-3">
+            <HiXMark
+              size={28}
+              strokeWidth={0}
+              color="#303031"
+              className="cursor-pointer"
+              onClick={closeSearchButton}
+            />
+          </div>
+          <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
             <p className="font-semibold">10</p>
             <img src="/assets/fire.svg" alt="" />
           </button>
           <button
-          onClick={onToggle}
-          className="rounded-full relative bg-white p-[10px]  grid place-content-center">
-            <img src="/assets/Vector.svg" alt="" className='w-[23px]'/>
+            onClick={onToggle}
+            className="relative grid place-content-center rounded-full bg-white p-[10px]"
+          >
+            <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
 
-            {isOpen && <NotificationModal close={onToggle}/>}
+            {isOpen && <NotificationModal close={onToggle} />}
           </button>
         </div>
       </div>
