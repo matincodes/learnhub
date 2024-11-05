@@ -90,7 +90,7 @@ const Profile = () => {
               <img
                 src={profile}
                 alt=""
-                className="w-full h-full object-cover"
+                className="w-full object-cover bg-red-500"
               />
             </div>
             <p className="text-center font-san text-[18px] font-medium">
