@@ -164,6 +164,7 @@ const TopNav = ({ title, paragraph }) => {
               className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
               ref={inputState}
               onFocus={openSearch}
+              onChange={getLength}
             />
 
             <HiXMark
