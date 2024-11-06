@@ -17,7 +17,7 @@ import { Route as PricingImport } from './routes/pricing'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
-import { Route as userDashboardDashboardLayoutDashboardImport } from './routes/(userDashboard)/_dashboardLayout/dashboard'
+import { Route as userDashboardDashboardLayoutDashboardIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
 import { Route as userDashboardDashboardLayoutDashboardNotificationsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/notifications'
@@ -65,58 +65,58 @@ const userDashboardDashboardLayoutRoute =
     getParentRoute: () => userDashboardRoute,
   } as any)
 
-const userDashboardDashboardLayoutDashboardRoute =
-  userDashboardDashboardLayoutDashboardImport.update({
-    path: '/dashboard',
+const userDashboardDashboardLayoutDashboardIndexRoute =
+  userDashboardDashboardLayoutDashboardIndexImport.update({
+    path: '/dashboard/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardSearchRoute =
   userDashboardDashboardLayoutDashboardSearchImport.update({
-    path: '/search',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/search',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardProfileRoute =
   userDashboardDashboardLayoutDashboardProfileImport.update({
-    path: '/profile',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/profile',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardNotificationsRoute =
   userDashboardDashboardLayoutDashboardNotificationsImport.update({
-    path: '/notifications',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/notifications',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardMyCoursesRoute =
   userDashboardDashboardLayoutDashboardMyCoursesImport.update({
-    path: '/my-courses',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/my-courses',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardLeaderboardRoute =
   userDashboardDashboardLayoutDashboardLeaderboardImport.update({
-    path: '/leaderboard',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/leaderboard',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardAnalyticsRoute =
   userDashboardDashboardLayoutDashboardAnalyticsImport.update({
-    path: '/analytics',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/analytics',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardQuizzesIndexRoute =
   userDashboardDashboardLayoutDashboardQuizzesIndexImport.update({
-    path: '/quizzes/',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/quizzes/',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardQuizzesIdRoute =
   userDashboardDashboardLayoutDashboardQuizzesIdImport.update({
-    path: '/quizzes/$id',
-    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+    path: '/dashboard/quizzes/$id',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -165,68 +165,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
-    '/(userDashboard)/_dashboardLayout/dashboard': {
-      id: '/_dashboardLayout/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardImport
-      parentRoute: typeof userDashboardDashboardLayoutImport
-    }
     '/(userDashboard)/_dashboardLayout/dashboard/analytics': {
       id: '/_dashboardLayout/dashboard/analytics'
-      path: '/analytics'
+      path: '/dashboard/analytics'
       fullPath: '/dashboard/analytics'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardAnalyticsImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/leaderboard': {
       id: '/_dashboardLayout/dashboard/leaderboard'
-      path: '/leaderboard'
+      path: '/dashboard/leaderboard'
       fullPath: '/dashboard/leaderboard'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardLeaderboardImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/my-courses': {
       id: '/_dashboardLayout/dashboard/my-courses'
-      path: '/my-courses'
+      path: '/dashboard/my-courses'
       fullPath: '/dashboard/my-courses'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/notifications': {
       id: '/_dashboardLayout/dashboard/notifications'
-      path: '/notifications'
+      path: '/dashboard/notifications'
       fullPath: '/dashboard/notifications'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardNotificationsImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/profile': {
       id: '/_dashboardLayout/dashboard/profile'
-      path: '/profile'
+      path: '/dashboard/profile'
       fullPath: '/dashboard/profile'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardProfileImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/search': {
       id: '/_dashboardLayout/dashboard/search'
-      path: '/search'
+      path: '/dashboard/search'
       fullPath: '/dashboard/search'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSearchImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
+    '/(userDashboard)/_dashboardLayout/dashboard/': {
+      id: '/_dashboardLayout/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardIndexImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': {
       id: '/_dashboardLayout/dashboard/quizzes/$id'
-      path: '/quizzes/$id'
+      path: '/dashboard/quizzes/$id'
       fullPath: '/dashboard/quizzes/$id'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIdImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': {
       id: '/_dashboardLayout/dashboard/quizzes/'
-      path: '/quizzes'
+      path: '/dashboard/quizzes'
       fullPath: '/dashboard/quizzes'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIndexImport
-      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
     }
   }
 }
@@ -239,17 +239,15 @@ export const routeTree = rootRoute.addChildren({
   userDashboardRoute: userDashboardRoute.addChildren({
     userDashboardDashboardLayoutRoute:
       userDashboardDashboardLayoutRoute.addChildren({
-        userDashboardDashboardLayoutDashboardRoute:
-          userDashboardDashboardLayoutDashboardRoute.addChildren({
-            userDashboardDashboardLayoutDashboardAnalyticsRoute,
-            userDashboardDashboardLayoutDashboardLeaderboardRoute,
-            userDashboardDashboardLayoutDashboardMyCoursesRoute,
-            userDashboardDashboardLayoutDashboardNotificationsRoute,
-            userDashboardDashboardLayoutDashboardProfileRoute,
-            userDashboardDashboardLayoutDashboardSearchRoute,
-            userDashboardDashboardLayoutDashboardQuizzesIdRoute,
-            userDashboardDashboardLayoutDashboardQuizzesIndexRoute,
-          }),
+        userDashboardDashboardLayoutDashboardAnalyticsRoute,
+        userDashboardDashboardLayoutDashboardLeaderboardRoute,
+        userDashboardDashboardLayoutDashboardMyCoursesRoute,
+        userDashboardDashboardLayoutDashboardNotificationsRoute,
+        userDashboardDashboardLayoutDashboardProfileRoute,
+        userDashboardDashboardLayoutDashboardSearchRoute,
+        userDashboardDashboardLayoutDashboardIndexRoute,
+        userDashboardDashboardLayoutDashboardQuizzesIdRoute,
+        userDashboardDashboardLayoutDashboardQuizzesIndexRoute,
       }),
   }),
   AuthLoginRoute,
@@ -284,7 +282,15 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "(userDashboard)/_dashboardLayout.jsx",
       "parent": "/",
       "children": [
-        "/_dashboardLayout/dashboard"
+        "/_dashboardLayout/dashboard/analytics",
+        "/_dashboardLayout/dashboard/leaderboard",
+        "/_dashboardLayout/dashboard/my-courses",
+        "/_dashboardLayout/dashboard/notifications",
+        "/_dashboardLayout/dashboard/profile",
+        "/_dashboardLayout/dashboard/search",
+        "/_dashboardLayout/dashboard/",
+        "/_dashboardLayout/dashboard/quizzes/$id",
+        "/_dashboardLayout/dashboard/quizzes/"
       ]
     },
     "/_auth/login": {
@@ -293,51 +299,41 @@ export const routeTree = rootRoute.addChildren({
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
     },
-    "/_dashboardLayout/dashboard": {
-      "filePath": "(userDashboard)/_dashboardLayout/dashboard.jsx",
-      "parent": "/_dashboardLayout",
-      "children": [
-        "/_dashboardLayout/dashboard/analytics",
-        "/_dashboardLayout/dashboard/leaderboard",
-        "/_dashboardLayout/dashboard/my-courses",
-        "/_dashboardLayout/dashboard/notifications",
-        "/_dashboardLayout/dashboard/profile",
-        "/_dashboardLayout/dashboard/search",
-        "/_dashboardLayout/dashboard/quizzes/$id",
-        "/_dashboardLayout/dashboard/quizzes/"
-      ]
-    },
     "/_dashboardLayout/dashboard/analytics": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/analytics.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/leaderboard": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/leaderboard.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/my-courses": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/notifications": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/notifications.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/profile": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/profile.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/search": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/search.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/dashboard/": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/index.jsx",
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/quizzes/$id": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/$id.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/quizzes/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/index.jsx",
-      "parent": "/_dashboardLayout/dashboard"
+      "parent": "/_dashboardLayout"
     }
   }
 }
