@@ -39,7 +39,7 @@ const SideNav = ({ close, isNav }) => {
               className="flex items-center justify-center gap-x-3 "
             >
               <div className="grid w-[60px] h-[50px] place-content-center overflow-hidden rounded-[100%]">
-                <img src={user.image} className="object-cover" />
+                <img src={user?.image} className="object-cover" />
               </div>
               <div className="w-full ">
                 <p className="font-semibold">Abisola Elizabeth</p>
