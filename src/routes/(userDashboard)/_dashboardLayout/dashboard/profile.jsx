@@ -4,7 +4,7 @@ import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
 
 
-export const Route = createFileRoute('/dashboard/profile')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/profile')({
   component: () => Profile(),
 })
 

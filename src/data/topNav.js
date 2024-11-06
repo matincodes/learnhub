@@ -21,4 +21,10 @@ export const topNavData = {
   '/dashboard/profile': {
     title: 'Profile',
   },
+  '/dashboard/notifications': {
+    title: 'Notifications',
+  },
+  '/dashboard/search': {
+    title: 'Search',
+  },
 }

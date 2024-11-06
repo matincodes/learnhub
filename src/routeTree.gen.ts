@@ -14,32 +14,33 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PricingImport } from './routes/pricing'
-import { Route as DashboardImport } from './routes/dashboard'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
-import { Route as DashboardSearchImport } from './routes/dashboard/search'
-import { Route as DashboardProfileImport } from './routes/dashboard/profile'
-import { Route as DashboardNotificationsImport } from './routes/dashboard/notifications'
-import { Route as DashboardMyCoursesImport } from './routes/dashboard/my-courses'
-import { Route as DashboardLeaderboardImport } from './routes/dashboard/leaderboard'
-import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
-import { Route as DashboardQuizzesIndexImport } from './routes/dashboard/quizzes/index'
-import { Route as DashboardQuizzesIdImport } from './routes/dashboard/quizzes/$id'
+import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
+import { Route as userDashboardDashboardLayoutDashboardImport } from './routes/(userDashboard)/_dashboardLayout/dashboard'
+import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
+import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
+import { Route as userDashboardDashboardLayoutDashboardNotificationsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/notifications'
+import { Route as userDashboardDashboardLayoutDashboardMyCoursesImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses'
+import { Route as userDashboardDashboardLayoutDashboardLeaderboardImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/leaderboard'
+import { Route as userDashboardDashboardLayoutDashboardAnalyticsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/analytics'
+import { Route as userDashboardDashboardLayoutDashboardQuizzesIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/index'
+import { Route as userDashboardDashboardLayoutDashboardQuizzesIdImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
 
 // Create Virtual Routes
 
+const userDashboardImport = createFileRoute('/(userDashboard)')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const PricingRoute = PricingImport.update({
-  path: '/pricing',
+const userDashboardRoute = userDashboardImport.update({
+  id: '/(userDashboard)',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardRoute = DashboardImport.update({
-  path: '/dashboard',
+const PricingRoute = PricingImport.update({
+  path: '/pricing',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,41 +48,6 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-
-const DashboardIndexRoute = DashboardIndexImport.update({
-  path: '/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardSearchRoute = DashboardSearchImport.update({
-  path: '/search',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardProfileRoute = DashboardProfileImport.update({
-  path: '/profile',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardNotificationsRoute = DashboardNotificationsImport.update({
-  path: '/notifications',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardMyCoursesRoute = DashboardMyCoursesImport.update({
-  path: '/my-courses',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardLeaderboardRoute = DashboardLeaderboardImport.update({
-  path: '/leaderboard',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardAnalyticsRoute = DashboardAnalyticsImport.update({
-  path: '/analytics',
-  getParentRoute: () => DashboardRoute,
-} as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
   path: '/signup',
@@ -93,15 +59,65 @@ const AuthLoginRoute = AuthLoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardQuizzesIndexRoute = DashboardQuizzesIndexImport.update({
-  path: '/quizzes/',
-  getParentRoute: () => DashboardRoute,
-} as any)
+const userDashboardDashboardLayoutRoute =
+  userDashboardDashboardLayoutImport.update({
+    id: '/_dashboardLayout',
+    getParentRoute: () => userDashboardRoute,
+  } as any)
 
-const DashboardQuizzesIdRoute = DashboardQuizzesIdImport.update({
-  path: '/quizzes/$id',
-  getParentRoute: () => DashboardRoute,
-} as any)
+const userDashboardDashboardLayoutDashboardRoute =
+  userDashboardDashboardLayoutDashboardImport.update({
+    path: '/dashboard',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardSearchRoute =
+  userDashboardDashboardLayoutDashboardSearchImport.update({
+    path: '/search',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardProfileRoute =
+  userDashboardDashboardLayoutDashboardProfileImport.update({
+    path: '/profile',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardNotificationsRoute =
+  userDashboardDashboardLayoutDashboardNotificationsImport.update({
+    path: '/notifications',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardMyCoursesRoute =
+  userDashboardDashboardLayoutDashboardMyCoursesImport.update({
+    path: '/my-courses',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardLeaderboardRoute =
+  userDashboardDashboardLayoutDashboardLeaderboardImport.update({
+    path: '/leaderboard',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardAnalyticsRoute =
+  userDashboardDashboardLayoutDashboardAnalyticsImport.update({
+    path: '/analytics',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardQuizzesIndexRoute =
+  userDashboardDashboardLayoutDashboardQuizzesIndexImport.update({
+    path: '/quizzes/',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardQuizzesIdRoute =
+  userDashboardDashboardLayoutDashboardQuizzesIdImport.update({
+    path: '/quizzes/$id',
+    getParentRoute: () => userDashboardDashboardLayoutDashboardRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -114,19 +130,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingImport
       parentRoute: typeof rootRoute
+    }
+    '/(userDashboard)': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof userDashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/(userDashboard)/_dashboardLayout': {
+      id: '/_dashboardLayout'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof userDashboardDashboardLayoutImport
+      parentRoute: typeof userDashboardRoute
     }
     '/_auth/login': {
       id: '/_auth/login'
@@ -142,68 +165,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard/analytics': {
-      id: '/dashboard/analytics'
+    '/(userDashboard)/_dashboardLayout/dashboard': {
+      id: '/_dashboardLayout/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
+    '/(userDashboard)/_dashboardLayout/dashboard/analytics': {
+      id: '/_dashboardLayout/dashboard/analytics'
       path: '/analytics'
       fullPath: '/dashboard/analytics'
-      preLoaderRoute: typeof DashboardAnalyticsImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardAnalyticsImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/leaderboard': {
-      id: '/dashboard/leaderboard'
+    '/(userDashboard)/_dashboardLayout/dashboard/leaderboard': {
+      id: '/_dashboardLayout/dashboard/leaderboard'
       path: '/leaderboard'
       fullPath: '/dashboard/leaderboard'
-      preLoaderRoute: typeof DashboardLeaderboardImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardLeaderboardImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/my-courses': {
-      id: '/dashboard/my-courses'
+    '/(userDashboard)/_dashboardLayout/dashboard/my-courses': {
+      id: '/_dashboardLayout/dashboard/my-courses'
       path: '/my-courses'
       fullPath: '/dashboard/my-courses'
-      preLoaderRoute: typeof DashboardMyCoursesImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/notifications': {
-      id: '/dashboard/notifications'
+    '/(userDashboard)/_dashboardLayout/dashboard/notifications': {
+      id: '/_dashboardLayout/dashboard/notifications'
       path: '/notifications'
       fullPath: '/dashboard/notifications'
-      preLoaderRoute: typeof DashboardNotificationsImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardNotificationsImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/profile': {
-      id: '/dashboard/profile'
+    '/(userDashboard)/_dashboardLayout/dashboard/profile': {
+      id: '/_dashboardLayout/dashboard/profile'
       path: '/profile'
       fullPath: '/dashboard/profile'
-      preLoaderRoute: typeof DashboardProfileImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardProfileImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/search': {
-      id: '/dashboard/search'
+    '/(userDashboard)/_dashboardLayout/dashboard/search': {
+      id: '/_dashboardLayout/dashboard/search'
       path: '/search'
       fullPath: '/dashboard/search'
-      preLoaderRoute: typeof DashboardSearchImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSearchImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/dashboard/quizzes/$id': {
-      id: '/dashboard/quizzes/$id'
+    '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': {
+      id: '/_dashboardLayout/dashboard/quizzes/$id'
       path: '/quizzes/$id'
       fullPath: '/dashboard/quizzes/$id'
-      preLoaderRoute: typeof DashboardQuizzesIdImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIdImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
-    '/dashboard/quizzes/': {
-      id: '/dashboard/quizzes/'
+    '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': {
+      id: '/_dashboardLayout/dashboard/quizzes/'
       path: '/quizzes'
       fullPath: '/dashboard/quizzes'
-      preLoaderRoute: typeof DashboardQuizzesIndexImport
-      parentRoute: typeof DashboardImport
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIndexImport
+      parentRoute: typeof userDashboardDashboardLayoutDashboardImport
     }
   }
 }
@@ -212,18 +235,23 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  DashboardRoute: DashboardRoute.addChildren({
-    DashboardAnalyticsRoute,
-    DashboardLeaderboardRoute,
-    DashboardMyCoursesRoute,
-    DashboardNotificationsRoute,
-    DashboardProfileRoute,
-    DashboardSearchRoute,
-    DashboardIndexRoute,
-    DashboardQuizzesIdRoute,
-    DashboardQuizzesIndexRoute,
-  }),
   PricingRoute,
+  userDashboardRoute: userDashboardRoute.addChildren({
+    userDashboardDashboardLayoutRoute:
+      userDashboardDashboardLayoutRoute.addChildren({
+        userDashboardDashboardLayoutDashboardRoute:
+          userDashboardDashboardLayoutDashboardRoute.addChildren({
+            userDashboardDashboardLayoutDashboardAnalyticsRoute,
+            userDashboardDashboardLayoutDashboardLeaderboardRoute,
+            userDashboardDashboardLayoutDashboardMyCoursesRoute,
+            userDashboardDashboardLayoutDashboardNotificationsRoute,
+            userDashboardDashboardLayoutDashboardProfileRoute,
+            userDashboardDashboardLayoutDashboardSearchRoute,
+            userDashboardDashboardLayoutDashboardQuizzesIdRoute,
+            userDashboardDashboardLayoutDashboardQuizzesIndexRoute,
+          }),
+      }),
+  }),
   AuthLoginRoute,
   AuthSignupRoute,
 })
@@ -237,31 +265,27 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/dashboard",
         "/pricing",
+        "/",
         "/_auth/login",
         "/_auth/signup"
       ]
     },
     "/": {
-      "filePath": "index.lazy.jsx"
-    },
-    "/dashboard": {
-      "filePath": "dashboard.jsx",
+      "filePath": "(userDashboard)",
       "children": [
-        "/dashboard/analytics",
-        "/dashboard/leaderboard",
-        "/dashboard/my-courses",
-        "/dashboard/notifications",
-        "/dashboard/profile",
-        "/dashboard/search",
-        "/dashboard/",
-        "/dashboard/quizzes/$id",
-        "/dashboard/quizzes/"
+        "/_dashboardLayout"
       ]
     },
     "/pricing": {
       "filePath": "pricing.jsx"
+    },
+    "/_dashboardLayout": {
+      "filePath": "(userDashboard)/_dashboardLayout.jsx",
+      "parent": "/",
+      "children": [
+        "/_dashboardLayout/dashboard"
+      ]
     },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
@@ -269,41 +293,51 @@ export const routeTree = rootRoute.addChildren({
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
     },
-    "/dashboard/analytics": {
-      "filePath": "dashboard/analytics.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard.jsx",
+      "parent": "/_dashboardLayout",
+      "children": [
+        "/_dashboardLayout/dashboard/analytics",
+        "/_dashboardLayout/dashboard/leaderboard",
+        "/_dashboardLayout/dashboard/my-courses",
+        "/_dashboardLayout/dashboard/notifications",
+        "/_dashboardLayout/dashboard/profile",
+        "/_dashboardLayout/dashboard/search",
+        "/_dashboardLayout/dashboard/quizzes/$id",
+        "/_dashboardLayout/dashboard/quizzes/"
+      ]
     },
-    "/dashboard/leaderboard": {
-      "filePath": "dashboard/leaderboard.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/analytics": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/analytics.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/my-courses": {
-      "filePath": "dashboard/my-courses.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/leaderboard": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/leaderboard.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/notifications": {
-      "filePath": "dashboard/notifications.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/my-courses": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/profile": {
-      "filePath": "dashboard/profile.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/notifications": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/notifications.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/search": {
-      "filePath": "dashboard/search.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/profile": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/profile.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/": {
-      "filePath": "dashboard/index.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/search": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/search.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/quizzes/$id": {
-      "filePath": "dashboard/quizzes/$id.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/quizzes/$id": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/$id.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     },
-    "/dashboard/quizzes/": {
-      "filePath": "dashboard/quizzes/index.jsx",
-      "parent": "/dashboard"
+    "/_dashboardLayout/dashboard/quizzes/": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/index.jsx",
+      "parent": "/_dashboardLayout/dashboard"
     }
   }
 }

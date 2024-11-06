@@ -5,7 +5,7 @@ import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
 import { topNavData } from '@/data/topNav'
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
 })
 

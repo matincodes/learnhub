@@ -22,7 +22,7 @@ const TopNav = ({ title, paragraph }) => {
     select: location => location.pathname,
   })
   const navigate = useNavigate({ from: pathname })
-  const routeApi = getRouteApi('/dashboard')
+  const routeApi = getRouteApi('/(userDashboard)/_dashboardLayout')
 
   const { prevRoute } = routeApi.useSearch()
   window.localStorage.setItem('prevRoute', prevRoute)

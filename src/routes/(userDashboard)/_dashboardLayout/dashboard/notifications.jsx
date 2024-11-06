@@ -1,10 +1,11 @@
 import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router'
 import { MdNavigateBefore } from 'react-icons/md'
-import { notifications } from '../../data/notificationData'
+import { notifications } from '@/data/notificationData'
 import { useState, useEffect } from 'react'
-import { cn } from '../../lib/utils'
-import { NotificationWidget } from '../../components/topNav/notificationModal'
-export const Route = createFileRoute('/dashboard/notifications')({
+import { cn } from '@/lib/utils'
+import { NotificationWidget } from '@/components/topNav/notificationModal'
+
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/notifications')({
   component: NotificationsPage,
 })
 

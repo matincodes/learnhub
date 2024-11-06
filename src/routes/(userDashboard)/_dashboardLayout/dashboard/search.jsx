@@ -5,7 +5,7 @@ import { searchedCourses, recentSearchedCourses } from '@/data/dashboard'
 import { useEffect, useState } from 'react'
 
 
-export const Route = createFileRoute('/dashboard/search')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/search')({
   component: Search,
 })
 

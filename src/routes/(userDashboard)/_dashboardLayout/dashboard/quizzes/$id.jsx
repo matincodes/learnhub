@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-export const Route = createFileRoute('/dashboard/quizzes/$id')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id')({
   component: StartQuiz,
 })
 

@@ -7,11 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { firstSectionData } from '../../../data/quiz'
-import QuizTopSectionCard from '../../../components/widgets/quiz_top_section_card'
-import RecentCourseCard from '../../../components/widgets/recent_course_card'
-import { recentCourses } from '../../../data/dashboard'
-export const Route = createFileRoute('/dashboard/quizzes/')({
+import { firstSectionData } from '@/data/quiz'
+import QuizTopSectionCard from '@/components/widgets/quiz_top_section_card'
+import RecentCourseCard from '@/components/widgets/recent_course_card'
+import { recentCourses } from '@/data/dashboard'
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/quizzes/')({
   component: Quizzes,
 })
 

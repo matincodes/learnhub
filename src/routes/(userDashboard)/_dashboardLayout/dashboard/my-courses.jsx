@@ -10,10 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { coursesFilter } from '../../data/courses'
+import { coursesFilter } from '@/data/courses'
 import { recentCourses } from '@/data/dashboard'
 import RecentCourseCard from '@/components/widgets/recent_course_card'
-export const Route = createFileRoute('/dashboard/my-courses')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/my-courses')({
   component: MyCourses,
 })
 

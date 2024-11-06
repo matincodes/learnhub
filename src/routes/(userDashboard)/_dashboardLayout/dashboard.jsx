@@ -4,7 +4,7 @@ import RecentCourseCard from '@/components/widgets/recent_course_card'
 import { recentCourses } from '@/data/dashboard'
 import { ChevronsUp } from 'lucide-react'
 
-export const Route = createFileRoute('/dashboard/')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard')({
   component: DashboardIndexComponent,
 })
 
