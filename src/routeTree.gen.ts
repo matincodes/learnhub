@@ -14,6 +14,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PricingImport } from './routes/pricing'
+import { Route as CoursesIndexImport } from './routes/courses/index'
+import { Route as CoursesCourseImport } from './routes/courses/$course'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
@@ -48,6 +50,16 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const CoursesIndexRoute = CoursesIndexImport.update({
+  path: '/courses/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoursesCourseRoute = CoursesCourseImport.update({
+  path: '/courses/$course',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
   path: '/signup',
@@ -165,6 +177,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
+    '/courses/$course': {
+      id: '/courses/$course'
+      path: '/courses/$course'
+      fullPath: '/courses/$course'
+      preLoaderRoute: typeof CoursesCourseImport
+      parentRoute: typeof rootRoute
+    }
+    '/courses/': {
+      id: '/courses/'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/analytics': {
       id: '/_dashboardLayout/dashboard/analytics'
       path: '/dashboard/analytics'
@@ -252,6 +278,8 @@ export const routeTree = rootRoute.addChildren({
   }),
   AuthLoginRoute,
   AuthSignupRoute,
+  CoursesCourseRoute,
+  CoursesIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -266,7 +294,9 @@ export const routeTree = rootRoute.addChildren({
         "/pricing",
         "/",
         "/_auth/login",
-        "/_auth/signup"
+        "/_auth/signup",
+        "/courses/$course",
+        "/courses/"
       ]
     },
     "/": {
@@ -298,6 +328,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
+    },
+    "/courses/$course": {
+      "filePath": "courses/$course.jsx"
+    },
+    "/courses/": {
+      "filePath": "courses/index.jsx"
     },
     "/_dashboardLayout/dashboard/analytics": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/analytics.jsx",
