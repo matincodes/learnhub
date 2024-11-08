@@ -21,6 +21,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'CSS: The Complete Guide for Developers',
@@ -33,6 +59,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -45,6 +97,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -57,6 +135,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -69,6 +173,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -81,6 +211,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -93,6 +249,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -105,6 +287,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -117,6 +325,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
     ],
   },
@@ -125,8 +359,8 @@ export const Courses = [
     category: 'Backend Development',
     courses: [
       {
-        title: 'Javascript: The Complete Guide for Developers',
-        image: '/assets/recent3.png',
+        title: 'Node JS: The Complete Guide for Developers',
+        image: '/assets/mockups/recent3.png',
         lesson: '78',
         duration: '10 hours 45 Minutes',
         description: `This comprehensive course is designed to transform aspiring developers into proficient front-end experts, equipping them with the skills to build dynamic, responsive, and interactive web applications. By mastering JavaScript, HTML5, and CSS3, students will gain a deep understanding of the technologies driving modern web development.
@@ -135,6 +369,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -147,6 +407,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -159,6 +445,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -171,6 +483,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
     ],
   },
@@ -189,6 +527,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -201,6 +565,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -213,6 +603,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -225,6 +641,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
     ],
   },
@@ -243,6 +685,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -255,6 +723,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -267,6 +761,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -279,6 +799,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
     ],
   },
@@ -297,6 +843,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -309,6 +881,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -321,6 +919,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
       {
         title: 'Javascript: The Complete Guide for Developers',
@@ -333,6 +957,32 @@ export const Courses = [
         Through hands-on coding exercises, projects, and quizzes, students will apply their knowledge and receive invaluable instructor feedback. Whether transitioning from back-end development or seeking to enhance existing front-end skills, this course provides a structured learning path.
         Upon completion, students will possess the expertise to: Build dynamic web applications with JavaScript
         Create reusable UI components and manage state, Implement responsive design and accessibility features, Optimize performance and security, Stay up-to-date with industry trends and best practices.  This course is ideal for beginner to advanced developers, front-end developers seeking enhancement, and web designers looking to expand their skillset. With a solid grasp of HTML, CSS, and programming basics, students will be well-prepared to tackle complex projects and excel in the industry.`,
+        testimonies: [
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+          {
+            testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
+            author: 'John Doe',
+          },
+        ]
       },
     ],
   },
