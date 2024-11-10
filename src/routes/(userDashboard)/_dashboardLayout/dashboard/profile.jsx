@@ -100,14 +100,14 @@ const Profile = () => {
           {/* Image and name */}
 
           {/* Cards */}
-          <div className="flex justify-evenly">
-            <div className="lg:basis-[35%] space-y-2 rounded-2xl border p-2 font-san">
+          <div className="flex space-x-5 justify-center">
+            <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
               <p className="text-[14px] font-[500] text-[#989494]">
                 Course Completed
               </p>
               <h2 className="text-[20px] font-bold">15</h2>
             </div>
-            <div className="lg:basis-[35%] space-y-2 rounded-2xl border p-2 font-san">
+            <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
               <p className="text-[14px] font-[500] text-[#989494]">
                 On Going Courses
               </p>

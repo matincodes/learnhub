@@ -11,8 +11,8 @@ const isActive = (pathname, link) => {
 const SideNav = ({ close, isNav }) => {
   const [user, setUser] = useState('')
   const data = window.localStorage.getItem('user')
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     setUser(JSON.parse(data))
   }, [data])
 
@@ -36,12 +36,18 @@ const SideNav = ({ close, isNav }) => {
           <div className="w-full px-4">
             <Link
               to="/dashboard/profile"
-              className="flex items-center justify-center gap-x-3 "
+              className="flex"
             >
-              <div className="grid w-[60px] h-[50px] place-content-center overflow-hidden rounded-[100%]">
-                <img src={user?.image} className="object-cover" />
+              <div className="grid basis-[50%] place-content-center">
+                <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+                <img
+                  src={user?.image}
+                  alt=""
+                  className="object-cover"
+                />
+                </div>
               </div>
-              <div className="w-full ">
+              <div className="w-full flex flex-col justify-center">
                 <p className="font-semibold">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
