@@ -1,7 +1,7 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Separator } from '@/components/ui/separator'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
+import { Link, useLocation } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
 const isActive = (pathname, link) => {
@@ -13,25 +13,16 @@ const SideNav = ({ close, isNav }) => {
   const data = window.localStorage.getItem('user')
 
   useEffect(() => {
+
+  useEffect(() => {
     setUser(JSON.parse(data))
   }, [data])
 
   const { pathname } = useLocation()
 
   return (
-    <div
-      onClick={e => {
-        e.stopPropagation()
-        close()
-      }}
-      className={`modal swipeInLeft fixed inset-y-0 left-0 z-[70] hidden h-full lg:block`}
-    >
-      <div
-        onClick={e => {
-          e.stopPropagation()
-        }}
-        className="my-5 flex h-full w-[280px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
-      >
+    <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
+      <div className="flex h-screen w-[280px] flex-col items-center overflow-y-scroll bg-white shadow sm:py-4">
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
           <div className="w-full px-4">
             <Link
