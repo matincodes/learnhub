@@ -13,8 +13,6 @@ const SideNav = ({ close, isNav }) => {
   const data = window.localStorage.getItem('user')
 
   useEffect(() => {
-
-  useEffect(() => {
     setUser(JSON.parse(data))
   }, [data])
 
