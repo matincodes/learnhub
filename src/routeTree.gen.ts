@@ -20,6 +20,7 @@ import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
 import { Route as userDashboardDashboardLayoutDashboardIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
+import { Route as userDashboardDashboardLayoutDashboardSettingsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
 import { Route as userDashboardDashboardLayoutDashboardNotificationsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/notifications'
@@ -80,6 +81,12 @@ const userDashboardDashboardLayoutRoute =
 const userDashboardDashboardLayoutDashboardIndexRoute =
   userDashboardDashboardLayoutDashboardIndexImport.update({
     path: '/dashboard/',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardSettingsRoute =
+  userDashboardDashboardLayoutDashboardSettingsImport.update({
+    path: '/dashboard/settings',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
@@ -233,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSearchImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
+    '/(userDashboard)/_dashboardLayout/dashboard/settings': {
+      id: '/_dashboardLayout/dashboard/settings'
+      path: '/dashboard/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSettingsImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/': {
       id: '/_dashboardLayout/dashboard/'
       path: '/dashboard'
@@ -271,6 +285,7 @@ export const routeTree = rootRoute.addChildren({
         userDashboardDashboardLayoutDashboardNotificationsRoute,
         userDashboardDashboardLayoutDashboardProfileRoute,
         userDashboardDashboardLayoutDashboardSearchRoute,
+        userDashboardDashboardLayoutDashboardSettingsRoute,
         userDashboardDashboardLayoutDashboardIndexRoute,
         userDashboardDashboardLayoutDashboardQuizzesIdRoute,
         userDashboardDashboardLayoutDashboardQuizzesIndexRoute,
@@ -318,6 +333,7 @@ export const routeTree = rootRoute.addChildren({
         "/_dashboardLayout/dashboard/notifications",
         "/_dashboardLayout/dashboard/profile",
         "/_dashboardLayout/dashboard/search",
+        "/_dashboardLayout/dashboard/settings",
         "/_dashboardLayout/dashboard/",
         "/_dashboardLayout/dashboard/quizzes/$id",
         "/_dashboardLayout/dashboard/quizzes/"
@@ -357,6 +373,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_dashboardLayout/dashboard/search": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/search.jsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/dashboard/settings": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/settings.jsx",
       "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/": {
