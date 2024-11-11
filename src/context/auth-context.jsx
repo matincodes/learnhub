@@ -32,6 +32,33 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       setIsAuthenticated(false)
       console.error(error)
+      return false
+    }
+  }
+
+  const signup = async ({ first_name, last_name, email, password, confirm_password }) => {
+    try {
+      const response = await axios.post(
+        'https://coderina-learnhub.onrender.com/api/students/signup/',
+        { first_name, last_name, email, password, confirm_password },
+      )
+
+      const data = await response.json()
+      const user = {
+        name: `${data.first_name} ${data.last_name}`,
+        email: data.email,
+      }
+      setUser(user)
+      setAccessToken(data.tokens.accessToken)
+      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem('accessToken', data.tokens.accessToken)
+      localStorage.setItem('refreshToken', data.tokens.refreshToken) // Store the refresh token
+      setIsAuthenticated(true)
+      return true
+    } catch (error) {
+      setIsAuthenticated(false)
+      console.error(error)
+      return false
     }
   }
 
@@ -86,7 +113,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, authFetch, accessToken }}
+      value={{ user, isAuthenticated, login, signup, logout, authFetch, accessToken }}
     >
       {children}
     </AuthContext.Provider>
