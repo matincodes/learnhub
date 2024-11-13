@@ -24,8 +24,8 @@ const SignUp = () => {
 
   const onSubmit = async data => {
     setIsLoading(true)
-    reset()
     if (await signup(data)) {
+      reset()
       router.invalidate()
       router.push('/dashboard')
     } else {
