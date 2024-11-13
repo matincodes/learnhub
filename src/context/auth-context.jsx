@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     try {
       const response = await axios.post(
-        'https://coderina-learnhub.onrender.com/api/students/login/',
+        'https://coderina.onrender.com/api/students/login/',
         { email, password },
       )
 
@@ -36,10 +36,16 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const signup = async ({ first_name, last_name, email, password, confirm_password }) => {
+  const signup = async ({
+    first_name,
+    last_name,
+    email,
+    password,
+    confirm_password,
+  }) => {
     try {
       const response = await axios.post(
-        'https://coderina-learnhub.onrender.com/api/students/signup/',
+        'https://coderina.onrender.com/api/students/signup/',
         { first_name, last_name, email, password, confirm_password },
       )
 
@@ -113,7 +119,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, signup, logout, authFetch, accessToken }}
+      value={{
+        user,
+        isAuthenticated,
+        login,
+        signup,
+        logout,
+        authFetch,
+        accessToken,
+      }}
     >
       {children}
     </AuthContext.Provider>
