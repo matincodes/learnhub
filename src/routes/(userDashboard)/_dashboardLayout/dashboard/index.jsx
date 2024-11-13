@@ -2,8 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import Inventory from '@/components/inventory/inventory'
 import RecentCourseCard from '@/components/widgets/recent_course_card'
 import { recentCourses } from '@/data/dashboard'
+import { ChevronsUp } from 'lucide-react'
 
-export const Route = createFileRoute('/dashboard/')({
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/')({
   component: DashboardIndexComponent,
 })
 
@@ -31,7 +32,7 @@ function DashboardIndexComponent() {
           metrics={'76%'}
           image={'/assets/fi-br-bulb.png'}
           analytics={
-            <div className="flex items-center gap-x-1 text-sm font-semibold sm:text-base">
+            <div className="flex items-center gap-x-2 text-sm font-semibold sm:text-base">
               <p>+ 2.345</p>
               <img src="/assets/fi-br-chat-arrow-grow.png" alt="" />
             </div>
@@ -60,9 +61,9 @@ function DashboardIndexComponent() {
             <div className="grid w-full grid-cols-6 border-b px-2 text-[9px] font-semibold uppercase text-gray-500 sm:text-[13px]">
               <p>Rank</p>
               <p className="col-span-2">Name</p>
-              <p>Course</p>
-              <p>Hours</p>
-              <p>Point(XP)</p>
+              <p className='text-center'>Course</p>
+              <p className='text-center'>Hours</p>
+              <p className='text-center'>Point(XP)</p>
             </div>
 
             {[...Array(4)].map((_, index) => (
@@ -77,27 +78,31 @@ function DashboardIndexComponent() {
                   <img src="/assets/ellip.png" alt="" />
                   <p>Charlie Rawal</p>
                 </div>
-                <p className="text-center">53</p>
-                <p className="text-center">250</p>
+                <p className="text-center text-gray-500">53</p>
+                <p className="text-center text-gray-500">250</p>
                 <p className="text-center text-green-500">13,450</p>
               </div>
             ))}
           </div>
         </div>
         <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:w-[35%] sm:p-6">
+          <div className='w-full flex border-b pb-3 items-center justify-between'>
           <h2 className="text-base font-semibold sm:text-xl">
             Upcoming Sessions
           </h2>
+          <ChevronsUp size={40} color='#7f7f7f'/>
+          </div>
 
-          <div className="flex w-full flex-col items-start gap-y-3">
+          <div className="flex w-full flex-col mt-4 items-start gap-y-8 sm:gap-y-12">
             {[1, 2].map((_, index) => (
               <div
                 key={index}
                 className="flex w-full items-start justify-start gap-x-4"
               >
+                <img src="/assets/hubsession.png" alt=""/>
                 <div className="space-y-2">
-                  <h2 className="text-sm font-semibold sm:text-base">
-                    Meeting with Instructor
+                  <h2 className="text-sm font-medium sm:text-lg">
+                    Meeting with Folorunsho Alakija
                   </h2>
                   <div className="flex items-center gap-x-3 text-xs sm:text-sm">
                     <div className="flex items-center gap-x-2">

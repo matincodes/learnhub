@@ -1,15 +1,15 @@
+import { useLocation } from "@tanstack/react-router"
+
 const Header = e => {
+  const location = useLocation()
+
   return (
-    <div className="relative mt-16 flex flex-col items-center p-4 text-center">
-      <h1 className="font-san text-[40px] font-semibold leading-[40px] text-[#12141D] lg:text-[50px]">
-        {' '}
-        {e.main_text}{' '}
-      </h1>
-      <h2 className="mt-4 font-san text-[40px] font-bold leading-[40px] text-normal_green lg:-mt-5 lg:text-[56px] lg:leading-loose">
-        {' '}
-        {e.mini_text}{' '}
-      </h2>
-      <p className="mt-5 font-inter text-paragraph lg:w-[40%]">
+    <div className={`relative ${location.pathname === '/pricing' 
+    || location.pathname === '/courses' || location.pathname === '/courses/'  ? 'lg:mt-[40px] space-y-2 ' : 'lg:mt-[190px] mt-[90px] space-y-[30px]'}  flex flex-col items-center p-4`}>
+        <h1 className={`text-center font-san text-[40px] font-bold leading-[38px] lg:leading-[52px] text-[#051911] lg:text-[50px] lg:w-[50%] w-[${e.min_width}]`}>
+          {e.main_text}
+        </h1>
+      <p className="mt-2  text-center font-san text-[#848484] lg:w-[40%]">
         {' '}
         {e.paragraph}{' '}
       </p>

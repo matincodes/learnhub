@@ -1,45 +1,50 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Separator } from '@/components/ui/separator'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
+import { Link, useLocation } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 
 const isActive = (pathname, link) => {
   return pathname.split('/').at(-1) === link.split('/').at(-1)
 }
 
 const SideNav = ({ close, isNav }) => {
+  const [user, setUser] = useState('')
+  const data = window.localStorage.getItem('user')
+
+  useEffect(() => {
+    setUser(JSON.parse(data))
+  }, [data])
+
   const { pathname } = useLocation()
 
   return (
-    <div
-      onClick={e => {
-        e.stopPropagation()
-        close()
-      }}
-      className={`modal swipeInLeft fixed inset-y-0 left-0 z-[70] hidden h-full lg:block`}
-    >
-      <div
-        onClick={e => {
-          e.stopPropagation()
-        }}
-        className="my-5 flex h-full w-[250px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
-      >
+    <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
+      <div className="flex h-screen w-[280px] flex-col items-center overflow-y-scroll bg-white shadow sm:py-4">
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
-          <div>
+          <div className="w-full px-4">
             <Link
               to="/dashboard/profile"
-              className="flex w-full items-start gap-x-3 pb-3"
+              className="flex"
             >
-              <img src={'/assets/user.png'} alt="" />
-              <div className="space-y-1">
-                <p className="font-medium">Abisola Elizabeth</p>
+              <div className="grid basis-[50%] place-content-center">
+                <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+                <img
+                  src={user?.image}
+                  alt=""
+                  className="object-cover"
+                />
+                </div>
+              </div>
+              <div className="w-full flex flex-col justify-center">
+                <p className="font-semibold">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
             </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
-            <ul className="mt-6 flex w-full flex-col gap-y-1 px-3">
+            <ul className="mt-6 flex w-full flex-col gap-y-1">
               {navLinks.map(({ link, name, iconImage }) => {
                 return (
                   <li key={name} className={'w-full'}>
@@ -49,7 +54,7 @@ const SideNav = ({ close, isNav }) => {
                       className={cn(
                         'relative flex w-full items-center p-3 font-medium',
                         {
-                          'rounded-xl bg-gray-200 font-semibold': isActive(
+                          'rounded-xl bg-[#F7F7F7] font-semibold': isActive(
                             pathname,
                             link,
                           ),
@@ -63,7 +68,7 @@ const SideNav = ({ close, isNav }) => {
                           className="absolute left-[-4px]"
                         />
                       )}
-                      <div className="flex w-full items-center space-x-7">
+                      <div className="flex w-full items-center gap-x-3">
                         <img src={iconImage} alt="icon" />
                         <span>{name}</span>
                       </div>
@@ -74,7 +79,7 @@ const SideNav = ({ close, isNav }) => {
             </ul>
           </div>
 
-          <div className="flex w-full items-center justify-center px-6">
+          <div className="flex w-full items-center justify-center px-3">
             <Link
               onClick={close}
               to={'/dashboard/settings'}

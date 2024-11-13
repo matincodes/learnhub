@@ -1,36 +1,42 @@
+
+// const coursesSection = [
+
+// ]
+
+
 const cardSectionOne = [
   {
     id: 1,
     title: 'Course Catalog',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Access a wide range of courses tailored to diverse learning needs, all in one place.',
   },
   {
     id: 2,
     title: 'Instructor Engagement',
     description:
-      'With the Google Meet integrated feature book sessions with instructors, to enhancing your learning experience',
+      'Easily book sessions with instructors using the integrated Google Meet feature to enhance your learning experience.',
   },
   {
     id: 3,
-    title: 'Gamified Learning',
+    title: 'Smart Dashboard',
     description:
-      'Earn badges, XP, and climb the leaderboard in our gamified structure to boost engagement and motivation',
+      'Track progress, manage sessions, and stay updated with a dashboard designed for streamlined learning.',
   },
 ]
 
 const cardSectionTwo = [
   {
     id: 1,
-    title: 'Responsive Design',
+    title: 'Gamified Learning',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Earn badges, XP, and climb the leaderboard in our gamified structure to boost engagement and motivation',
   },
   {
     id: 2,
-    title: 'Smart Dashboard',
+    title: 'Responsive Design',
     description:
-      'Security testing is a type of software testing that is focused determining if an information.',
+      'Enjoy a seamless learning experience on any device, from desktop to mobile.',
   },
   {
     id: 3,
@@ -46,14 +52,16 @@ const paymentSection = [
     description:
       'With this plan you will have access to variety of courses for a month',
     plan: '1 Month subscription',
+    durationPlan: 'monthly'
   },
   {
     id: 2,
     image: '/assets/mockups/yearly.png',
-    price: '20,000',
+    price: '240,000',
     description:
-      'With this plan you will have access to variety of courses for a month',
+      'With this plan you will get to save 17% from the monthly plan in a year',
     plan: '1 Year subscription',
+    durationPlan: 'yearly'
   },
 ]
 

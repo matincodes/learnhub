@@ -2,99 +2,333 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import NavBar from '@/components/navBar/navBar'
 import Header from '@/components/header/header'
+import Content from '@/components/special/content'
 import TestimonialCard from '@/components/testimonialCard/testimonialCard'
+import { Courses } from '@/data/courses'
+import CourseOption from '@/components/options/options'
+import SearchCourseCard from '@/components/widgets/couse_search_card'
+
 import {
   cardSectionOne,
   cardSectionTwo,
-  paymentSection,
   testimonialSection,
 } from '@/data/HomePageCard'
 import Footer from '@/components/footer/footer'
 
+// Card
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+
+// Accordion
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+
+import { useRef, useState } from 'react'
+import { Link } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/')({
   component: App,
 })
 
 function App() {
+  const stopNav = useRef(null)
+  const [courseOption, setCourseOption] = useState('Frontend Development')
+
+  // For Filtering Courses
+  const getOptionValue = e => {
+    setCourseOption(e.target.value)
+  }
+
+
+  // User Image
+  const data = window.localStorage.getItem('user')
+  const user = JSON.parse(data)
+
   return (
     <>
-      <NavBar />
-      {/* Banner */}
-      <div className="flex flex-col items-center justify-center space-y-4 p-[20px] text-center">
-        <h1 className="text-[45px] font-extrabold text-dark_green lg:text-[64px] lg:leading-[80px]">
-          Empower Your Skills: <br /> Upskill with Coderina LearnHub
-        </h1>
-        <p className="text-[20px]">
-          Rigorous programmed. Real-world skills. Lifelong <br /> career
-          acceleration.
-        </p>
+    {/* NavBar */}
+      <NavBar stopNav={stopNav} />
+    {/* NavBar */}
 
-        <Button className="w-fit bg-normal_green font-san text-white">
-          {' '}
-          Get Started Today{' '}
-        </Button>
+
+      {/* Banner */}
+      <div className="flex flex-col items-center justify-center mt-[45px] p-[30px] text-center ">
+        <div className="flex flex-col items-center">
+          <h1 className="font-san text-[40px] font-extrabold leading-[40px] text-dark_green lg:text-[60px] lg:leading-[50px]">
+            Unlock New Tech Skills with
+          </h1>
+          <h1 className="lg:mb-6 lg:mt-2 mb-4 w-full font-san text-[40px] font-extrabold leading-[40px] text-dark_green lg:text-[60px] lg:leading-[50px]">
+            Coderina LearnHub
+          </h1>
+
+          <p className="p-0 font-san text-[14px] lg:w-[90%] w-[90%] lg:leading-7 text-[#404040ed] lg:text-[20px]">
+            Build new skills with hands-on courses and interactive <br />{' '}
+            learning. Start your journey today.
+          </p>
+        </div>
+
+        <div className="space-x-[30px] mt-[40px] mb-[70px]">
+        {user === null ? 
+          <>
+          <Button
+            className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
+            asChild
+          >
+            <Link to="/signup"> Get Started </Link>
+          </Button>
+          <Button
+            className="w-fit border-2 border-normal_green px-[25px] py-[25px] font-san text-[16px] text-normal_green"
+            asChild
+          >
+            <Link to="/pricing"> View Pricing </Link>
+          </Button>
+         </> 
+          :
+          <Button
+            className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
+            asChild
+          >
+            <Link to="/dashboard"> Continue Learning </Link>
+          </Button>
+        }
+        </div>
 
         <div className="grid w-full place-content-center">
+        <picture>
           <img
             src="/assets/mockups/desktop_banner_mockup.svg"
             alt=""
             className="hidden lg:flex"
           />
+        </picture>
+        <picture>
           <img
             src="/assets/mockups/desktop_responsive_banner_mockup.svg"
             alt=""
             className="mt-12 flex lg:hidden"
           />
+        </picture>
         </div>
       </div>
       {/* Banner */}
 
-      {/* Why Choose Us */}
+      {/* Explore Courses */}
       <div className="">
+        <Header
+          main_text="Explore various Courses with Coderina LearnHub"
+          width="50%"
+          min_width="90%"
+        />
+
+        <div className="hidden place-content-center lg:flex lg:space-x-6 lg:p-4">
+          {Courses.map(courseTitle => (
+            <CourseOption
+              key={courseTitle.id}
+              category={courseTitle.category}
+              getOptionValue={getOptionValue}
+              active={courseOption}
+            />
+          ))}
+        </div>
+
+        <div className="hidden justify-center p-3 lg:flex">
+          <Carousel className="w-[100%] lg:w-[90%]">
+            <CarouselContent className=" ">
+              {Courses.map(category =>
+                courseOption === category.category
+                  ? category.courses.map((item, index) => (
+                      <CarouselItem
+                        className="basis-[60%] lg:basis-[23%]"
+                        key={index}
+                      >
+                        <SearchCourseCard
+                          image={item.image}
+                          title={item.title}
+                          lesson={item.lesson}
+                          duration={item.duration}
+                        />
+                      </CarouselItem>
+                    ))
+                  : '',
+              )}
+            </CarouselContent>
+            <CarouselPrevious className="hidden lg:flex" />
+            <CarouselNext className="hidden lg:flex" />
+          </Carousel>
+        </div>
+      </div>
+
+              {/* Responsive */}
+      <div className="lg:hidden p-4">
+      {Courses.map(course => (
+        <Accordion collapsible key={course.id} className='w-full'>
+          <AccordionItem value={`item-${course.id}`}>
+            <AccordionTrigger className='font-san text-[#303031]'>{course.category}</AccordionTrigger>
+            <AccordionContent>
+            <div className=" justify-center p-3 lg:flex">
+          <Carousel className="w-[100%] lg:w-[90%]">
+            <CarouselContent className=" ">
+              {Courses.map(category =>
+                course.category === category.category
+                  ? category.courses.map((item, index) => (
+                      <CarouselItem
+                        className="basis-[80%] min-[500px]:basis-[60%] lg:basis-[23%]"
+                        key={index}
+                      >
+                        <SearchCourseCard
+                          image={item.image}
+                          title={item.title}
+                          lesson={item.lesson}
+                          duration={item.duration}
+                        />
+                      </CarouselItem>
+                    ))
+                  : '',
+              )}
+            </CarouselContent>
+            <CarouselPrevious className="hidden lg:flex" />
+            <CarouselNext className="hidden lg:flex" />
+          </Carousel>
+        </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      ))}
+      </div>
+      {/* Explore Courses */}
+
+      {/* Why Choose Us */}
+      <div>
         {/* Header */}
         <Header
-          main_text="Why Choose"
-          mini_text=" Coderina LearnHub"
-          paragraph="Coderina LearnHub is a type of learning management software tool used for learning or upskilling with an exposure to variety of courses "
+          main_text="Why Choose Coderina LearnHub"
+          width="40%"
+          min_width="90%"
+          paragraph={
+            'Explore a variety of features designed to enhance your learning experience. Discover tools that learning engaging and effective!'
+          }
         />
         {/* Header */}
 
         {/* Card 1 */}
-        <div className="grid gap-6 p-[40px] font-san">
+        <div className="relative z-10 grid gap-6 p-[10px] font-san lg:p-[10px] lg:px-[60px]">
           {cardSectionOne.map(content => (
             <Card
               key={content.id}
-              className={`flex h-[60vh] w-full flex-col bg-[#F9FBFA] outline-none ${content.id === 3 ? 'col-span-12' : 'col-span-12 lg:col-span-6 lg:h-[120lvh]'} relative overflow-hidden`}
+              className={`relative flex h-[35vh] w-full flex-col rounded-2xl bg-[#D7E4DE] outline-none ${content.id === 2 ? 'h-[45vh] bg-dark_green text-white' : ''} ${content.id === 3 ? ' col-span-12 lg:h-[75vh]' : 'col-span-12 lg:col-span-6 lg:h-[65lvh]'} overflow-hidden`}
             >
-              <img
-                src={`${content.id === 1 ? '/assets/mockups/Courses_1.svg' : ''} `}
-                className="absolute h-full w-full border-none outline-none lg:w-auto"
-                alt=""
-              />
+              {content.id === 1 ? (
+                <>
+                  <picture>
 
-              <div className={`absolute ${content.id === 1 ? 'bottom-3' : ''}`}>
-                <CardHeader>
-                  <div
-                    className={`h-[60px] w-[60px] rounded-full bg-dark_green lg:hidden ${content.id === 1 ? 'hidden' : 'grid place-content-center'} `}
-                  >
-                    <img src="/assets/shield.svg" className="w-[20px]" alt="" />
-                  </div>
-                  <CardTitle className="text-[35px]">{content.title}</CardTitle>
+                  <img
+                    src={'/assets/mockups/Courses_1.png'}
+                    className="absolute bottom-[10px] right-[10px] hidden outline-none lg:flex"
+                    alt=""
+                  />
+                  </picture>
+
+                  {/* Responsivness */}
+                    <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_1_Responsive.svg'}
+                    className="absolute bottom-[0px] right-1 flex w-[90px] border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                    </picture>
+                  {/* Responsivness */}
+                </>
+              ) : content.id === 2 ? (
+                <div className="relative flex h-full">
+                  <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_2_lg.png'}
+                    className="absolute bottom-[10px] right-[10px] hidden w-[550px] rounded-br-xl border-none outline-none lg:flex"
+                    alt=""
+                  />
+                  </picture>
+
+                <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_2_sm.png'}
+                    className="absolute bottom-[-10px] right-0 hidden border-none outline-none lg:right-[140px] lg:flex 2xl:right-[160px]"
+                    alt=""
+                  />
+                </picture>
+
+                  {/* Responsiveness */}
+                    <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_2_lg_responsive.svg'}
+                    className="absolute bottom-[10px] right-[10px] z-0 flex w-[170px] rounded-br-xl border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                    </picture>
+
+                <picture>
+
+                  <img
+                    src={'/assets/mockups/learnhub_4_large_responsive.svg'}
+                    className="absolute bottom-[-5px] right-0 flex w-[110px] border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                </picture>
+                  {/* Responsiveness */}
+                </div>
+              ) : content.id === 3 ? (
+                <div className="relative flex h-full">
+                  <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_3_lg.svg'}
+                    className="absolute right-[10px] bottom-[10px] hidden w-[650px] rounded-br-xl border-none outline-none lg:flex"
+                    alt=""
+                  />
+                  </picture>
+                    <picture>
+
+                  <img
+                    src={'/assets/mockups/Courses_3_lg_responsive.png'}
+                    className="absolute bottom-[0px] right-[0px] flex w-[170px] rounded-br-xl border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                    </picture>
+                </div>
+              ) : (
+                ''
+              )}
+
+              <div
+                className={`absolute bottom-0 lg:top-0 ${content.id === 1 ? '' : ''} w-full p-2`}
+              >
+                <CardHeader className="p-[10px] lg:pt-[65px]">
+                  <CardTitle className="w-[50%] p-0 text-[25px] leading-[25px] lg:leading-[10px] lg:w-full lg:text-[35px]">
+                    {content.title}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-[10px] lg:p-[15px]">
                   <p
-                    className={`w-full ${content.id === 3 ? 'lg:w-[40%]' : 'lg:w-[50%]'} text-paragraph`}
+                    className={`w-[65%] text-[15px] ${content.id === 3 ? 'lg:w-[30%]' : 'lg:w-[50%]'} ${
+                      content.id === 2 ? 'text-[#ffffff]' : ''
+                    } text-[#292929]`}
                   >
                     {content.description}
                   </p>
+                  {content.id === 1 ? <div ref={stopNav}></div> : <></>}
                 </CardContent>
               </div>
             </Card>
@@ -103,95 +337,118 @@ function App() {
         {/* Card 1 */}
 
         {/* Card 2 */}
-        <div className="grid gap-6 p-10 font-san lg:grid-cols-3">
+        <div className="relative z-30 grid gap-9 bg-transparent p-[10px] font-san lg:grid-cols-3 lg:p-[10px] lg:px-[60px] mt-[20px]">
           {cardSectionTwo.map(content => (
             <Card
               key={content.id}
-              className={`relative h-[47lvh] overflow-hidden rounded-2xl border-none bg-[#F9FBFA] outline-none lg:h-[100lvh] ${content.id === 3 ? 'grid items-center bg-dark_green text-white lg:place-content-center' : ''} `}
+              className={`h-[40lvh] overflow-hidden rounded-2xl bg-dark_green text-white outline-none lg:h-[85lvh] ${content.id === 3 ? 'grid items-center lg:place-content-center' : content.id === 2 ? 'bg-[#D7E4DE] text-[#303031]' : ''} relative top-[0px]`}
             >
               {content.id === 1 ? (
                 <div className="absolute h-full w-[100%] overflow-hidden">
-                  <img
-                    src={`/assets/mockups/learnhub_4_mini.svg`}
-                    className="absolute -left-5 hidden h-full w-[280px] outline-none lg:flex"
-                    alt=""
-                  />
+                  <picture>
 
                   <img
-                    src={`/assets/mockups/learnhub_4_large.svg`}
-                    className="absolute -right-12 hidden outline-none lg:-right-[25px] lg:top-[-3px] lg:flex lg:w-[450px] lg:rotate-0"
+                    src={`/assets/mockups/learnhub_4_large.png`}
+                    className="absolute bottom-2 right-2 hidden w-[150px] lg:w-[250px] rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
 
                   {/* Responsive images */}
-                  <img
-                    src={`/assets/mockups/learnhub_4_mini_responsive.svg`}
-                    className="absolute -top-[10px] right-[40px] flex w-[370px] outline-none lg:hidden"
-                    alt=""
-                  />
+                    <picture>
 
                   <img
+                    src={'/assets/mockups/learnhub_4_large_responsive.png'}
+                    className="absolute bottom-[0px] right-[-20px] flex w-[160px] border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                    </picture>
+                    <picture>
+
+                  {/* <img
                     src={`/assets/mockups/learnhub_4_large_responsive.svg`}
                     className="absolute -right-[25px] flex h-full w-[340px] outline-none lg:hidden"
                     alt=""
-                  />
+                  /> */}
+                    </picture>
                 </div>
               ) : content.id === 2 ? (
-                <div className="absolute flex h-full w-[100%] overflow-hidden">
-                  <img
-                    src={`/assets/mockups/learnhub_5_left.svg`}
-                    className="relative bottom-[-90px] left-[0px] hidden h-full w-[250px] outline-none lg:flex"
-                    alt=""
-                  />
+                <div className="relative flex h-full overflow-hidden lg:w-[100%]">
+                  <picture>
 
                   <img
-                    src={`/assets/mockups/learnhub_5_right.svg`}
-                    className="absolute bottom-[-20px] right-[-20px] hidden h-full w-[330px] lg:flex"
+                    src={`/assets/mockups/learnhub_4.png`}
+                    className="absolute bottom-2 right-2 hidden rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
+
+                <picture>
+
+                  <img
+                    src={`/assets/mockups/Courses_3_sm.png`}
+                    className="absolute bottom-1 right-2 hidden w-[250px] outline-none lg:flex"
+                    alt=""
+                  />
+                </picture>
 
                   {/* Responsive images */}
-                  <img
-                    src={`/assets/mockups/learnhub_5_left_responsive.svg`}
-                    className="absolute right-[90px] top-[5px] flex w-[370px] outline-none lg:hidden"
-                    alt=""
-                  />
+                    <picture>
 
                   <img
-                    src={`/assets/mockups/learnhub_5_right_responsive.svg`}
-                    className="absolute -right-[25px] flex h-full w-[340px] outline-none lg:hidden"
+                    src={'/assets/mockups/learnhub_5_large_responsive.svg'}
+                    className="absolute bottom-[0px] right-[-20px] flex w-[270px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
+                    <picture>
+
+                  <img
+                    src={'/assets/mockups/learnhub_5_small_responsive.svg'}
+                    className="absolute bottom-[0px] right-[-0px] flex w-[160px] border-none outline-none lg:hidden"
+                    alt=""
+                  />
+                    </picture>
                 </div>
               ) : (
                 <div className="absolute h-full w-full">
+                  <picture>
+
                   <img
                     src={`/assets/mockups/product_1.png`}
-                    className="absolute bottom-0 w-[250px] outline-none"
+                    className="absolute bottom-0 w-[190px] outline-none"
                     alt=""
                   />
+                  </picture>
+                    <picture>
+
                   <img
                     src={`/assets/mockups/product_2.png`}
                     className="absolute right-0 top-0 w-[200px] outline-none"
                     alt=""
                   />
+                    </picture>
                 </div>
               )}
 
               <div
-                className={`absolute ${content.id === 1 ? 'bottom-0' : content.id === 3 ? 'relative place-items-end' : 'bottom-0 lg:top-0'}`}
+                className={`absolute ${content.id === 3 ? 'relative' : 'bottom-0 lg:top-0'} p-2`}
               >
-                <CardHeader>
-                  <CardTitle className="text-[20px] lg:text-[30px]">
+                <CardHeader className="p-0 px-[10px] lg:pt-[45px]">
+                  <CardTitle
+                    className={` lg:w-full ${content.id === 3 ? 'w-[75%] text-[30px] lg:text-[40px] leading-[40px]' : 'w-[40%] text-[25px] lg:text-[37px]'}`}
+                  >
                     {content.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="w-[90%] text-[15px] text-paragraph lg:text-[17px]">
+                <CardContent className="p-0 px-[10px] pb-4">
+                  <p
+                    className={`lg:text-[16px] text-[14px] ${content.id === 1 ? 'text-[#CCCCCC]' : 'text-[#303031]'} leading-[24px] w-[60%] lg:w-full `}
+                  >
                     {content.description}
                   </p>
                   {content.id === 3 ? (
-                    <Button className="rounded-xl bg-light_green font-san font-semibold text-normal_green">
+                    <Button className="rounded-xl bg-light_green p-6 font-san text-[18px] font-semibold text-[#002214] lg:mt-[50px] mt-[30px]">
                       Get Started
                     </Button>
                   ) : (
@@ -204,61 +461,68 @@ function App() {
         </div>
         {/* Card 2 */}
       </div>
+      {/* </div> */}
       {/* Why Choose Us */}
 
-      {/*  Payment Plans  */}
-      <div className="">
+      {/* No Age limit */}
+      <div className="relative mb-[90px] flex flex-col lg:mb-[190px]">
         <Header
-          main_text="Payment Plans"
-          paragraph="Choose a plan that fits, pricing is per month or year, there is no limit to any subscribtion plan "
+          main_text="No Age Limit with Coderina LearnHub"
+          position
+          min_width="90%"
+          width="41%"
+          paragraph={`Whether young or old, our platform offers courses for all ages. Start learning today It's never too late or early to grow your skills!`}
         />
+        <div className="flex justify-center">
+          <Button
+            className="w-fit border-2 border-normal_green bg-normal_green px-[15px] py-[25px] font-san text-[16px] text-white"
+            asChild
+          >
+            <Link to="/signup"> Get Started </Link>
+          </Button>
+        </div>
 
-        <div className="grid place-content-center space-y-14 p-[40px] lg:flex lg:gap-12 lg:space-y-0">
-          {paymentSection.map(content => (
-            <>
-              <Card
-                className={`relative basis-[37%] rounded-2xl border-[5px] p-2 lg:h-[105lvh] ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}
-              >
-                <CardHeader className="p-0">
-                  <img src={content.image} alt="" />
-                </CardHeader>
-                <CardContent className="mt-3 flex flex-col items-center space-y-3 text-center">
-                  <h2 className="font-inter text-[25px] font-extrabold lg:text-[50px]">
-                    {' '}
-                    NGN {content.price}
-                    <span className="font-san text-[18px] font-normal">
-                      /monthly
-                    </span>{' '}
-                  </h2>
-                  <p className="font-san lg:w-[80%]">
-                    With this plan you will have access to variety of courses
-                    for a month
-                  </p>
-                </CardContent>
-
-                <CardFooter className="bottom-1 mt-7 grid items-center p-0 text-center lg:absolute lg:w-[96%]">
-                  <p
-                    className={`w-full rounded-b-lg p-5 font-san text-[18px] font-semibold ${content.id === 2 ? 'bg-[#F9FBFA] text-[#3A4D41]' : 'bg-dark_green text-white'}`}
-                  >
-                    {content.plan}
-                  </p>
-                </CardFooter>
-              </Card>
-            </>
-          ))}
+        <div className="lg:mt-3 mt-[60px] flex justify-center gap-x-4 p-1 lg:gap-x-[180px] lg:p-4">
+          <div
+            className="relative h-[250px] w-[150px] rounded-b-[90px] rounded-t-[90px] bg-cover bg-center bg-no-repeat lg:h-[400px] lg:w-[230px]"
+            style={{ backgroundImage: `url('/assets/mockups/1.jpeg')` }}
+          >
+            <img
+              src="/assets/mockups/image_1.png"
+              className="absolute right-[-55px] top-[-35px] w-[80px] object-cover lg:right-[-90px] lg:top-[-80px] lg:w-[150px]"
+              alt=""
+            />
+          </div>
+          <div
+            className="relative bottom-[-100px] h-[250px] w-[150px] rounded-b-[90px] rounded-t-[90px] bg-cover bg-center bg-no-repeat lg:h-[400px] lg:w-[230px]"
+            style={{ backgroundImage: `url('/assets/mockups/2.jpeg')` }}
+          ></div>
+          <div
+            className="relative h-[250px] w-[150px] rounded-b-[90px] rounded-t-[90px] bg-cover bg-center bg-no-repeat lg:h-[400px] lg:w-[230px]"
+            style={{ backgroundImage: `url('/assets/mockups/3.jpeg')` }}
+          >
+            <img
+              src="/assets/mockups/Image_2.png"
+              className="relative left-[-50px] -z-10 w-[130px] lg:bottom-[-50px] lg:left-[-100px] lg:w-[930px]"
+              alt=""
+            />
+          </div>
         </div>
       </div>
-      {/* Payment Plans */}
+      {/* No Age limit */}
 
       {/* Testimonial */}
-      <div className="">
+      <div className="lg:mt-0 mt-40">
         <Header
-          main_text="What the community says about"
-          mini_text=" Coderina LearnHub"
-          paragraph={`Our community loves the diverse course offerings and effective upskilling features. Here's what they have to say`}
+          main_text="What Users Say About Coderina LearnHub"
+          width="42%"
+          min_width="90%"
+          paragraph={
+            'See how we transformed learning for our users. hear their feedbacks and experiences!'
+          }
         />
 
-        <div className="grid place-content-center gap-8 p-[10px] lg:grid-cols-2 lg:p-[50px]">
+        <div className="grid place-content-center gap-12 p-[10px] lg:grid-cols-2 lg:gap-8 lg:p-[50px]">
           {testimonialSection.map(content => (
             <TestimonialCard
               key={content.id}
@@ -270,44 +534,10 @@ function App() {
       </div>
       {/* Testimonial */}
 
-      <div className="relative mt-12 flex h-[70vh] flex-col bg-[#F9FBFA] lg:h-full lg:flex-row">
-        <div className="lg:basis-[50%]">
-          <img
-            src="/assets/mockups/mockup_left.svg"
-            alt=""
-            className="hidden w-[550px] lg:flex"
-          />
-          <img
-            src="/assets/mockups/courses_mini_1.svg"
-            alt=""
-            className="flex w-[250px] lg:hidden"
-          />
-        </div>
-
-        <div className="absolute flex h-full w-full flex-col items-center justify-center space-y-4 text-center lg:relative lg:h-auto lg:basis-[50%]">
-          <p className="font-san text-[35px] font-semibold leading-10 text-[#303031] lg:font-medium">
-            The course content you <br /> need, ready for you
-          </p>
-          <Button className="w-fit rounded-xl bg-normal_green font-san font-semibold text-white">
-            Get Started
-          </Button>
-
-          <img
-            src="/assets/mockups/courses_mini_2.svg"
-            alt=""
-            className="absolute -bottom-[120px] right-0 flex basis-[50%] lg:hidden"
-          />
-          <img
-            src="/assets/mockups/mockup_right.svg"
-            alt=""
-            className="absolute -bottom-16 hidden basis-[50%] lg:flex"
-          />
-        </div>
-      </div>
-
-      {/* Gradient */}
-      <div className="relative z-10 h-[11vh] bg-gradient-to-tr from-[#fff]"></div>
-      {/* Gradient */}
+      {/* Content */}
+      <Content />
+      {/* Content */}
+     
 
       <Footer />
     </>

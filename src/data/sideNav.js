@@ -5,7 +5,7 @@ export const navLinks = [
     iconImage: '/assets/dashboard.png',
   },
   {
-    link: '/dashboard/courses',
+    link: '/dashboard/my-courses',
     name: 'My Courses',
     iconImage: '/assets/courses.png',
   },
