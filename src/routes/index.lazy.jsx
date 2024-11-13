@@ -62,7 +62,7 @@ function App() {
 
 
       {/* Banner */}
-      <div className="flex flex-col items-center justify-center mt-[45px] p-[30px] text-center ">
+      <div className="flex flex-col items-center justify-center mt-[45px] p-[3px] lg:p-[30px] text-center ">
         <div className="flex flex-col items-center">
           <h1 className="font-san text-[40px] font-extrabold leading-[40px] text-dark_green lg:text-[60px] lg:leading-[50px]">
             Unlock New Tech Skills with
@@ -77,7 +77,7 @@ function App() {
           </p>
         </div>
 
-        <div className="space-x-[30px] mt-[40px] mb-[70px]">
+        <div className="lg:space-x-[35px] space-x-8 mt-[40px] mb-[70px]">
         {user === null ? 
           <>
           <Button

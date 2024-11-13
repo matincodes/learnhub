@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { navLinks } from '@/data/NavBar'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { FiMenu } from 'react-icons/fi'
 import { v4 as uuidv4 } from 'uuid'
@@ -20,7 +19,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 const NavBar = e => {
-  const [navState, setNavState] = useState('none')
+  const navState = 'none'
   const data = window.localStorage.getItem('user')
   const user = JSON.parse(data)
 
@@ -32,7 +31,7 @@ const NavBar = e => {
         <Link to="/">
           <img
             src="/assets/learnhub-logo.svg"
-            className="absolute w-[120px] lg:relative lg:w-[150px]"
+            className="absolute top-[20px] right-[145px] lg:top-0 lg:right-0 w-[120px] lg:relative lg:w-[150px]"
           />
         </Link>
 
