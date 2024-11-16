@@ -13,15 +13,9 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-<<<<<<< HEAD
-import { Route as DashboardImport } from './routes/dashboard'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
-import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
-=======
 import { Route as PricingImport } from './routes/pricing'
 import { Route as CoursesIndexImport } from './routes/courses/index'
 import { Route as CoursesCourseImport } from './routes/courses/$course'
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
@@ -43,10 +37,6 @@ const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-<<<<<<< HEAD
-const DashboardRoute = DashboardImport.update({
-  path: '/dashboard',
-=======
 const userDashboardRoute = userDashboardImport.update({
   id: '/(userDashboard)',
   getParentRoute: () => rootRoute,
@@ -54,7 +44,6 @@ const userDashboardRoute = userDashboardImport.update({
 
 const PricingRoute = PricingImport.update({
   path: '/pricing',
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -63,16 +52,6 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-<<<<<<< HEAD
-const DashboardIndexRoute = DashboardIndexImport.update({
-  path: '/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
-const DashboardAnalyticsRoute = DashboardAnalyticsImport.update({
-  path: '/analytics',
-  getParentRoute: () => DashboardRoute,
-=======
 const CoursesIndexRoute = CoursesIndexImport.update({
   path: '/courses/',
   getParentRoute: () => rootRoute,
@@ -81,7 +60,6 @@ const CoursesIndexRoute = CoursesIndexImport.update({
 const CoursesCourseRoute = CoursesCourseImport.update({
   path: '/courses/$course',
   getParentRoute: () => rootRoute,
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
 } as any)
 
 const AuthSignupRoute = AuthSignupImport.update({
@@ -171,15 +149,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-<<<<<<< HEAD
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
-=======
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -201,7 +170,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutImport
       parentRoute: typeof userDashboardRoute
     }
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -216,21 +184,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof rootRoute
     }
-<<<<<<< HEAD
-    '/dashboard/analytics': {
-      id: '/dashboard/analytics'
-      path: '/analytics'
-      fullPath: '/dashboard/analytics'
-      preLoaderRoute: typeof DashboardAnalyticsImport
-      parentRoute: typeof DashboardImport
-    }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardImport
-=======
     '/courses/$course': {
       id: '/courses/$course'
       path: '/courses/$course'
@@ -314,7 +267,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/quizzes'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIndexImport
       parentRoute: typeof userDashboardDashboardLayoutImport
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
     }
   }
 }
@@ -323,14 +275,6 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-<<<<<<< HEAD
-  DashboardRoute: DashboardRoute.addChildren({
-    DashboardAnalyticsRoute,
-    DashboardIndexRoute,
-  }),
-  AuthLoginRoute,
-  AuthSignupRoute,
-=======
   PricingRoute,
   userDashboardRoute: userDashboardRoute.addChildren({
     userDashboardDashboardLayoutRoute:
@@ -351,7 +295,6 @@ export const routeTree = rootRoute.addChildren({
   AuthSignupRoute,
   CoursesCourseRoute,
   CoursesIndexRoute,
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
 })
 
 /* prettier-ignore-end */
@@ -363,18 +306,12 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.jsx",
       "children": [
         "/",
-<<<<<<< HEAD
-        "/dashboard",
-        "/_auth/login",
-        "/_auth/signup"
-=======
         "/pricing",
         "/",
         "/_auth/login",
         "/_auth/signup",
         "/courses/$course",
         "/courses/"
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
       ]
     },
     "/": {
@@ -402,28 +339,12 @@ export const routeTree = rootRoute.addChildren({
         "/_dashboardLayout/dashboard/quizzes/"
       ]
     },
-    "/dashboard": {
-      "filePath": "dashboard.jsx",
-      "children": [
-        "/dashboard/analytics",
-        "/dashboard/"
-      ]
-    },
     "/_auth/login": {
       "filePath": "_auth/login.jsx"
     },
     "/_auth/signup": {
       "filePath": "_auth/signup.jsx"
     },
-<<<<<<< HEAD
-    "/dashboard/analytics": {
-      "filePath": "dashboard/analytics.jsx",
-      "parent": "/dashboard"
-    },
-    "/dashboard/": {
-      "filePath": "dashboard/index.jsx",
-      "parent": "/dashboard"
-=======
     "/courses/$course": {
       "filePath": "courses/$course.jsx"
     },
@@ -469,7 +390,6 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboardLayout/dashboard/quizzes/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/index.jsx",
       "parent": "/_dashboardLayout"
->>>>>>> 2cb77225ba8513cf27e98ac3e6f28acd4e73be99
     }
   }
 }
