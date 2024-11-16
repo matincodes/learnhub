@@ -8,7 +8,7 @@ const isActive = (pathname, link) => {
   return pathname.split('/').at(-1) === link.split('/').at(-1)
 }
 
-const SideNav = ({ close, isNav }) => {
+const SideNav = ({ close }) => {
   const [user, setUser] = useState('')
   const data = window.localStorage.getItem('user')
 
