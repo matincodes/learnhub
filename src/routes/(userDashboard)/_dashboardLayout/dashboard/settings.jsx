@@ -38,6 +38,12 @@ function SettingsContent() {
             <PasswordInput placeholder="Current Password" />
             <PasswordInput placeholder="New Password" />
           </div>
+          <Button
+            variant="outline"
+            className="w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow"
+          >
+            Change Password
+          </Button>
         </div>
 
         {/* Notification Settings */}
@@ -66,6 +72,9 @@ function SettingsContent() {
               label="Mute my Notifications"
               description="All your notifications will be muted until you switch it off"
             />
+            <Button className="w-auto rounded-xl border border-normal_yellow bg-normal_yellow px-3 py-2 text-white">
+              Save Changes
+            </Button>
           </div>
         </div>
 
