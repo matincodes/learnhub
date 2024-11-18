@@ -1,4 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/context/auth-context'
+import { useToast } from '@/hooks/use-toast'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/signup')({
@@ -9,19 +14,30 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     // formState: { errors },
   } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const { signup } = useAuth()
+  const router = useRouter()
+  const { toast } = useToast()
 
   const onSubmit = async data => {
-    // await fetch('https://coderina-learnhub.onrender.com/api/students/login/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    console.log(data)
+    setIsLoading(true)
+    if (await signup(data)) {
+      reset()
+      router.invalidate()
+      router.push('/dashboard')
+    } else {
+      setIsLoading(false)
+      return toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Signup failed, please try again.',
+      })
+    }
   }
+
   return (
     <div className="relative place-content-center items-center p-[20px]">
       <div className="flex flex-row-reverse overflow-hidden rounded-r-xl">
@@ -77,14 +93,14 @@ const SignUp = () => {
               <div className="inputs grid lg:grid-cols-2 lg:space-x-3">
                 <div className="inputs grid space-y-2">
                   <label
-                    htmlFor="firstName"
+                    htmlFor="first_name"
                     className="font-san tracking-wide text-[#303031]"
                   >
                     First name
                   </label>
                   <input
-                    {...register('firstName', { required: true })}
-                    id="firstName"
+                    {...register('first_name', { required: true })}
+                    id="first_name"
                     placeholder="Enter first name"
                     className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                   />
@@ -92,14 +108,14 @@ const SignUp = () => {
 
                 <div className="inputs grid space-y-2">
                   <label
-                    htmlFor="lastName"
+                    htmlFor="last_name"
                     className="font-san tracking-wide text-[#303031]"
                   >
                     Last name
                   </label>
                   <input
-                    {...register('lastName', { required: true })}
-                    id="lastName"
+                    {...register('last_name', { required: true })}
+                    id="last_name"
                     placeholder="Enter email address"
                     className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                   />
@@ -162,15 +178,25 @@ const SignUp = () => {
               {/* Confirm Password */}
             </div>
 
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-normal_green p-[12px] font-san text-[18px] text-white"
-            >
-              Sign up
-            </button>
+            {!isLoading ? (
+              <Button
+                type="submit"
+                className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"
+              >
+                Sign Up
+              </Button>
+            ) : (
+              <Button
+                disabled
+                className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing you up...
+              </Button>
+            )}
 
             <p className="font-san">
-              Already have an account?
+              Already have an account?&nbsp;
               <Link
                 to={`/login`}
                 className="font-semibold text-normal_green underline"

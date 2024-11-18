@@ -1,12 +1,28 @@
-import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
-import { useState } from 'react'
-import { cn } from '@/lib/utils'
 import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
 import { topNavData } from '@/data/topNav'
+import { cn } from '@/lib/utils'
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useLocation,
+} from '@tanstack/react-router'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
+  beforeLoad: ({ context, location }) => {
+    console.log('context', context)
+    if (!context.isAuthenticated) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+  },
 })
 
 function DashboardComponent() {

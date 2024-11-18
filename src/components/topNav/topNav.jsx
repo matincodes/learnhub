@@ -1,12 +1,11 @@
 import { Input } from '@/components/ui/input'
 import {
-  getRouteApi,
   Link,
   useLocation,
   useNavigate,
   useRouter,
 } from '@tanstack/react-router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
 import NotificationModal from './notificationModal'
@@ -16,24 +15,16 @@ const TopNav = ({ title, paragraph }) => {
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
-  const inputState = useRef()
   const router = useRouter()
   const pathname = useLocation({
     select: location => location.pathname,
   })
-  const navigate = useNavigate({ from: pathname })
-  const routeApi = getRouteApi('/(userDashboard)/_dashboardLayout')
-
-  const { prevRoute } = routeApi.useSearch()
-  window.localStorage.setItem('prevRoute', prevRoute)
-
-  // const prevRoute = pathname
+  const navigate = useNavigate()
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
   const openSearch = () => {
     setOpenSearchStatus(true)
     navigate({
       to: '/dashboard/search',
-      search: { prevRoute: pathname },
     })
   }
 
@@ -48,11 +39,10 @@ const TopNav = ({ title, paragraph }) => {
   const closeSearchButton = () => {
     if (openSearchStatus === true && inputLength === 0) {
       setOpenSearchStatus(false)
-      navigate({ to: `${prevRoute}` })
+      navigate({ to: router.history.back() })
     } else if (openSearchStatus === true && inputLength > 0) {
       setOpenSearchStatus(true)
       setSearchInputValue('')
-      inputState.current.value = ''
       setInputLength(0)
     }
   }
@@ -98,7 +88,7 @@ const TopNav = ({ title, paragraph }) => {
                   placeholder="Search here"
                   className="border-none bg-transparent outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
                   autoFocus
-                  ref={inputState}
+                  value={searchInputValue}
                   onClick={openSearch}
                   onChange={getLength}
                 />
@@ -156,13 +146,13 @@ const TopNav = ({ title, paragraph }) => {
         </div>
 
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
-          <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-[#F7AE30]">
+          <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow">
             <Input
               type="text"
               id="search"
               placeholder="Search here"
               className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-              ref={inputState}
+              value={searchInputValue}
               onFocus={openSearch}
               onChange={getLength}
             />

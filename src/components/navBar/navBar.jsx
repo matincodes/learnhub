@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { navLinks } from '@/data/NavBar'
 import { Link } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { FiMenu } from 'react-icons/fi'
 import { v4 as uuidv4 } from 'uuid'
@@ -20,7 +19,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 const NavBar = e => {
-  const [navState, setNavState] = useState('none')  
+  // TODO: remove unnecessary navState var
+  const navState = 'none'
   const data = window.localStorage.getItem('user')
   const user = JSON.parse(data)
 
@@ -29,10 +29,12 @@ const NavBar = e => {
       <div
         className={`top-0 ${e.NavStatus} z-40 flex items-center justify-around bg-white p-10 lg:p-5`}
       >
-        <img
-          src="/assets/learnhub-logo.svg"
-          className="absolute w-[120px] lg:relative lg:w-[150px]"
-        />
+        <Link to="/">
+          <img
+            src="/assets/learnhub-logo.svg"
+            className="absolute right-[145px] top-[20px] w-[120px] lg:relative lg:right-0 lg:top-0 lg:w-[150px]"
+          />
+        </Link>
 
         <Sheet>
           <div className="absolute flex w-full justify-end p-3">
@@ -176,7 +178,10 @@ const NavBar = e => {
                     </>
                   ) : (
                     <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
-                      <img src={user.image} className="w-full object-[center_90%]" />
+                      <img
+                        src={user.image}
+                        className="w-full object-[center_90%]"
+                      />
                     </div>
                   )}
                 </div>
@@ -220,12 +225,10 @@ const NavBar = e => {
               </Button>
             </>
           ) : (
-            
-          <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
-            <img src={user.image} className="w-full object-[center_90%]" />
-          </div>
+            <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
+              <img src={user.image} className="w-full object-[center_90%]" />
+            </div>
           )}
-
         </div>
       </div>
     </>

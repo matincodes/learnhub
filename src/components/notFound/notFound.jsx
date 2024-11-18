@@ -18,7 +18,7 @@ export default function NotFound() {
         </p>
         <Link
           to="/"
-          className="rounded-xl border border-[#F7AE30] bg-[#F7AE30] px-3 py-2 text-white"
+          className="rounded-xl border border-normal_yellow bg-normal_yellow px-3 py-2 text-white"
         >
           Return to homepage
         </Link>

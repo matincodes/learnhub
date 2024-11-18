@@ -62,7 +62,7 @@ function App() {
 
 
       {/* Banner */}
-      <div className="flex flex-col items-center justify-center mt-[45px] p-[30px] text-center ">
+      <div className="flex flex-col items-center justify-center mt-[45px] p-[3px] lg:p-[30px] text-center ">
         <div className="flex flex-col items-center">
           <h1 className="font-san text-[40px] font-extrabold leading-[40px] text-dark_green lg:text-[60px] lg:leading-[50px]">
             Unlock New Tech Skills with
@@ -77,7 +77,7 @@ function App() {
           </p>
         </div>
 
-        <div className="space-x-[30px] mt-[40px] mb-[70px]">
+        <div className="lg:space-x-[35px] space-x-8 mt-[40px] mb-[70px]">
         {user === null ? 
           <>
           <Button
@@ -98,22 +98,26 @@ function App() {
             className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
             asChild
           >
-            <Link to="/"> Continue Learning </Link>
+            <Link to="/dashboard"> Continue Learning </Link>
           </Button>
         }
         </div>
 
         <div className="grid w-full place-content-center">
+        <picture>
           <img
             src="/assets/mockups/desktop_banner_mockup.svg"
             alt=""
             className="hidden lg:flex"
           />
+        </picture>
+        <picture>
           <img
             src="/assets/mockups/desktop_responsive_banner_mockup.svg"
             alt=""
             className="mt-12 flex lg:hidden"
           />
+        </picture>
         </div>
       </div>
       {/* Banner */}
@@ -225,60 +229,84 @@ function App() {
             >
               {content.id === 1 ? (
                 <>
+                  <picture>
+
                   <img
                     src={'/assets/mockups/Courses_1.png'}
                     className="absolute bottom-[10px] right-[10px] hidden outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
 
                   {/* Responsivness */}
+                    <picture>
+
                   <img
                     src={'/assets/mockups/Courses_1_Responsive.svg'}
                     className="absolute bottom-[0px] right-1 flex w-[90px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
                   {/* Responsivness */}
                 </>
               ) : content.id === 2 ? (
                 <div className="relative flex h-full">
+                  <picture>
+
                   <img
                     src={'/assets/mockups/Courses_2_lg.png'}
                     className="absolute bottom-[10px] right-[10px] hidden w-[550px] rounded-br-xl border-none outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
+
+                <picture>
 
                   <img
                     src={'/assets/mockups/Courses_2_sm.png'}
                     className="absolute bottom-[-10px] right-0 hidden border-none outline-none lg:right-[140px] lg:flex 2xl:right-[160px]"
                     alt=""
                   />
+                </picture>
 
                   {/* Responsiveness */}
+                    <picture>
+
                   <img
                     src={'/assets/mockups/Courses_2_lg_responsive.svg'}
                     className="absolute bottom-[10px] right-[10px] z-0 flex w-[170px] rounded-br-xl border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
+
+                <picture>
 
                   <img
                     src={'/assets/mockups/learnhub_4_large_responsive.svg'}
                     className="absolute bottom-[-5px] right-0 flex w-[110px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                </picture>
                   {/* Responsiveness */}
                 </div>
               ) : content.id === 3 ? (
                 <div className="relative flex h-full">
+                  <picture>
+
                   <img
                     src={'/assets/mockups/Courses_3_lg.svg'}
-                    className="absolute right-[10px] hidden rounded-br-xl border-none outline-none lg:flex"
+                    className="absolute right-[10px] bottom-[10px] hidden w-[650px] rounded-br-xl border-none outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
+                    <picture>
+
                   <img
                     src={'/assets/mockups/Courses_3_lg_responsive.png'}
                     className="absolute bottom-[0px] right-[0px] flex w-[170px] rounded-br-xl border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
                 </div>
               ) : (
                 ''
@@ -317,62 +345,89 @@ function App() {
             >
               {content.id === 1 ? (
                 <div className="absolute h-full w-[100%] overflow-hidden">
+                  <picture>
+
                   <img
                     src={`/assets/mockups/learnhub_4_large.png`}
-                    className="absolute bottom-2 right-2 hidden w-[330px] rounded-br-xl outline-none lg:flex"
+                    className="absolute bottom-2 right-2 hidden w-[150px] lg:w-[250px] rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
 
                   {/* Responsive images */}
+                    <picture>
+
                   <img
                     src={'/assets/mockups/learnhub_4_large_responsive.png'}
                     className="absolute bottom-[0px] right-[-20px] flex w-[160px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
+                    <picture>
+
                   {/* <img
                     src={`/assets/mockups/learnhub_4_large_responsive.svg`}
                     className="absolute -right-[25px] flex h-full w-[340px] outline-none lg:hidden"
                     alt=""
                   /> */}
+                    </picture>
                 </div>
               ) : content.id === 2 ? (
                 <div className="relative flex h-full overflow-hidden lg:w-[100%]">
+                  <picture>
+
                   <img
                     src={`/assets/mockups/learnhub_4.png`}
                     className="absolute bottom-2 right-2 hidden rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
+                  </picture>
+
+                <picture>
 
                   <img
                     src={`/assets/mockups/Courses_3_sm.png`}
                     className="absolute bottom-1 right-2 hidden w-[250px] outline-none lg:flex"
                     alt=""
                   />
+                </picture>
 
                   {/* Responsive images */}
+                    <picture>
+
                   <img
                     src={'/assets/mockups/learnhub_5_large_responsive.svg'}
                     className="absolute bottom-[0px] right-[-20px] flex w-[270px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
+                    <picture>
+
                   <img
                     src={'/assets/mockups/learnhub_5_small_responsive.svg'}
                     className="absolute bottom-[0px] right-[-0px] flex w-[160px] border-none outline-none lg:hidden"
                     alt=""
                   />
+                    </picture>
                 </div>
               ) : (
                 <div className="absolute h-full w-full">
+                  <picture>
+
                   <img
                     src={`/assets/mockups/product_1.png`}
                     className="absolute bottom-0 w-[190px] outline-none"
                     alt=""
                   />
+                  </picture>
+                    <picture>
+
                   <img
                     src={`/assets/mockups/product_2.png`}
                     className="absolute right-0 top-0 w-[200px] outline-none"
                     alt=""
                   />
+                    </picture>
                 </div>
               )}
 

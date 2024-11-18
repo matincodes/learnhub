@@ -1,47 +1,42 @@
-import { Link, useLocation } from '@tanstack/react-router'
+import { Separator } from '@/components/ui/separator'
 import { navLinks } from '@/data/sideNav'
 import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
+import { Link, useLocation } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
 const isActive = (pathname, link) => {
   return pathname.split('/').at(-1) === link.split('/').at(-1)
 }
 
-const SideNav = ({ close, isNav }) => {
+const SideNav = ({ close }) => {
   const [user, setUser] = useState('')
   const data = window.localStorage.getItem('user')
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     setUser(JSON.parse(data))
   }, [data])
 
   const { pathname } = useLocation()
 
   return (
-    <div
-      onClick={e => {
-        e.stopPropagation()
-        close()
-      }}
-      className={`modal swipeInLeft fixed inset-y-0 left-0 z-[70] hidden h-full lg:block`}
-    >
-      <div
-        onClick={e => {
-          e.stopPropagation()
-        }}
-        className="my-5 flex h-full w-[280px] flex-col items-center overflow-y-auto bg-white shadow sm:py-4"
-      >
+    <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
+      <div className="flex h-screen w-[280px] flex-col items-center overflow-y-scroll bg-white shadow sm:py-4">
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
           <div className="w-full px-4">
             <Link
               to="/dashboard/profile"
-              className="flex items-center justify-center gap-x-3 "
+              className="flex"
             >
-              <div className="grid w-[60px] h-[50px] place-content-center overflow-hidden rounded-[100%]">
-                <img src={user?.image} className="object-cover" />
+              <div className="grid basis-[50%] place-content-center">
+                <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+                <img
+                  src={user?.image}
+                  alt=""
+                  className="object-cover"
+                />
+                </div>
               </div>
-              <div className="w-full ">
+              <div className="w-full flex flex-col justify-center">
                 <p className="font-semibold">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>

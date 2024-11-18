@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
@@ -74,7 +74,7 @@ const Profile = () => {
   return (
     <div className="lg:flex grid gap-6 relative">
       {/* Left */}
-      <div className={`lg:basis-[40%] space-y-[50px] overflow-hidden ${editFormState ? 'lg:grid hidden' : ''} rounded-2xl bg-white lg:p-5 p-1 z-20`}>          
+      <div className={`lg:basis-[50%] space-y-[50px] overflow-hidden ${editFormState ? 'lg:grid hidden' : ''} rounded-2xl bg-white lg:p-5 p-1 z-20`}>          
         {/* User Profile */}
 
         <div className="flex flex-col space-y-5 p-2 relative ">
@@ -100,14 +100,14 @@ const Profile = () => {
           {/* Image and name */}
 
           {/* Cards */}
-          <div className="flex justify-evenly">
-            <div className="lg:basis-[35%] space-y-2 rounded-2xl border p-2 font-san">
+          <div className="flex space-x-5 justify-center">
+            <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
               <p className="text-[14px] font-[500] text-[#989494]">
                 Course Completed
               </p>
               <h2 className="text-[20px] font-bold">15</h2>
             </div>
-            <div className="lg:basis-[35%] space-y-2 rounded-2xl border p-2 font-san">
+            <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
               <p className="text-[14px] font-[500] text-[#989494]">
                 On Going Courses
               </p>
@@ -122,7 +122,7 @@ const Profile = () => {
         <div className="flex flex-col space-y-5 p-2">
           <p className="font-san text-[18px] font-medium">Achievements</p>
 
-          <div className="grid lg:grid-cols-4 grid-cols-3 gap-x-10 gap-y-7 items-center place-content-center">  
+          <div className="grid lg:grid-cols-4 grid-cols-3 gap-x-4 gap-y-7 items-center ">  
           {achievements.map(achievement => (
               <div key={uuidv4()} className="flex flex-col items-center justify-center text-center space-y-2 p-0">
                 
@@ -131,7 +131,7 @@ const Profile = () => {
                     alt=""
                     className="w-[60px]"
                   />
-                  <p className="lg:text-[16px] text-[14px] font-semibold font-montserrat">{achievement.title}</p>
+                  <p className="lg:text-[14px] text-[14px] font-semibold font-montserrat">{achievement.title}</p>
                 
                 <p className="lg:text-[7px] text-[4px] font-medium font-montserrat">{achievement.description}</p>
               </div>
@@ -198,7 +198,7 @@ const Profile = () => {
               ref={firstNameRef}
               onChange={() => handleInputTextChange(firstNameRef)}
               // readOnly = {inputFocusState}
-              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
             </div>
           </div>
@@ -220,7 +220,7 @@ const Profile = () => {
               ref={lastNameRef}
               onChange={() => handleInputTextChange(lastNameRef)}
               // readOnly = {inputFocusState}
-              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
           
             </div>
@@ -243,7 +243,7 @@ const Profile = () => {
               ref={emailRef}
               onChange={() => handleInputTextChange(emailRef)}
               // readOnly = {inputFocusState}
-              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none border border-[#ccc] p-2 rounded-xl flex items-center"
+              className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
             
             </div>

@@ -1,4 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/context/auth-context'
+import { useToast } from '@/hooks/use-toast'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/login')({
@@ -6,21 +11,28 @@ export const Route = createFileRoute('/_auth/login')({
 })
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const { register, handleSubmit, reset } = useForm()
+  const { login } = useAuth()
+  const router = useRouter()
+  const { toast } = useToast()
+  const { redirect } = Route.useSearch()
 
   const onSubmit = async data => {
-    await fetch('https://coderina-learnhub.onrender.com/api/students/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-
-    console.log(data)
+    setIsLoading(true)
+    if (await login(data)) {
+      reset()
+      router.invalidate()
+      if (redirect) router.push('/dashboard')
+      else router.history.push(redirect)
+    } else {
+      setIsLoading(false)
+      return toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Login failed, please try again.',
+      })
+    }
   }
 
   return (
@@ -87,7 +99,7 @@ const Login = () => {
                   {...register('email', { required: true })}
                   id="email"
                   placeholder="Email"
-                  className="font-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
+                  className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                 />
               </div>
               {/* Email */}
@@ -105,7 +117,7 @@ const Login = () => {
                   {...register('password', { required: true })}
                   id="password"
                   placeholder="Enter password"
-                  className="font-san rounded-md border border-[#84848481] p-[12px] text-[#AAAAAA]"
+                  className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                 />
 
                 <div className="mt-1 flex items-center justify-between">
@@ -131,21 +143,30 @@ const Login = () => {
               {/* Password */}
             </div>
 
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-normal_green p-[12px] font-san text-[18px] text-white"
-            >
-              Log in
-            </button>
+            {!isLoading ? (
+              <Button
+                type="submit"
+                className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"
+              >
+                Log In
+              </Button>
+            ) : (
+              <Button
+                disabled
+                className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Logging you in...
+              </Button>
+            )}
 
             <p className="font-san">
-              Don&apos;t have an account?
+              Don&apos;t have an account?&nbsp;
               <Link
                 to={`/signup`}
                 className="font-semibold text-normal_green underline"
               >
-                {' '}
-                Sign Up{' '}
+                Sign Up
               </Link>
             </p>
           </form>

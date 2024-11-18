@@ -1,7 +1,7 @@
 
 const SearchCourseCard = ({ image, title, lesson, duration }) => {
   return (
-    <div className="flex flex-col w-[250px] justify-center space-y-1">
+    <div className="flex flex-col space-y-1">
       <div className="h-[120px] w-full sm:h-[141px] ">
         <img
           src={image}
