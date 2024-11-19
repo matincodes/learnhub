@@ -210,15 +210,15 @@ const NavBar = e => {
         <div className="hidden w-[15%] justify-around lg:flex">
           {user === null ? (
             <>
-              <Button asChild>
-                <Link to="/login" className="bg-[#e5f5ee59] font-san">
+              <Button  className="bg-[#e5f5ee59] font-san" asChild>
+                <Link to="/login">
                   Log in
                 </Link>
               </Button>
-              <Button asChild>
+              <Button className="rounded-xl bg-normal_green font-san text-white shadow-md" asChild>
                 <Link
                   to="/signup"
-                  className="rounded-xl bg-normal_green font-san text-white shadow-md"
+                  
                 >
                   Sign Up
                 </Link>
