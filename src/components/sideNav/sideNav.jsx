@@ -1,12 +1,8 @@
 import { Separator } from '@/components/ui/separator'
 import { navLinks } from '@/data/sideNav'
-import { cn } from '@/lib/utils'
+import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-
-const isActive = (pathname, link) => {
-  return pathname.split('/').at(-1) === link.split('/').at(-1)
-}
 
 const SideNav = ({ close }) => {
   const [user, setUser] = useState('')
@@ -23,20 +19,13 @@ const SideNav = ({ close }) => {
       <div className="flex h-screen w-[280px] flex-col items-center overflow-y-scroll bg-white shadow sm:py-4">
         <div className="relative flex h-full w-full flex-col items-center justify-between px-3">
           <div className="w-full px-4">
-            <Link
-              to="/dashboard/profile"
-              className="flex"
-            >
+            <Link to="/dashboard/profile" className="flex">
               <div className="grid basis-[50%] place-content-center">
-                <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
-                <img
-                  src={user?.image}
-                  alt=""
-                  className="object-cover"
-                />
+                <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
+                  <img src={user?.image} alt="" className="object-cover" />
                 </div>
               </div>
-              <div className="w-full flex flex-col justify-center">
+              <div className="flex w-full flex-col justify-center">
                 <p className="font-semibold">Abisola Elizabeth</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
