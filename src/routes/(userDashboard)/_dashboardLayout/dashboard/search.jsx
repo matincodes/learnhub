@@ -14,7 +14,6 @@ function Search() {
   const [search, setSearch] = useState(openSearchStatus) // When the search field is active
   const [typeSearch, setTypeSearch] = useState([])  // This is when the user has typed for what they are searching for
   const [searchValue, setSearchValue] = useState([])
-  const prevRoute = window.localStorage.getItem('prevRoute')
 
   // Get the Current State of the search button
   useEffect(() => {
@@ -42,7 +41,7 @@ function Search() {
     }
   }, [])
 
-  const filterRecentCourses = recentSearchedCourses.filter(courses => courses.title.toLowerCase().includes(searchValue))
+
   const filterCourses = searchedCourses.filter(courses => courses.title.toLowerCase().includes(searchValue))
   
   

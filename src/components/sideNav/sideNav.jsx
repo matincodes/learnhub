@@ -13,7 +13,12 @@ const SideNav = ({ close }) => {
   const data = window.localStorage.getItem('user')
 
   useEffect(() => {
-    setUser(JSON.parse(data))
+    if(!data){
+      setUser({image: '/assets/profile.png'})
+    }
+    else{
+      setUser(JSON.parse(data))
+    }
   }, [data])
 
   const { pathname } = useLocation()

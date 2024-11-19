@@ -12,17 +12,17 @@ import { useState } from 'react'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
-  beforeLoad: ({ context, location }) => {
-    console.log('context', context)
-    if (!context.isAuthenticated) {
-      throw redirect({
-        to: '/login',
-        search: {
-          redirect: location.href,
-        },
-      })
-    }
-  },
+  // beforeLoad: ({ context, location }) => {
+  //   console.log('context', context)
+  //   if (!context.isAuthenticated) {
+  //     throw redirect({
+  //       to: '/login',
+  //       search: {
+  //         redirect: location.href,
+  //       },
+  //     })
+  //   }
+  // },
 })
 
 function DashboardComponent() {
