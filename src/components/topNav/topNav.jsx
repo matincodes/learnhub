@@ -28,6 +28,7 @@ const TopNav = ({ title, paragraph }) => {
     })
   }
 
+
   // To see not if the close button will cancel the text input or will return the search to the initial state
   const getLength = e => {
     const inputValue = e.target.value
@@ -49,8 +50,8 @@ const TopNav = ({ title, paragraph }) => {
 
   useEffect(() => {
     localStorage.setItem('openSearchStatus', openSearchStatus)
-    localStorage.setItem('searchValue', searchInputValue)
-  }, [openSearchStatus, searchInputValue])
+    localStorage.setItem('searchValue', searchInputValue)  
+  }, [searchInputValue, openSearchStatus])
 
   function onToggle() {
     setIsOpen(!isOpen)

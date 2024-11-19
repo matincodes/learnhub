@@ -11,13 +11,13 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboar
 function DashboardIndexComponent() {
   return (
     <div className="w-full space-y-6 sm:space-y-10">
-      <div className="grid w-full grid-cols-3 gap-4 sm:gap-8 lg:gap-20">
+      <div className="grid w-full grid-cols-2 gap-4 sm:gap-8 lg:gap-20">
         <Inventory
           title={'Total Courses'}
           metrics={7}
           image="/assets/courses.png"
         />
-        <Inventory
+        {/* <Inventory
           title={'Completed Courses'}
           metrics={
             <p>
@@ -26,7 +26,7 @@ function DashboardIndexComponent() {
             </p>
           }
           image={'/assets/fi-br-list-check.png'}
-        />
+        /> */}
         <Inventory
           title={'Productivity'}
           metrics={'76%'}

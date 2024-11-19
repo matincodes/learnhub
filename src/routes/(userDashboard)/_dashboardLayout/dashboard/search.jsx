@@ -17,7 +17,6 @@ function Search() {
   const [search, setSearch] = useState(openSearchStatus) // When the search field is active
   const [typeSearch, setTypeSearch] = useState([]) // This is when the user has typed for what they are searching for
   const [searchValue, setSearchValue] = useState([])
-  const prevRoute = window.localStorage.getItem('prevRoute')
 
   // Get the Current State of the search button
   useEffect(() => {
@@ -48,9 +47,7 @@ function Search() {
     }
   }, [])
 
-  const filterRecentCourses = recentSearchedCourses.filter(courses =>
-    courses.title.toLowerCase().includes(searchValue),
-  )
+  
   const filterCourses = searchedCourses.filter(courses =>
     courses.title.toLowerCase().includes(searchValue),
   )
@@ -78,7 +75,7 @@ function Search() {
                   check for typos or try again.
                 </p>
                 <a
-                  href={prevRoute}
+                  // href={prevRoute}
                   className="rounded-xl border-2 border-normal_yellow px-4 py-1 font-san font-[600] text-normal_yellow"
                 >
                   Go back

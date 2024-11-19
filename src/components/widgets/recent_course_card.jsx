@@ -1,7 +1,10 @@
 import { Dot } from 'lucide-react'
 import { cn } from '../../lib/utils'
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { useState } from 'react';
 
 const RecentCourseCard = ({ className, image, title, id, isQuiz }) => {
+  const [isFavorite, setIsFavorite] = useState(false)
   return (
     <div
       className={cn(
@@ -9,12 +12,18 @@ const RecentCourseCard = ({ className, image, title, id, isQuiz }) => {
         className,
       )}
     >
-      <div className="h-[120px] w-full sm:h-[141px] 2xl:h-[180px]">
+      <div className="h-[120px] relative w-full sm:h-[141px] 2xl:h-[180px]">
         <img
           src={image}
           className="h-full w-full rounded-t-lg object-cover"
           alt=""
         />
+        <button
+        onClick={() => setIsFavorite(!isFavorite)}
+        className='absolute top-2 right-2 text-white'
+        >
+          {isFavorite ?<IoMdHeart size={22}/> : <IoMdHeartEmpty size={22}/>}
+        </button>
       </div>
       <h3
         className={cn(
