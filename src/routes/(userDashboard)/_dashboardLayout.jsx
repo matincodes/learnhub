@@ -2,13 +2,9 @@ import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
 import { topNavData } from '@/data/topNav'
 import { cn } from '@/lib/utils'
-import {
-  createFileRoute,
-  Outlet,
-  redirect,
-  useLocation,
-} from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
+import BottomNav from '../../components/bottomNav/bottomNav'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
@@ -34,7 +30,7 @@ function DashboardComponent() {
   }
 
   return (
-    <div className="h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
+    <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       <TopNav
         title={topNavData[pathname]?.title}
         paragraph={topNavData[pathname]?.paragraph}
@@ -48,6 +44,7 @@ function DashboardComponent() {
         <Outlet />
       </div>
       <SideNav isNav={isNav} close={onClose} />
+      <BottomNav />
     </div>
   )
 }
