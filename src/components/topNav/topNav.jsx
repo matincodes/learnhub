@@ -47,12 +47,11 @@ const TopNav = ({ title, paragraph }) => {
       setInputLength(0)
     }
   }
-  
+
   useEffect(() => {
     localStorage.setItem('openSearchStatus', openSearchStatus)
     localStorage.setItem('searchValue', searchInputValue)  
   }, [searchInputValue, openSearchStatus])
-
 
   function onToggle() {
     setIsOpen(!isOpen)
@@ -90,7 +89,7 @@ const TopNav = ({ title, paragraph }) => {
                   placeholder="Search here"
                   className="border-none bg-transparent outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
                   autoFocus
-                value = {searchInputValue}
+                  value={searchInputValue}
                   onClick={openSearch}
                   onChange={getLength}
                 />
@@ -148,13 +147,13 @@ const TopNav = ({ title, paragraph }) => {
         </div>
 
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
-          <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-[#F7AE30]">
+          <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow">
             <Input
               type="text"
               id="search"
               placeholder="Search here"
               className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-              value = {searchInputValue}
+              value={searchInputValue}
               onFocus={openSearch}
               onChange={getLength}
             />

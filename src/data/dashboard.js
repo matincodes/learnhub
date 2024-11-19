@@ -1,14 +1,21 @@
 export const recentCourses = [
-  { id: 1, title: 'UI/UX Design Principles', image: '/assets/recent1.png' },
-  {id:2,
+  { 
+    id: 1, 
+    title: 'UI/UX Design Principles', 
+    image: '/assets/recent1.png' 
+  },
+  {
+    id:2,
     title: 'Mobile App Development with React-Native',
     image: '/assets/recent2.png',
   },
-  {id:3,
+  {
+    id:3,
     title: 'Javascript: The Complete Guide for Developers',
     image: '/assets/recent3.png',
   },
-  {id:4,
+  {
+    id:4,
     title: 'Frontend Web Development with MERN Stack',
     image: '/assets/recent4.png',
   },

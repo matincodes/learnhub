@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 const NavBar = e => {
+  // TODO: remove unnecessary navState var
   const navState = 'none'
   const data = window.localStorage.getItem('user')
   const user = JSON.parse(data)
@@ -20,7 +21,7 @@ const NavBar = e => {
         <Link to="/">
           <img
             src="/assets/learnhub-logo.svg"
-            className="absolute top-[20px] right-[145px] lg:top-0 lg:right-0 w-[120px] lg:relative lg:w-[150px]"
+            className="absolute right-[145px] top-[20px] w-[120px] lg:relative lg:right-0 lg:top-0 lg:w-[150px]"
           />
         </Link>
 
@@ -147,15 +148,15 @@ const NavBar = e => {
         <div className="hidden w-[15%] justify-around lg:flex">
           {user === null ? (
             <>
-              <Button asChild>
-                <Link to="/login" className="bg-[#e5f5ee59] font-san">
+              <Button  className="bg-[#e5f5ee59] font-san" asChild>
+                <Link to="/login">
                   Log in
                 </Link>
               </Button>
-              <Button asChild>
+              <Button className="rounded-xl bg-normal_green font-san text-white shadow-md" asChild>
                 <Link
                   to="/signup"
-                  className="rounded-xl bg-normal_green font-san text-white shadow-md"
+                  
                 >
                   Sign Up
                 </Link>
