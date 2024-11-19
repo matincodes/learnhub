@@ -23,8 +23,8 @@ const Login = () => {
     if (await login(data)) {
       reset()
       router.invalidate()
-      if (redirect) router.push('/dashboard')
-      else router.history.push(redirect)
+      if (redirect) router.history.push(redirect)
+      else router.navigate({ to: '/dashboard' })
     } else {
       setIsLoading(false)
       return toast({

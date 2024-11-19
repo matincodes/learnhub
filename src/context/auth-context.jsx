@@ -4,7 +4,9 @@ import { createContext, useContext, useState } from 'react'
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem('learnhub-user')),
+  )
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accessToken'),
   )
@@ -12,21 +14,20 @@ export const AuthProvider = ({ children }) => {
 
   const login = async ({ email, password }) => {
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         'https://coderina.onrender.com/api/students/login/',
         { email, password },
       )
 
-      const data = await response.json()
       const user = {
         name: `${data.first_name} ${data.last_name}`,
         email: data.email,
       }
       setUser(user)
-      setAccessToken(data.tokens.accessToken)
-      localStorage.setItem('user', JSON.stringify(user))
-      localStorage.setItem('accessToken', data.tokens.accessToken)
-      localStorage.setItem('refreshToken', data.tokens.refreshToken) // Store the refresh token
+      setAccessToken(data.tokens.access)
+      localStorage.setItem('learnhub-user', JSON.stringify(user))
+      localStorage.setItem('accessToken', data.tokens.access)
+      localStorage.setItem('refreshToken', data.tokens.refresh) // Store the refresh token
       setIsAuthenticated(true)
       return true
     } catch (error) {
@@ -44,21 +45,20 @@ export const AuthProvider = ({ children }) => {
     confirm_password,
   }) => {
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         'https://coderina.onrender.com/api/students/signup/',
-        { first_name, last_name, email, password, confirm_password },
+        { user: { first_name, last_name, email, password, confirm_password } },
       )
 
-      const data = await response.json()
       const user = {
         name: `${data.first_name} ${data.last_name}`,
         email: data.email,
       }
       setUser(user)
-      setAccessToken(data.tokens.accessToken)
-      localStorage.setItem('user', JSON.stringify(user))
-      localStorage.setItem('accessToken', data.tokens.accessToken)
-      localStorage.setItem('refreshToken', data.tokens.refreshToken) // Store the refresh token
+      setAccessToken(data.tokens.access)
+      localStorage.setItem('learnhub-user', JSON.stringify(user))
+      localStorage.setItem('accessToken', data.tokens.access)
+      localStorage.setItem('refreshToken', data.tokens.refresh) // Store the refresh token
       setIsAuthenticated(true)
       return true
     } catch (error) {
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null)
     setAccessToken(null)
     setIsAuthenticated(false)
-    localStorage.removeItem('user')
+    localStorage.removeItem('learnhub-user')
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
   }
