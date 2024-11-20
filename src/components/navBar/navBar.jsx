@@ -1,15 +1,4 @@
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { navLinks } from '@/data/NavBar'
 import { Link } from '@tanstack/react-router'
 import { CiSearch } from 'react-icons/ci'
@@ -58,38 +47,12 @@ const NavBar = e => {
                   Home
                 </Link>
 
-                <DropdownMenu className="font-san">
-                  <DropdownMenuTrigger
-                    asChild
-                    className="rounded-none pb-7 pt-7 !outline-none !ring-0 focus:bg-transparent lg:flex lg:p-0"
-                  >
-                    <Button className="justify-start pl-0 font-san text-[16px] font-normal">
-                      Courses
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-14 bg-white">
-                    {navLinks.map(links => (
-                      <DropdownMenuSub key={uuidv4()}>
-                        <DropdownMenuSubTrigger>
-                          {' '}
-                          {links.name}{' '}
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="">
-                            <DropdownMenuLabel className="font-normal text-[#848484]">
-                              Sub Courses
-                            </DropdownMenuLabel>
-                            {links.subcourses.map(item => (
-                              <DropdownMenuItem key={uuidv4()}>
-                                <Link to={'/'}> {item.name} </Link>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Link
+                  to="/courses"
+                  className="p-1 pl-0 font-san text-[16px] outline-0 lg:flex lg:p-0"
+                >
+                  Courses
+                </Link>
 
                 <Link
                   to="/pricing"
@@ -113,38 +76,13 @@ const NavBar = e => {
                   Home
                 </Link>
 
-                <DropdownMenu className="font-san">
-                  <DropdownMenuTrigger
-                    asChild
-                    className="rounded-none pb-3 pt-3 !outline-none !ring-0 focus:bg-transparent lg:flex lg:p-0"
-                  >
-                    <Button className="justify-start pl-0 font-inter text-[16px] font-semibold">
-                      Courses
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-14 bg-white">
-                    {navLinks.map(links => (
-                      <DropdownMenuSub key={uuidv4()}>
-                        <DropdownMenuSubTrigger>
-                          {' '}
-                          {links.name}{' '}
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="">
-                            <DropdownMenuLabel className="font-normal text-[#848484]">
-                              Sub Courses
-                            </DropdownMenuLabel>
-                            {links.subcourses.map(item => (
-                              <DropdownMenuItem key={uuidv4()}>
-                                <Link to={'/'}> {item.name} </Link>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Link
+                  to="/courses"
+                  className="p-1 pl-0 font-inter text-[16px] font-semibold outline-0 lg:flex lg:p-0"
+                >
+                  Courses
+                </Link>
+                
 
                 <Link
                   to="/pricing"
@@ -210,15 +148,15 @@ const NavBar = e => {
         <div className="hidden w-[15%] justify-around lg:flex">
           {user === null ? (
             <>
-              <Button asChild>
-                <Link to="/login" className="bg-[#e5f5ee59] font-san">
+              <Button  className="bg-[#e5f5ee59] font-san" asChild>
+                <Link to="/login">
                   Log in
                 </Link>
               </Button>
-              <Button asChild>
+              <Button className="rounded-xl bg-normal_green font-san text-white shadow-md" asChild>
                 <Link
                   to="/signup"
-                  className="rounded-xl bg-normal_green font-san text-white shadow-md"
+                  
                 >
                   Sign Up
                 </Link>

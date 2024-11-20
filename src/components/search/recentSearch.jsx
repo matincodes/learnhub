@@ -20,7 +20,7 @@ const RecentSearch = () => {
      }, [])
 
      return (
-          <div className="relative z-50 space-y-12 rounded-lg bg-white p-6">
+          <div className="relative z-10 space-y-12 rounded-lg bg-white p-6">
           <div className="flex justify-between">
             <p className="text-[14px] font-[600]">Recent Searches</p>
 

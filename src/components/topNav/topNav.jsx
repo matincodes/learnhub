@@ -28,6 +28,7 @@ const TopNav = ({ title, paragraph }) => {
     })
   }
 
+
   // To see not if the close button will cancel the text input or will return the search to the initial state
   const getLength = e => {
     const inputValue = e.target.value
@@ -49,8 +50,8 @@ const TopNav = ({ title, paragraph }) => {
 
   useEffect(() => {
     localStorage.setItem('openSearchStatus', openSearchStatus)
-    localStorage.setItem('searchValue', searchInputValue)
-  }, [openSearchStatus, searchInputValue])
+    localStorage.setItem('searchValue', searchInputValue)  
+  }, [searchInputValue, openSearchStatus])
 
   function onToggle() {
     setIsOpen(!isOpen)
@@ -108,7 +109,11 @@ const TopNav = ({ title, paragraph }) => {
 
             {openSearchStatus === false ? (
               <div className="flex items-center justify-evenly space-x-3">
-                <Link href="" className="rounded-full bg-white p-[7px]">
+                <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
+                  <p className="font-semibold">10</p>
+                  <img src="/assets/fire.svg" alt="" />
+                </button>
+                <Link href="" className="rounded-full p-[7px]">
                   <img src="/assets/Vector.svg" alt="" />
                 </Link>
                 <button>
