@@ -2,20 +2,8 @@ import { Separator } from '@/components/ui/separator'
 import { navLinks } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
 
-const SideNav = ({ close }) => {
-  const [user, setUser] = useState('')
-  const data = window.localStorage.getItem('user')
-
-  useEffect(() => {
-    if(!data){
-      setUser({image: '/assets/profile.png'})
-    }
-    else{
-      setUser(JSON.parse(data))
-    }
-  }, [data])
+const SideNav = () => {
 
   const { pathname } = useLocation()
 
@@ -27,7 +15,11 @@ const SideNav = ({ close }) => {
             <Link to="/dashboard/profile" className="flex">
               <div className="grid basis-[50%] place-content-center">
                 <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
-                  <img src={user?.image} alt="" className="object-cover" />
+                  <img
+                    src="/assets/profile.png"
+                    alt="profile image"
+                    className="object-cover"
+                  />
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
@@ -43,7 +35,6 @@ const SideNav = ({ close }) => {
                 return (
                   <li key={name} className={'w-full'}>
                     <Link
-                      onClick={close}
                       to={link}
                       className={cn(
                         'relative flex w-full items-center p-3 font-medium',
@@ -75,7 +66,6 @@ const SideNav = ({ close }) => {
 
           <div className="flex w-full items-center justify-center px-3">
             <Link
-              onClick={close}
               to={'/dashboard/settings'}
               activeProps={{
                 className: 'rounded-xl bg-gray-200 font-semibold',
