@@ -1,33 +1,32 @@
+import BottomNav from '@/components/bottomNav/bottomNav'
 import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
 import { topNavData } from '@/data/topNav'
 import { cn } from '@/lib/utils'
-import { createFileRoute, Outlet, redirect, useLocation } from '@tanstack/react-router'
-import { useState } from 'react'
-import BottomNav from '../../components/bottomNav/bottomNav'
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useLocation,
+} from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
-  // beforeLoad: ({ context, location }) => {
-  //   console.log('context', context)
-  //   if (!context.isAuthenticated) {
-  //     throw redirect({
-  //       to: '/login',
-  //       search: {
-  //         redirect: location.href,
-  //       },
-  //     })
-  //   }
-  // },
+  beforeLoad: ({ context, location }) => {
+    console.log('context', context)
+    if (!context.isAuthenticated) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+  },
 })
 
 function DashboardComponent() {
-  const [isNav, setNav] = useState(false)
   const { pathname } = useLocation()
-
-  function onClose() {
-    setNav(!isNav)
-  }
 
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
@@ -43,7 +42,7 @@ function DashboardComponent() {
       >
         <Outlet />
       </div>
-      <SideNav isNav={isNav} close={onClose} />
+      <SideNav />
       <BottomNav />
     </div>
   )
