@@ -15,49 +15,53 @@ function LeaderBoard() {
       </h2>
 
       <table className="w-full">
-        <thead className="mb-3 grid w-full grid-cols-6">
-          <tr className="text-[13px] font-semibold uppercase text-gray-400">
-            Rank
-          </tr>
-          <tr className="col-span-2 text-[13px] font-semibold uppercase text-gray-400">
-            Name
-          </tr>
-          <tr className="text-[13px] font-semibold uppercase text-gray-400">
-            Quiz Attempt
-          </tr>
-          <tr className="text-[13px] font-semibold uppercase text-gray-400">
-            Total Hours
-          </tr>
-          <tr className="text-[13px] font-semibold uppercase text-gray-400">
-            Point(XP)
+        <thead className="w-full">
+          <tr className="mb-3 grid w-full grid-cols-6">
+            <td className="text-[13px] font-semibold uppercase text-gray-400">
+              Rank
+            </td>
+            <td className="col-span-2 text-[13px] font-semibold uppercase text-gray-400">
+              Name
+            </td>
+            <td className="text-[13px] font-semibold uppercase text-gray-400">
+              Quiz Attempt
+            </td>
+            <td className="text-[13px] font-semibold uppercase text-gray-400">
+              Total Hours
+            </td>
+            <td className="text-[13px] font-semibold uppercase text-gray-400">
+              Point(XP)
+            </td>
           </tr>
         </thead>
-        {leaderboardData.map((value, index) => (
-          <tbody className="mb-3 grid w-full grid-cols-6 items-center rounded-md bg-gray-100 p-4 font-medium">
-            <tr>
-              {index + 1 === 1 ? (
-                <img src="/assets/goldbadge.svg" alt="" />
-              ) : index + 1 === 2 ? (
-                <img src="/assets/silverbadge.svg" alt="" />
-              ) : index + 1 === 3 ? (
-                <img src="/assets/bronzebadge.svg" alt="" />
-              ) : (
-                index + 1
-              )}
+        <tbody className="w-full">
+          {leaderboardData.map((value, index) => (
+            <tr className="mb-3 grid w-full grid-cols-6 items-center rounded-md bg-gray-100 p-4 font-medium">
+              <td>
+                {index + 1 === 1 ? (
+                  <img src="/assets/goldbadge.svg" alt="" />
+                ) : index + 1 === 2 ? (
+                  <img src="/assets/silverbadge.svg" alt="" />
+                ) : index + 1 === 3 ? (
+                  <img src="/assets/bronzebadge.svg" alt="" />
+                ) : (
+                  index + 1
+                )}
+              </td>
+              <td className="col-span-2 grid grid-cols-6 items-center gap-2">
+                <img
+                  src={value.image}
+                  alt=""
+                  className="h-10 w-10 rounded-full"
+                />
+                <p className="col-span-5">{value.name}</p>
+              </td>
+              <td>{value.quizAttempts}</td>
+              <td>{value.totalHours}</td>
+              <td>{value.points}</td>
             </tr>
-            <tr className="col-span-2 grid grid-cols-6 items-center gap-2">
-              <img
-                src={value.image}
-                alt=""
-                className="h-10 w-10 rounded-full"
-              />
-              <p className="col-span-5">{value.name}</p>
-            </tr>
-            <tr>{value.quizAttempts}</tr>
-            <tr>{value.totalHours}</tr>
-            <tr>{value.points}</tr>
-          </tbody>
-        ))}
+          ))}
+        </tbody>
       </table>
     </div>
   )
