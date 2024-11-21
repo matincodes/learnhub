@@ -37,7 +37,7 @@ function DashboardComponent() {
 
       <div
         className={cn(
-          'relative bottom-24 h-full overflow-scroll bg-gray-100 px-2 pb-14 sm:px-4 lg:float-right lg:h-fit lg:w-[calc(100%-280px)] lg:px-10 lg:pt-28',
+          'relative max-lg:bottom-24 h-full overflow-scroll bg-gray-100 px-2 pb-14 sm:px-4 lg:float-right lg:h-fit lg:w-[calc(100%-280px)] lg:px-10 lg:pt-28',
         )}
       >
         <Outlet />
