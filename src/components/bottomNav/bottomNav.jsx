@@ -1,32 +1,23 @@
 import { navLinks } from '@/data/sideNav'
-import { cn, isActive } from '@/lib/utils'
+import { isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
 
 export default function BottomNav() {
   const { pathname } = useLocation()
 
   return (
-    <nav className="absolute inset-x-0 bottom-0 flex flex-row items-center justify-between lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 flex h-24 flex-row items-center justify-around bg-white lg:hidden">
       {navLinks.map(({ link, name, iconImage }) => {
         return (
-          <div key={name} className="w-full">
+          <div key={name} className="flex items-center justify-center p-3">
             <Link
-              onClick={close}
               to={link}
-              className={cn(
-                'relative flex w-full items-center p-3 font-medium',
-                {
-                  'font-semibold': isActive(
-                    pathname,
-                    link,
-                  ),
-                },
-              )}
+              className="relative flex items-center justify-center p-2"
             >
               {isActive(pathname, link) && (
-                <div className="absolute bottom-[-4px] size-4 rounded-full " />
+                <div className="absolute bottom-0 size-1 rounded-full bg-black" />
               )}
-              <img src={iconImage} alt="icon" />
+              <img src={iconImage} alt={name} />
             </Link>
           </div>
         )
