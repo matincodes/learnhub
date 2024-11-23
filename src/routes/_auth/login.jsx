@@ -2,8 +2,8 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/login')({
@@ -112,14 +112,10 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <input
-                  type="password"
+                <PasswordInput
                   {...register('password', { required: true })}
                   id="password"
-                  placeholder="Enter password"
-                  className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                 />
-
                 <div className="mt-1 flex items-center justify-between">
                   <div className="flex items-center space-x-1">
                     <input
@@ -175,3 +171,28 @@ const Login = () => {
     </div>
   )
 }
+
+const PasswordInput = forwardRef(({ ...props }, ref) => {
+  const [showPassword, setShowPassword] = useState(false)
+
+  return (
+    <div className="relative flex-1">
+      <input
+        type={showPassword ? 'text' : 'password'}
+        ref={ref}
+        {...props}
+        placeholder="Enter password"
+        className="w-full rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
+      />
+      <button
+        className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+    </div>
+  )
+})
+
+PasswordInput.displayName = 'PasswordInput'
