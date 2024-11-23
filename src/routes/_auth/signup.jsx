@@ -27,7 +27,9 @@ const SignUp = () => {
     if (await signup(data)) {
       reset()
       router.invalidate()
-      router.push('/dashboard')
+      router.navigate({
+        to: '/dashboard',
+      })
     } else {
       setIsLoading(false)
       return toast({
