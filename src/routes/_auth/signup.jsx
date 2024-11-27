@@ -7,10 +7,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/signup')({
-  component: () => SignUp(),
+  component: SignUp,
 })
 
-const SignUp = () => {
+function SignUp() {
   const {
     register,
     handleSubmit,

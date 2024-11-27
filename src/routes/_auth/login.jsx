@@ -7,16 +7,16 @@ import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/login')({
-  component: () => Login(),
+  component: Login,
 })
 
-const Login = () => {
+function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, reset } = useForm()
   const { login } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
-  const { redirect } = Route.useSearch()
+  const redirect = Route.useSearch({ select: s => s.redirect })
 
   const onSubmit = async data => {
     setIsLoading(true)
