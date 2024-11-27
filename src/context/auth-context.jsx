@@ -20,7 +20,8 @@ export const AuthProvider = ({ children }) => {
       )
 
       const user = {
-        name: `${data.first_name} ${data.last_name}`,
+        firstName: data.first_name,
+        lastName: data.last_name,
         email: data.email,
       }
       setUser(user)
@@ -51,7 +52,8 @@ export const AuthProvider = ({ children }) => {
       )
 
       const user = {
-        name: `${data.first_name} ${data.last_name}`,
+        firstName: data.first_name,
+        lastName: data.last_name,
         email: data.email,
       }
       setUser(user)
