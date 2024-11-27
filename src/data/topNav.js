@@ -1,6 +1,6 @@
 export const topNavData = {
   '/dashboard': {
-    title: `Welcome Back, ${JSON.parse(localStorage.getItem('learnhub-user'))?.firstName} 👋`,
+    title: 'Welcome Back,',
     paragraph: 'What would you love to learn today?',
   },
   '/dashboard/my-courses': {
