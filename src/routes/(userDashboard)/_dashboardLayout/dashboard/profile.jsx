@@ -8,7 +8,7 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboar
   component: Profile,
 })
 
-const Profile = () => {
+function Profile() {
   const [profile, setProfile] = useState('')
   const [buttonState, setButtonState] = useState(false)
   const [editFormState, setEditFormState] = useState(false)
