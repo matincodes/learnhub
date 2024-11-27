@@ -60,7 +60,7 @@ const TopNav = () => {
     setIsOpen(!isOpen)
   }
   return (
-    <div className="right-0 z-50 flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right">
+    <div className="flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right">
       <div className="flex w-full flex-col items-start gap-y-4 p-2 lg:hidden">
         <div className="flex w-full items-center justify-between">
           {openSearchStatus === false && (
@@ -110,7 +110,7 @@ const TopNav = () => {
             )}
             {/* responsive Input Search */}
 
-            {openSearchStatus === false ? (
+            {openSearchStatus === false && (
               <div className="flex items-center justify-evenly space-x-3">
                 <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
                   <p className="font-semibold">10</p>
@@ -119,16 +119,11 @@ const TopNav = () => {
                 <Link href="" className="rounded-full p-[7px]">
                   <img src="/assets/Vector.svg" alt="" />
                 </Link>
-                <button>
-                  <img src={'/assets/fi-br-menu-burger.png'} alt="" />
-                </button>
               </div>
-            ) : (
-              <div className="hidden"></div>
             )}
           </div>
         </div>
-        
+
         <div className="my-5 flex flex-col items-start justify-start">
           <h2 className="flex text-lg font-semibold sm:text-2xl">
             {pathname != '/dashboard' && (
