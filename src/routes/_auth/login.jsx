@@ -24,7 +24,7 @@ const Login = () => {
       reset()
       router.invalidate()
       if (redirect) router.history.push(redirect)
-      else router.navigate({ to: '/dashboard' })
+      else router.navigate({ to: '/' })
     } else {
       setIsLoading(false)
       return toast({

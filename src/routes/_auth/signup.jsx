@@ -28,7 +28,7 @@ const SignUp = () => {
       reset()
       router.invalidate()
       router.navigate({
-        to: '/dashboard',
+        to: '/',
       })
     } else {
       setIsLoading(false)
