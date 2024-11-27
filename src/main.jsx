@@ -21,6 +21,7 @@ const router = createRouter({
     authFetch: undefined,
     accessToken: undefined,
   },
+  defaultStructuralSharing: true,
 })
 
 // Render the app
