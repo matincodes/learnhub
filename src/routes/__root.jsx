@@ -1,4 +1,5 @@
 import { Toaster } from '@/components/ui/toaster'
+import { ScrollRestoration } from '@tanstack/react-router'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { lazy, Suspense } from 'react'
 
@@ -19,6 +20,7 @@ export const Route = createRootRoute({
     <>
       <Outlet />
       <Toaster />
+      <ScrollRestoration getKey={location => location.pathname} />
       <Suspense>
         <TanStackRouterDevtools />
       </Suspense>
