@@ -1,8 +1,10 @@
 import { Input } from '@/components/ui/input'
+import { topNavData } from '@/data/topNav'
 import {
   Link,
   useLocation,
   useNavigate,
+  useRouteContext,
   useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
@@ -10,15 +12,17 @@ import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
 import NotificationModal from './notificationModal'
 
-const TopNav = ({ title, paragraph }) => {
+const TopNav = () => {
   const [openSearchStatus, setOpenSearchStatus] = useState(false)
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
 
   const router = useRouter()
-  const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const navigate = useNavigate()
+  const firstName = useRouteContext({ select: s => s.user?.firstName })
+  const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
+  const title = topNavData[pathname]?.title
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
   const openSearch = () => {
@@ -124,12 +128,23 @@ const TopNav = ({ title, paragraph }) => {
             )}
           </div>
         </div>
-        {title && (
-          <div className="my-5 flex flex-col items-start justify-start">
-            <h2 className="flex text-lg font-semibold sm:text-2xl">{title}</h2>
-            <p className="empty:hidden">{paragraph}</p>
-          </div>
-        )}
+        
+        <div className="my-5 flex flex-col items-start justify-start">
+          <h2 className="flex text-lg font-semibold sm:text-2xl">
+            {pathname != '/dashboard' && (
+              <img
+                src="/assets/arrow-left-01.svg"
+                onClick={() => router.history.back()}
+                className="cursor-pointer"
+                alt="arrow left"
+              />
+            )}
+            {title}
+          </h2>
+          {pathname === '/dashboard' && (
+            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+          )}
+        </div>
       </div>
 
       {/* Desktop View */}
@@ -146,7 +161,9 @@ const TopNav = ({ title, paragraph }) => {
             )}
             {title}
           </h2>
-          <p className="empty:hidden">{paragraph}</p>
+          {pathname === '/dashboard' && (
+            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+          )}
         </div>
 
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
