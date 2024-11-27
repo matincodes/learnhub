@@ -4,8 +4,7 @@ import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
 
 const SideNav = () => {
-
-  const { pathname } = useLocation()
+  const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">

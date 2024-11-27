@@ -15,11 +15,11 @@ const TopNav = ({ title, paragraph }) => {
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
+
   const router = useRouter()
-  const pathname = useLocation({
-    select: location => location.pathname,
-  })
+  const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const navigate = useNavigate()
+
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
   const openSearch = () => {
     setOpenSearchStatus(true)
@@ -27,7 +27,6 @@ const TopNav = ({ title, paragraph }) => {
       to: '/dashboard/search',
     })
   }
-
 
   // To see not if the close button will cancel the text input or will return the search to the initial state
   const getLength = e => {
@@ -50,7 +49,7 @@ const TopNav = ({ title, paragraph }) => {
 
   useEffect(() => {
     localStorage.setItem('openSearchStatus', openSearchStatus)
-    localStorage.setItem('searchValue', searchInputValue)  
+    localStorage.setItem('searchValue', searchInputValue)
   }, [searchInputValue, openSearchStatus])
 
   function onToggle() {
@@ -136,7 +135,7 @@ const TopNav = ({ title, paragraph }) => {
       {/* Desktop View */}
       <div className="hidden w-full items-center justify-between lg:flex">
         <div className="flex flex-col items-start justify-start">
-          <h2 className="flex items-center text-nowrap text-3xl font-semibold lg:text-2xl">
+          <h2 className="flex items-center text-nowrap text-3xl font-semibold capitalize lg:text-2xl">
             {pathname != '/dashboard' && (
               <img
                 src="/assets/arrow-left-01.svg"
