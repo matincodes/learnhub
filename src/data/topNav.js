@@ -1,7 +1,6 @@
 export const topNavData = {
   '/dashboard': {
-    title: 'Welcome Back,',
-    paragraph: 'What would you love to learn today?',
+    title: 'Dashboard'
   },
   '/dashboard/my-courses': {
     title: 'Courses',
