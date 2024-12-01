@@ -1,14 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { leaderboardData } from '../../../../data/leaderboard'
-import { IoArrowBack, IoArrowForward } from 'react-icons/io5'
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getPaginationRowModel,
-} from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
-
 import {
   Table,
   TableBody,
@@ -17,6 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { leaderboardData } from '@/data/leaderboard'
+import { createFileRoute } from '@tanstack/react-router'
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { IoArrowBack, IoArrowForward } from 'react-icons/io5'
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/leaderboard',
@@ -100,9 +99,7 @@ function DataTable({ data, columns }) {
               <IoArrowBack size={22} />
             </Button>
             <div className="flex items-center gap-1 font-medium text-gray-500">
-              <span>
-                {table.getState().pagination.pageIndex + 1}
-              </span>{' '}
+              <span>{table.getState().pagination.pageIndex + 1}</span>
               <span>of</span> <span>{table.getPageCount()}</span>
             </div>
             <Button
@@ -204,8 +201,6 @@ const columns = [
 ]
 
 function LeaderBoard() {
-  ;['Rank', 'Name', 'Quiz Attempt', 'Total Hours', 'Points (XP)']
-
   return (
     <div className="mx-auto w-full max-w-[1300px] rounded-xl bg-white p-4 sm:p-6">
       <h2 className="mb-4 text-base font-semibold sm:mb-6 sm:text-2xl">
