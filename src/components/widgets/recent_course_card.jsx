@@ -18,12 +18,12 @@ const RecentCourseCard = ({ className, image, title, id, isQuiz }) => {
           className="h-full w-full rounded-t-lg object-cover"
           alt=""
         />
-        <button
+       {!isQuiz && <button
         onClick={() => setIsFavorite(!isFavorite)}
         className='absolute top-2 right-2 text-white'
         >
           {isFavorite ?<IoMdHeart size={22}/> : <IoMdHeartEmpty size={22}/>}
-        </button>
+        </button>}
       </div>
       <h3
         className={cn(
@@ -40,15 +40,16 @@ const RecentCourseCard = ({ className, image, title, id, isQuiz }) => {
           <span> 50 minutes</span>
         </p>
 
-        {isQuiz && (
+       
+      </div>
+      {isQuiz && (
           <button
             onClick={() => window.open(`/dashboard/quizzes/${id}`, '_self')}
-            className="text-xs font-medium text-normal_yellow sm:text-[13px]"
+            className="text-xs font-medium border border-normal_yellow rounded-lg w-full h-12 mt-2 text-normal_yellow sm:text-[13px]"
           >
             Start Quiz
           </button>
         )}
-      </div>
     </div>
   )
 }
