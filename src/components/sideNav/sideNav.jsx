@@ -1,10 +1,13 @@
 import { Separator } from '@/components/ui/separator'
-import { navLinks } from '@/data/sideNav'
+import { navLinks,  } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
-import { Link, useLocation } from '@tanstack/react-router'
+import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 
 const SideNav = () => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
+  const firstName = useRouteContext({ select: s => s.user?.firstName })
+  const lastName = useRouteContext({ select: s => s.user?.lastName })
+  // const title = topNavData[pathname]?.title
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
@@ -22,7 +25,7 @@ const SideNav = () => {
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
-                <p className="font-semibold">Abisola Elizabeth</p>
+                <p className="font-semibold">{lastName} {firstName}</p>
                 <p className="text-xs sm:text-sm">View Profile</p>
               </div>
             </Link>

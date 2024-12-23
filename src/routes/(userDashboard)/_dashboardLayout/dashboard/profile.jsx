@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useRouteContext } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
@@ -16,7 +16,9 @@ function Profile() {
   const firstNameRef = useRef()
   const lastNameRef = useRef()
   const emailRef = useRef()
-
+  const firstName = useRouteContext({ select: s => s.user?.firstName })
+  const lastName = useRouteContext({ select: s => s.user?.lastName })
+  const email = useRouteContext({ select: s => s.user?.email })
 
   // Change Image
   const handleImageChange = () =>{
@@ -94,7 +96,7 @@ function Profile() {
               />
             </div>
             <p className="text-center font-san text-[18px] font-medium">
-              Abisola Elizabeth
+              {lastName} {firstName}
             </p>
           </div>
           {/* Image and name */}
@@ -192,11 +194,11 @@ function Profile() {
             </label>
             <div className="basis-full flex justify-between gap-4">
             <input
-              id="firstName"
-              placeholder="Abisola"
+              id="lastName"
+              placeholder={lastName}
               type="text"
-              ref={firstNameRef}
-              onChange={() => handleInputTextChange(firstNameRef)}
+              ref={lastNameRef}
+              onChange={() => handleInputTextChange(lastNameRef)}
               // readOnly = {inputFocusState}
               className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
@@ -215,10 +217,10 @@ function Profile() {
             <div className="basis-full flex justify-between gap-4">
             <input
               id="lastName"
-              placeholder="Elizabeth"
+              placeholder={firstName}
               type="text"
-              ref={lastNameRef}
-              onChange={() => handleInputTextChange(lastNameRef)}
+              ref={firstNameRef}
+              onChange={() => handleInputTextChange(firstNameRef)}
               // readOnly = {inputFocusState}
               className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
@@ -238,7 +240,7 @@ function Profile() {
           <div className="basis-full flex justify-between gap-4">
             <input
               id="email"
-              placeholder="Anifowsekb@gmail.com"
+              placeholder={email}
               type="email"
               ref={emailRef}
               onChange={() => handleInputTextChange(emailRef)}

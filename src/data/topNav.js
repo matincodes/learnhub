@@ -5,8 +5,8 @@ export const topNavData = {
   '/dashboard/my-courses': {
     title: 'Courses',
   },
-  '/dashboard/analytics': {
-    title: 'Analytics',
+  '/dashboard/mentor': {
+    title: 'Book A Mentor',
   },
   '/dashboard/leaderboard': {
     title: 'Leader Board',

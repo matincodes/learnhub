@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, useParams, useSearch } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { FiPlus } from 'react-icons/fi'
 import * as React from 'react'
@@ -10,14 +10,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { coursesFilter } from '@/data/courses'
-import { recentCourses } from '@/data/dashboard'
+import { coursesFilter, UserCourses } from '@/data/userCourses'
+
+
+
 import RecentCourseCard from '@/components/widgets/recent_course_card'
-export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/my-courses')({
+import { useEffect } from 'react'
+export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/my-courses/')({
   component: MyCourses,
 })
 
 function MyCourses() {
+  const {course_title} = useSearch('')
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(course_title){
+      navigate({to: `${location.pathname}/${course_title}`})
+    }
+    else{
+      console.log('dfdf')
+    }
+  }, [course_title, navigate])
+
+
+
   return (
     <div className="w-full rounded-xl bg-white p-4 sm:p-6">
       <div className="mb-10 flex w-full items-center justify-between sm:mb-12">
@@ -47,13 +64,15 @@ function MyCourses() {
         </Button>
       </div>
 
-      <div className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-10 lg:grid-cols-2 xl:grid-cols-4">
-        {recentCourses.map((item, index) => (
+      <div className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-5 lg:grid-cols-2 xl:grid-cols-4">
+        {UserCourses.map((item, index) => (
+          <a href={`/dashboard/my-courses/?course_title=${item.title}`} key={index} >
           <RecentCourseCard
-            className="w-full sm:w-full"
-            key={index}
+            className="w-full sm:w-full "
             {...item}
           />
+          </a>
+          
         ))}
       </div>
     </div>
