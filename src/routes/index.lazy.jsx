@@ -84,7 +84,7 @@ function App() {
             className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
             asChild
           >
-            <Link to="/signup"> Get Started </Link>
+            <Link to="/sigup"> View All Courses </Link>
           </Button>
           <Button
             className="w-fit border-2 border-normal_green px-[25px] py-[25px] font-san text-[16px] text-normal_green"
@@ -295,7 +295,7 @@ function App() {
 
                   <img
                     src={'/assets/mockups/Courses_3_lg.svg'}
-                    className="absolute right-[10px] bottom-[10px] hidden w-[650px] rounded-br-xl border-none outline-none lg:flex"
+                    className="absolute right-[10px] bottom-[10px] hidden w-[750px] rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
                   </picture>
@@ -349,7 +349,7 @@ function App() {
 
                   <img
                     src={`/assets/mockups/learnhub_4_large.png`}
-                    className="absolute bottom-2 right-2 hidden w-[150px] lg:w-[250px] rounded-br-xl outline-none lg:flex"
+                    className="absolute bottom-2 right-2 hidden w-[150px] lg:w-[300px] rounded-br-xl outline-none lg:flex"
                     alt=""
                   />
                   </picture>

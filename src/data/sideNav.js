@@ -10,9 +10,9 @@ export const navLinks = [
     iconImage: '/assets/courses.png',
   },
   {
-    link: '/dashboard/analytics',
-    name: 'Analytics',
-    iconImage: '/assets/fi-br-list-check.png',
+    link: '/dashboard/mentor',
+    name: 'Book A Mentor',
+    iconImage: '/assets/fi-br-calendar.png',
   },
   {
     link: '/dashboard/leaderboard',

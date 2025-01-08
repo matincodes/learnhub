@@ -25,11 +25,13 @@ import { Route as userDashboardDashboardLayoutDashboardSettingsImport } from './
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
 import { Route as userDashboardDashboardLayoutDashboardNotificationsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/notifications'
-import { Route as userDashboardDashboardLayoutDashboardMyCoursesImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses'
+import { Route as userDashboardDashboardLayoutDashboardMentorImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/mentor'
 import { Route as userDashboardDashboardLayoutDashboardLeaderboardImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/leaderboard'
-import { Route as userDashboardDashboardLayoutDashboardAnalyticsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/analytics'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/index'
+import { Route as userDashboardDashboardLayoutDashboardMyCoursesIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/index'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIdImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
+import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/index'
+import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid'
 
 // Create Virtual Routes
 
@@ -114,9 +116,9 @@ const userDashboardDashboardLayoutDashboardNotificationsRoute =
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
-const userDashboardDashboardLayoutDashboardMyCoursesRoute =
-  userDashboardDashboardLayoutDashboardMyCoursesImport.update({
-    path: '/dashboard/my-courses',
+const userDashboardDashboardLayoutDashboardMentorRoute =
+  userDashboardDashboardLayoutDashboardMentorImport.update({
+    path: '/dashboard/mentor',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
@@ -126,15 +128,15 @@ const userDashboardDashboardLayoutDashboardLeaderboardRoute =
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
-const userDashboardDashboardLayoutDashboardAnalyticsRoute =
-  userDashboardDashboardLayoutDashboardAnalyticsImport.update({
-    path: '/dashboard/analytics',
-    getParentRoute: () => userDashboardDashboardLayoutRoute,
-  } as any)
-
 const userDashboardDashboardLayoutDashboardQuizzesIndexRoute =
   userDashboardDashboardLayoutDashboardQuizzesIndexImport.update({
     path: '/dashboard/quizzes/',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardMyCoursesIndexRoute =
+  userDashboardDashboardLayoutDashboardMyCoursesIndexImport.update({
+    path: '/dashboard/my-courses/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
 
@@ -143,6 +145,20 @@ const userDashboardDashboardLayoutDashboardQuizzesIdRoute =
     path: '/dashboard/quizzes/$id',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
+
+const userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute =
+  userDashboardDashboardLayoutDashboardMyCoursesIdIndexImport.update({
+    path: '/dashboard/my-courses/$id/',
+    getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute =
+  userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidImport.update(
+    {
+      path: '/dashboard/my-courses/$id/learn/lecture/$lectureid',
+      getParentRoute: () => userDashboardDashboardLayoutRoute,
+    } as any,
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -211,13 +227,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesIndexImport
       parentRoute: typeof rootRoute
     }
-    '/(userDashboard)/_dashboardLayout/dashboard/analytics': {
-      id: '/_dashboardLayout/dashboard/analytics'
-      path: '/dashboard/analytics'
-      fullPath: '/dashboard/analytics'
-      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardAnalyticsImport
-      parentRoute: typeof userDashboardDashboardLayoutImport
-    }
     '/(userDashboard)/_dashboardLayout/dashboard/leaderboard': {
       id: '/_dashboardLayout/dashboard/leaderboard'
       path: '/dashboard/leaderboard'
@@ -225,11 +234,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardLeaderboardImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
-    '/(userDashboard)/_dashboardLayout/dashboard/my-courses': {
-      id: '/_dashboardLayout/dashboard/my-courses'
-      path: '/dashboard/my-courses'
-      fullPath: '/dashboard/my-courses'
-      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesImport
+    '/(userDashboard)/_dashboardLayout/dashboard/mentor': {
+      id: '/_dashboardLayout/dashboard/mentor'
+      path: '/dashboard/mentor'
+      fullPath: '/dashboard/mentor'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMentorImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/notifications': {
@@ -274,11 +283,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIdImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
+    '/(userDashboard)/_dashboardLayout/dashboard/my-courses/': {
+      id: '/_dashboardLayout/dashboard/my-courses/'
+      path: '/dashboard/my-courses'
+      fullPath: '/dashboard/my-courses'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesIndexImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': {
       id: '/_dashboardLayout/dashboard/quizzes/'
       path: '/dashboard/quizzes'
       fullPath: '/dashboard/quizzes'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIndexImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
+    '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/': {
+      id: '/_dashboardLayout/dashboard/my-courses/$id/'
+      path: '/dashboard/my-courses/$id'
+      fullPath: '/dashboard/my-courses/$id'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesIdIndexImport
+      parentRoute: typeof userDashboardDashboardLayoutImport
+    }
+    '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid': {
+      id: '/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid'
+      path: '/dashboard/my-courses/$id/learn/lecture/$lectureid'
+      fullPath: '/dashboard/my-courses/$id/learn/lecture/$lectureid'
+      preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
   }
@@ -293,16 +323,18 @@ export const routeTree = rootRoute.addChildren({
   userDashboardRoute: userDashboardRoute.addChildren({
     userDashboardDashboardLayoutRoute:
       userDashboardDashboardLayoutRoute.addChildren({
-        userDashboardDashboardLayoutDashboardAnalyticsRoute,
         userDashboardDashboardLayoutDashboardLeaderboardRoute,
-        userDashboardDashboardLayoutDashboardMyCoursesRoute,
+        userDashboardDashboardLayoutDashboardMentorRoute,
         userDashboardDashboardLayoutDashboardNotificationsRoute,
         userDashboardDashboardLayoutDashboardProfileRoute,
         userDashboardDashboardLayoutDashboardSearchRoute,
         userDashboardDashboardLayoutDashboardSettingsRoute,
         userDashboardDashboardLayoutDashboardIndexRoute,
         userDashboardDashboardLayoutDashboardQuizzesIdRoute,
+        userDashboardDashboardLayoutDashboardMyCoursesIndexRoute,
         userDashboardDashboardLayoutDashboardQuizzesIndexRoute,
+        userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute,
+        userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute,
       }),
   }),
   CoursesCourseRoute,
@@ -345,16 +377,18 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "(userDashboard)/_dashboardLayout.jsx",
       "parent": "/",
       "children": [
-        "/_dashboardLayout/dashboard/analytics",
         "/_dashboardLayout/dashboard/leaderboard",
-        "/_dashboardLayout/dashboard/my-courses",
+        "/_dashboardLayout/dashboard/mentor",
         "/_dashboardLayout/dashboard/notifications",
         "/_dashboardLayout/dashboard/profile",
         "/_dashboardLayout/dashboard/search",
         "/_dashboardLayout/dashboard/settings",
         "/_dashboardLayout/dashboard/",
         "/_dashboardLayout/dashboard/quizzes/$id",
-        "/_dashboardLayout/dashboard/quizzes/"
+        "/_dashboardLayout/dashboard/my-courses/",
+        "/_dashboardLayout/dashboard/quizzes/",
+        "/_dashboardLayout/dashboard/my-courses/$id/",
+        "/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid"
       ]
     },
     "/_auth/login": {
@@ -371,16 +405,12 @@ export const routeTree = rootRoute.addChildren({
     "/courses/": {
       "filePath": "courses/index.jsx"
     },
-    "/_dashboardLayout/dashboard/analytics": {
-      "filePath": "(userDashboard)/_dashboardLayout/dashboard/analytics.jsx",
-      "parent": "/_dashboardLayout"
-    },
     "/_dashboardLayout/dashboard/leaderboard": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/leaderboard.jsx",
       "parent": "/_dashboardLayout"
     },
-    "/_dashboardLayout/dashboard/my-courses": {
-      "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses.jsx",
+    "/_dashboardLayout/dashboard/mentor": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/mentor.jsx",
       "parent": "/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/notifications": {
@@ -407,8 +437,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/$id.jsx",
       "parent": "/_dashboardLayout"
     },
+    "/_dashboardLayout/dashboard/my-courses/": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses/index.jsx",
+      "parent": "/_dashboardLayout"
+    },
     "/_dashboardLayout/dashboard/quizzes/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/index.jsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/dashboard/my-courses/$id/": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/index.jsx",
+      "parent": "/_dashboardLayout"
+    },
+    "/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid": {
+      "filePath": "(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid.jsx",
       "parent": "/_dashboardLayout"
     }
   }

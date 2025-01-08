@@ -20,9 +20,15 @@ const TopNav = () => {
 
   const router = useRouter()
   const navigate = useNavigate()
-  const firstName = useRouteContext({ select: s => s.user?.firstName })
+  // const firstName = useRouteContext({ select: s => s.user?.firstName })
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const title = topNavData[pathname]?.title
+  const regex = /my-courses\/([^\/]+)/;
+  const match = pathname.match(regex);
+  const courseTitle = match ? decodeURIComponent(match[1]) : null;
+
+  console.log(match)
+  // console.log(useRouteContext( { select: s => s } ))
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
   const openSearch = () => {
@@ -60,7 +66,7 @@ const TopNav = () => {
     setIsOpen(!isOpen)
   }
   return (
-    <div className="flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)] lg:px-10 min-[1024px]:float-right">
+    <div className="flex w-full bg-gray-100 items-center justify-between  px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)] lg:px-6  min-[1024px]:float-right">
       <div className="flex w-full flex-col items-start gap-y-4 p-2 lg:hidden">
         <div className="flex w-full items-center justify-between">
           {openSearchStatus === false && (
@@ -124,28 +130,29 @@ const TopNav = () => {
           </div>
         </div>
 
-        <div className="my-5 flex flex-col items-start justify-start">
-          <h2 className="flex text-lg font-semibold sm:text-2xl">
-            {pathname != '/dashboard' && (
+        <div className="my-5 flex flex-col items-start justify-start relative">
+          <h2 className="flex text-lg font-semibold sm:text-2xl items-center">
+            {/* {pathname != '/dashboard' && ( */}
               <img
                 src="/assets/arrow-left-01.svg"
                 onClick={() => router.history.back()}
                 className="cursor-pointer"
                 alt="arrow left"
               />
-            )}
-            {title}
+            {/* )} */}
+            {courseTitle ? courseTitle : title }
+            {/* {} */}
           </h2>
           {pathname === '/dashboard' && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+                        <p className="capitalize">{`Welcome Back, Timilehin 👋`}</p>
           )}
         </div>
       </div>
 
       {/* Desktop View */}
-      <div className="hidden w-full items-center justify-between lg:flex">
-        <div className="flex flex-col items-start justify-start">
-          <h2 className="flex items-center text-nowrap text-3xl font-semibold capitalize lg:text-2xl">
+      <div className="hidden w-full items-center justify-between md:flex-col gap-4 lg:flex-row lg:flex">
+        <div className="flex flex-col items-start justify-start relative ">
+          <h2 className="flex items-center text-nowrap text-3xl font-semibold capitalize lg:text-2xl ">
             {pathname != '/dashboard' && (
               <img
                 src="/assets/arrow-left-01.svg"
@@ -154,10 +161,12 @@ const TopNav = () => {
                 alt="arrow left"
               />
             )}
-            {title}
+            {/* {title} */}
+            {courseTitle ? courseTitle : title }
+
           </h2>
           {pathname === '/dashboard' && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+            <p className="capitalize">{`Welcome Back, Timilehin 👋`}</p>
           )}
         </div>
 

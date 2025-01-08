@@ -111,32 +111,7 @@ function DataTable({ data, columns }) {
             </Button>
           </div>
         </div>
-        {/* {leaderboardData.map((value, index) => (
-        <tr className="mb-3 grid w-full grid-cols-6 items-center rounded-md bg-gray-100 p-4 font-medium">
-          <td>
-            {index + 1 === 1 ? (
-              <img src="/assets/goldbadge.svg" alt="" />
-            ) : index + 1 === 2 ? (
-              <img src="/assets/silverbadge.svg" alt="" />
-            ) : index + 1 === 3 ? (
-              <img src="/assets/bronzebadge.svg" alt="" />
-            ) : (
-              index + 1
-            )}
-          </td>
-          <td className="col-span-2 grid grid-cols-6 items-center gap-2">
-            <img
-              src={value.image}
-              alt=""
-              className="h-10 w-10 rounded-full"
-            />
-            <p className="col-span-5">{value.name}</p>
-          </td>
-          <td>{value.quizAttempts}</td>
-          <td>{value.totalHours}</td>
-          <td>{value.points}</td>
-        </tr>
-      ))} */}
+    
       </TableBody>
     </Table>
   )
