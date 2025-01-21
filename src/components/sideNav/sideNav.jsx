@@ -5,8 +5,10 @@ import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 
 const SideNav = () => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
-  const firstName = useRouteContext({ select: s => s.user?.firstName })
-  const lastName = useRouteContext({ select: s => s.user?.lastName })
+  // const firstName = useRouteContext({ select: s => s.user?.firstName })
+  // const lastName = useRouteContext({ select: s => s.user?.lastName })
+  const firstName = "Timilehin"
+  const lastName = "Egbetokun"
   // const title = topNavData[pathname]?.title
 
   return (

@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PricingImport } from './routes/pricing'
+import { Route as CheckoutImport } from './routes/checkout'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as CoursesIndexImport } from './routes/courses/index'
 import { Route as CoursesCourseImport } from './routes/courses/$course'
@@ -47,6 +48,11 @@ const userDashboardRoute = userDashboardImport.update({
 
 const PricingRoute = PricingImport.update({
   path: '/pricing',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CheckoutRoute = CheckoutImport.update({
+  path: '/checkout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -176,6 +182,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutImport
       parentRoute: typeof rootRoute
     }
     '/pricing': {
@@ -319,6 +332,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   AuthRoute: AuthRoute.addChildren({ AuthLoginRoute, AuthSignupRoute }),
+  CheckoutRoute,
   PricingRoute,
   userDashboardRoute: userDashboardRoute.addChildren({
     userDashboardDashboardLayoutRoute:
@@ -351,6 +365,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/_auth",
+        "/checkout",
         "/pricing",
         "/",
         "/courses/$course",
@@ -369,6 +384,9 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/login",
         "/_auth/signup"
       ]
+    },
+    "/checkout": {
+      "filePath": "checkout.jsx"
     },
     "/pricing": {
       "filePath": "pricing.jsx"

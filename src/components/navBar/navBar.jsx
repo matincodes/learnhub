@@ -12,6 +12,10 @@ const NavBar = e => {
   const navState = 'none'
   const data = window.localStorage.getItem('user')
   const user = JSON.parse(data)
+  // const firstName = useRouteContext({ select: s => s.user?.firstName })
+  // const lastName = useRouteContext({ select: s => s.user?.lastName })
+  const firstName = 'Timilehin'
+  const lastName = 'Egbetokun'
 
   return (
     <>
@@ -82,7 +86,6 @@ const NavBar = e => {
                 >
                   Courses
                 </Link>
-                
 
                 <Link
                   to="/pricing"
@@ -148,23 +151,30 @@ const NavBar = e => {
         <div className="hidden w-[15%] justify-around lg:flex">
           {user === null ? (
             <>
-              <Button  className="bg-[#e5f5ee59] font-san" asChild>
-                <Link to="/login">
+              <Button asChild className="w-fit bg-[#e5f5ee59] font-san">
+                <Link to="/login" className="border">
                   Log in
                 </Link>
               </Button>
-              <Button className="rounded-xl bg-normal_green font-san text-white shadow-md" asChild>
-                <Link
-                  to="/signup"
-                  
-                >
-                  Sign Up
-                </Link>
+              <Button
+                asChild
+                className="w-fit rounded-xl bg-normal_green font-san text-white shadow-md"
+              >
+                <Link to="/signup">Sign Up</Link>
               </Button>
             </>
           ) : (
-            <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
-              <img src={user.image} className="w-full object-[center_90%]" />
+            <div className="flex items-center gap-3 border border-green-500 bg-[#FAFFFD]">
+              <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
+                <img src={user.image} className="w-full object-[center_90%]" />
+              </div>
+
+              <div className="flex w-full flex-col justify-center border">
+                <p className="text-[13px] font-semibold">
+                  {lastName} {firstName}
+                </p>
+                <p className="text-xs sm:text-sm">Visit Dashboard</p>
+              </div>
             </div>
           )}
         </div>
