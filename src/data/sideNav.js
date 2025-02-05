@@ -25,3 +25,29 @@ export const navLinks = [
     iconImage: '/assets/fi-br-notebook.png',
   },
 ]
+
+
+export const adminNavLinks = [
+  {
+    link: '/admindashboard',
+    name: 'Dashboard',
+    iconImage: '/assets/dashboard.png',
+  },
+  {
+    link: '/admindashboard/courses',
+    name: 'Manage Courses',
+    iconImage: '/assets/courses.png',
+  },
+  {
+    link: '/admindashboard/users',
+    name: 'Manage Users',
+    iconImage: '/assets/fi-br-portrait.png',
+  },
+  {
+    link: '/admindashboard/quizzes',
+    name: 'Manages Quizzes',
+    iconImage: '/assets/fi-br-notebook.png',
+  },
+]
+
+
