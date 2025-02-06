@@ -27,6 +27,9 @@ export default {
         normal_yellow: '#f7ae30',
         dark_yellow: '#b98324',
         paragraph: '#4b4b4bc9',
+        gray:'#616161',
+        black:'#000000',
+        dark_gray:'#303031'
       },
       keyframes: {
         'accordion-down': {
