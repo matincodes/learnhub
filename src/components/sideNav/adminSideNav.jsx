@@ -70,7 +70,7 @@ const AdminSideNav = () => {
 
           <div className="flex w-full items-center justify-center px-3">
             <Link
-              to={'/admindashboard/settings'}
+              to={'/admin/dashboard/settings'}
               activeProps={{
                 className: 'rounded-xl bg-gray-200 font-semibold',
               }}
