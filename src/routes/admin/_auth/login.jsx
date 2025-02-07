@@ -22,10 +22,13 @@ function Login() {
     setChecked(event.target.checked)
   }
   // Initialize the form using react-hook-form
-  const { register, handleSubmit } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
   const onSubmit = data => {
-    console.log(data)
-    console.log(checked)
+    console.log(checked, data)
   }
 
   return (
@@ -56,29 +59,32 @@ function Login() {
             <div className="flex h-[219px] w-full flex-col gap-[27px]">
               {/* Email Input */}
               <span className="flex h-[81px] w-full flex-col gap-[5px]">
-                <label className="text-dark_gray font-sans text-[12px] font-normal leading-[24px]">
+                <label className="font-sans text-[12px] font-normal leading-[24px] text-dark_gray">
                   Email address
                 </label>
                 <input
                   placeholder="Enter email address"
                   type="email"
-                  className="h-[52px] w-full rounded-md border-[1px] border-normal_green px-[10px] py-[10px] font-sans text-[12px] font-normal text-[#AAAAAA] outline-none"
-                  {...register('Email address' , {required: true})}
+                  className={`h-[52px] w-full rounded-md border-[1px] ${errors.email ? `border-red` : `border-normal_green`} px-[10px] py-[10px] font-sans text-[12px] font-normal text-[#AAAAAA] outline-none`}
+                  {...register('email', { required: true })}
                 />
               </span>
 
               {/* Password Input with Toggle Visibility */}
               <span className="flex h-[81px] w-full flex-col gap-[5px]">
-                <label className="text-dark_gray font-sans text-[12px] font-normal leading-[24px]">
+                <label className="font-sans text-[12px] font-normal leading-[24px] text-dark_gray">
                   Password
                 </label>
-                <div className="flex h-auto w-full items-center justify-between rounded-md border-[1px] border-normal_green px-[10px]">
+                <div
+                  className={`flex h-auto w-full items-center justify-between rounded-md border-[1px] ${errors.password ? `border-red` : `border-normal_green`} px-[10px]`}
+                >
                   <input
                     placeholder="Enter password"
                     type={showPassword ? 'password' : 'text'}
                     className="h-[52px] w-full font-sans text-[12px] font-normal text-[#AAAAAA] outline-none"
-                    {...register('Password' , {required: true})}
+                    {...register('password', { required: true })}
                   />
+
                   {/* Toggle Password Visibility Button */}
                   <span
                     className="cursor-pointer text-[#B4B4B4]"
@@ -116,7 +122,7 @@ function Login() {
           </form>
 
           {/* Footer Message */}
-          <p className="text-gray text-center font-sans text-[15px] font-normal leading-[24px]">
+          <p className="text-center font-sans text-[15px] font-normal leading-[24px] text-gray">
             Need access? Contact your system administrator.
           </p>
         </div>

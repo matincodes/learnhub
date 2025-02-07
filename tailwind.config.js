@@ -29,7 +29,8 @@ export default {
         paragraph: '#4b4b4bc9',
         gray:'#616161',
         black:'#000000',
-        dark_gray:'#303031'
+        dark_gray:'#303031',
+        red:'#FF3B30'
       },
       keyframes: {
         'accordion-down': {
