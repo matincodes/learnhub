@@ -27,6 +27,7 @@ import { Route as AdminAuthSignupImport } from './routes/admin/_auth/signup'
 import { Route as AdminAuthLoginImport } from './routes/admin/_auth/login'
 import { Route as AdminDashboardLayoutDashboardIndexImport } from './routes/admin/_dashboardLayout/dashboard/index'
 import { Route as userDashboardDashboardLayoutDashboardIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
+import { Route as AdminDashboardLayoutDashboardSettingsImport } from './routes/admin/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSettingsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
@@ -133,6 +134,12 @@ const userDashboardDashboardLayoutDashboardIndexRoute =
   userDashboardDashboardLayoutDashboardIndexImport.update({
     path: '/dashboard/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardSettingsRoute =
+  AdminDashboardLayoutDashboardSettingsImport.update({
+    path: '/dashboard/settings',
+    getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardSettingsRoute =
@@ -354,6 +361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSettingsImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
+    '/admin/_dashboardLayout/dashboard/settings': {
+      id: '/admin/_dashboardLayout/dashboard/settings'
+      path: '/dashboard/settings'
+      fullPath: '/admin/dashboard/settings'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardSettingsImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/': {
       id: '/_dashboardLayout/dashboard/'
       path: '/dashboard'
@@ -436,6 +450,7 @@ export const routeTree = rootRoute.addChildren({
       AdminAuthSignupRoute,
     }),
     AdminDashboardLayoutRoute: AdminDashboardLayoutRoute.addChildren({
+      AdminDashboardLayoutDashboardSettingsRoute,
       AdminDashboardLayoutDashboardIndexRoute,
     }),
   }),
@@ -525,6 +540,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "admin/_dashboardLayout.jsx",
       "parent": "/admin",
       "children": [
+        "/admin/_dashboardLayout/dashboard/settings",
         "/admin/_dashboardLayout/dashboard/"
       ]
     },
@@ -565,6 +581,10 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboardLayout/dashboard/settings": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/settings.jsx",
       "parent": "/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/settings": {
+      "filePath": "admin/_dashboardLayout/dashboard/settings.jsx",
+      "parent": "/admin/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/index.jsx",

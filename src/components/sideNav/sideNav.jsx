@@ -1,14 +1,13 @@
 import { Separator } from '@/components/ui/separator'
-import { navLinks,  } from '@/data/sideNav'
+import { navLinks, adminNavLinks } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 
 const SideNav = () => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
-  // const firstName = useRouteContext({ select: s => s.user?.firstName })
-  // const lastName = useRouteContext({ select: s => s.user?.lastName })
-  const firstName = "Timilehin"
-  const lastName = "Egbetokun"
+  const firstName = useRouteContext({ select: s => s.user?.firstName })
+  const lastName = useRouteContext({ select: s => s.user?.lastName })
+  const role = useRouteContext({ select: s => s.user?.role })
   // const title = topNavData[pathname]?.title
 
   return (
@@ -27,15 +26,15 @@ const SideNav = () => {
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
-                <p className="font-semibold">{lastName} {firstName}</p>
-                <p className="text-xs sm:text-sm">View Profile</p>
+                <p className="font-semibold">{lastName}, {firstName}</p>
+                <p className="text-xs sm:text-sm">{pathname.includes('/admin/dashboard') && role === 'admin' ? "Admin" : "View Profile" }</p>
               </div>
             </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
             <ul className="mt-6 flex w-full flex-col gap-y-1">
-              {navLinks.map(({ link, name, iconImage }) => {
+              { (pathname.includes('/admin/dashboard') && role === 'admin' ? adminNavLinks : navLinks).map(({ link, name, iconImage }) => {
                 return (
                   <li key={name} className={'w-full'}>
                     <Link
@@ -70,7 +69,7 @@ const SideNav = () => {
 
           <div className="flex w-full items-center justify-center px-3">
             <Link
-              to={'/dashboard/settings'}
+              to={`${pathname.includes('/admin/dashboard') && role === 'admin' ? '/admin/dashboard/settings' : '/dashboard/settings'}`}
               activeProps={{
                 className: 'rounded-xl bg-gray-200 font-semibold',
               }}
