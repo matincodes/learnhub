@@ -87,10 +87,10 @@ function DashboardIndexComponent() {
         </div>
         <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:w-[35%] sm:p-6">
           <div className='w-full flex border-b pb-3 items-center justify-between'>
-          <h2 className="text-base font-semibold sm:text-xl">
-            Upcoming Sessions
-          </h2>
-          <ChevronsUp size={40} color='#7f7f7f'/>
+            <h2 className="text-base font-semibold sm:text-xl">
+              Upcoming Sessions
+            </h2>
+            <ChevronsUp size={40} color='#7f7f7f' />
           </div>
 
           <div className="flex w-full flex-col mt-4 items-start gap-y-8 sm:gap-y-12">
@@ -99,7 +99,7 @@ function DashboardIndexComponent() {
                 key={index}
                 className="flex w-full items-start justify-start gap-x-4"
               >
-                <img src="/assets/hubsession.png" alt=""/>
+                <img src="/assets/hubsession.png" alt="" />
                 <div className="space-y-2">
                   <h2 className="text-sm font-medium sm:text-lg">
                     Meeting with Folorunsho Alakija

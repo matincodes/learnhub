@@ -27,6 +27,10 @@ import { Route as AdminAuthSignupImport } from './routes/admin/_auth/signup'
 import { Route as AdminAuthLoginImport } from './routes/admin/_auth/login'
 import { Route as AdminDashboardLayoutDashboardIndexImport } from './routes/admin/_dashboardLayout/dashboard/index'
 import { Route as userDashboardDashboardLayoutDashboardIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
+import { Route as AdminDashboardLayoutDashboardManageCourseImport } from './routes/admin/_dashboardLayout/dashboard/manage-course'
+import { Route as AdminDashboardLayoutDashboardCourseDetailsImport } from './routes/admin/_dashboardLayout/dashboard/course-details'
+import { Route as AdminDashboardLayoutDashboardAddModuleImport } from './routes/admin/_dashboardLayout/dashboard/add-module'
+import { Route as AdminDashboardLayoutDashboardAddCourseImport } from './routes/admin/_dashboardLayout/dashboard/add-course'
 import { Route as userDashboardDashboardLayoutDashboardSettingsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
@@ -133,6 +137,30 @@ const userDashboardDashboardLayoutDashboardIndexRoute =
   userDashboardDashboardLayoutDashboardIndexImport.update({
     path: '/dashboard/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardManageCourseRoute =
+  AdminDashboardLayoutDashboardManageCourseImport.update({
+    path: '/dashboard/manage-course',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardCourseDetailsRoute =
+  AdminDashboardLayoutDashboardCourseDetailsImport.update({
+    path: '/dashboard/course-details',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardAddModuleRoute =
+  AdminDashboardLayoutDashboardAddModuleImport.update({
+    path: '/dashboard/add-module',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardAddCourseRoute =
+  AdminDashboardLayoutDashboardAddCourseImport.update({
+    path: '/dashboard/add-course',
+    getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardSettingsRoute =
@@ -354,6 +382,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSettingsImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
+    '/admin/_dashboardLayout/dashboard/add-course': {
+      id: '/admin/_dashboardLayout/dashboard/add-course'
+      path: '/dashboard/add-course'
+      fullPath: '/admin/dashboard/add-course'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardAddCourseImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
+    '/admin/_dashboardLayout/dashboard/add-module': {
+      id: '/admin/_dashboardLayout/dashboard/add-module'
+      path: '/dashboard/add-module'
+      fullPath: '/admin/dashboard/add-module'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardAddModuleImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
+    '/admin/_dashboardLayout/dashboard/course-details': {
+      id: '/admin/_dashboardLayout/dashboard/course-details'
+      path: '/dashboard/course-details'
+      fullPath: '/admin/dashboard/course-details'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseDetailsImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
+    '/admin/_dashboardLayout/dashboard/manage-course': {
+      id: '/admin/_dashboardLayout/dashboard/manage-course'
+      path: '/dashboard/manage-course'
+      fullPath: '/admin/dashboard/manage-course'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardManageCourseImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/': {
       id: '/_dashboardLayout/dashboard/'
       path: '/dashboard'
@@ -436,6 +492,10 @@ export const routeTree = rootRoute.addChildren({
       AdminAuthSignupRoute,
     }),
     AdminDashboardLayoutRoute: AdminDashboardLayoutRoute.addChildren({
+      AdminDashboardLayoutDashboardAddCourseRoute,
+      AdminDashboardLayoutDashboardAddModuleRoute,
+      AdminDashboardLayoutDashboardCourseDetailsRoute,
+      AdminDashboardLayoutDashboardManageCourseRoute,
       AdminDashboardLayoutDashboardIndexRoute,
     }),
   }),
@@ -525,6 +585,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "admin/_dashboardLayout.jsx",
       "parent": "/admin",
       "children": [
+        "/admin/_dashboardLayout/dashboard/add-course",
+        "/admin/_dashboardLayout/dashboard/add-module",
+        "/admin/_dashboardLayout/dashboard/course-details",
+        "/admin/_dashboardLayout/dashboard/manage-course",
         "/admin/_dashboardLayout/dashboard/"
       ]
     },
@@ -565,6 +629,22 @@ export const routeTree = rootRoute.addChildren({
     "/_dashboardLayout/dashboard/settings": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/settings.jsx",
       "parent": "/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/add-course": {
+      "filePath": "admin/_dashboardLayout/dashboard/add-course.jsx",
+      "parent": "/admin/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/add-module": {
+      "filePath": "admin/_dashboardLayout/dashboard/add-module.jsx",
+      "parent": "/admin/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/course-details": {
+      "filePath": "admin/_dashboardLayout/dashboard/course-details.jsx",
+      "parent": "/admin/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/manage-course": {
+      "filePath": "admin/_dashboardLayout/dashboard/manage-course.jsx",
+      "parent": "/admin/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/index.jsx",
