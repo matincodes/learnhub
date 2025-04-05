@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 
@@ -54,8 +54,10 @@ const COURSE_EDIT = [
         text: 'Backend development'
     },
 ]
-function EditCourse() {
-    const [edit, setEdit] = useState(true)
+
+
+function EditCourse({ editingItemId, handleEditClick }) {
+
     return (
         <>
             <div className='flex flex-col w-full bg-white py-14 md:py-0'>
@@ -63,11 +65,10 @@ function EditCourse() {
                     <div className=" mt-3 p-3" key={course.id}>
                         <div className="flex justify-between">
                             <span className='text-[#808080]'>{course.name}</span>
-                            <span className='hidden md:block'> {course.icon}</span>
-                            <Button className={`flex md:hidden  w-auto h-10 rounded-lg gap-2 ${edit ? 'bg-[#F7F7F7]' : 'bg-[#848484]'}`} disabled={edit}>
-
+                            <span className='hidden md:block' onClick={() => handleEditClick(course.id)}> {course.icon}</span>
+                            <Button className={`flex md:hidden  w-auto h-10 rounded-lg gap-2 ${editingItemId === course.id ? 'bg-[#F7F7F7]' : 'bg-[#848484]'}`} disabled={editingItemId === course.id} onClick={() => handleEditClick(course.id)}>
                                 {
-                                    edit ? (
+                                    editingItemId === course.id ? (
                                         <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_9816_27806)">
                                                 <path d="M8.75 5.29167V6.75H7.5C7.16848 6.75 6.85054 6.8817 6.61612 7.11612C6.3817 7.35054 6.25 7.66848 6.25 8V9.25H1.875C1.70924 9.25 1.55027 9.18415 1.43306 9.06694C1.31585 8.94973 1.25 8.79076 1.25 8.625V2.375C1.25 2.20924 1.31585 2.05027 1.43306 1.93306C1.55027 1.81585 1.70924 1.75 1.875 1.75H5.625C5.79076 1.75 5.94973 1.68415 6.06694 1.56694C6.18415 1.44973 6.25 1.29076 6.25 1.125C6.25 0.95924 6.18415 0.800269 6.06694 0.683058C5.94973 0.565848 5.79076 0.5 5.625 0.5H1.875C1.37772 0.5 0.900805 0.697544 0.549175 1.04917C0.197544 1.40081 0 1.87772 0 2.375L0 8.625C0 9.12228 0.197544 9.59919 0.549175 9.95082C0.900805 10.3025 1.37772 10.5 1.875 10.5H6.86833C7.36541 10.5 7.84215 10.3026 8.19375 9.95125L9.45083 8.69417C9.80236 8.34263 9.99989 7.86589 10 7.36875V5.29167C10 5.12591 9.93415 4.96694 9.81694 4.84972C9.69973 4.73251 9.54076 4.66667 9.375 4.66667C9.20924 4.66667 9.05027 4.73251 8.93306 4.84972C8.81585 4.96694 8.75 5.12591 8.75 5.29167Z" fill="#374957" fill-opacity="0.5" />
@@ -94,11 +95,11 @@ function EditCourse() {
                                         </svg>
                                     )
                                 }
-                                <span className={`${edit ? 'text-[#6C7882]' : 'text-white'}`}>Edit Details</span>
+                                <span className={`${editingItemId === course.id ? 'text-[#6C7882]' : 'text-white'}`}>Edit Details</span>
                             </Button>
                         </div>
                         <div className="flex flex-col">
-                            {edit ? (
+                            {editingItemId === course.id ? (
                                 <Input
                                     type="text"
                                     className="!border-0 !border-b-2 !rounded-none px-0"

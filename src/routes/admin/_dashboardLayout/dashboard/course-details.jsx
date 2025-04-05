@@ -3,6 +3,7 @@ import EditCourseModules from '@/components/course_details/edit-course-modules'
 import Hero from '@/components/course_details/hero'
 import { Button } from '@/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 
 
 export const Route = createFileRoute('/admin/_dashboardLayout/dashboard/course-details')({
@@ -11,6 +12,14 @@ export const Route = createFileRoute('/admin/_dashboardLayout/dashboard/course-d
 
 
 function DashboardCourseDetailsComponent() {
+  //Editing state
+  const [editingItemId, setEditingItemId] = useState(null);
+
+  //Handling the editing buttons for proper editing of form
+  const handleEditClick = (id) => {
+    setEditingItemId((prevId) => (prevId === id ? null : id));
+  };
+
   return (
     <>
       <div className="flex gap-1 items-center">
@@ -26,9 +35,12 @@ function DashboardCourseDetailsComponent() {
         </svg>
         <h1 className='font-semibold'>Course details</h1>
       </div>
+
       <Hero />
+
+      {/* Editing of selected course*/}
       <form action="">
-        <EditCourse />
+        <EditCourse editingItemId={editingItemId} handleEditClick={handleEditClick} />
         <div className="flex justify-end w-full my-4">
           <Button className="border !border-[#F7AE30] rounded-lg bg-transparent w-48 gap-4">
             <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,12 +56,17 @@ function DashboardCourseDetailsComponent() {
             <span className="text-[#F7AE30]">Add Module</span>
           </Button>
         </div>
-        <EditCourseModules />
-        <div className="w-full flex justify-between md:justify-end items-center gap-5 mt-8">
-          <Button className=" bg-[#F7AE30] opacity-50 rounded-lg w-36 gap-4 text-white">Publish</Button>
-          <Button className=" bg-[#E94343] rounded-lg w-36 gap-4 text-white">Delete Course</Button>
-        </div>
       </form>
+
+      {/* Editing of course module based on the selected course*/}
+      <form action="">
+        <EditCourseModules editingItemId={editingItemId} handleEditClick={handleEditClick} />
+      </form>
+
+      <div className="w-full flex justify-between md:justify-end items-center gap-5 mt-8">
+        <Button className={`bg-[#F7AE30] ${editingItemId ? 'opacity-100' : 'opacity-50'} rounded-lg w-36 gap-4 text-white`} onClick={() => handleEditClick(null)}>Publish</Button>
+        <Button className=" bg-[#E94343] rounded-lg w-36 gap-4 text-white">Delete Course</Button>
+      </div>
     </>
   )
 }
