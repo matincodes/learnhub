@@ -35,7 +35,7 @@ export function NotificationWidget({
 
 const NotificationModal = ({ close }) => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
-  const role = useRouteContext({ select: s => s.user?.role })
+  const role = 'admin'
   const [active, setActive] = useState(1)
   const [filteredData, setFilteredData] = useState(
     pathname.includes('/admin/dashboard') && role == 'admin'

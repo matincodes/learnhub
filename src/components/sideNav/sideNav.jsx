@@ -5,10 +5,9 @@ import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 
 const SideNav = () => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
-  const firstName = useRouteContext({ select: s => s.user?.firstName })
-  const lastName = useRouteContext({ select: s => s.user?.lastName })
-  const role = useRouteContext({ select: s => s.user?.role })
-  // const title = topNavData[pathname]?.title
+  const firstName = 'Timilehin'
+  const lastName = 'Emmanuel'
+  const role = 'admin'
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">

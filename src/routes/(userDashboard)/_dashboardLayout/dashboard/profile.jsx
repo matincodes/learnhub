@@ -31,9 +31,7 @@ function Profile() {
         window.localStorage.setItem('user', JSON.stringify({ image: base64String }))
       }
       reader.readAsDataURL(image)
-
     }
-
   }
 
   const handleInputText = () =>{
@@ -45,7 +43,7 @@ function Profile() {
   }
   
   const handleInputTextChange = (inputRef) =>{
-    const inputLength = inputRef.current.value
+    const inputLength = inputRef.current.value  
     if(inputLength.length > 0){
       setButtonState(true)
     }

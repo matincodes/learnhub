@@ -16,12 +16,12 @@ const TopNav = () => {
   const [openSearchStatus, setOpenSearchStatus] = useState(false)
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const [inputLengtdh, setInputLength] = useState(0)
+  const [inputLength, setInputLength] = useState(0)
 
   const router = useRouter()
   const navigate = useNavigate()
-  const firstName = useRouteContext({ select: s => s.user?.firstName })
-  const role = useRouteContext({ select: s => s.user?.role }) || 'user'
+  const firstName = "Timilehin"
+  const role = "admin"
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const title = topNavData[pathname]?.title
   const regex = /my-courses\/([^\/]+)/;

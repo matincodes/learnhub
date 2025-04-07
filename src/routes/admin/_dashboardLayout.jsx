@@ -8,16 +8,16 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/admin/_dashboardLayout')({
   component: AdminDashboardComponent,
-  beforeLoad: ({ context, location }) => {
-    if (!context.isAuthenticated) {
-      throw redirect({
-        to: '/login',
-        search: {
-          redirect: location.href,
-        },
-      })
-    }
-  },
+  // beforeLoad: ({ context, location }) => {
+  //   if (!context.isAuthenticated) {
+  //     throw redirect({
+  //       to: '/login',
+  //       search: {
+  //         redirect: location.href,
+  //       },
+  //     })
+  //   }
+  // },
 })
 
 function AdminDashboardComponent() {
