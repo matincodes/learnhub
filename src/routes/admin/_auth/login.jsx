@@ -36,39 +36,21 @@ function Login() {
   }
 
   return (
-    <div className="relative grid p-[20px]">
-      <div className="flex h-[90lvh] w-full overflow-hidden rounded-l-xl">
-        <div className="relative hidden basis-[45%] place-content-center items-center overflow-hidden bg-[#D8DCE4] lg:flex">
+    <div className=" ">
+      <div className="flex h-auto w-full">
+        <div className=" hidden w-[50%] h-auto lg:flex ">
           {/* Logo */}
           <img
-            src="/assets/learnhub.png"
+            src="/assets/mockupAdmin.svg"
             alt="Logo"
-            className="absolute left-0 top-0 m-[15px] w-[150px]"
+            width="100%"
+            height="100%"
           />
           {/* Logo */}
-
-          {/* Top Right Image */}
-          <img
-            src="/assets/mockups/login_bottom_mockup.svg"
-            alt="MockupImage"
-            className="absolute -right-8 -top-7 w-[280px]"
-          />
-          {/* Top Right Image */}
-
-          <h3 className="w-[90%] font-montserrat text-[45px] font-bold text-normal_green">
-            A Platform to <br /> Empower and upskill
-          </h3>
-
-          {/* Bottom Left Image */}
-          <img
-            src="/assets/mockups/login_bottom_mockup.svg"
-            alt="MockupImage"
-            className="absolute bottom-0 left-0 w-[280px]"
-          />
-          {/* Bottom Left Image */}
+        
         </div>
 
-        <div className="flex basis-[100%] flex-col place-content-center lg:basis-[55%] lg:flex-row lg:items-center">
+        <div className=" h-auto w-full mt-[49px] lg:w-[50%] flex flex-col justify-center items-center ">
           {/* Logo */}
           <div className="flex place-content-center lg:hidden">
             <img
@@ -81,16 +63,16 @@ function Login() {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="width-[100%] space-y-9 p-[10px] lg:basis-[60%]"
+            className="w-[90%] space-y-9 p-[10px] "
           >
-            <h3 className="font-san text-[38px] font-semibold">Log in</h3>
+            <h3 className="font-san text-[38px] font-semibold">Admin Login</h3>
 
             <div className="space-y-5">
               {/* Email */}
               <div className="inputs grid space-y-2">
                 <label
                   htmlFor="email"
-                  className="font-san tracking-wide text-[#303031]"
+                  className="font-normal text-[12px] font-san tracking-wide text-[#303031] lg:text-[16px]"
                 >
                   Email address
                 </label>
@@ -108,13 +90,14 @@ function Login() {
               <div className="inputs grid space-y-2">
                 <label
                   htmlFor="password"
-                  className="font-san tracking-wide text-[#303031]"
+                  className="font-normal text-[12px] font-san tracking-wide text-[#303031] lg:text-[16px]"
                 >
                   Password
                 </label>
                 <PasswordInput
                   {...register('password', { required: true })}
                   id="password"
+                  
                 />
                 <div className="mt-1 flex items-center justify-between">
                   <div className="flex items-center space-x-1">
@@ -126,12 +109,12 @@ function Login() {
                     />
                     <label
                       htmlFor="remember_password"
-                      className="font-san text-[15px]"
+                      className="font-san text-[8px] font-normal lg:text-[12px]"
                     >
                       Remember Password
                     </label>
                   </div>
-                  <p className="font-san text-[15px] text-[#FA5B66]">
+                  <p className="font-san text-[8px] font-normal  text-[#626262] lg:text-[12px]">
                     Forgot Password?
                   </p>
                 </div>
@@ -156,14 +139,8 @@ function Login() {
               </Button>
             )}
 
-            <p className="font-san">
-              Don&apos;t have an account?&nbsp;
-              <Link
-                to={`/signup`}
-                className="font-semibold text-normal_green underline"
-              >
-                Sign Up
-              </Link>
+            <p className="font-san text-[#616161] font-normal text-[15px] text-center">
+            Need access? Contact your system administrator.
             </p>
           </form>
         </div>
@@ -182,7 +159,7 @@ const PasswordInput = forwardRef(({ ...props }, ref) => {
         ref={ref}
         {...props}
         placeholder="Enter password"
-        className="w-full rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
+        className="w-full rounded-md border border-[#84848481] p-[12px] font-normal font-san text-[#AAAAAA]"
       />
       <button
         className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
