@@ -46,7 +46,8 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
             <div className="p-3">
                 <div className="flex justify-between">
                     <span className='text-[#808080]'>Module 1</span>
-                    <svg width="18" height="19" className="hidden md:block" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                    <svg width="18" height="19" className="hidden md:block" onClick={() => handleEditClick(0)} viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_9490_3471)">
                             <path d="M15.75 9.125V11.75H13.5C12.9033 11.75 12.331 11.9871 11.909 12.409C11.4871 12.831 11.25 13.4033 11.25 14V16.25H3.375C3.07663 16.25 2.79048 16.1315 2.5795 15.9205C2.36853 15.7095 2.25 15.4234 2.25 15.125V3.875C2.25 3.57663 2.36853 3.29048 2.5795 3.0795C2.79048 2.86853 3.07663 2.75 3.375 2.75H10.125C10.4234 2.75 10.7095 2.63147 10.9205 2.4205C11.1315 2.20952 11.25 1.92337 11.25 1.625C11.25 1.32663 11.1315 1.04048 10.9205 0.829505C10.7095 0.618526 10.4234 0.5 10.125 0.5L3.375 0.5C2.47989 0.5 1.62145 0.855579 0.988515 1.48851C0.355579 2.12145 0 2.97989 0 3.875L0 15.125C0 16.0201 0.355579 16.8785 0.988515 17.5115C1.62145 18.1444 2.47989 18.5 3.375 18.5H12.363C13.2577 18.5 14.1159 18.1447 14.7488 17.5123L17.0115 15.2495C17.6442 14.6167 17.9998 13.7586 18 12.8638V9.125C18 8.82663 17.8815 8.54048 17.6705 8.3295C17.4595 8.11853 17.1734 8 16.875 8C16.5766 8 16.2905 8.11853 16.0795 8.3295C15.8685 8.54048 15.75 8.82663 15.75 9.125Z" fill="#374957" />
                             <path d="M13.3447 1.84489L3.96975 11.2199C3.82909 11.3605 3.75004 11.5512 3.75 11.7501V14.0001C3.75 14.1991 3.82902 14.3898 3.96967 14.5305C4.11032 14.6711 4.30109 14.7501 4.5 14.7501H6.75C6.9489 14.7501 7.13963 14.6711 7.28025 14.5304L16.5285 5.28214C16.8414 4.98037 17.0715 4.60317 17.1965 4.1868C17.3216 3.77043 17.3374 3.3289 17.2425 2.90464C17.1363 2.51007 16.9286 2.15021 16.64 1.8609C16.3515 1.5716 15.9922 1.36295 15.5979 1.25575C15.2036 1.14854 14.7881 1.14652 14.3928 1.24989C13.9974 1.35326 13.6361 1.55841 13.3447 1.84489Z" fill="#374957" />
@@ -95,10 +96,9 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
                             className="!border-0 !border-b-2 !rounded-none px-0"
                             placeholder='Introduction To Python' />
                     ) : (
-                        <p className='font-semibold text-sm border-b py-2'>Introduction To Python</p>
+                        <p className='font-semibold text-sm py-2 border-b'>Introduction To Python</p>
                     )}
                 </div>
-                <p className='font-semibold text-sm border-b py-2'></p>
             </div>
 
 
@@ -106,7 +106,7 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
             {COURSE_EDIT_MODULE.map((course) => (
                 <div className="p-3" key={course.id}>
                     <div className="flex justify-between">
-                        <span className='text-[#808080]'>{course.name}</span>
+                        <span className='text-[#808080] font-medium'>{course.name}</span>
                         <span className='hidden md:block' onClick={() => handleEditClick(course.id)}> {course.icon}</span>
                         <Button className={`flex md:hidden  w-auto h-10 rounded-lg gap-2 ${editingItemId === course.id ? 'bg-[#F7F7F7]' : 'bg-[#848484]'}`} disabled={editingItemId === course.id} onClick={() => handleEditClick(course.id)}>
                             {
@@ -151,7 +151,8 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
                     </div>
                     <div >
                         <div className="flex justify-between mt-6">
-                            <span className='text-[#808080]'>Content Upload</span>
+                            {/* text-[#808080]  */}
+                            <span className='font-semibold'>Content Upload</span>
                         </div>
 
                         {/*Checking if the is a video upload on this course, but since there is no api for that, i use a simple dymanic wah to display the video button*/}
@@ -194,7 +195,7 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
                         }
                         <div className="flex flex-col py-2 gap-4">
                             <div className="flex justify-between">
-                                <span className='text-[#808080]'>Time</span>
+                                <span className='text-[#808080] font-medium'>Time</span>
                                 <span className='hidden md:block' onClick={() => handleEditClick(course.id)}> {course.icon}</span>
                                 <Button className={`flex md:hidden  w-auto h-10 rounded-lg gap-2 ${editingItemId === course.id ? 'bg-[#F7F7F7]' : 'bg-[#848484]'}`} disabled={editingItemId === course.id} onClick={() => handleEditClick(course.id)}>
                                     {
@@ -234,7 +235,7 @@ function EditCourseModules({ editingItemId, handleEditClick }) {
                                         className="!border-0 !border-b-2 !rounded-none px-0"
                                         placeholder={course.time} />
                                 ) : (
-                                    <span className="border-b py-2">{course.time}</span>
+                                    <span className="border-b py-2 text-sm font-semibold">{course.time}</span>
                                 )}
                             </div>
                         </div>

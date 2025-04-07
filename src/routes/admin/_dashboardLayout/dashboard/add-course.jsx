@@ -22,13 +22,13 @@ export const Route = createFileRoute('/admin/_dashboardLayout/dashboard/add-cour
 })
 
 
-const DropdownMenuMenu = () => {
+const Dropdown = () => {
   return (
     <div className="relative w-full mt-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="px-4 py-2 flex flex-row justify-between items-center bg-white w-full h-fit outline-none relative border rounded-md">
-            <span className="text-base font-san font-semibold">All courses</span>
+            <span className="text-sm font-san font-medium">All courses</span>
             <svg
               width="19"
               height="19"
@@ -57,7 +57,7 @@ const DropdownMenuMenu = () => {
               className={`p-2 w-full cursor-pointer outline-none ${course.key === 1 ? 'bg-[#f0eded]' : ''
                 } font-sans rounded-lg`}
             >
-              <span className="font-san text-base text-[#303031]">
+              <span className="font-san text-sm text-[#303031] font-medium">
                 {course.name}
               </span>
             </DropdownMenuItem>
@@ -73,23 +73,23 @@ const DropdownMenuMenu = () => {
 function DashboardAddCourseComponent() {
   return (
     <>
-      <h1 className='font-bold'>Create New Course Form</h1>
-      <div className="w-full bg-white px-4 py-3 rounded-lg mt-4">
+      <h1 className='font-semibold text-lg'>Create New Course Form</h1>
+      <div className="w-full bg-white px-4 md:pr-28 md:pl-8 py-3 rounded-lg mt-4">
         <form action="">
           <div className="py-3 flex flex-col gap-2">
-            <label htmlFor="course title" className='font-extrabold'>Course Title</label>
+            <label htmlFor="course title" className='font-semibold'>Course Title</label>
             <Input type="text" placeholder="Input course title" />
           </div>
           <div className="py-3 flex flex-col gap-2">
-            <label htmlFor="course title" className='font-extrabold'>Course Title</label>
+            <label htmlFor="course title" className='font-semibold'>Course Title</label>
             <Textarea className="w-full h-32 " placeholder="Input Course Description..." />
           </div>
           <div className="py-3 flex flex-col gap-2">
-            <label htmlFor="course title" className='font-extrabold'>Course Title</label>
-            <DropdownMenuMenu />
+            <label htmlFor="course title" className='font-semibold'>Course Title</label>
+            <Dropdown />
           </div>
           <div className="cursor-pointer py-3 flex flex-col gap-2">
-            <label htmlFor="course title" className='font-extrabold'>Image Upload</label>
+            <label htmlFor="course title" className='font-semibold'>Image Upload</label>
             <div className="rounded-lg border-dashed  md:w-80 h-24 border border-black flex flex-col justify-center items-center text-sm">
               <div className="hidden md:block text-center">
                 <span className='text-[#F7AE30] underline'>Click Here To Upload a course thumbnail</span> <br />

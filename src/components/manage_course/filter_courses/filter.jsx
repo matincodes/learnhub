@@ -19,7 +19,7 @@ const DropdownMenuDemo = () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <button className="px-4 py-2 flex flex-row justify-between items-center bg-white w-[280px] h-fit outline-none">
-                    <span className="text-base font-san font-semibold">All courses</span>
+                    <span className="text-sm font-san font-medium">All Courses</span>
                     <svg
                         width="19"
                         height="19"
@@ -42,9 +42,9 @@ const DropdownMenuDemo = () => {
                 {DROPDOWNCONTENT.map((course) => (
                     <DropdownMenuItem
                         key={course.key}
-                        className={`p-2 w-full cursor-pointer outline-none ${course.key == 1 && 'bg-[#f0eded] '} font-sans rounded-lg`}
+                        className={`w-full cursor-pointer outline-none ${course.key == 1 && 'bg-[#f0eded] '} rounded-lg`}
                     >
-                        <span className="font-san text-base text-[#303031] font-semibold">{course.name}</span>
+                        <span className="font-san text-sm text-[#303031] font-medium">{course.name}</span>
                     </DropdownMenuItem>
                 ))}
             </DropdownMenuContent>

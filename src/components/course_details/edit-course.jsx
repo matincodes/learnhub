@@ -64,7 +64,7 @@ function EditCourse({ editingItemId, handleEditClick }) {
                 {COURSE_EDIT.map((course) => (
                     <div className=" mt-3 p-3" key={course.id}>
                         <div className="flex justify-between">
-                            <span className='text-[#808080]'>{course.name}</span>
+                            <span className='text-[#808080] font-medium'>{course.name}</span>
                             <span className='hidden md:block' onClick={() => handleEditClick(course.id)}> {course.icon}</span>
                             <Button className={`flex md:hidden  w-auto h-10 rounded-lg gap-2 ${editingItemId === course.id ? 'bg-[#F7F7F7]' : 'bg-[#848484]'}`} disabled={editingItemId === course.id} onClick={() => handleEditClick(course.id)}>
                                 {
@@ -103,7 +103,7 @@ function EditCourse({ editingItemId, handleEditClick }) {
                                 <Input
                                     type="text"
                                     className="!border-0 !border-b-2 !rounded-none px-0"
-                                    placeholder={course.text}
+                                    placeholder={`${course.text.slice(0, 33)}.....`}
                                 />
                             ) : (
                                 <p className='font-semibold text-sm border-b py-3'>{course.text}</p>

@@ -14,14 +14,14 @@ const generateRandomDate = () => {
 //PAGINATION COMPONENT
 export const Pagination = () => {
     return (
-        <div className="w-[300px] h-[40px] rounded-2xl flex flex-row justify-between items-center bg-[#f0eded] py-6">
-            <div className="bg-white h-10 w-24 flex justify-center items-center rounded-2xl cursor-pointer">
+        <div className="w-[170px] h-[40px] rounded-2xl flex flex-row justify-between items-center bg-[#faf8f8] py-1 px-1">
+            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 10.5001H10.207L12.646 8.06113C12.9274 7.77986 13.0855 7.39834 13.0856 7.00048C13.0857 6.60262 12.9277 6.22102 12.6465 5.93963C12.3652 5.65823 11.9837 5.50009 11.5858 5.5C11.188 5.49991 10.8064 5.65786 10.525 5.93913L6.93896 9.52513C6.28373 10.1822 5.91577 11.0722 5.91577 12.0001C5.91577 12.928 6.28373 13.8181 6.93896 14.4751L10.525 18.0611C10.8064 18.3424 11.188 18.5003 11.5858 18.5003C11.9837 18.5002 12.3652 18.342 12.6465 18.0606C12.9277 17.7792 13.0857 17.3976 13.0856 16.9998C13.0855 16.6019 12.9274 16.2204 12.646 15.9391L10.207 13.5001H19C19.3978 13.5001 19.7793 13.3421 20.0606 13.0608C20.3419 12.7795 20.5 12.398 20.5 12.0001C20.5 11.6023 20.3419 11.2208 20.0606 10.9395C19.7793 10.6582 19.3978 10.5001 19 10.5001Z" fill="#303031" />
                 </svg>
             </div>
-            <span>1 of 15</span>
-            <div className="bg-white h-10 w-24 flex justify-center items-center rounded-2xl cursor-pointer">
+            <span className='text-sm text-[#848484] font-medium'>1 of 15</span>
+            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.061 9.52513L13.475 5.93913C13.1936 5.65786 12.812 5.49991 12.4141 5.5C12.0163 5.50009 11.6348 5.65823 11.3535 5.93963C11.0722 6.22102 10.9143 6.60262 10.9144 7.00048C10.9145 7.39834 11.0726 7.77986 11.354 8.06113L13.793 10.5001H5C4.60218 10.5001 4.22064 10.6582 3.93934 10.9395C3.65804 11.2208 3.5 11.6023 3.5 12.0001C3.5 12.398 3.65804 12.7795 3.93934 13.0608C4.22064 13.3421 4.60218 13.5001 5 13.5001H13.793L11.354 15.9391C11.0726 16.2204 10.9145 16.6019 10.9144 16.9998C10.9143 17.3976 11.0722 17.7792 11.3535 18.0606C11.6348 18.342 12.0163 18.5002 12.4141 18.5003C12.812 18.5003 13.1936 18.3424 13.475 18.0611L17.061 14.4751C17.7162 13.8181 18.0842 12.928 18.0842 12.0001C18.0842 11.0722 17.7162 10.1822 17.061 9.52513Z" fill="#303031" />
                 </svg>
@@ -80,29 +80,29 @@ export const CourseTable = () => {
     return (
         <div className="bg-white w-full relative">
             <Table>
-                <TableHeader className="font-extrabold text-base text-left">
+                <TableHeader className="">
                     <TableRow>
-                        <TableHead>Course title</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Students</TableHead>
-                        <TableHead>Last Updated</TableHead>
-                        <TableHead>Actions</TableHead>
+                        <TableHead className="font-extrabold text-base">Course Title</TableHead>
+                        <TableHead className="font-extrabold text-base">Category</TableHead>
+                        <TableHead className="font-extrabold text-base">Status</TableHead>
+                        <TableHead className="font-extrabold text-base">Students</TableHead>
+                        <TableHead className="font-extrabold text-base">Last Updated</TableHead>
+                        <TableHead className="font-extrabold text-base">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {TABLEDATA.map((each_table) => (
-                        <TableRow key={each_table.id} className="font-semibold text-left relative  h-28">
+                        <TableRow key={each_table.id} className="text-left relative text-sm h-20">
                             <TableCell>
                                 <div className="flex flex-row items-center gap-2">
-                                    <img src={randomImage} alt="random image" width={60} />
-                                    <span>{each_table.course_title}</span>
+                                    <img src={randomImage} alt="random image" width={50} />
+                                    <span className='text-xs'>{each_table.course_title}</span>
                                 </div>
                             </TableCell>
-                            <TableCell>{each_table.category}</TableCell>
-                            <TableCell className={`${each_table.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'}`}>{each_table.status}</TableCell>
-                            <TableCell>{each_table.students}</TableCell>
-                            <TableCell>{each_table.last_updated}</TableCell>
+                            <TableCell className='text-xs font-medium'>{each_table.category}</TableCell>
+                            <TableCell className={`${each_table.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'} font-semibold`}>{each_table.status}</TableCell>
+                            <TableCell className="font-medium">{each_table.students}</TableCell>
+                            <TableCell className="font-medium">{each_table.last_updated}</TableCell>
                             <TableCell className="">
                                 <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg" className='text-center'>
                                     <path d="M16.125 4.37497C17.1605 4.37497 18 3.53551 18 2.49998C18 1.46446 17.1605 0.625 16.125 0.625C15.0895 0.625 14.25 1.46446 14.25 2.49998C14.25 3.53551 15.0895 4.37497 16.125 4.37497Z" fill="#333333" className='text-center' />
@@ -123,7 +123,7 @@ export const CourseTable = () => {
 //MOBILE VIEW FOR DISPLAYING COURSES DATA
 export const CourseCard = () => {
     return (
-        <div className="flex flex-col w-full h-screen mb-14">
+        <div className="flex flex-col w-full h-screen mb-24">
             {TABLEDATA.map((each_card) => (
                 <div className="flex flex-col shadow-lg rounded-xl">
                     <div className="border-b border-[#E6E6E6] h-10  flex items-center justify-end">

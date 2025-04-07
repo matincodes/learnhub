@@ -56,17 +56,16 @@ function DashboardCourseDetailsComponent() {
             <span className="text-[#F7AE30]">Add Module</span>
           </Button>
         </div>
-      </form>
 
-      {/* Editing of course module based on the selected course*/}
-      <form action="">
+
+        {/* Editing of course module based on the selected course*/}
         <EditCourseModules editingItemId={editingItemId} handleEditClick={handleEditClick} />
-      </form>
 
-      <div className="w-full flex justify-between md:justify-end items-center gap-5 mt-8">
-        <Button className={`bg-[#F7AE30] ${editingItemId ? 'opacity-100' : 'opacity-50'} rounded-lg w-36 gap-4 text-white`} onClick={() => handleEditClick(null)}>Publish</Button>
-        <Button className=" bg-[#E94343] rounded-lg w-36 gap-4 text-white">Delete Course</Button>
-      </div>
+        <div className="w-full flex justify-between md:justify-end items-center gap-5 mt-8">
+          <Button className={`bg-[#F7AE30] ${editingItemId ? 'opacity-100' : 'opacity-50'} rounded-lg w-36 gap-4 text-white`} onClick={() => handleEditClick(null)}>Publish</Button>
+          <Button className=" bg-[#E94343] rounded-lg w-36 gap-4 text-white">Delete Course</Button>
+        </div>
+      </form>
     </>
   )
 }
