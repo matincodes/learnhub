@@ -1,127 +1,192 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Inventory from '@/components/inventory/inventory'
-import RecentCourseCard from '@/components/widgets/recent_course_card'
-import { recentCourses } from '@/data/dashboard'
-import { ChevronsUp } from 'lucide-react'
+import AdminInventory from '@/components/inventory/adminInventory'
+import Courses from '@/data/courseManagement'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { Eye, Trash2 } from 'lucide-react'
+import Chart from '@/components/charts/charts'
+import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
+
 
 export const Route = createFileRoute('/admin/_dashboardLayout/dashboard/')({
   component: DashboardIndexComponent,
 })
 
 function DashboardIndexComponent() {
+  const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
+  const role = 'admin'
+
   return (
+    <>
+
+    {pathname.includes('/admin/dashboard') && role === 'admin' ? 
     <div className="w-full space-y-6 sm:space-y-10">
-      <div className="grid w-full grid-cols-2 gap-4 sm:gap-8 lg:gap-20">
-        <Inventory
-          title={'Total Courses'}
-          metrics={7}
-          image="/assets/courses.png"
+      <div className="grid w-full gap-4 lg:grid-cols-3">
+        <AdminInventory
+          title={'Enrolled Courses'}
+          metrics={`6,457`}
+          image="/assets/fi-br-user.png"
         />
-        {/* <Inventory
-          title={'Completed Courses'}
-          metrics={
-            <p>
-              <span>5</span>
-              <span className="text-sm text-gray-500 sm:text-base">/7</span>
-            </p>
-          }
-          image={'/assets/fi-br-list-check.png'}
-        /> */}
-        <Inventory
-          title={'Productivity'}
-          metrics={'76%'}
-          image={'/assets/fi-br-bulb.png'}
-          analytics={
-            <div className="flex items-center gap-x-2 text-sm font-semibold sm:text-base">
-              <p>+ 2.345</p>
-              <img src="/assets/fi-br-chat-arrow-grow.png" alt="" />
-            </div>
-          }
+        <AdminInventory
+          title={'Active Users'}
+          metrics={'4,502'}
+          image={'/assets/fi-br-user.png'}
+        />
+        <AdminInventory
+          title={'Engagement Rate'}
+          metrics={'45%'}
+          image={'/assets/fi-br-user.png'}
         />
       </div>
-      <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:p-6">
-        <h2 className="text-base font-semibold sm:text-xl">Recent Courses</h2>
-        <div className="w-full">
-          <div className="no-scrollbar w-full overflow-x-auto">
-            <div className="w-full min-w-max">
-              <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
-                {recentCourses.map((item, index) => (
-                  <RecentCourseCard key={index} {...item} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <Chart />
 
       <div className="flex w-full flex-col-reverse items-start gap-6 sm:flex-row">
-        <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:w-[65%] sm:p-6">
-          <h2 className="text-base font-semibold sm:text-xl">Leader Board</h2>
-          <div className="w-full">
-            <div className="grid w-full grid-cols-6 border-b px-2 text-[9px] font-semibold uppercase text-gray-500 sm:text-[13px]">
-              <p>Rank</p>
-              <p className="col-span-2">Name</p>
-              <p className='text-center'>Course</p>
-              <p className='text-center'>Hours</p>
-              <p className='text-center'>Point(XP)</p>
-            </div>
-
-            {[...Array(4)].map((_, index) => (
-              <div
-                key={index}
-                className="grid w-full grid-cols-6 items-center p-2 text-[9px] font-semibold sm:text-[13px]"
-              >
-                <div className="flex h-4 w-4 flex-col items-center justify-center rounded-lg bg-gray-100 sm:h-8 sm:w-8">
-                  <p>{index + 1}</p>
-                </div>
-                <div className="col-span-2 flex items-center gap-x-2">
-                  <img src="/assets/ellip.png" alt="" />
-                  <p>Charlie Rawal</p>
-                </div>
-                <p className="text-center text-gray-500">53</p>
-                <p className="text-center text-gray-500">250</p>
-                <p className="text-center text-green-500">13,450</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="grid w-full grid-cols-1 gap-y-4 rounded-lg bg-white p-4 sm:w-[35%] sm:p-6">
-          <div className='w-full flex border-b pb-3 items-center justify-between'>
-          <h2 className="text-base font-semibold sm:text-xl">
-            Upcoming Sessions
-          </h2>
-          <ChevronsUp size={40} color='#7f7f7f'/>
+        <div className="grid w-full grid-cols-1 gap-y-5 rounded-lg bg-white p-4 sm:p-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-semibold sm:text-xl">
+              Course Management
+            </h2>
+            <button className="rounded-[5px] bg-normal_yellow px-[15px] py-[2px] font-san text-[16px] font-[400] text-white">
+              +
+            </button>
           </div>
 
-          <div className="flex w-full flex-col mt-4 items-start gap-y-8 sm:gap-y-12">
-            {[1, 2].map((_, index) => (
+          {/* Courses Management Table */}
+
+          {/* Desktop View */}
+          <div className="hidden w-full lg:flex">
+            <table className="w-full table-fixed font-san">
+              <thead>
+                <tr className="space-x-3 p-1 text-left">
+                  <th className="w-[30%] text-[16px] font-[500]">
+                    Course Title
+                  </th>
+                  <th className="text-[16px] font-[500]">Category</th>
+                  <th className="text-[16px] font-[500]">Status</th>
+                  <th className="text-[16px] font-[500]">Students</th>
+                  <th className="text-[16px] font-[500]">Last Updated</th>
+                  <th className="w-[10%] text-[16px] font-[500]">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#3333331A]">
+                {Courses.map((_, index) => (
+                  <tr key={index} className="space-x-3 p-4">
+                    <td className="flex items-center gap-2 py-6">
+                      <img
+                        src="/assets/course_management.png"
+                        alt=""
+                        className="w-[70px] rounded-[5px]"
+                      />
+                      <p className="text-[15px]">{_.courseTitle}</p>
+                    </td>
+                    <td className="py-6 text-[15px]">{_.category}</td>
+                    <td
+                      className={`py-6 text-[15px] font-[600] ${_.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'} `}
+                    >
+                      {_.status}
+                    </td>
+                    <td className="py-6 text-[15px]">{_.students}</td>
+                    <td className="py-6 text-[15px]">{_.lastUpdated}</td>
+                    <td className="py-6 text-[15px] font-[700]">
+                      {/* <button>...</button> */}
+                      <Popover>
+                        <PopoverTrigger>...</PopoverTrigger>
+                        <PopoverContent className="flex flex-col space-y-3 font-san">
+                          <button className="flex items-center gap-2 text-[14px]">
+                            <Eye className="w-[19px]" />
+                            View Details
+                          </button>
+                          <button className="flex items-center gap-2 text-[14px] text-red-500">
+                            <Trash2 className="w-[19px]" /> Delete
+                          </button>
+                        </PopoverContent>
+                      </Popover>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {/* Desktop View */}
+
+          {/* Responsive */}
+          <div className="lg:hidden font-san">
+            {Courses.map((_, index) => (
               <div
                 key={index}
-                className="flex w-full items-start justify-start gap-x-4"
+                className="relative w-full  p-4"
               >
-                <img src="/assets/hubsession.png" alt=""/>
-                <div className="space-y-2">
-                  <h2 className="text-sm font-medium sm:text-lg">
-                    Meeting with Folorunsho Alakija
-                  </h2>
-                  <div className="flex items-center gap-x-3 text-xs sm:text-sm">
-                    <div className="flex items-center gap-x-2">
-                      <img src="/assets/googlemeet.png" alt="" />
-                      <p className="font-semibold text-gray-400">Google Meet</p>
-                    </div>
-                    <div className="flex items-center gap-x-2">
-                      <img src="/assets/fi-br-clock.png" alt="" />
-                      <p className="font-semibold text-gray-400">
-                        5 Hours 23 Min
-                      </p>
+                <Popover>
+                <div className="flex justify-end">
+                  <PopoverTrigger className="right-4 rotate-[90deg] text-[25px] text-[#374957]">
+                    ...
+                  </PopoverTrigger>
+                  <PopoverContent className="flex flex-col space-y-3 font-san">
+                    <button className="flex items-center gap-2 text-[14px]">
+                      <Eye className="w-[19px]" />
+                      View Details
+                    </button>
+                    <button className="flex items-center gap-2 text-[14px] text-red-500">
+                      <Trash2 className="w-[19px]" /> Delete
+                    </button>
+                  </PopoverContent>
+                </div>
+                </Popover>
+
+                <div className="flex items-center gap-2 justify-between border-t border-gray-200 py-3">
+
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/assets/course_management.png"
+                      alt=""
+                      className="w-[40px] h-[40px]  object-cover rounded-[50px]"
+                    />
+                    <div className='grid place-content-center'>
+                      <p className="text-[17px] flex font-[600]"> {_.courseTitle} </p>
+                      <p className="text-[13px] font-[400]">{_.category}</p>
                     </div>
                   </div>
+
+
+                  <span
+                    className={`px-[20px] py-[3px] rounded-full text-[13px] flex font-[500] ${_.status == 'Published' ? 'text-[#008000] bg-[#87E587]' : 'bg-[#F3CB83] text-[#B98324]'} items-center gap-1 `}
+                  >
+                  <span className={`w-[5px] h-[5px] bg-[#008000] rounded-[50px] ${_.status == 'Published' ? 'text-[#008000]' : 'bg-[#B98324]'} `}></span>
+                    {_.status}
+                  </span>
+                </div>
+
+                <div className='space-y-[3px] mt-[3px]'>
+                  <div className=" flex justify-between">
+                  <p className='font-[400]'>No. Of Students: </p>
+                  <p className='text-[#4E4E4E]'>{_.students}</p>
+                  
+                  </div>
+                  <div className=" flex justify-between">
+                  <p className='font-[400]'>Last Updated: </p>
+                  <p className='text-[#4E4E4E]'>{_.lastUpdated}</p>
+                  
+                  </div>
+
                 </div>
               </div>
             ))}
           </div>
+          {/* Responsive */}
+
+          {/* Courses Management Table */}
         </div>
       </div>
-    </div>
+    </div
+    
+    >
+    : ""}
+    </>
+
   )
+
 }

@@ -148,7 +148,7 @@ const NavBar = e => {
           {/* NavLinks and SearchBar */}
         </Sheet>
 
-        <div className="hidden w-[15%] justify-around lg:flex">
+        <div className="hidden w-[20%] justify-around lg:flex ">
           {user === null ? (
             <>
               <Button asChild className="w-fit bg-[#e5f5ee59] font-san">
@@ -164,12 +164,12 @@ const NavBar = e => {
               </Button>
             </>
           ) : (
-            <div className="flex items-center gap-3 border border-green-500 bg-[#FAFFFD]">
-              <div className="grid h-[60px] w-[60px] place-content-center overflow-hidden rounded-full border">
-                <img src={user.image} className="w-full object-[center_90%]" />
+            <div className="flex items-center gap-3 w-full bg-[#FAFFFD] ">
+              <div className="grid place-content-center overflow-hidden rounded-full">
+                <img src={user.image} className="object-[center_90%]  w-[65px] " />
               </div>
 
-              <div className="flex w-full flex-col justify-center border">
+              <div className="flex w-full flex-col justify-center ">
                 <p className="text-[13px] font-semibold">
                   {lastName} {firstName}
                 </p>
