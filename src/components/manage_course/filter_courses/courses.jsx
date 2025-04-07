@@ -1,7 +1,8 @@
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../../ui/table'
 import randomImage from "../../../../public/assets/programming image.png"
 import Image1 from "../../../../public/assets/Ellipse 4022.png"
-import Option from '@/components/ui/option';
+import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 
 //Generating random date for the table data flow
 const generateRandomDate = () => {
@@ -9,6 +10,50 @@ const generateRandomDate = () => {
     return new Date(new Date() - Math.random() * (new Date() - new Date(2020, 0, 1))).toDateString();
 };
 
+
+
+function Option({ onClick, className, }) {
+    const navigate = useNavigate()
+    const handleNavigate = (id) => {
+        navigate({ to: '/admin/dashboard/course-details' })
+    }
+    return (
+        <div className={className}>
+            <div className="flex flex-row gap-2 items-center w-32 bg-[#f8f6f6] rounded-lg px-1 py-2 cursor-pointer" onClick={() => handleNavigate()}
+            >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_9238_60844)">
+                        <path d="M13.4389 5.18191C12.0223 2.9963 9.60384 1.66701 6.9994 1.64258C4.39498 1.66701 1.97647 2.9963 0.559892 5.18191C-0.186631 6.27748 -0.186631 7.7183 0.559892 8.8139C1.97567 11.0009 4.39432 12.3315 6.99942 12.3568C9.60384 12.3323 12.0223 11.003 13.439 8.81742C14.187 7.72102 14.187 6.27828 13.4389 5.18191ZM11.9894 7.82058C10.9079 9.53602 9.02727 10.5826 6.9994 10.5976C4.97155 10.5826 3.09092 9.53602 2.00937 7.82058C1.6722 7.32522 1.6722 6.67408 2.00937 6.17875C3.0909 4.46331 4.97152 3.41673 6.9994 3.40169C9.02724 3.4167 10.9079 4.46331 11.9894 6.17875C12.3266 6.67408 12.3266 7.32522 11.9894 7.82058Z" fill="#374957" />
+                        <path d="M6.99928 9.34524C8.29465 9.34524 9.34476 8.29514 9.34476 6.99977C9.34476 5.7044 8.29465 4.6543 6.99928 4.6543C5.70391 4.6543 4.65381 5.7044 4.65381 6.99977C4.65381 8.29514 5.70391 9.34524 6.99928 9.34524Z" fill="#374957" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_9238_60844">
+                            <rect width="14" height="14" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                <span className='text-xs font-medium'>View Details</span>
+            </div>
+            <div className="flex flex-row gap-2 items-center w-32 rounded-lg px-1 py-2 cursor-pointer">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_9238_60838)">
+                        <path d="M13.4166 2.625C13.4166 2.14175 13.0248 1.75 12.5416 1.75H10.3389C9.97033 0.704293 8.98369 0.00355469 7.87493 0H6.12493C5.01617 0.00355469 4.02952 0.704293 3.66093 1.75H1.45825C0.975006 1.75 0.583252 2.14175 0.583252 2.625C0.583252 3.10825 0.975006 3.5 1.45825 3.5H1.74993V10.7917C1.74993 12.5636 3.18635 14 4.95825 14H9.04158C10.8135 14 12.2499 12.5636 12.2499 10.7917V3.5H12.5416C13.0248 3.5 13.4166 3.10825 13.4166 2.625ZM10.4999 10.7917C10.4999 11.5971 9.84701 12.25 9.0416 12.25H4.95825C4.15284 12.25 3.49993 11.5971 3.49993 10.7917V3.5H10.4999V10.7917Z" fill="#FF0000" fill-opacity="0.5" />
+                        <path d="M5.5415 10.5C6.02475 10.5 6.4165 10.1082 6.4165 9.625V6.125C6.4165 5.64175 6.02475 5.25 5.5415 5.25C5.05826 5.25 4.6665 5.64175 4.6665 6.125V9.625C4.6665 10.1082 5.05826 10.5 5.5415 10.5Z" fill="#FF0000" fill-opacity="0.5" />
+                        <path d="M8.45825 10.5C8.9415 10.5 9.33325 10.1082 9.33325 9.625V6.125C9.33325 5.64175 8.9415 5.25 8.45825 5.25C7.97501 5.25 7.58325 5.64175 7.58325 6.125V9.625C7.58325 10.1082 7.97501 10.5 8.45825 10.5Z" fill="#FF0000" fill-opacity="0.5" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_9238_60838">
+                            <rect width="14" height="14" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                <span className='text-xs font-medium text-[#FF0000]'>Delete</span>
+            </div>
+        </div>
+    )
+}
+
+export default Option
 
 
 //PAGINATION COMPONENT
@@ -77,10 +122,11 @@ const TABLEDATA = [
 
 //TABLET, LAPTOP VIEW FOR DISPLAYING COURSES DATA
 export const CourseTable = () => {
+    const [showOption, setShowOption] = useState(false)
     return (
         <div className="bg-white w-full relative">
             <Table>
-                <TableHeader className="">
+                <TableHeader>
                     <TableRow>
                         <TableHead className="font-extrabold text-base">Course Title</TableHead>
                         <TableHead className="font-extrabold text-base">Category</TableHead>
@@ -103,14 +149,14 @@ export const CourseTable = () => {
                             <TableCell className={`${each_table.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'} font-semibold`}>{each_table.status}</TableCell>
                             <TableCell className="font-medium">{each_table.students}</TableCell>
                             <TableCell className="font-medium">{each_table.last_updated}</TableCell>
-                            <TableCell className="">
+                            <TableCell onClick={() => setShowOption(true)}>
                                 <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg" className='text-center'>
                                     <path d="M16.125 4.37497C17.1605 4.37497 18 3.53551 18 2.49998C18 1.46446 17.1605 0.625 16.125 0.625C15.0895 0.625 14.25 1.46446 14.25 2.49998C14.25 3.53551 15.0895 4.37497 16.125 4.37497Z" fill="#333333" className='text-center' />
                                     <path d="M8.99998 4.37497C10.0355 4.37497 10.875 3.53551 10.875 2.49998C10.875 1.46446 10.0355 0.625 8.99998 0.625C7.96446 0.625 7.125 1.46446 7.125 2.49998C7.125 3.53551 7.96446 4.37497 8.99998 4.37497Z" fill="#333333" />
                                     <path d="M1.87499 4.37497C2.91052 4.37497 3.74998 3.53551 3.74998 2.49998C3.74998 1.46446 2.91052 0.625 1.87499 0.625C0.839461 0.625 0 1.46446 0 2.49998C0 3.53551 0.839461 4.37497 1.87499 4.37497Z" fill="#333333" />
                                 </svg>
                             </TableCell>
-                            {each_table.id == 1 && <Option className="w-[190px] h-auto shadow-lg flex flex-col gap-3 py-3 px-4 absolute right-[73px] -bottom-24 bg-white z-20 rounded-md" />}
+                            {each_table.id == 1 && showOption && <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2  px-2 absolute right-[73px] -bottom-24 bg-white z-20 rounded-md" />}
                         </TableRow>
                     ))}
                 </TableBody>

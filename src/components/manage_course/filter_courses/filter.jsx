@@ -18,7 +18,7 @@ const DropdownMenuDemo = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className="px-4 py-2 flex flex-row justify-between items-center bg-white w-[280px] h-fit outline-none">
+                <button className="px-4 py-2 flex flex-row justify-between items-center bg-white w-[220px] h-fit outline-none">
                     <span className="text-sm font-san font-medium">All Courses</span>
                     <svg
                         width="19"
@@ -38,7 +38,7 @@ const DropdownMenuDemo = () => {
                 </button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-[280px] flex flex-col bg-white px-3 gap-3">
+            <DropdownMenuContent className="w-[220px] flex flex-col bg-white px-3 gap-3">
                 {DROPDOWNCONTENT.map((course) => (
                     <DropdownMenuItem
                         key={course.key}
