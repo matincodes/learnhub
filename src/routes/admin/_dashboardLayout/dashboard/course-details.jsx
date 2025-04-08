@@ -24,7 +24,7 @@ function DashboardCourseDetailsComponent() {
 
   const navigate = useNavigate()
   const handleNavigate = () => {
-    navigate({ to: '/admin/dashboard/manage-course' })
+    navigate({ to: '/admin/dashboard/courses' })
   }
 
   return (

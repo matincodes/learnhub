@@ -72,8 +72,11 @@ const Dropdown = () => {
 
 function DashboardAddCourseComponent() {
   const navigate = useNavigate()
-  const handleNavigate = () => {
+  const NavigateToModule = () => {
     navigate({ to: '/admin/dashboard/add-module' })
+  }
+  const NavigateBack = () => {
+    navigate({ to: '/admin/dashboard/courses' })
   }
   return (
     <>
@@ -95,21 +98,58 @@ function DashboardAddCourseComponent() {
           <div className="cursor-pointer py-3 flex flex-col gap-2">
             <label htmlFor="course title" className='font-semibold'>Image Upload</label>
             <div className="rounded-lg border-dashed  md:w-80 h-24 border border-black flex flex-col justify-center items-center text-sm">
-              <div className="hidden md:block text-center">
-                <span className='text-[#F7AE30] underline'>Click Here To Upload a course thumbnail</span> <br />
-                <span className='font-bold'>Drag & Drop</span>
+              <div className="hidden md:block mt-4">
+                <label htmlFor="file-upload" className="flex flex-col items-center  cursor-pointer font-medium ">
+                  <span className='text-[#F7AE30] underline'>Add a course thumbnail / </span>
+                  <span className='text-black'>Drag & Drop</span>
+                </label>
+
+                <Input
+                  id="file-upload"
+                  type="file"
+                  accept="image/*"
+                  className="mt-2 w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4
+               file:rounded-md file:border-0
+               file:text-sm file:font-semibold
+               file:bg-[#F7AE30]/90 file:text-white
+               hover:file:bg-[#F7AE30 hidden"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    console.log("Selected file:", file);
+                    // You can add your file upload logic here
+                  }}
+                />
               </div>
-              <div className="block md:hidden">
-                <span className='text-[#F7AE30] underline'>Add a course thumbnail / </span>
-                <span className='text-black'>Drag & Drop</span>
+              <div className="block md:hidden mt-4">
+                <label htmlFor="file-upload" className="flex font-medium  items-center gap-2 cursor-pointer">
+                  <span className='text-[#F7AE30] underline'>Add a course thumbnail / </span>
+                  <span className='text-black'>Drag & Drop</span>
+                </label>
+
+                <Input
+                  id="file-upload"
+                  type="file"
+                  accept="image/*"
+                  className="mt-2 w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4
+               file:rounded-md file:border-0
+               file:text-sm file:font-semibold
+               file:bg-[#F7AE30]/90 file:text-white
+               hover:file:bg-[#F7AE30] hidden"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    console.log("Selected file:", file);
+                    // You can add your file upload logic here
+                  }}
+                />
               </div>
+
             </div>
-          </div>
-        </form>
-      </div>
+          </div >
+        </form >
+      </div >
       <div className="md:bg-white w-full flex justify-between px-4 mt-10 py-5">
-        <Button className="border-[#B1B1B1] rounded-lg border">Cancle</Button>
-        <Button className="bg-[#F7AE30] px-8 md:px-0 md:w-48 text-white rounded-lg" onClick={handleNavigate}>
+        <Button className="border-[#B1B1B1] rounded-lg border" onClick={NavigateBack}>Cancle</Button>
+        <Button className="bg-[#F7AE30] px-8 md:px-0 md:w-48 text-white rounded-lg" onClick={NavigateToModule}>
           <span className="block md:hidden">Add Module</span>
           <span className="hidden md:block">Proceed to Add Module</span>
         </Button>

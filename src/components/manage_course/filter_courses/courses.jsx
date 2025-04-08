@@ -4,23 +4,15 @@ import Image1 from "../../../../public/assets/Ellipse 4022.png"
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
-//Generating random date for the table data flow
-const generateRandomDate = () => {
-    // Random date between 2020-01-01 and the current date
-    return new Date(new Date() - Math.random() * (new Date() - new Date(2020, 0, 1))).toDateString();
-};
 
 
 
-function Option({ onClick, className, }) {
+function Option({ onClick, className, handleShowDeleteModal }) {
     const navigate = useNavigate()
     const handleNavigate = (id) => {
         navigate({ to: '/admin/dashboard/course-details' })
     }
-    const handleDelete = () => {
-        console.log("Delete confirmed!")
-        // your delete logic here
-    }
+
     return (
         <div className={className}>
             <div className="flex flex-row gap-2 items-center w-32 bg-[#f8f6f6] rounded-lg px-1 py-2 cursor-pointer" onClick={() => handleNavigate()}
@@ -51,7 +43,7 @@ function Option({ onClick, className, }) {
                         </clipPath>
                     </defs>
                 </svg>
-                <span className='text-xs font-medium text-[#FF0000]'>Delete</span>
+                <span className='text-xs font-medium text-[#FF0000]' onClick={() => handleShowDeleteModal(true)}>Delete</span>
             </div>
         </div>
     )
@@ -61,16 +53,16 @@ export default Option
 
 
 //PAGINATION COMPONENT
-export const Pagination = () => {
+export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     return (
         <div className="w-[170px] h-[40px] rounded-2xl flex flex-row justify-between items-center bg-[#faf8f8] py-1 px-1">
-            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer">
+            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer" onClick={() => onPageChange(currentPage - 1)}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 10.5001H10.207L12.646 8.06113C12.9274 7.77986 13.0855 7.39834 13.0856 7.00048C13.0857 6.60262 12.9277 6.22102 12.6465 5.93963C12.3652 5.65823 11.9837 5.50009 11.5858 5.5C11.188 5.49991 10.8064 5.65786 10.525 5.93913L6.93896 9.52513C6.28373 10.1822 5.91577 11.0722 5.91577 12.0001C5.91577 12.928 6.28373 13.8181 6.93896 14.4751L10.525 18.0611C10.8064 18.3424 11.188 18.5003 11.5858 18.5003C11.9837 18.5002 12.3652 18.342 12.6465 18.0606C12.9277 17.7792 13.0857 17.3976 13.0856 16.9998C13.0855 16.6019 12.9274 16.2204 12.646 15.9391L10.207 13.5001H19C19.3978 13.5001 19.7793 13.3421 20.0606 13.0608C20.3419 12.7795 20.5 12.398 20.5 12.0001C20.5 11.6023 20.3419 11.2208 20.0606 10.9395C19.7793 10.6582 19.3978 10.5001 19 10.5001Z" fill="#303031" />
                 </svg>
             </div>
-            <span className='text-sm text-[#848484] font-medium'>1 of 15</span>
-            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer">
+            <span className='text-sm text-[#848484] font-medium'>{currentPage} of {totalPages}</span>
+            <div className="bg-white h-8 w-12 flex justify-center items-center rounded-lg cursor-pointer" onClick={() => onPageChange(currentPage + 1)}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.061 9.52513L13.475 5.93913C13.1936 5.65786 12.812 5.49991 12.4141 5.5C12.0163 5.50009 11.6348 5.65823 11.3535 5.93963C11.0722 6.22102 10.9143 6.60262 10.9144 7.00048C10.9145 7.39834 11.0726 7.77986 11.354 8.06113L13.793 10.5001H5C4.60218 10.5001 4.22064 10.6582 3.93934 10.9395C3.65804 11.2208 3.5 11.6023 3.5 12.0001C3.5 12.398 3.65804 12.7795 3.93934 13.0608C4.22064 13.3421 4.60218 13.5001 5 13.5001H13.793L11.354 15.9391C11.0726 16.2204 10.9145 16.6019 10.9144 16.9998C10.9143 17.3976 11.0722 17.7792 11.3535 18.0606C11.6348 18.342 12.0163 18.5002 12.4141 18.5003C12.812 18.5003 13.1936 18.3424 13.475 18.0611L17.061 14.4751C17.7162 13.8181 18.0842 12.928 18.0842 12.0001C18.0842 11.0722 17.7162 10.1822 17.061 9.52513Z" fill="#303031" />
                 </svg>
@@ -80,112 +72,78 @@ export const Pagination = () => {
 }
 
 
-//Loading Dynamic data into the table 
-const TABLEDATA = [
-    {
-        id: 1,
-        course_title: "Advanced Web Design",
-        category: "Programming",
-        status: "Published",
-        students: 150,
-        last_updated: generateRandomDate(),
-    },
-    {
-        id: 2,
-        course_title: "Advanced Web Design",
-        category: "Data science",
-        status: "Archived",
-        students: 150,
-        last_updated: generateRandomDate(),
-    },
-    {
-        id: 3,
-        course_title: "Advanced Web Design",
-        category: "Design",
-        status: "Archived",
-        students: 150,
-        last_updated: generateRandomDate(),
-    },
-    {
-        id: 4,
-        course_title: "Advanced Web Design",
-        category: "Programming",
-        status: "Published",
-        students: 150,
-        last_updated: generateRandomDate(),
-    },
-    {
-        id: 5,
-        course_title: "Advanced Web Design",
-        category: "programming",
-        status: "Archived",
-        students: 150,
-        last_updated: generateRandomDate(),
-    },
-];
-
 //TABLET, LAPTOP VIEW FOR DISPLAYING COURSES DATA
-export const CourseTable = () => {
+export const CourseTable = ({ handleShowDeleteModal, currentRows }) => {
     const [showOption, setShowOption] = useState(false);
     const [selectedOptionId, setSelectedOptionId] = useState(null);
 
-    function handleOpenOption(id) {
-        if (selectedOptionId === id && showOption) {
-            setShowOption(false);
-            setSelectedOptionId(null);
-        } else {
-            setShowOption(true);
-            setSelectedOptionId(id);
-        }
-    }
+    const handleOpenOption = (id) => {
+        setShowOption(selectedOptionId !== id || !showOption);
+        setSelectedOptionId(id);
+    };
 
     return (
-        <div className="bg-white w-full h-full relative">
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="font-extrabold text-base">Course Title</TableHead>
-                        <TableHead className="font-extrabold text-base">Category</TableHead>
-                        <TableHead className="font-extrabold text-base">Status</TableHead>
-                        <TableHead className="font-extrabold text-base">Students</TableHead>
-                        <TableHead className="font-extrabold text-base">Last Updated</TableHead>
-                        <TableHead className="font-extrabold text-base">Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {TABLEDATA.map((each_table) => (
-                        <TableRow key={each_table.id} className="text-left relative text-sm h-20">
-                            <TableCell>
-                                <div className="flex flex-row items-center gap-2">
-                                    <img src={randomImage} alt="random image" width={50} />
-                                    <span className='text-xs'>{each_table.course_title}</span>
+        <div className="bg-white w-full h-full p-4 rounded-xl overflow-x-auto">
+            <table className="min-w-full table-fixed text-sm text-gray-700">
+                <thead >
+                    <tr>
+                        <th className="w-1/4 px-4 py-3 text-left font-bold text-gray-900">Course Title</th>
+                        <th className="w-1/6 px-4 py-3 text-left font-bold text-gray-900">Category</th>
+                        <th className="w-1/6 px-4 py-3 text-left font-bold text-gray-900">Status</th>
+                        <th className="w-1/6 px-4 py-3 text-left font-bold text-gray-900">Students</th>
+                        <th className="w-1/6 px-4 py-3 text-left font-bold text-gray-900">Last Updated</th>
+                        <th className="w-1/12 px-4 py-3 text-left font-bold text-gray-900">Actions</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                    {currentRows.map((each_table, index) => (
+                        <tr key={each_table.id || index} className="hover:bg-gray-50 transition duration-150 relative">
+                            <td className="px-4 py-4">
+                                <div className="flex items-center gap-3">
+                                    <img src={randomImage} alt="course" className="w-10 h-10 rounded-md object-cover" />
+                                    <span className="text-sm font-medium text-gray-800">{each_table.course_title}</span>
                                 </div>
-                            </TableCell>
-                            <TableCell className='text-xs font-medium'>{each_table.category}</TableCell>
-                            <TableCell className={`${each_table.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'} font-semibold`}>{each_table.status}</TableCell>
-                            <TableCell className="font-medium">{each_table.students}</TableCell>
-                            <TableCell className="font-medium">{each_table.last_updated}</TableCell>
-                            <TableCell onClick={() => handleOpenOption(each_table.id)}>
-                                <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg" className='text-center cursor-pointer'>
-                                    <path d="M16.125 4.37497C17.1605 4.37497 18 3.53551 18 2.49998C18 1.46446 17.1605 0.625 16.125 0.625C15.0895 0.625 14.25 1.46446 14.25 2.49998C14.25 3.53551 15.0895 4.37497 16.125 4.37497Z" fill="#333333" className='text-center' />
-                                    <path d="M8.99998 4.37497C10.0355 4.37497 10.875 3.53551 10.875 2.49998C10.875 1.46446 10.0355 0.625 8.99998 0.625C7.96446 0.625 7.125 1.46446 7.125 2.49998C7.125 3.53551 7.96446 4.37497 8.99998 4.37497Z" fill="#333333" />
-                                    <path d="M1.87499 4.37497C2.91052 4.37497 3.74998 3.53551 3.74998 2.49998C3.74998 1.46446 2.91052 0.625 1.87499 0.625C0.839461 0.625 0 1.46446 0 2.49998C0 3.53551 0.839461 4.37497 1.87499 4.37497Z" fill="#333333" />
-                                </svg>
-                            </TableCell>
-                            {each_table.id === selectedOptionId && showOption && (
-                                <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2 px-2 absolute right-28 top-20 bg-white z-20 rounded-md" />
-                            )}
-                        </TableRow>
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700">{each_table.category}</td>
+                            <td className="px-4 py-4">
+                                <span className={`text-sm font-semibold px-2 py-1 rounded-full 
+                                    ${each_table.status === 'Published'
+                                        ? 'text-green-700 '
+                                        : 'text-yellow-700 '}`}>
+                                    {each_table.status}
+                                </span>
+                            </td>
+                            <td className="px-4 py-4 font-medium text-gray-700">{each_table.students}</td>
+                            <td className="px-4 py-4 font-medium text-gray-700">{each_table.last_updated}</td>
+                            <td className="px-4 py-4">
+                                <div className="relative">
+                                    <button onClick={() => handleOpenOption(each_table.id)} className="hover:bg-gray-100 p-2 rounded-full transition">
+                                        <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="1.875" cy="2.5" r="1.875" fill="#333" />
+                                            <circle cx="9" cy="2.5" r="1.875" fill="#333" />
+                                            <circle cx="16.125" cy="2.5" r="1.875" fill="#333" />
+                                        </svg>
+                                    </button>
+                                    {each_table.id === selectedOptionId && showOption && (
+                                        <Option
+                                            className="absolute right-2 top-10 z-30 bg-white border border-gray-200 shadow-lg rounded-md py-2 px-3 flex flex-col gap-2"
+                                            handleShowDeleteModal={handleShowDeleteModal}
+                                        />
+                                    )}
+                                </div>
+                            </td>
+                        </tr>
                     ))}
-                </TableBody>
-            </Table>
+                </tbody>
+            </table>
         </div>
-    )
-}
+    );
+};
+
 
 
 // MOBILE VIEW FOR DISPLAYING COURSES DATA
-export const CourseCard = () => {
+export const CourseCard = ({ handleShowDeleteModal, currentRows }) => {
     const [showOption, setShowOption] = useState(false);
     const [selectedOptionId, setSelectedOptionId] = useState(null);
 
@@ -200,9 +158,9 @@ export const CourseCard = () => {
     }
 
     return (
-        <div className="flex flex-col w-full h-screen">
-            {TABLEDATA.map((each_card) => (
-                <div key={each_card.id} className="flex flex-col shadow-lg rounded-xl mb-4 relative">
+        <div className="flex flex-col w-full">
+            {currentRows.map((each_card, index) => (
+                <div key={each_card.id || index} className="flex flex-col shadow-lg rounded-xl mb-4 relative">
                     <div
                         className="border-b border-[#E6E6E6] h-10 flex items-center justify-end cursor-pointer"
                         onClick={() => handleOpenOption(each_card.id)}
@@ -285,7 +243,7 @@ export const CourseCard = () => {
 
                     {each_card.id === selectedOptionId && showOption && (
                         <div className="absolute top-8 right-2 z-20">
-                            <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2 px-2 bg-white rounded-md" />
+                            <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2 px-2 bg-white rounded-md" handleShowDeleteModal={handleShowDeleteModal} />
                         </div>
                     )}
                 </div>
