@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -71,6 +71,10 @@ const Dropdown = () => {
 
 
 function DashboardAddCourseComponent() {
+  const navigate = useNavigate()
+  const handleNavigate = () => {
+    navigate({ to: '/admin/dashboard/add-module' })
+  }
   return (
     <>
       <h1 className='font-semibold text-lg'>Create New Course Form</h1>
@@ -105,7 +109,7 @@ function DashboardAddCourseComponent() {
       </div>
       <div className="md:bg-white w-full flex justify-between px-4 mt-10 py-5">
         <Button className="border-[#B1B1B1] rounded-lg border">Cancle</Button>
-        <Button className="bg-[#F7AE30] px-8 md:px-0 md:w-48 text-white rounded-lg">
+        <Button className="bg-[#F7AE30] px-8 md:px-0 md:w-48 text-white rounded-lg" onClick={handleNavigate}>
           <span className="block md:hidden">Add Module</span>
           <span className="hidden md:block">Proceed to Add Module</span>
         </Button>

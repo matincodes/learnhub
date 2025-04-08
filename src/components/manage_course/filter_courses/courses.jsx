@@ -17,6 +17,10 @@ function Option({ onClick, className, }) {
     const handleNavigate = (id) => {
         navigate({ to: '/admin/dashboard/course-details' })
     }
+    const handleDelete = () => {
+        console.log("Delete confirmed!")
+        // your delete logic here
+    }
     return (
         <div className={className}>
             <div className="flex flex-row gap-2 items-center w-32 bg-[#f8f6f6] rounded-lg px-1 py-2 cursor-pointer" onClick={() => handleNavigate()}
@@ -103,7 +107,7 @@ const TABLEDATA = [
         last_updated: generateRandomDate(),
     },
     {
-        id: 3,
+        id: 4,
         course_title: "Advanced Web Design",
         category: "Programming",
         status: "Published",
@@ -111,7 +115,7 @@ const TABLEDATA = [
         last_updated: generateRandomDate(),
     },
     {
-        id: 3,
+        id: 5,
         course_title: "Advanced Web Design",
         category: "programming",
         status: "Archived",
@@ -122,9 +126,21 @@ const TABLEDATA = [
 
 //TABLET, LAPTOP VIEW FOR DISPLAYING COURSES DATA
 export const CourseTable = () => {
-    const [showOption, setShowOption] = useState(false)
+    const [showOption, setShowOption] = useState(false);
+    const [selectedOptionId, setSelectedOptionId] = useState(null);
+
+    function handleOpenOption(id) {
+        if (selectedOptionId === id && showOption) {
+            setShowOption(false);
+            setSelectedOptionId(null);
+        } else {
+            setShowOption(true);
+            setSelectedOptionId(id);
+        }
+    }
+
     return (
-        <div className="bg-white w-full relative">
+        <div className="bg-white w-full h-full relative">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -149,14 +165,16 @@ export const CourseTable = () => {
                             <TableCell className={`${each_table.status == 'Published' ? 'text-[#008000]' : 'text-[#B98324]'} font-semibold`}>{each_table.status}</TableCell>
                             <TableCell className="font-medium">{each_table.students}</TableCell>
                             <TableCell className="font-medium">{each_table.last_updated}</TableCell>
-                            <TableCell onClick={() => setShowOption(true)}>
-                                <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg" className='text-center'>
+                            <TableCell onClick={() => handleOpenOption(each_table.id)}>
+                                <svg width="18" height="5" viewBox="0 0 18 5" fill="none" xmlns="http://www.w3.org/2000/svg" className='text-center cursor-pointer'>
                                     <path d="M16.125 4.37497C17.1605 4.37497 18 3.53551 18 2.49998C18 1.46446 17.1605 0.625 16.125 0.625C15.0895 0.625 14.25 1.46446 14.25 2.49998C14.25 3.53551 15.0895 4.37497 16.125 4.37497Z" fill="#333333" className='text-center' />
                                     <path d="M8.99998 4.37497C10.0355 4.37497 10.875 3.53551 10.875 2.49998C10.875 1.46446 10.0355 0.625 8.99998 0.625C7.96446 0.625 7.125 1.46446 7.125 2.49998C7.125 3.53551 7.96446 4.37497 8.99998 4.37497Z" fill="#333333" />
                                     <path d="M1.87499 4.37497C2.91052 4.37497 3.74998 3.53551 3.74998 2.49998C3.74998 1.46446 2.91052 0.625 1.87499 0.625C0.839461 0.625 0 1.46446 0 2.49998C0 3.53551 0.839461 4.37497 1.87499 4.37497Z" fill="#333333" />
                                 </svg>
                             </TableCell>
-                            {each_table.id == 1 && showOption && <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2  px-2 absolute right-[73px] -bottom-24 bg-white z-20 rounded-md" />}
+                            {each_table.id === selectedOptionId && showOption && (
+                                <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2 px-2 absolute right-28 top-20 bg-white z-20 rounded-md" />
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -166,40 +184,94 @@ export const CourseTable = () => {
 }
 
 
-//MOBILE VIEW FOR DISPLAYING COURSES DATA
+// MOBILE VIEW FOR DISPLAYING COURSES DATA
 export const CourseCard = () => {
+    const [showOption, setShowOption] = useState(false);
+    const [selectedOptionId, setSelectedOptionId] = useState(null);
+
+    function handleOpenOption(id) {
+        if (selectedOptionId === id && showOption) {
+            setShowOption(false);
+            setSelectedOptionId(null);
+        } else {
+            setShowOption(true);
+            setSelectedOptionId(id);
+        }
+    }
+
     return (
-        <div className="flex flex-col w-full h-screen mb-24">
+        <div className="flex flex-col w-full h-screen">
             {TABLEDATA.map((each_card) => (
-                <div className="flex flex-col shadow-lg rounded-xl">
-                    <div className="border-b border-[#E6E6E6] h-10  flex items-center justify-end">
-                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.50023 3.12498C8.36317 3.12498 9.06272 2.42543 9.06272 1.56249C9.06272 0.699551 8.36317 0 7.50023 0C6.63729 0 5.93774 0.699551 5.93774 1.56249C5.93774 2.42543 6.63729 3.12498 7.50023 3.12498Z" fill="#374957" />
-                            <path d="M7.50023 9.06247C8.36317 9.06247 9.06272 8.36292 9.06272 7.49999C9.06272 6.63705 8.36317 5.9375 7.50023 5.9375C6.63729 5.9375 5.93774 6.63705 5.93774 7.49999C5.93774 8.36292 6.63729 9.06247 7.50023 9.06247Z" fill="#374957" />
-                            <path d="M7.50023 15C8.36317 15 9.06272 14.3004 9.06272 13.4375C9.06272 12.5746 8.36317 11.875 7.50023 11.875C6.63729 11.875 5.93774 12.5746 5.93774 13.4375C5.93774 14.3004 6.63729 15 7.50023 15Z" fill="#374957" />
+                <div key={each_card.id} className="flex flex-col shadow-lg rounded-xl mb-4 relative">
+                    <div
+                        className="border-b border-[#E6E6E6] h-10 flex items-center justify-end cursor-pointer"
+                        onClick={() => handleOpenOption(each_card.id)}
+                    >
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 15 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M7.50023 3.12498C8.36317 3.12498 9.06272 2.42543 9.06272 1.56249C9.06272 0.699551 8.36317 0 7.50023 0C6.63729 0 5.93774 0.699551 5.93774 1.56249C5.93774 2.42543 6.63729 3.12498 7.50023 3.12498Z"
+                                fill="#374957"
+                            />
+                            <path
+                                d="M7.50023 9.06247C8.36317 9.06247 9.06272 8.36292 9.06272 7.49999C9.06272 6.63705 8.36317 5.9375 7.50023 5.9375C6.63729 5.9375 5.93774 6.63705 5.93774 7.49999C5.93774 8.36292 6.63729 9.06247 7.50023 9.06247Z"
+                                fill="#374957"
+                            />
+                            <path
+                                d="M7.50023 15C8.36317 15 9.06272 14.3004 9.06272 13.4375C9.06272 12.5746 8.36317 11.875 7.50023 11.875C6.63729 11.875 5.93774 12.5746 5.93774 13.4375C5.93774 14.3004 6.63729 15 7.50023 15Z"
+                                fill="#374957"
+                            />
                         </svg>
                     </div>
-                    <div className="flex flex-row justify-between py-4 px-3 relative">
-                        <div className='flex gap-3'>
+
+                    <div className="flex flex-row justify-between py-4 px-3">
+                        <div className="flex gap-3">
                             <img src={Image1} alt="image1" />
-                            <span className='flex flex-col font-san'>
+                            <span className="flex flex-col font-san">
                                 <span>{each_card.course_title}</span>
                                 <span>{each_card.category}</span>
                             </span>
                         </div>
-                        <div className={`rounded-full ${each_card.status === "Published" ? 'bg-[#87E587]' : 'bg-[#F3CB83]'}  w-[6.5rem] h-[2.1rem] flex gap-2 justify-center items-center`}>
-                            {each_card.status === "Published" ?
-                                <span><svg width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="1.5" cy="1.5" r="1.5" fill="#008000" />
-                                </svg>
-                                </span> :
-                                <span><svg width="3" height="3" viewBox="0 0 3 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="1.50024" cy="1.5" r="1.5" fill="#B98324" />
-                                </svg>
-                                </span>}
+                        <div
+                            className={`rounded-full ${each_card.status === "Published"
+                                ? "bg-[#87E587]"
+                                : "bg-[#F3CB83]"
+                                } w-[6.5rem] h-[2.1rem] flex gap-2 justify-center items-center`}
+                        >
+                            {each_card.status === "Published" ? (
+                                <span>
+                                    <svg
+                                        width="3"
+                                        height="3"
+                                        viewBox="0 0 3 3"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle cx="1.5" cy="1.5" r="1.5" fill="#008000" />
+                                    </svg>
+                                </span>
+                            ) : (
+                                <span>
+                                    <svg
+                                        width="3"
+                                        height="3"
+                                        viewBox="0 0 3 3"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle cx="1.50024" cy="1.5" r="1.5" fill="#B98324" />
+                                    </svg>
+                                </span>
+                            )}
                             <span>{each_card.status}</span>
                         </div>
                     </div>
+
                     <div className="flex flex-row justify-between items-center py-4 px-3">
                         <div className="flex flex-col">
                             <span>Student</span>
@@ -209,10 +281,15 @@ export const CourseCard = () => {
                             <span>{each_card.students}</span>
                             <span>{each_card.last_updated}</span>
                         </div>
-                        {each_card.id == 1 && <Option className="w-[190px] h-auto shadow-lg flex flex-col gap-3 py-3 px-4 absolute right-3 top-20  bg-white z-20 rounded-md" />}
                     </div>
+
+                    {each_card.id === selectedOptionId && showOption && (
+                        <div className="absolute top-8 right-2 z-20">
+                            <Option className="h-auto shadow-sm border flex flex-col gap-1 py-2 px-2 bg-white rounded-md" />
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
-    )
-}
+    );
+};
