@@ -94,12 +94,21 @@ function App() {
           </Button>
          </> 
           :
+          <>
           <Button
             className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
             asChild
           >
-            <Link to="/dashboard"> Continue Learning </Link>
+            <Link to="/courses"> View All Courses </Link>
           </Button>
+
+          <Button
+            className="w-fit border-2 border-normal_green px-[25px] py-[25px] font-san text-[16px] text-normal_green"
+            asChild
+          >
+            <Link to="/dashboard"> Visit Dashboard </Link>
+          </Button>
+          </>
         }
         </div>
 
@@ -148,7 +157,7 @@ function App() {
                 courseOption === category.category
                   ? category.courses.map((item, index) => (
                       <CarouselItem
-                        className="basis-[60%] lg:basis-[23%]"
+                        className="basis-[60%] lg:basis-[30%]"
                         key={index}
                       >
                         <SearchCourseCard

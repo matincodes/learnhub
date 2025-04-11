@@ -46,6 +46,82 @@ export const Courses = [
             testimony: `I've been using Learnhub for my online courses, and it's been a game-changer!`,
             author: 'John Doe',
           },
+        ],
+        contents: [
+          {
+               id: '001',
+               sectionTitle: 'JavaScript Fundamentals',
+               courses: [
+                    {
+                         id: '331',
+                         videourl: `https://res.cloudinary.com/dtukeebne/video/upload/v1733128970/NUESA-Awards_-_Google_Chrome_2024-11-05_11-59-26_pe8ejs.mp4`,
+                         title: `Introduction To JavaScript`,
+                         timeLength: `01:00`
+                    },
+                    {
+                         id: '332',
+                         videourl: `https://www.youtube.com/watch?v=y38qQRg3UDI`,
+                         title: `Variables,Data types, and Operators`,
+                         timeLength: `31:09`,
+                    },
+                    {
+                         id: '333',
+                         videourl: `https://www.youtube.com/watch?v=y38qQRg3UDI`,
+                         title: `Functions and Function Expressions`,
+                         timeLength: `03:09`
+                    },
+                    {
+                         id: '334',
+                         videourl: `https://vimeo.com/243556536`,
+                         title: `Lab:Building a Simple Calculator`,
+                         timeLength: `03:09`
+                    },
+                    {
+                         id: '335',
+                         videourl: `https://www.youtube.com/watch?v=y38qQRg3UDI`,
+                         title: `Object-Oriented Programming (OOP)`,
+                         timeLength: `03:09`
+                    },
+               ]
+          },
+          {
+               id: '002',    
+               sectionTitle: 'DOM Manipulation and Event Handling' ,
+               courses: [
+                    {
+                      id: '231',
+                      videourl: `https://www.youtube.com/watch?v=0ZJgIjIuY7U`,
+                      title: `Introduction To JavaScript`,
+                      timeLength: `03:09`
+                    },
+                    {
+                      id: '232',
+                         title: `Artificial Neural Network`,
+                         timeLength: `03:09`
+                    },
+                    {
+                      id: '233',
+                         title: `Variables,Data types, and Operators`,
+                         timeLength: `03:09`
+                    },
+                    {
+                      id: '234',
+                         title: `Functions and Function Expressions`,
+                         timeLength: `03:09`
+                    },
+                    {
+                      id: '235',
+                         title: `Lab:Building a Simple Calculator`,
+                         timeLength: `03:09`
+                    },
+                    {
+                      id: '236',
+                         title: `Object-Oriented Programming (OOP)`,
+                         timeLength: `03:09`
+                    },
+               ]
+          },
+
         ]
       },
       {

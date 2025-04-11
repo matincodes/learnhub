@@ -95,34 +95,34 @@ function GetId(){
         value={hash}
         className="w-full bg-white p-6 lg:max-w-[1000px] relative"
       >
-        <TabsList className="m-0 border-b border-[#8080804d] p-0">
+        <TabsList className="m-0 border-b border-[#8080804d] p-0 w-full">
           <TabsTrigger value="coursecontent">Course Content</TabsTrigger>
           <TabsTrigger value="description">Descriptions</TabsTrigger>
           <TabsTrigger value="review">Review</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="coursecontent" className="space-y-3 font-san">
+        <TabsContent value="coursecontent" className="space-y-3 font-san mt-8 ">
           {firstCourse.contents.map(courseContent => (
             <Accordion
               type="single"
               collapsible
-              className="w-full rounded-[8px] border-0 bg-[#F7F7F7B2] px-3"
+              className="w-full"
               key={courseContent.id}
             >
-              <AccordionItem value="item-1">
+              <AccordionItem value="item-1" className="overflow-hidden rounded-[8px] border">
                 <AccordionTrigger className="grid">
-                  <p className="lg:text-[18px] text-[15px] font-[600]">
+                  <p className="flex gap-2 text-[13px] font-[600] lg:gap-0 lg:text-[18px]">
                     Section {courseContent.id}:
-                    <span className="pl-3">{courseContent.sectionTitle}</span>
+                    <span className="lg:pl-3  text-left">{courseContent.sectionTitle}</span>
                   </p>
                   <div className="flex items-center">
-                    <p className="font-[500]">
+                    <p className="text-[12px] font-[500] lg:text-[15px]">
                       <span>{courseContent.courses.length}</span> lectures
                     </p>
 
                     <Dot strokeWidth={4} />
 
-                    <p>{calculateTotalTimeInMinutes(courseContent.courses)}</p>
+                    <p className="text-[12px] lg:text-[15px]">{calculateTotalTimeInMinutes(courseContent.courses)}</p>
                   </div>
                 </AccordionTrigger>
 

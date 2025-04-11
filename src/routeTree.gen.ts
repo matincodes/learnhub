@@ -18,10 +18,16 @@ import { Route as CheckoutImport } from './routes/checkout'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as CoursesIndexImport } from './routes/courses/index'
 import { Route as CoursesCourseImport } from './routes/courses/$course'
+import { Route as AdminDashboardLayoutImport } from './routes/admin/_dashboardLayout'
+import { Route as AdminAuthImport } from './routes/admin/_auth'
 import { Route as AuthSignupImport } from './routes/_auth/signup'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutImport } from './routes/(userDashboard)/_dashboardLayout'
+import { Route as AdminAuthSignupImport } from './routes/admin/_auth/signup'
+import { Route as AdminAuthLoginImport } from './routes/admin/_auth/login'
+import { Route as AdminDashboardLayoutDashboardIndexImport } from './routes/admin/_dashboardLayout/dashboard/index'
 import { Route as userDashboardDashboardLayoutDashboardIndexImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
+import { Route as AdminDashboardLayoutDashboardSettingsImport } from './routes/admin/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSettingsImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
@@ -36,10 +42,16 @@ import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLe
 
 // Create Virtual Routes
 
+const AdminImport = createFileRoute('/admin')()
 const userDashboardImport = createFileRoute('/(userDashboard)')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const AdminRoute = AdminImport.update({
+  path: '/admin',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const userDashboardRoute = userDashboardImport.update({
   id: '/(userDashboard)',
@@ -76,6 +88,16 @@ const CoursesCourseRoute = CoursesCourseImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminDashboardLayoutRoute = AdminDashboardLayoutImport.update({
+  id: '/_dashboardLayout',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAuthRoute = AdminAuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AuthSignupRoute = AuthSignupImport.update({
   path: '/signup',
   getParentRoute: () => AuthRoute,
@@ -92,10 +114,32 @@ const userDashboardDashboardLayoutRoute =
     getParentRoute: () => userDashboardRoute,
   } as any)
 
+const AdminAuthSignupRoute = AdminAuthSignupImport.update({
+  path: '/signup',
+  getParentRoute: () => AdminAuthRoute,
+} as any)
+
+const AdminAuthLoginRoute = AdminAuthLoginImport.update({
+  path: '/login',
+  getParentRoute: () => AdminAuthRoute,
+} as any)
+
+const AdminDashboardLayoutDashboardIndexRoute =
+  AdminDashboardLayoutDashboardIndexImport.update({
+    path: '/dashboard/',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+
 const userDashboardDashboardLayoutDashboardIndexRoute =
   userDashboardDashboardLayoutDashboardIndexImport.update({
     path: '/dashboard/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
+  } as any)
+
+const AdminDashboardLayoutDashboardSettingsRoute =
+  AdminDashboardLayoutDashboardSettingsImport.update({
+    path: '/dashboard/settings',
+    getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
 
 const userDashboardDashboardLayoutDashboardSettingsRoute =
@@ -226,6 +270,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupImport
       parentRoute: typeof AuthImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin/_auth': {
+      id: '/admin/_auth'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAuthImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/_dashboardLayout': {
+      id: '/admin/_dashboardLayout'
+      path: ''
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminDashboardLayoutImport
+      parentRoute: typeof AdminImport
+    }
     '/courses/$course': {
       id: '/courses/$course'
       path: '/courses/$course'
@@ -239,6 +304,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/courses'
       preLoaderRoute: typeof CoursesIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/admin/_auth/login': {
+      id: '/admin/_auth/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminAuthLoginImport
+      parentRoute: typeof AdminAuthImport
+    }
+    '/admin/_auth/signup': {
+      id: '/admin/_auth/signup'
+      path: '/signup'
+      fullPath: '/admin/signup'
+      preLoaderRoute: typeof AdminAuthSignupImport
+      parentRoute: typeof AdminAuthImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/leaderboard': {
       id: '/_dashboardLayout/dashboard/leaderboard'
@@ -282,12 +361,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardSettingsImport
       parentRoute: typeof userDashboardDashboardLayoutImport
     }
+    '/admin/_dashboardLayout/dashboard/settings': {
+      id: '/admin/_dashboardLayout/dashboard/settings'
+      path: '/dashboard/settings'
+      fullPath: '/admin/dashboard/settings'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardSettingsImport
+      parentRoute: typeof AdminDashboardLayoutImport
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/': {
       id: '/_dashboardLayout/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardIndexImport
       parentRoute: typeof userDashboardDashboardLayoutImport
+    }
+    '/admin/_dashboardLayout/dashboard/': {
+      id: '/admin/_dashboardLayout/dashboard/'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardIndexImport
+      parentRoute: typeof AdminDashboardLayoutImport
     }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': {
       id: '/_dashboardLayout/dashboard/quizzes/$id'
@@ -351,6 +444,16 @@ export const routeTree = rootRoute.addChildren({
         userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute,
       }),
   }),
+  AdminRoute: AdminRoute.addChildren({
+    AdminAuthRoute: AdminAuthRoute.addChildren({
+      AdminAuthLoginRoute,
+      AdminAuthSignupRoute,
+    }),
+    AdminDashboardLayoutRoute: AdminDashboardLayoutRoute.addChildren({
+      AdminDashboardLayoutDashboardSettingsRoute,
+      AdminDashboardLayoutDashboardIndexRoute,
+    }),
+  }),
   CoursesCourseRoute,
   CoursesIndexRoute,
 })
@@ -368,6 +471,7 @@ export const routeTree = rootRoute.addChildren({
         "/checkout",
         "/pricing",
         "/",
+        "/admin",
         "/courses/$course",
         "/courses/"
       ]
@@ -417,11 +521,42 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth/signup.jsx",
       "parent": "/_auth"
     },
+    "/admin": {
+      "filePath": "admin",
+      "children": [
+        "/admin/_auth",
+        "/admin/_dashboardLayout"
+      ]
+    },
+    "/admin/_auth": {
+      "filePath": "admin/_auth.jsx",
+      "parent": "/admin",
+      "children": [
+        "/admin/_auth/login",
+        "/admin/_auth/signup"
+      ]
+    },
+    "/admin/_dashboardLayout": {
+      "filePath": "admin/_dashboardLayout.jsx",
+      "parent": "/admin",
+      "children": [
+        "/admin/_dashboardLayout/dashboard/settings",
+        "/admin/_dashboardLayout/dashboard/"
+      ]
+    },
     "/courses/$course": {
       "filePath": "courses/$course.jsx"
     },
     "/courses/": {
       "filePath": "courses/index.jsx"
+    },
+    "/admin/_auth/login": {
+      "filePath": "admin/_auth/login.jsx",
+      "parent": "/admin/_auth"
+    },
+    "/admin/_auth/signup": {
+      "filePath": "admin/_auth/signup.jsx",
+      "parent": "/admin/_auth"
     },
     "/_dashboardLayout/dashboard/leaderboard": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/leaderboard.jsx",
@@ -447,9 +582,17 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/settings.jsx",
       "parent": "/_dashboardLayout"
     },
+    "/admin/_dashboardLayout/dashboard/settings": {
+      "filePath": "admin/_dashboardLayout/dashboard/settings.jsx",
+      "parent": "/admin/_dashboardLayout"
+    },
     "/_dashboardLayout/dashboard/": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/index.jsx",
       "parent": "/_dashboardLayout"
+    },
+    "/admin/_dashboardLayout/dashboard/": {
+      "filePath": "admin/_dashboardLayout/dashboard/index.jsx",
+      "parent": "/admin/_dashboardLayout"
     },
     "/_dashboardLayout/dashboard/quizzes/$id": {
       "filePath": "(userDashboard)/_dashboardLayout/dashboard/quizzes/$id.jsx",
