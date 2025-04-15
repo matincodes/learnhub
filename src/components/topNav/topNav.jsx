@@ -140,7 +140,7 @@ const TopNav = () => {
 
         <div className="my-5 flex flex-col items-start justify-start relative">
           <h2 className="flex text-lg font-semibold sm:text-2xl items-center">
-            {pathname != '/dashboard' || pathname != '/admin/dashboard' || pathname != '/admin/dashboard/courses' && (
+            {pathname != '/dashboard' || pathname != '/admin/dashboard' || pathname != '/admin/dashboard/courses' || pathname !== '/admin/dashboard/course-details' && (
               <img
                 src="/assets/arrow-left-01.svg"
                 onClick={() => router.history.back()}
@@ -151,7 +151,7 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
             {/* {} */}
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses') && (
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details') && (
             <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
           )}
         </div>
@@ -170,12 +170,12 @@ const TopNav = () => {
               />
             )}
             {/* {title} */}
-            {pathname.includes('/admin/dashboard') || pathname.includes('/admin/dashboard/courses') && pathname == '/admin/dashboard' ? 'Dashboard' : ''}
+            {pathname.includes('/admin/dashboard') || pathname.includes('/admin/dashboard/courses') || pathname.includes('/admin/dashboard/course-details') || pathname.includes('/admin/dashboard/add-course') || pathname.includes('/admin/dashboard/add-module') && pathname == '/admin/dashboard' ? 'Dashboard' : ''}
 
             {courseTitle ? courseTitle : title}
 
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses') && (
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details' || pathname == '/admin/dashboard/add-course' || pathname == ('/admin/dashboard/add-module')) && (
             <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
           )}
         </div>

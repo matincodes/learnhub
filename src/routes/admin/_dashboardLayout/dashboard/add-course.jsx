@@ -145,7 +145,7 @@ function DashboardAddCourseComponent() {
 
             </div>
           </div >
-        </form >
+        </form>
       </div >
       <div className="md:bg-white w-full flex justify-between px-4 mt-10 py-5">
         <Button className="border-[#B1B1B1] rounded-lg border" onClick={NavigateBack}>Cancle</Button>

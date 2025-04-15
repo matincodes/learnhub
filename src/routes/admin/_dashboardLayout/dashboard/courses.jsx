@@ -104,7 +104,7 @@ function DashboardCourseManagementComponent() {
   }
 
 
-  const [checkingCourseExist, setCheckCourseExist] = useState(true)
+  const [checkingCourseExist, setCheckCourseExist] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 4;
   const totalPages = Math.ceil(DATA.length / rowsPerPage);
@@ -114,7 +114,7 @@ function DashboardCourseManagementComponent() {
 
   return (
     <div className='w-full h-full'>
-      <div className="flex flex-row justify-between px-4 pb-9 items-center w-full">
+      {checkingCourseExist && <div className="w-full h-full">
         <h1 className='text-lg font-medium'>Course Management</h1>
         <Button className="bg-[#F7AE30] md:w-44 md:px-2 gap-2" onClick={handleNavigate}>
           <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +129,7 @@ function DashboardCourseManagementComponent() {
           </svg>
           <span className='text-white hidden md:block'>Create new Course</span>
         </Button>
-      </div>
+      </div>}
       {checkingCourseExist ? (
         <>
           <Filter />
@@ -153,7 +153,7 @@ function DashboardCourseManagementComponent() {
           </div>
         </>
       ) : (
-        <NoCourse />
+        <NoCourse handleNavigate={handleNavigate} />
       )}
       {showDeleteModal && <DeleteDialog handleCloseDeleteModal={setShowDeleteModel} />}
     </div>
