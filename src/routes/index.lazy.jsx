@@ -7,6 +7,7 @@ import TestimonialCard from '@/components/testimonialCard/testimonialCard'
 import { Courses } from '@/data/courses'
 import CourseOption from '@/components/options/options'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
+import { useUser } from '@/hooks/use-user'
 
 import {
   cardSectionOne,
@@ -43,6 +44,7 @@ export const Route = createLazyFileRoute('/')({
 function App() {
   const stopNav = useRef(null)
   const [courseOption, setCourseOption] = useState('Frontend Development')
+  const user  = useUser()
 
   // For Filtering Courses
   const getOptionValue = e => {
@@ -50,9 +52,7 @@ function App() {
   }
 
 
-  // User Image
-  const data = window.localStorage.getItem('user')
-  const user = JSON.parse(data)
+  
 
   return (
     <>

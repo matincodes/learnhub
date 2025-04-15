@@ -1,123 +1,73 @@
-import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
+import { login, signup, refreshAccessToken } from '@/api/authService'
+import { saveAuthData, getAuthData, clearAuthData } from '@/lib/tokenStorage'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('learnhub-user')),
-  )
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('accessToken'),
-  )
-  const [isAuthenticated, setIsAuthenticated] = useState(!!user)
+  const { user: storedUser, accessToken: storedToken, refreshToken: storedRefresh } = getAuthData()
 
-  const login = async ({ email, password }) => {
+  const [user, setUser] = useState(storedUser)
+  const [accessToken, setAccessToken] = useState(storedToken)
+  const [refreshToken, setRefreshToken] = useState(storedRefresh)
+  const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser)
+
+  const handleLogin = async (role, credentials) => {
     try {
-      const { data } = await axios.post(
-        'https://coderina.onrender.com/api/students/login/',
-        { email, password },
-      )
-
-      const user = {
-        firstName: data.first_name,
-        lastName: data.last_name,
-        email: data.email,
-        role: data.role || 'user'
-      }
+      const { user, tokens, redirect } = await login(role, credentials)
       setUser(user)
-      setAccessToken(data.tokens.access)
-      localStorage.setItem('learnhub-user', JSON.stringify(user))
-      localStorage.setItem('accessToken', data.tokens.access)
-      localStorage.setItem('refreshToken', data.tokens.refresh) // Store the refresh token
+      setAccessToken(tokens.access)
+      setRefreshToken(tokens.refresh)
+      saveAuthData(user, tokens)
       setIsAuthenticated(true)
-      return true
-    } catch (error) {
-      setIsAuthenticated(false)
-      console.error(error)
-      return false
+      return { succes: true, redirect}
+    } catch (err) {
+      console.error(err)
+      return { succes: false, error: err.response?.data?.error || 'An error occurred' }
     }
   }
 
-  const signup = async ({
-    first_name,
-    last_name,
-    email,
-    password,
-    confirm_password,
-  }) => {
+  const handleSignup = async (role, userData) => {
     try {
-      const { data } = await axios.post(
-        'https://coderina.onrender.com/api/students/signup/',
-        { user: { first_name, last_name, email, password, confirm_password } },
-      )
-
-      const user = {
-        firstName: data.first_name,
-        lastName: data.last_name,
-        email: data.email,
-      }
+      const { user, tokens, redirect } = await signup(role, userData)
       setUser(user)
-      setAccessToken(data.tokens.access)
-      localStorage.setItem('learnhub-user', JSON.stringify(user))
-      localStorage.setItem('accessToken', data.tokens.access)
-      localStorage.setItem('refreshToken', data.tokens.refresh) // Store the refresh token
+      setAccessToken(tokens.access)
+      setRefreshToken(tokens.refresh)
+      saveAuthData(user, tokens)
       setIsAuthenticated(true)
-      return true
-    } catch (error) {
-      setIsAuthenticated(false)
-      console.error(error)
-      return false
+      return { succes: true, redirect}
+    } catch (err) {
+      console.error(err)
+      return { succes: false, error: err.response?.data?.error || 'An error occurred' }
     }
   }
 
   const logout = () => {
+    clearAuthData()
     setUser(null)
     setAccessToken(null)
+    setRefreshToken(null)
     setIsAuthenticated(false)
-    localStorage.removeItem('learnhub-user')
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
   }
 
-  const refreshAccessToken = async () => {
-    const refreshToken = localStorage.getItem('refreshToken')
-    const response = await fetch('/api/refresh', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ refreshToken }),
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to refresh access token')
+  const secureRequest = async (axiosRequest) => {
+    try {
+      const response = await axiosRequest(accessToken)
+      return response
+    } catch (error) {
+      if (error.response?.status === 401 && refreshToken) {
+        try {
+          const newAccess = await refreshAccessToken(refreshToken)
+          setAccessToken(newAccess)
+          localStorage.setItem('accessToken', newAccess)
+          return axiosRequest(newAccess)
+        } catch (err) {
+          logout()
+          throw err
+        }
+      }
+      throw error
     }
-
-    const data = await response.json()
-    setAccessToken(data.accessToken)
-    localStorage.setItem('accessToken', data.accessToken)
-  }
-
-  const authFetch = async (url, options = {}) => {
-    if (!accessToken) {
-      await refreshAccessToken()
-    }
-
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-
-    if (response.status === 401) {
-      await refreshAccessToken()
-      return authFetch(url, options)
-    }
-
-    return response
   }
 
   return (
@@ -125,11 +75,11 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         isAuthenticated,
-        login,
-        signup,
+        login: handleLogin,
+        signup: handleSignup,
         logout,
-        authFetch,
         accessToken,
+        secureRequest,
       }}
     >
       {children}

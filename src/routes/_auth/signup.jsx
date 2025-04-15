@@ -11,12 +11,7 @@ export const Route = createFileRoute('/_auth/signup')({
 })
 
 function SignUp() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    // formState: { errors },
-  } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const { signup } = useAuth()
   const router = useRouter()
@@ -24,20 +19,34 @@ function SignUp() {
 
   const onSubmit = async data => {
     setIsLoading(true)
-    if (await signup(data)) {
+
+    // Client-side check for password match
+    if (data.password !== data.confirm_password) {
+      toast({
+        variant: 'destructive',
+        title: 'Password mismatch',
+        description: 'Please make sure your passwords match.',
+      })
+      setIsLoading(false)
+      return
+    }
+
+    const result = await signup('student', data)
+
+    if (result.success) {
+      console.log('Signup successful')
       reset()
       router.invalidate()
-      router.navigate({
-        to: '/',
-      })
+      router.navigate({ to: result.redirect || '/' })
     } else {
-      setIsLoading(false)
-      return toast({
+      toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
         description: 'Signup failed, please try again.',
       })
     }
+
+    setIsLoading(false)
   }
 
   return (
