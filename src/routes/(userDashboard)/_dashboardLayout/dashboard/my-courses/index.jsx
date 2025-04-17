@@ -1,7 +1,9 @@
-import { createFileRoute, useNavigate, useParams, useSearch } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
-import { FiPlus } from 'react-icons/fi'
-import * as React from 'react'
+import {
+  createFileRoute,
+  useNavigate,
+  useParams,
+  useSearch,
+} from '@tanstack/react-router'
 import {
   Select,
   SelectContent,
@@ -11,29 +13,30 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { coursesFilter, UserCourses } from '@/data/userCourses'
+import { Button } from '@/components/ui/button'
+import { FiPlus } from 'react-icons/fi'
 
-
+import NullState from '@/components/nullState/nullState'
 
 import RecentCourseCard from '@/components/widgets/recent_course_card'
 import { useEffect } from 'react'
-export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/my-courses/')({
+export const Route = createFileRoute(
+  '/(userDashboard)/_dashboardLayout/dashboard/my-courses/',
+)({
   component: MyCourses,
 })
 
 function MyCourses() {
-  const {course_title} = useSearch('')
+  const { course_title } = useSearch('')
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    if(course_title){
-      navigate({to: `${location.pathname}/${course_title}`})
-    }
-    else{
+  useEffect(() => {
+    if (course_title) {
+      navigate({ to: `${location.pathname}/${course_title}` })
+    } else {
       console.log('dfdf')
     }
   }, [course_title, navigate])
-
-
 
   return (
     <div className="w-full rounded-xl bg-white p-4 sm:p-6">
@@ -65,38 +68,23 @@ function MyCourses() {
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-5 lg:grid-cols-2 xl:grid-cols-4">
-        {UserCourses.map((item, index) => (
-          <a href={`/dashboard/my-courses/?course_title=${item.title}`} key={index} >
-          <RecentCourseCard
-            className="w-full sm:w-full "
-            {...item}
+        {UserCourses.length <= 0 ? (
+          <NullState
+            mainText="No recent courses yet"
+            miniText="Add courses to continue your learning journey"
+            button
           />
-          </a>
-          
-        ))}
+        ) : (
+          UserCourses.map((item, index) => (
+            <a
+              href={`/dashboard/my-courses/?course_title=${item.title}`}
+              key={index}
+            >
+              <RecentCourseCard className="w-full sm:w-full" {...item} />
+            </a>
+          ))
+        )}
       </div>
-    </div>
-  )
-}
-
-function EmptyCard() {
-  return (
-    <div className="col-span-full flex w-full flex-col items-center justify-center gap-y-5">
-      <img src="/assets/empty.png" alt="" />
-
-      <div className="space-y-2">
-        <h2 className="text-center text-sm font-semibold">
-          No recent courses yet
-        </h2>
-        <p className="text-center text-sm text-gray-500">
-          Add courses to continue your learning journey
-        </p>
-      </div>
-
-      <Button className="h-12 items-center justify-center gap-x-2 rounded-xl border border-normal_yellow bg-none px-4 text-normal_yellow">
-        <FiPlus size={24} />
-        <p>Add Courses</p>
-      </Button>
     </div>
   )
 }
