@@ -18,16 +18,16 @@ import { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
-  // beforeLoad: ({ context, location }) => {
-  //   if (!context.isAuthenticated) {
-  //     throw redirect({
-  //       to: '/login',
-  //       search: {
-  //         redirect: location.href,
-  //       },
-  //     })
-  //   }
-  // },
+  beforeLoad: ({ context, location }) => {
+    if (!context.isAuthenticated) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+  },
 })
 
 export const Checkout = () => {
