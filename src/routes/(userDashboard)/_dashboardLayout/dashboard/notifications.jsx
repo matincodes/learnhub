@@ -4,6 +4,7 @@ import { notifications } from '@/data/notificationData'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { NotificationWidget } from '@/components/topNav/notificationModal'
+import NullState from '@/components/nullState/nullState'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/notifications')({
   component: NotificationsPage,
@@ -49,8 +50,14 @@ const navigate = useNavigate()
           <button className="font-medium text-red-500">Clear All</button>
         </div>
 
-        <div className="flex w-full flex-col items-start justify-start">
-          {filteredData.map((item, index) => (
+        <div className="flex w-full flex-col items-start justify-start border border-red-500">
+          {filteredData.length <= 0 ?
+           <NullState
+                      mainText="No Notifications Yet"
+                      miniText="Stay tuned! Updates will appear here."
+                    />
+                    :
+            filteredData.map((item, index) => (
             <NotificationWidget {...item} key={index} />
           ))}
         </div>
