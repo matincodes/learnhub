@@ -13,6 +13,7 @@ import { Courses } from '@/data/courses'
 import { useState } from 'react'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import Footer from '@/components/footer/footer'
+import NullState from '@/components/nullState/nullState'
 
 export const Route = createFileRoute('/courses/')({
   component: Course,
@@ -60,23 +61,30 @@ function Course() {
         </Select>
       </div>
 
-      <div className="lgp-5 p-2 flex items-center justify-center">
-        <div className="grid grid-cols-2 lg:gap-9 gap-4 w-fit lg:w-[96%] lg:p-4 p-2 lg:grid-cols-3">
-          {Courses.map(category =>
-            courseTitle === category.category
-              ? category.courses.map((item, id) => (
-                  <div className="flex w-fit justify-center" key={id}>
-                    <a href={`/courses/${item.title}`}>
-                      <SearchCourseCard
-                        image={item.image}
-                        title={item.title}
-                        lesson={item.lesson}
-                        duration={item.duration}
-                      />
-                    </a>
-                  </div>
-                ))
-              : '',
+      <div className={`lg:p-5 flex items-center justify-center p-2 ${Courses.length <= 0 ? 'h-[90vh]' : ''}  `}>
+        <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
+          {Courses.length <= 0 ? (
+            <NullState
+              mainText="No Courses Yet"
+              miniText="Stay tuned! Updates will appear here."
+            />
+          ) : (
+            Courses.map(category =>
+              courseTitle === category.category
+                ? category.courses.map((item, id) => (
+                    <div className="flex w-fit justify-center" key={id}>
+                      <a href={`/courses/${item.title}`}>
+                        <SearchCourseCard
+                          image={item.image}
+                          title={item.title}
+                          lesson={item.lesson}
+                          duration={item.duration}
+                        />
+                      </a>
+                    </div>
+                  ))
+                : '',
+            )
           )}
         </div>
       </div>
