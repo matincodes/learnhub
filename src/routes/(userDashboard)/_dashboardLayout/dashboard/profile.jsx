@@ -2,6 +2,7 @@ import { createFileRoute, useRouteContext } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
+import { UserProfile } from '@/context/user-context'
 
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboard/profile')({
@@ -19,9 +20,12 @@ function Profile() {
   const firstName = useRouteContext({ select: s => s.user?.firstName })
   const lastName = useRouteContext({ select: s => s.user?.lastName })
   const email = useRouteContext({ select: s => s.user?.email })
+  const { getUserById } = UserProfile()
+
 
   // Change Image
   const handleImageChange = () =>{
+    
     const image = (userprofile.current.files[0])
     if(image){
       const reader = new FileReader()
@@ -102,16 +106,16 @@ function Profile() {
           {/* Cards */}
           <div className="flex space-x-5 justify-center">
             <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
-              <p className="text-[14px] font-[500] text-[#989494]">
+              <p className="text-[13px] font-[500] text-[#989494]">
                 Course Completed
               </p>
-              <h2 className="text-[20px] font-bold">15</h2>
+              <h2 className="text-[20px] font-bold">{getUserById?.completed_courses}</h2>
             </div>
             <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
-              <p className="text-[14px] font-[500] text-[#989494]">
+              <p className="text-[13px] font-[500] text-[#989494]">
                 On Going Courses
               </p>
-              <h2 className="text-[20px] font-bold">20</h2>
+              <h2 className="text-[20px] font-bold">{getUserById?.ongoing_courses}</h2>
             </div>
           </div>
           {/* Cards */}

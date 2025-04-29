@@ -37,14 +37,19 @@ import {
 import { useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 
+
 export const Route = createLazyFileRoute('/')({
   component: App,
 })
+
+
+
 
 function App() {
   const stopNav = useRef(null)
   const [courseOption, setCourseOption] = useState('Frontend Development')
   const user  = useUser()
+
 
   // For Filtering Courses
   const getOptionValue = e => {
