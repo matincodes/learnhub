@@ -63,12 +63,12 @@ function Mentor() {
           <div
             className={`grid gap-4  ${selectedMentor == null ? 'lg:grid-cols-4' : 'lg:grid-cols-2 lg:relative absolute '} `}
           >
-            {Mentors.map(mentor => (
+            {Mentors.map((mentor, index) => (
               <>
                 <div
                   onClick={() => handleMentorClick(mentor)}
                   className="flex cursor-pointer flex-col justify-center rounded-[10px] border p-1 space-y-3"
-                  key={mentor.name}
+                  key={index}
                 >
                   <div className="relative overflow-hidden rounded-[5px] lg:grid  lg:h-[200px] ">
                     <img
