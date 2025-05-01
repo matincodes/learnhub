@@ -1,34 +1,34 @@
 import { Input } from '@/components/ui/input'
 import { topNavData } from '@/data/topNav'
 import {
-  Link,
   useLocation,
   useNavigate,
-  useRouteContext,
   useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
 import NotificationModal from './notificationModal'
+import { UserProfile } from '@/context/user-context'
 
 const TopNav = () => {
   const [openSearchStatus, setOpenSearchStatus] = useState(false)
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
+    const { getUserById } = UserProfile()
+  
+
 
   const router = useRouter()
   const navigate = useNavigate()
-  const firstName = "Timilehin"
   const role = "admin"
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const title = topNavData[pathname]?.title
-  const regex = /my-courses\/([^\/]+)/;
-  const match = pathname.match(regex);
+  const regex = /my-courses\/([^/]+)/;
+    const match = pathname.match(regex);
   const courseTitle = match ? decodeURIComponent(match[1]) : null;
 
-  console.log(title, courseTitle, useLocation({ select: s => s.pathname }))
+  // console.log(title, courseTitle, useLocation({select: s => s.pathname}))
   // console.log(useRouteContext( { select: s => s } ))
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
@@ -78,43 +78,7 @@ const TopNav = () => {
           <div
             className={`items-center ${openSearchStatus === false ? 'flex w-full items-center justify-end gap-3' : 'w-full'}`}
           >
-            {/* responsive Input Search */}
-            {/* {openSearchStatus === false ? (
-              <div className="rounded-full bg-white p-[7px]">
-                <CiSearch
-                  size={28}
-                  strokeWidth={2}
-                  color="#303031"
-                  className="cursor-pointer"
-                  onClick={openSearch}
-                />
-              </div>
-            ) : (
-              <div
-                className={`'w-full border-b-[#848484]'} left-0 flex h-10 items-center justify-evenly overflow-hidden border-4 border-l-0 border-r-0 border-t-0`}
-              >
-                <Input
-                  type="text"
-                  id="search"
-                  placeholder="Search here"
-                  className="border-none bg-transparent outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-                  autoFocus
-                  value={searchInputValue}
-                  onClick={openSearch}
-                  onChange={getLength}
-                />
-
-                <div className="">
-                  <HiXMark
-                    size={28}
-                    strokeWidth={0}
-                    color="#303031"
-                    className="cursor-pointer"
-                    onClick={closeSearchButton}
-                  />
-                </div>
-              </div>
-            )} */}
+      
             {/* responsive Input Search */}
 
             {openSearchStatus === false && (
@@ -151,8 +115,8 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
             {/* {} */}
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details') && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
+          <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
           )}
         </div>
       </div>
@@ -175,8 +139,8 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
 
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details' || pathname == '/admin/dashboard/add-course' || pathname == ('/admin/dashboard/add-module')) && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
+            <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
           )}
         </div>
 

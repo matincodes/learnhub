@@ -1,13 +1,15 @@
 import { Separator } from '@/components/ui/separator'
+import { UserProfile } from '@/context/user-context'
 import { navLinks, adminNavLinks } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
-import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 
 const SideNav = () => {
+  const { getUserById } = UserProfile()
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
-  const firstName = 'Timilehin'
-  const lastName = 'Emmanuel'
+ 
   const role = 'admin'
+
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
@@ -18,22 +20,31 @@ const SideNav = () => {
               <div className="grid basis-[50%] place-content-center">
                 <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
                   <img
-                    src="/assets/profile.png"
+                    src={getUserById?.profile_image}
                     alt="profile image"
                     className="object-cover"
                   />
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
-                <p className="font-semibold">{lastName}, {firstName}</p>
-                <p className="text-xs sm:text-sm">{pathname.includes('/admin/dashboard') && role === 'admin' ? "Admin" : "View Profile"}</p>
+                <p className="font-semibold">
+                  { getUserById?.last_name}, { getUserById?.first_name}
+                </p>
+                <p className="text-xs sm:text-sm">
+                  {pathname.includes('/admin/dashboard') && role === 'admin'
+                    ? 'Admin'
+                    : 'View Profile'}
+                </p>
               </div>
             </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
             <ul className="mt-6 flex w-full flex-col gap-y-1">
-              {(pathname.includes('/admin/dashboard') && role === 'admin' ? adminNavLinks : navLinks).map(({ link, name, iconImage }) => {
+              {(pathname.includes('/admin/dashboard') && role === 'admin'
+                ? adminNavLinks
+                : navLinks
+              ).map(({ link, name, iconImage }) => {
                 return (
                   <li key={name} className={'w-full'}>
                     <Link

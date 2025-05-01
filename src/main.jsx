@@ -7,6 +7,7 @@ import NotFound from '@/components/notFound/notFound'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 import { AuthProvider, useAuth } from '@/context/auth-context'
+import { UserProvider } from './context/user-context'
 
 // Create a new router instance
 const router = createRouter({
@@ -31,7 +32,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <AuthProvider>
+        <UserProvider>
         <App />
+        </UserProvider>
       </AuthProvider>
     </StrictMode>,
   )
@@ -39,5 +42,7 @@ if (!rootElement.innerHTML) {
 
 export function App() {
   const auth = useAuth()
+  
+  
   return <RouterProvider router={router} context={{ ...auth }} />
 }

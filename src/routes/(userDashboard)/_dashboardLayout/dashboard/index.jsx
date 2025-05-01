@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import Inventory from '@/components/inventory/inventory'
 import RecentCourseCard from '@/components/widgets/recent_course_card'
-import { recentCourses } from '@/data/dashboard'
+// import { recentCourses } from '@/data/dashboard'
 import { ChevronsUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { fetchCourses } from '@/lib/apiFunctions'
 import NullState from '@/components/nullState/nullState'
+import { UserProfile } from '@/context/user-context'
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/',
@@ -15,6 +16,7 @@ export const Route = createFileRoute(
 
 function DashboardIndexComponent() {
   const [recentCourses, setRecentCourses] = useState([])
+  const {getUserById} = UserProfile()
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ2MTEzODAxLCJpYXQiOjE3NDYwMjc0MDEsImp0aSI6ImU4YzFmNmRiNTZlNTQwN2Y5NGIxODM4MzYxY2FlYmQwIiwidXNlcl9pZCI6OH0.inTlwRTL_SnBzucxXuT4VZe7JovqXk0AsINa2wzneqI'
 
@@ -27,28 +29,19 @@ function DashboardIndexComponent() {
 
     getCourses()
   }, [token])
-
+  const totalCoures = getUserById?.ongoing_courses + getUserById?.completed_courses
   return (
     <div className="w-full space-y-6 sm:space-y-10">
       <div className="grid w-full grid-cols-2 gap-4 sm:gap-8 lg:gap-20">
         <Inventory
           title={'Total Courses'}
-          metrics={7}
+          metrics={totalCoures}
           image="/assets/courses.png"
         />
-        {/* <Inventory
-          title={'Completed Courses'}
-          metrics={
-            <p>
-              <span>5</span>
-              <span className="text-sm text-gray-500 sm:text-base">/7</span>
-            </p>
-          }
-          image={'/assets/fi-br-list-check.png'}
-        /> */}
+    
         <Inventory
           title={'Productivity'}
-          metrics={'76%'}
+          metrics={`${getUserById?.student_productivity}%`}
           image={'/assets/fi-br-bulb.png'}
           analytics={
             <div className="flex items-center gap-x-2 text-sm font-semibold sm:text-base">

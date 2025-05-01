@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import Header from '@/components/header/header'
 import { paymentSection } from '@/data/HomePageCard'
 import NavBar from '@/components/navBar/navBar'
