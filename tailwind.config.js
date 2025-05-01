@@ -26,6 +26,7 @@ export default {
         light_yellow: '#fde6bf',
         normal_yellow: '#f7ae30',
         dark_yellow: '#b98324',
+        deep_green: '#008000',
         paragraph: '#4b4b4bc9',
       },
       keyframes: {
