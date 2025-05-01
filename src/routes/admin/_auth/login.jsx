@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,7 +20,7 @@ function Login() {
 
   const onSubmit = async data => {
     setIsLoading(true)
-    if (await login(data)) {
+    if (await login('admin', data)) {
       reset()
       router.invalidate()
       if (redirect) router.history.push(redirect)
