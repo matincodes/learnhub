@@ -1,14 +1,14 @@
 import { Input } from '@/components/ui/input'
 import { topNavData } from '@/data/topNav'
 import {
-  Link,
+  /*Link,*/
   useLocation,
   useNavigate,
-  useRouteContext,
+  /*useRouteContext,*/
   useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { CiSearch } from 'react-icons/ci'
+// import { CiSearch } from 'react-icons/ci'
 import { HiXMark } from 'react-icons/hi2'
 import NotificationModal from './notificationModal'
 
@@ -24,7 +24,7 @@ const TopNav = () => {
   const role = "admin"
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const title = topNavData[pathname]?.title
-  const regex = /my-courses\/([^\/]+)/;
+  const regex = /my-courses\/([^/]+)/;
   const match = pathname.match(regex);
   const courseTitle = match ? decodeURIComponent(match[1]) : null;
 

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import Inventory from '@/components/inventory/inventory'
 import RecentCourseCard from '@/components/widgets/recent_course_card'
-import { recentCourses } from '@/data/dashboard'
+// import { recentCourses } from '@/data/dashboard'
 import { ChevronsUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { fetchCourses } from '@/lib/apiFunctions'
@@ -22,7 +22,7 @@ function DashboardIndexComponent() {
     const getCourses = async () => {
       const coursesData = await fetchCourses(token)
       console.log(coursesData)
-      setRecentCourses(coursesData)
+      setRecentCourses(coursesData || [])
     }
 
     getCourses()
@@ -63,20 +63,20 @@ function DashboardIndexComponent() {
         <div className="w-full">
           <div className="no-scrollbar w-full overflow-x-auto">
             <div className="w-full min-w-max">
-              <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
-                {recentCourses.length <= 0 ? (
-                  <NullState
-                    image={'/assets/empty.png'}
-                    mainText="No recent courses yet."
-                    miniText="Add courses to continue your learning journey."
-                    button
-                  />
-                ) : (
-                  recentCourses.map((item, index) => (
-                    <RecentCourseCard key={index} {...item} />
-                  ))
-                )}
-              </div>
+            <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
+            {recentCourses && recentCourses.length > 0 ? (
+              recentCourses.map((item, index) => (
+                <RecentCourseCard key={index} {...item} />
+              ))
+            ) : (
+              <NullState
+                image={'/assets/empty.png'}
+                mainText="No recent courses yet."
+                miniText="Add courses to continue your learning journey."
+                button
+              />
+            )}
+          </div>
             </div>
           </div>
         </div>

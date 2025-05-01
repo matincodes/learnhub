@@ -301,7 +301,6 @@ function CheckoutPage() {
               <Button className="w-full bg-[#006038] hover:bg-green-800 flex gap-2 items-center py-7 mt-16 ">
                 <span className='text-white'>Checkout with   </span>
                 <img
-                  w
                   src="/assets/download__4__1-removebg-preview 1.png"
                   alt="Monthly Plan"
                   className="h-4 w-auto"

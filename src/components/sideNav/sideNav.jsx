@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator'
 import { navLinks, adminNavLinks } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
-import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
+import { Link, useLocation, /*useRouteContext*/ } from '@tanstack/react-router'
 
 const SideNav = () => {
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
