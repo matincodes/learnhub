@@ -1,4 +1,4 @@
-import { createFileRoute, useRouteContext } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,17 +11,13 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboar
 
 function Profile() {
   const [profile, setProfile] = useState('')
-  const [buttonState, setButtonState] = useState(false)
   const [editFormState, setEditFormState] = useState(false)
   const userprofile = useRef()
   const firstNameRef = useRef()
   const lastNameRef = useRef()
   const emailRef = useRef()
-  const firstName = useRouteContext({ select: s => s.user?.firstName })
-  const lastName = useRouteContext({ select: s => s.user?.lastName })
-  const email = useRouteContext({ select: s => s.user?.email })
-  const { getUserById } = UserProfile()
-
+ 
+  const { getUserById , loading , updateUserProfile   } = UserProfile()
 
   // Change Image
   const handleImageChange = () =>{
@@ -45,16 +41,23 @@ function Profile() {
   const handlebackState = () =>{
     setEditFormState(false)
   }
+  function HandleSubmit(e) {
+    e.preventDefault()
+    const firstName = firstNameRef.current.value
+    const lastName = lastNameRef.current.value
+    const email = emailRef.current.value
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+    }
+    updateUserProfile(data)
+   
+    // Handle form submission logic here
+  }
   
-  const handleInputTextChange = (inputRef) =>{
-    const inputLength = inputRef.current.value  
-    if(inputLength.length > 0){
-      setButtonState(true)
-    }
-    else if(inputLength.length === 0){
-      // setInputFocusState(true)
-      setButtonState(false)
-    }
+  const handleInputTextChange = () =>{
+
   }
   
   
@@ -98,7 +101,7 @@ function Profile() {
               />
             </div>
             <p className="text-center font-san text-[18px] font-medium">
-              {lastName} {firstName}
+              {getUserById?.first_name} {getUserById?.last_name}
             </p>
           </div>
           {/* Image and name */}
@@ -185,7 +188,7 @@ function Profile() {
           {/* Change Image */}
         </div>
 
-        <form className="lg:space-y-[60px] space-y-7 left-0 lg:p-6 pb-[90px] p-2 w-full">
+        <form onSubmit={HandleSubmit} className="lg:space-y-[60px] space-y-7 left-0 lg:p-6 pb-[90px] p-2 w-full">
           {/* FirstName */}
           <div className="grid space-y-3">
             <label
@@ -197,7 +200,7 @@ function Profile() {
             <div className="basis-full flex justify-between gap-4">
             <input
               id="lastName"
-              placeholder={lastName}
+              placeholder={getUserById?.first_name}
               type="text"
               ref={lastNameRef}
               onChange={() => handleInputTextChange(lastNameRef)}
@@ -219,7 +222,7 @@ function Profile() {
             <div className="basis-full flex justify-between gap-4">
             <input
               id="lastName"
-              placeholder={firstName}
+              placeholder={getUserById?.last_name}
               type="text"
               ref={firstNameRef}
               onChange={() => handleInputTextChange(firstNameRef)}
@@ -242,7 +245,7 @@ function Profile() {
           <div className="basis-full flex justify-between gap-4">
             <input
               id="email"
-              placeholder={email}
+              placeholder={getUserById?.email}
               type="email"
               ref={emailRef}
               onChange={() => handleInputTextChange(emailRef)}
@@ -256,11 +259,10 @@ function Profile() {
           {/* Email */}
 
           <button
-          // disabled = {buttonState}
-           className={`rounded-lg border-none ${buttonState ? 'bg-normal_yellow' : 'bg-[#FDE6BF] disabled:cursor-not-allowed' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
-            Save Changes
+           className={`rounded-lg border-none ${loading.updateUserProfile  ? ' bg-[#FDE6BF] cursor-not-allowed' : 'bg-normal_yellow' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
+           {loading.updateUserProfile ?  "Please wait..." : 'Save Changes'}
           </button>
-        </form>
+        </form> 
       </div>
       }
       {/* Right */}

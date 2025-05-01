@@ -1,14 +1,18 @@
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { UserProfile } from '@/context/user-context'
 import { useUser } from '@/hooks/use-user'
 import { Link } from '@tanstack/react-router'
 import { CiSearch } from 'react-icons/ci'
 import { FiMenu } from 'react-icons/fi'
 
+
 const defaultAvatar = '/assets/profile.png'
 
 const NavBar = ({ NavStatus }) => {
   const user = useUser()
+  const { getUserById } = UserProfile()
+
 
   const renderUserMenu = () => (
     <div className="flex items-center space-x-2 rounded-2xl bg-[#FAFFFD] pr-4">
@@ -24,7 +28,7 @@ const NavBar = ({ NavStatus }) => {
 
       {/* User Info */}
       <div className="flex flex-col font-san text-left leading-tight">
-      <p className="font-semibold">{`${user.firstName || ''} ${user.lastName || ''}`.trim()}</p>
+      <p className="font-semibold">{`${getUserById?.first_name || ''} ${getUserById?.last_name|| ''}`.trim()}</p>
         <Link
           to="/dashboard"
           className="mt-1 text-[12px] hover:underline"

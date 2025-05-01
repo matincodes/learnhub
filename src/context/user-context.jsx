@@ -1,6 +1,6 @@
 import axiosInstance from '@/api/axiosInstance'
 import { useUser } from '@/hooks/use-user'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const userEndpoints = {
   profileByid: id => `/student/profile/${id}/`,
@@ -11,11 +11,16 @@ const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
   const [getUserById, setGetUserById] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState({
+    userProfile: true,
+    updateUserProfile: false,
+  })
+  const [error, setError] = useState(false)
 
   const user = useUser()
   const userId = user?.id
-  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
 
   const authHeaders = token
     ? {
@@ -26,42 +31,74 @@ export const UserProvider = ({ children }) => {
     : {}
 
   const getUserProfile = async () => {
+    // Skip request if offline
+    // if (typeof window !== 'undefined' && !navigator.onLine) {
+    //   console.warn('You are offline. Skipping profile fetch.')
+    //   return
+    // }
+
+    // setLoading(prev => ({ ...prev, userProfile: true }))
     try {
       const { data } = await axiosInstance.get(
         userEndpoints.profileByid(userId),
         authHeaders
       )
+      console.log(data)
       setGetUserById(data)
-    } catch (error) {
-      console.error('Failed to fetch user profile:', error)
+    } catch (e) {
+      console.log(e.massage)
+      setError(true)
     } finally {
-      setIsLoading(false)
+      setLoading(prev => ({ ...prev, userProfile: false }))
     }
   }
 
-  const updateUserProfile = async (profileUpdates) => {
+  const updateUserProfile = async profileUpdates => {
+    setLoading(prev => ({ ...prev, updateUserProfile: true }))
     try {
       const { data } = await axiosInstance.patch(
         userEndpoints.updateProfile(userId),
         profileUpdates,
         authHeaders
       )
-      console.log('Profile updated:', data)
-      await getUserProfile()
-    } catch (error) {
-      console.error('Failed to update profile:', error)
+      return data
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(prev => ({ ...prev, updateUserProfile: false }))
     }
   }
 
-  useEffect(() => {
-    if (userId && token) {
-      getUserProfile()
-      updateUserProfile()
-    }
-  })
+  // // Fetch profile when userId becomes available, but only once
+  // useEffect(() => {
+  //   if (userId && !getUserById && navigator.onLine) {
+  //     getUserProfile()
+  //   }
+  // }, [userId, getUserById])
+
+  // // Re-fetch profile when coming back online
+  // useEffect(() => {
+  //   const handleOnline = () => {
+  //     if (userId && !getUserById) {
+  //       console.log('Back online. Re-fetching user profile...')
+  //       getUserProfile()
+  //     }
+  //   }
+
+  //   window.addEventListener('online', handleOnline)
+  //   return () => window.removeEventListener('online', handleOnline)
+  // }, [userId, getUserById])
 
   return (
-    <UserContext.Provider value={{ getUserProfile, getUserById, isLoading, updateUserProfile }}>
+    <UserContext.Provider
+      value={{
+        getUserProfile,
+        getUserById,
+        updateUserProfile,
+        loading,
+        error,
+      }}
+    >
       {children}
     </UserContext.Provider>
   )

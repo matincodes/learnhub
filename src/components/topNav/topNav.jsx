@@ -28,7 +28,7 @@ const TopNav = () => {
   const match = pathname.match(regex);
   const courseTitle = match ? decodeURIComponent(match[1]) : null;
 
-  console.log(title, courseTitle, useLocation({select: s => s.pathname}))
+  // console.log(title, courseTitle, useLocation({select: s => s.pathname}))
   // console.log(useRouteContext( { select: s => s } ))
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up

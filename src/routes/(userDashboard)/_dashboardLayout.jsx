@@ -1,5 +1,7 @@
 import BottomNav from '@/components/bottomNav/bottomNav'
+import Error from '@/components/error/Error'
 import SideNav from '@/components/sideNav/sideNav'
+import Spinner from '@/components/spinner/Spinner'
 import TopNav from '@/components/topNav/topNav'
 import { UserProfile } from '@/context/user-context'
 import { cn } from '@/lib/utils'
@@ -20,14 +22,18 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
 })
 
 function DashboardComponent() {
-  const { isLoading , getUserProfile} = UserProfile()
-  console.log(isLoading)
+  const { error, loading , getUserProfile } = UserProfile()
   getUserProfile()
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
-      {isLoading ? (
-        'Loading'
-      ) : (
+      {loading.userProfile && (
+        <div className="flex h-screen w-full items-center justify-center">
+          {' '}
+          <Spinner />
+        </div>
+      )}
+      {error && <Error />}
+      {!loading.userProfile && !error && (
         <>
           {' '}
           <TopNav />
