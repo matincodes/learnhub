@@ -36,7 +36,7 @@ function Login() {
   }
 
   return (
-    <div className=" ">
+    <div className="">
       <div className="flex h-auto w-full">
         <div className=" hidden w-[50%] h-auto lg:flex ">
           {/* Logo */}
@@ -47,7 +47,7 @@ function Login() {
             height="100%"
           />
           {/* Logo */}
-        
+
         </div>
 
         <div className=" h-auto w-full mt-[49px] lg:w-[50%] flex flex-col justify-center items-center ">
@@ -97,7 +97,7 @@ function Login() {
                 <PasswordInput
                   {...register('password', { required: true })}
                   id="password"
-                  
+
                 />
                 <div className="mt-1 flex items-center justify-between">
                   <div className="flex items-center space-x-1">
@@ -140,7 +140,7 @@ function Login() {
             )}
 
             <p className="font-san text-[#616161] font-normal text-[15px] text-center">
-            Need access? Contact your system administrator.
+              Need access? Contact your system administrator.
             </p>
           </form>
         </div>

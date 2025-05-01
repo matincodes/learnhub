@@ -1,3 +1,4 @@
+import NullState from '@/components/nullState/nullState'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -7,7 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { leaderboardData } from '@/data/leaderboard'
+// import { leaderboardData } from '@/data/leaderboard'
+import { fetchLeaderBoard } from '@/lib/apiFunctions'
 import { createFileRoute } from '@tanstack/react-router'
 import {
   flexRender,
@@ -15,6 +17,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5'
 
 export const Route = createFileRoute(
@@ -111,7 +114,6 @@ function DataTable({ data, columns }) {
             </Button>
           </div>
         </div>
-    
       </TableBody>
     </Table>
   )
@@ -176,13 +178,35 @@ const columns = [
 ]
 
 function LeaderBoard() {
+  const [leaderboardData, setLeaderBoardData] = useState([])
+    const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ2MTEzODAxLCJpYXQiOjE3NDYwMjc0MDEsImp0aSI6ImU4YzFmNmRiNTZlNTQwN2Y5NGIxODM4MzYxY2FlYmQwIiwidXNlcl9pZCI6OH0.inTlwRTL_SnBzucxXuT4VZe7JovqXk0AsINa2wzneqI'
+  
+    useEffect(() => {
+      const getCourses = async () => {
+        const coursesData = await fetchLeaderBoard(token)
+        console.log(coursesData)
+        setLeaderBoardData(coursesData)
+      }
+  
+      getCourses()
+    }, [token])
+
   return (
     <div className="mx-auto w-full max-w-[1300px] rounded-xl bg-white p-4 sm:p-6">
       <h2 className="mb-4 text-base font-semibold sm:mb-6 sm:text-2xl">
         Rankings
       </h2>
 
-      <DataTable data={leaderboardData} columns={columns} />
+      {leaderboardData.length <= 0 ? (
+        <NullState
+          image={'/assets/trophy.png'}
+          mainText="Leaderboard is Empty"
+          miniText="No rankings yet. Take quizzes and check again."
+        />
+      ) : (
+        <DataTable data={leaderboardData} columns={columns} />
+      )}
     </div>
   )
 }
