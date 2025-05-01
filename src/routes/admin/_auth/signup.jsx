@@ -24,7 +24,9 @@ function SignUp() {
 
   const onSubmit = async data => {
     setIsLoading(true)
-    if (await signup(data)) {
+
+    
+    if (await signup('admin', data)) {
       reset()
       router.invalidate()
       router.navigate({

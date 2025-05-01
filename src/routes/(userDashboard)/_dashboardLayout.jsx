@@ -2,7 +2,7 @@ import BottomNav from '@/components/bottomNav/bottomNav'
 import SideNav from '@/components/sideNav/sideNav'
 import TopNav from '@/components/topNav/topNav'
 import { cn } from '@/lib/utils'
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet, /*redirect*/ } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
