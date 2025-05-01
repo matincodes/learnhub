@@ -24,15 +24,11 @@ const TopNav = () => {
   const role = "admin"
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   const title = topNavData[pathname]?.title
-  const regex = /my-courses\/([^\/]+)/;
-  const match = pathname.match(regex);
+  const regex = /my-courses\/([^/]+)/;
+    const match = pathname.match(regex);
   const courseTitle = match ? decodeURIComponent(match[1]) : null;
 
-<<<<<<< HEAD
   // console.log(title, courseTitle, useLocation({select: s => s.pathname}))
-=======
-  console.log(title, courseTitle, useLocation({ select: s => s.pathname }))
->>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
   // console.log(useRouteContext( { select: s => s } ))
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
@@ -87,20 +83,10 @@ const TopNav = () => {
 
             {openSearchStatus === false && (
               <div className="flex items-center justify-evenly space-x-3">
-<<<<<<< HEAD
-           
-                
-                <button
-            onClick={onToggle}
-            className="relative grid place-content-center rounded-full bg-white p-[10px]"
-          >
-            <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
-=======
                 {/* <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
                   <p className="font-semibold">10</p>
                   <img src="/assets/fire.svg" alt="" />
                 </button> */}
->>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
 
                 <button
                   onClick={onToggle}
@@ -129,13 +115,8 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
             {/* {} */}
           </h2>
-<<<<<<< HEAD
           {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
           <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
-=======
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details') && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
->>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
           )}
         </div>
       </div>
@@ -158,13 +139,8 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
 
           </h2>
-<<<<<<< HEAD
           {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
             <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
-=======
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details' || pathname == '/admin/dashboard/add-course' || pathname == ('/admin/dashboard/add-module')) && (
-            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
->>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
           )}
         </div>
 
