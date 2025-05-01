@@ -1,10 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import Header from '@/components/header/header'
 import { paymentSection } from '@/data/HomePageCard'
 import NavBar from '@/components/navBar/navBar'
 import Footer from '@/components/footer/footer'
 import Content from '@/components/special/content'
-
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 
 export const Route = createFileRoute('/pricing')({
@@ -12,6 +11,7 @@ export const Route = createFileRoute('/pricing')({
 })
 
 function Pricing() {
+
   return (
     <div className="">
       <NavBar />
@@ -40,18 +40,28 @@ function Pricing() {
                       /{content.durationPlan}
                     </span>{' '}
                   </h2>
-                {/* </CardContent> */}
-                {/* <CardContent className="mt-3 flex justify-center text-center"> */}
+                  {/* </CardContent> */}
+                  {/* <CardContent className="mt-3 flex justify-center text-center"> */}
                   <p className="w-[80%] font-san">{content.description}</p>
                 </CardContent>
               </div>
-              <CardFooter className="grid items-center p-0 text-center lg:relative lg:w-full">
-                <p
-                  className={`w-full rounded-b-lg p-5 font-san text-[18px] font-semibold ${content.id === 2 ? 'bg-[#F9FBFA] text-[#3A4D41]' : 'bg-dark_green text-white'}`}
-                >
-                  {content.plan}
-                </p>
-              </CardFooter>
+              <Link
+                to="/checkout"
+              >
+                <CardFooter className="grid items-center p-0 text-center lg:relative lg:w-full">
+                  <p
+                    role="button"
+                    tabIndex={0}
+                    className={`w-full rounded-b-lg p-5 font-san text-[18px] font-semibold ${content.id === 2 ? 'bg-[#F9FBFA] text-[#3A4D41]' : 'bg-dark_green text-white'}`}
+                    onClick={() => {
+                      const planType = content.plan.includes('Month') ? 'Month' : 'Year'
+                      localStorage.setItem('plan', planType)
+                    }}
+                  >
+                    {content.plan}
+                  </p>
+                </CardFooter>
+              </Link>
             </Card>
           ))}
         </div>

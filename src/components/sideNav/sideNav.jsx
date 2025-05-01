@@ -27,6 +27,7 @@ const SideNav = () => {
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
+<<<<<<< HEAD
                 <p className="font-semibold">
                   { getUserById?.last_name}, { getUserById?.first_name}
                 </p>
@@ -35,16 +36,24 @@ const SideNav = () => {
                     ? 'Admin'
                     : 'View Profile'}
                 </p>
+=======
+                <p className="font-semibold">{lastName}, {firstName}</p>
+                <p className="text-xs sm:text-sm">{pathname.includes('/admin/dashboard') && role === 'admin' ? "Admin" : "View Profile"}</p>
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
               </div>
             </Link>
 
             <Separator className="my-4 bg-[#98989A]" />
 
             <ul className="mt-6 flex w-full flex-col gap-y-1">
+<<<<<<< HEAD
               {(pathname.includes('/admin/dashboard') && role === 'admin'
                 ? adminNavLinks
                 : navLinks
               ).map(({ link, name, iconImage }) => {
+=======
+              {(pathname.includes('/admin/dashboard') && role === 'admin' ? adminNavLinks : navLinks).map(({ link, name, iconImage }) => {
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
                 return (
                   <li key={name} className={'w-full'}>
                     <Link

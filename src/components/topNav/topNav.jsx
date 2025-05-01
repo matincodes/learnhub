@@ -28,7 +28,11 @@ const TopNav = () => {
   const match = pathname.match(regex);
   const courseTitle = match ? decodeURIComponent(match[1]) : null;
 
+<<<<<<< HEAD
   // console.log(title, courseTitle, useLocation({select: s => s.pathname}))
+=======
+  console.log(title, courseTitle, useLocation({ select: s => s.pathname }))
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
   // console.log(useRouteContext( { select: s => s } ))
 
   // To switch from the normal icon to the search input field && This point the recent searches section comes up
@@ -83,6 +87,7 @@ const TopNav = () => {
 
             {openSearchStatus === false && (
               <div className="flex items-center justify-evenly space-x-3">
+<<<<<<< HEAD
            
                 
                 <button
@@ -90,9 +95,21 @@ const TopNav = () => {
             className="relative grid place-content-center rounded-full bg-white p-[10px]"
           >
             <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
+=======
+                {/* <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
+                  <p className="font-semibold">10</p>
+                  <img src="/assets/fire.svg" alt="" />
+                </button> */}
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
 
-            {isOpen && <NotificationModal close={onToggle} />}
-          </button>
+                <button
+                  onClick={onToggle}
+                  className="relative grid place-content-center rounded-full bg-white p-[10px]"
+                >
+                  <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
+
+                  {isOpen && <NotificationModal close={onToggle} />}
+                </button>
 
               </div>
             )}
@@ -101,7 +118,7 @@ const TopNav = () => {
 
         <div className="my-5 flex flex-col items-start justify-start relative">
           <h2 className="flex text-lg font-semibold sm:text-2xl items-center">
-            {pathname != '/dashboard' || pathname != '/admin/dashboard' && (
+            {pathname != '/dashboard' || pathname != '/admin/dashboard' || pathname != '/admin/dashboard/courses' || pathname !== '/admin/dashboard/course-details' && (
               <img
                 src="/assets/arrow-left-01.svg"
                 onClick={() => router.history.back()}
@@ -109,11 +126,16 @@ const TopNav = () => {
                 alt="arrow left"
               />
             )}
-            {courseTitle ? courseTitle : title }
+            {courseTitle ? courseTitle : title}
             {/* {} */}
           </h2>
+<<<<<<< HEAD
           {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
           <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
+=======
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details') && (
+            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
           )}
         </div>
       </div>
@@ -131,47 +153,52 @@ const TopNav = () => {
               />
             )}
             {/* {title} */}
-            {pathname.includes('/admin/dashboard') && pathname == '/admin/dashboard' ? 'Dashboard': ''}
+            {pathname.includes('/admin/dashboard') || pathname.includes('/admin/dashboard/courses') || pathname.includes('/admin/dashboard/course-details') || pathname.includes('/admin/dashboard/add-course') || pathname.includes('/admin/dashboard/add-module') && pathname == '/admin/dashboard' ? 'Dashboard' : ''}
 
-            {courseTitle ? courseTitle : title }
+            {courseTitle ? courseTitle : title}
 
           </h2>
+<<<<<<< HEAD
           {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
             <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
+=======
+          {(pathname == '/dashboard' || pathname == '/admin/dashboard' || pathname == '/admin/dashboard/courses' || pathname == '/admin/dashboard/course-details' || pathname == '/admin/dashboard/add-course' || pathname == ('/admin/dashboard/add-module')) && (
+            <p className="capitalize">{`Welcome Back, ${firstName} 👋`}</p>
+>>>>>>> 5386748c6e75a7b4662c2dbcbe9b4a68ccb73dfa
           )}
         </div>
 
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
-        {role == 'admin' ? ""
-          :
-          <>
-          <div className={`flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow`}>
-            <Input
-              type="text"
-              id="search"
-              placeholder="Search here"
-              className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-              value={searchInputValue}
-              onFocus={openSearch}
-              onChange={getLength}
-            />
+          {role == 'admin' ? ""
+            :
+            <>
+              <div className={`flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow`}>
+                <Input
+                  type="text"
+                  id="search"
+                  placeholder="Search here"
+                  className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
+                  value={searchInputValue}
+                  onFocus={openSearch}
+                  onChange={getLength}
+                />
 
-            <HiXMark
-              size={28}
-              strokeWidth={0}
-              color="#303031"
-              className="cursor-pointer"
-              onClick={closeSearchButton}
-            />
-          </div>
+                <HiXMark
+                  size={28}
+                  strokeWidth={0}
+                  color="#303031"
+                  className="cursor-pointer"
+                  onClick={closeSearchButton}
+                />
+              </div>
 
-          <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
-            <p className="font-semibold">10</p>
-            <img src="/assets/fire.svg" alt="" />
-          </button>
-            
-          </>
-        }
+              <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
+                <p className="font-semibold">10</p>
+                <img src="/assets/fire.svg" alt="" />
+              </button>
+
+            </>
+          }
           <button
             onClick={onToggle}
             className="relative grid place-content-center rounded-full bg-white p-[10px]"

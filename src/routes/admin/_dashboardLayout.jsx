@@ -24,10 +24,10 @@ function AdminDashboardComponent() {
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       <TopNav />
-
+      {/* md:overflow-scroll, lg:pt-28, pb-14,lg:py-2,lg:pt-28 */}
       <div
         className={cn(
-          'relative h-full overflow-scroll bg-gray-100 px-2 pb-14 max-lg:mb-24 sm:px-4 lg:float-right lg:h-fit lg:w-[calc(100%-280px)] lg:px-10 lg:pt-28',
+          'relative h-full  bg-gray-100 px-2 md:overflow-scroll, lg:pt-28, pb-14,lg:py-2,lg:pt-28  max-lg:mb-24 sm:px-4 lg:float-right lg:h-fit lg:w-[calc(100%-280px)]  ',
         )}
       >
         <Outlet />
