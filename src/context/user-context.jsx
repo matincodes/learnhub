@@ -43,7 +43,6 @@ export const UserProvider = ({ children }) => {
         userEndpoints.profileByid(userId),
         authHeaders
       )
-      console.log(data)
       setGetUserById(data)
     } catch (e) {
       console.log(e.massage)
@@ -61,6 +60,8 @@ export const UserProvider = ({ children }) => {
         profileUpdates,
         authHeaders
       )
+      console.log(data)
+      await getUserProfile()
       return data
     } catch (e) {
       setError(true)
@@ -88,7 +89,7 @@ export const UserProvider = ({ children }) => {
   //   window.addEventListener('online', handleOnline)
   //   return () => window.removeEventListener('online', handleOnline)
   // }, [userId, getUserById])
-
+  getUserProfile()
   return (
     <UserContext.Provider
       value={{

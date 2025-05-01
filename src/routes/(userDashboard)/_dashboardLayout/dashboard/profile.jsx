@@ -19,6 +19,7 @@ function Profile() {
  
   const { getUserById , loading , updateUserProfile   } = UserProfile()
 
+
   // Change Image
   const handleImageChange = () =>{
     
@@ -41,6 +42,7 @@ function Profile() {
   const handlebackState = () =>{
     setEditFormState(false)
   }
+
   function HandleSubmit(e) {
     e.preventDefault()
     const firstName = firstNameRef.current.value
@@ -50,7 +52,9 @@ function Profile() {
       first_name: firstName,
       last_name: lastName,
       email: email,
+      profile_image:profile,
     }
+    
     updateUserProfile(data)
    
     // Handle form submission logic here
@@ -73,7 +77,6 @@ function Profile() {
         setProfile(user.image)
     }
   }, [])
-
 
 
 

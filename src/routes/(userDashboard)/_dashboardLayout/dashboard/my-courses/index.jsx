@@ -70,6 +70,7 @@ function MyCourses() {
       <div className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-5 lg:grid-cols-2 xl:grid-cols-4">
         {UserCourses.length <= 0 ? (
           <NullState
+            image={'/assets/empty.png'}
             mainText="No recent courses yet"
             miniText="Add courses to continue your learning journey"
             button
