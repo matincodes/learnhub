@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Courses } from '@/data/courses'
+// import { Courses } from '@/data/courses'
 import { useEffect, useState } from 'react'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import Footer from '@/components/footer/footer'
@@ -77,37 +77,39 @@ console.log(coursesError)
       </div>
 
       <div
-        className={`flex items-center justify-center p-2 lg:p-5 ${courses.length <= 0 ? 'h-[90vh]' : ''} `}
-      >
-        <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
-          {courses.length <= 0 ? (
-            <NullState
-              image={'/assets/empty.png'}
-              mainText="Opps! No courses yet."
-              miniText="New courses will be added shortly. Stay tuned!"
-              link={'/'}
-              linkText={'Go To Homepage'}
-            />
-          ) : (
-            courses.map(category =>
-              courseTitle === category.category
-                ? category.courses.map((item, id) => (
-                    <div className="flex w-fit justify-center" key={id}>
-                      <a href={`/courses/${item.title}`}>
-                        <SearchCourseCard
-                          image={item.image}
-                          title={item.title}
-                          lesson={item.lesson}
-                          duration={item.duration}
-                        />
-                      </a>
-                    </div>
-                  ))
-                : '',
-            )
-          )}
-        </div>
-      </div>
+  className={`flex items-center justify-center p-2 lg:p-5 ${
+    courses.length <= 0 ? 'h-[90vh]' : ''
+  } `}
+>
+  <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
+    {Array.isArray(courses) && courses.length > 0 ? (
+      courses.map(category =>
+        courseTitle === category.category && Array.isArray(category.courses)
+          ? category.courses.map((item, id) => (
+              <div className="flex w-fit justify-center" key={id}>
+                <a href={`/courses/${item.title}`}>
+                  <SearchCourseCard
+                    image={item.image}
+                    title={item.title}
+                    lesson={item.lesson}
+                    duration={item.duration}
+                  />
+                </a>
+              </div>
+            ))
+          : null,
+      )
+    ) : (
+      <NullState
+        image={'/assets/empty.png'}
+        mainText="Opps! No courses yet."
+        miniText="New courses will be added shortly. Stay tuned!"
+        link={'/'}
+        linkText={'Go To Homepage'}
+      />
+    )}
+  </div>
+</div>
 
       {/* Footer */}
       <Footer />
