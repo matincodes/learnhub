@@ -17,8 +17,6 @@ const fetchCourses = async () => {
     return received.data; // Assuming you want the data from the response
   } catch (error) {
     console.error('Error fetching courses:', error);
-    coursesError = error
-//     return error
   }
 };
 

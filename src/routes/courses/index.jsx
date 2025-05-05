@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import Footer from '@/components/footer/footer'
 import NullState from '@/components/nullState/nullState'
-import { fetchCourses, coursesError } from '@/lib/apiFunctions'
+import { fetchCourses } from '@/lib/apiFunctions'
 
 export const Route = createFileRoute('/courses/')({
   component: Course,
@@ -24,9 +24,7 @@ function Course() {
   const [courseTitle, setCourseTitle] = useState('Frontend Development')
   window.localStorage.setItem('category', courseTitle)
   const [courses, setCourses] = useState([])
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ2MTEzODAxLCJpYXQiOjE3NDYwMjc0MDEsImp0aSI6ImU4YzFmNmRiNTZlNTQwN2Y5NGIxODM4MzYxY2FlYmQwIiwidXNlcl9pZCI6OH0.inTlwRTL_SnBzucxXuT4VZe7JovqXk0AsINa2wzneqI'
-
+  const token = localStorage.getItem('accessToken')
   useEffect(() => {
     const getCourses = async () => {
       const coursesData = await fetchCourses(token)
@@ -34,9 +32,8 @@ function Course() {
       setCourses(coursesData)
     }
     getCourses()
-  }, [token])
+  }, [])
 
-console.log(coursesError)
 
   const handleSelecetChange = value => {
     setCourseTitle(value)

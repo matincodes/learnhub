@@ -42,7 +42,7 @@ if (!rootElement.innerHTML) {
 
 export function App() {
   const auth = useAuth()
-  
+  console.log('Auth context:', auth)
   
   return <RouterProvider router={router} context={{ ...auth }} />
 }

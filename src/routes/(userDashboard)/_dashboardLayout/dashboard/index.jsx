@@ -2,11 +2,12 @@ import { createFileRoute } from '@tanstack/react-router';
 import Inventory from '@/components/inventory/inventory';
 import RecentCourseCard from '@/components/widgets/recent_course_card';
 import { ChevronsUp } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { fetchCourses } from '@/lib/apiFunctions'; // Assuming this fetches RECENT courses
+// import { useEffect, useState } from 'react';
+// import { fetchCourses } from '@/lib/apiFunctions';
 import NullState from '@/components/nullState/nullState';
-import { UserProfile } from '@/context/user-context'; // Import the context hook
-import { Skeleton } from '@/components/ui/skeleton'; // Example: Import a Skeleton component
+import { UserProfile } from '@/context/user-context'; 
+// import { Skeleton } from '@/components/ui/skeleton'; 
+
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/',
@@ -16,37 +17,38 @@ export const Route = createFileRoute(
 
 function DashboardIndexComponent() {
   // State for recent courses data, loading, and error
-  const [recentCourses, setRecentCourses] = useState([]);
-  const [loadingCourses, setLoadingCourses] = useState(true); // Start loading true
-  const [errorCourses, setErrorCourses] = useState(null);
+  // const [recentCourses, setRecentCourses] = useState([]);
+  // const [loadingCourses, setLoadingCourses] = useState(true); 
+  // const [errorCourses, setErrorCourses] = useState(null);
 
   // Get user profile data AND loading state from context
   const { getUserById, loading: loadingProfile } = UserProfile(); // Destructure loading state
 
   // --- Fetch Recent Courses Effect ---
-  useEffect(() => {
-    const getCourses = async () => {
-      setLoadingCourses(true); // Set loading true before fetch
-      setErrorCourses(null); // Clear previous errors
-      try {
-        // Assuming fetchCourses gets *recent* courses based on state name
-        const coursesData = await fetchCourses();
-        console.log('Fetched courses:', coursesData);
-        setRecentCourses(coursesData || []); // Ensure it's always an array
-      } catch (err) {
-        console.error('Failed to fetch recent courses:', err);
-        setErrorCourses(
-          err.message || 'An error occurred while fetching courses.',
-        );
-        setRecentCourses([]); // Set empty array on error
-      } finally {
-        setLoadingCourses(false); // Set loading false after fetch attempt
-      }
-    };
+  // useEffect(() => {
+  //   const getCourses = async () => {
+  //     setLoadingCourses(true); // Set loading true before fetch
+  //     setErrorCourses(null); // Clear previous errors
+  //     try {
+  //       // Assuming fetchCourses gets *recent* courses based on state name
+  //       const coursesData = await fetchCourses();
+  //       console.log('Fetched courses:', coursesData);
+  //       setRecentCourses(coursesData || []); // Ensure it's always an array
+  //     } catch (err) {
+  //       console.error('Failed to fetch recent courses:', err);
+  //       setErrorCourses(
+  //         err.message || 'An error occurred while fetching courses.',
+  //       );
+  //       setRecentCourses([]); // Set empty array on error
+  //     } finally {
+  //       setLoadingCourses(false); // Set loading false after fetch attempt
+  //     }
+  //   };
 
-    getCourses();
-  }, []); // Empty dependency array means run once on mount
+  //   getCourses();
+  // }, []); 
 
+  const recentCourses = getUserById?.ongoing_courses || [];
   // --- Safe Data Calculation ---
   // Calculate total courses safely, defaulting to 0 if context data is loading/null
   const totalCourses =
@@ -59,28 +61,17 @@ function DashboardIndexComponent() {
 
   // Helper to Render Recent Courses Section
   const renderRecentCourses = () => {
-    if (loadingCourses) {
+    {/*if (loadingProfile) {
       // Show skeleton loaders while fetching courses
       return (
         <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
           {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-[150px] w-[250px] rounded-lg" /> // Adjust skeleton size
+            <Skeleton key={i} className="h-[150px] w-[250px] rounded-lg" />
           ))}
         </div>
       );
-    }
+    }*/}
 
-    if (errorCourses) {
-      return (
-        <NullState
-          image={'/assets/error.png'} // Optional: Use an error image
-          mainText="Could not load courses"
-          miniText={errorCourses} // Display the error message
-          buttonText="Try Again" // Optional: Add a retry button
-          onButtonClick={() => window.location.reload()} // Example: Simple retry by reload
-        />
-      );
-    }
 
     if (recentCourses.length > 0) {
       return (
@@ -121,7 +112,7 @@ function DashboardIndexComponent() {
           analytics={
              /* Static analytics part remains */
             <div className="flex items-center gap-x-2 text-sm font-semibold sm:text-base">
-              <p>+ 2.345</p>
+              <p>0.00</p>
               <img src="/assets/fi-br-chat-arrow-grow.png" alt="" />
             </div>
           }
@@ -134,7 +125,7 @@ function DashboardIndexComponent() {
         <div className="w-full">
           <div className="no-scrollbar w-full overflow-x-auto">
             <div className="w-full min-w-max">
-              {renderRecentCourses()} {/* Render based on loading/error/data state */}
+              {renderRecentCourses()}
             </div>
           </div>
         </div>

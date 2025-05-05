@@ -1,5 +1,5 @@
 import axiosInstance from '@/api/axiosInstance';
-import { useUser } from '@/hooks/use-user'; // Assuming this provides { id: userId, ... }
+import { useUser } from '@/hooks/use-user'; 
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 // --- Configuration ---
@@ -49,11 +49,11 @@ export const UserProvider = ({ children }) => {
 
     console.log(`Workspaceing profile for user ID: ${userId}`);
     setLoading(prev => ({ ...prev, userProfile: true })); // Update loading state
-    setError(false); // Clear previous errors (reset boolean)
+    setError(false); 
 
     try {
       const { data } = await axiosInstance.get(
-        userEndpoints.profileByid(userId), // Use correct endpoint function
+        userEndpoints.profileByid(userId),
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setGetUserById(data); // Update state using the original setter name
