@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { achievements } from '@/data/dashboard'
 import { v4 as uuidv4 } from 'uuid'
 import { UserProfile } from '@/context/user-context'
@@ -17,7 +17,7 @@ function Profile() {
   const lastNameRef = useRef()
   const emailRef = useRef()
  
-  const { getUserById , loading , updateUserProfile   } = UserProfile()
+  const { getUserById , loading , updateUserProfile} = UserProfile()
 
 
   // Change Image
@@ -29,7 +29,6 @@ function Profile() {
       reader.onloadend = () =>{
         const base64String = reader.result
         setProfile(base64String)
-        window.localStorage.setItem('user-image', JSON.stringify({ image: base64String }))
       }
       reader.readAsDataURL(image)
     }
@@ -55,6 +54,7 @@ function Profile() {
       profile_image:profile,
     }
     
+    console.log(data)
     updateUserProfile(data)
    
     // Handle form submission logic here
@@ -64,20 +64,6 @@ function Profile() {
 
   }
   
-  
-  // Initial Profile Image
-  useEffect(()=>{
-    const user = JSON.parse(window.localStorage.getItem('user-image'))
-    if(user && user.image){
-      setProfile(user.image)
-    }
-    else{
-      window.localStorage.setItem('user-image', JSON.stringify({ image: '/assets/profile.png' }))
-      const user = JSON.parse(window.localStorage.getItem('user-image'))
-        setProfile(user.image)
-    }
-  }, [])
-
 
 
 
@@ -98,7 +84,7 @@ function Profile() {
           <div className="flex flex-col items-center justify-center space-y-2">
             <div className="grid h-[100px] w-[100px] justify-center overflow-hidden rounded-full ">
               <img
-                src={profile}
+                src={profile? profile : '/assets/profile.png'}
                 alt=""
                 className="w-full object-cover bg-red-500"
               />
@@ -171,7 +157,7 @@ function Profile() {
         <div className="relative flex items-center justify-center">
           <div className="lg:absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
             <img
-              src={profile}
+              src={profile? profile : '/assets/profile.png'}
               alt=""
               className="w-full h-full object-cover"
             />

@@ -28,6 +28,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   const handleSignup = async (role, userData) => {
+
+    console.log('User data:', userData)
+    console.log('Role:', role)
     try {
       const { user, tokens, redirect } = await signup(role, userData)
       setUser(user)

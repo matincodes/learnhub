@@ -20,6 +20,8 @@ function SignUp() {
   const onSubmit = async data => {
     setIsLoading(true)
 
+    console.log('Form data:', data)
+
     // Client-side check for password match
     if (data.password !== data.confirm_password) {
       toast({

@@ -1,13 +1,11 @@
 import axios from 'axios'
 // import { useState } from 'react';
-import { getAuthData } from './tokenStorage'; 
 
 const API_URL = 'https://learnhub.up.railway.app'
 let coursesError
 
-const token = getAuthData().accessToken  
 
-const fetchCourses = async () => {
+const fetchCourses = async (token) => {
   try {
     const received = await axios.get(`${API_URL}/courses/`, {
       headers: {

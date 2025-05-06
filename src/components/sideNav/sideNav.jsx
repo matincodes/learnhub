@@ -5,11 +5,12 @@ import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
 
 const SideNav = () => {
-  const { getUserById } = UserProfile()
+  const {  getUserById } = UserProfile()
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
  
   const role = 'admin'
 
+  const profileImage = localStorage.getItem('user-image') || '/assets/profile.png'
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
@@ -20,7 +21,7 @@ const SideNav = () => {
               <div className="grid basis-[50%] place-content-center">
                 <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
                   <img
-                    src={getUserById?.profile_image}
+                    src={profileImage}
                     alt="profile image"
                     className="object-cover"
                   />
@@ -28,7 +29,7 @@ const SideNav = () => {
               </div>
               <div className="flex w-full flex-col justify-center">
                 <p className="font-semibold">
-                  { getUserById?.last_name}, { getUserById?.first_name}
+                  { getUserById?.first_name}, { getUserById?.last_name}
                 </p>
                 <p className="text-xs sm:text-sm">
                   {pathname.includes('/admin/dashboard') && role === 'admin'

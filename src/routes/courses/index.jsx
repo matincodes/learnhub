@@ -21,8 +21,7 @@ export const Route = createFileRoute('/courses/')({
 })
 
 function Course() {
-  const [courseTitle, setCourseTitle] = useState('Frontend Development')
-  window.localStorage.setItem('category', courseTitle)
+  const [courseTitle, setCourseTitle] = useState('All Courses')
   const [courses, setCourses] = useState([])
   const token = localStorage.getItem('accessToken')
   useEffect(() => {
@@ -75,7 +74,7 @@ function Course() {
 
       <div
   className={`flex items-center justify-center p-2 lg:p-5 ${
-    courses.length <= 0 ? 'h-[90vh]' : ''
+    courses.length >= 0 ? 'h-[90vh]' : ''
   } `}
 >
   <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">

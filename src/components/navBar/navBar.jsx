@@ -50,7 +50,7 @@ const NavBar = ({ NavStatus }) => {
         <img
           src="/assets/learnhub-logo.svg"
           alt="Learnhub Logo"
-          className="absolute right-[145px] top-[20px] w-[120px] lg:relative lg:right-0 lg:top-0 lg:w-[150px]"
+          className="absolute left-4 top-[20px] w-[120px] lg:relative lg:right-0 lg:top-0 lg:w-[150px]"
         />
       </Link>
 
@@ -115,7 +115,7 @@ const NavBar = ({ NavStatus }) => {
           </div>
 
           {/* SEARCH BAR */}
-          <div className="absolute left-0 flex items-center space-x-2 rounded-lg border border-[#dcdcdc] bg-white px-4 py-2 lg:relative lg:w-[450px]">
+          <div className="absolute left-0 lg:flex items-center space-x-2 rounded-lg border border-[#dcdcdc] bg-white px-4 py-2 lg:relative lg:w-[450px] hidden">
             <CiSearch className="text-[22px] text-[#848484]" />
             <input
               type="text"

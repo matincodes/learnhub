@@ -36,8 +36,6 @@ import {
 
 import { useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { UserProfile } from '@/context/user-context'
-
 
 export const Route = createLazyFileRoute('/')({
   component: App,
@@ -48,8 +46,7 @@ function App() {
   const [courseOption, setCourseOption] = useState('Frontend Development')
   const user = useUser()
 
-  const {getUserProfile} = UserProfile()
-  getUserProfile()
+
   // For Filtering Courses
   const getOptionValue = e => {
     setCourseOption(e.target.value)

@@ -1,136 +1,128 @@
 import axiosInstance from '@/api/axiosInstance';
-import { useUser } from '@/hooks/use-user'; 
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { useUser } from '@/hooks/use-user';
+import { createContext, useContext, useState } from 'react';
 
-// --- Configuration ---
-// Endpoints remain the same, but use userId passed to functions
+// Configuration for API endpoints
 const userEndpoints = {
-  profileByid: (id) => `/student/profile/${id}/`,
+  profileById: (id) => `/student/profile/${id}/`, // Renamed for clarity from profileByid
   updateProfile: (id) => `/student/profile/${id}/`,
 };
 
-// --- Context Definition ---
-// Create the context with a default value matching the original structure
-const UserContext = createContext();
+// Define a default shape for the context, useful for consumers and testing
+const defaultUserContextValue = {
+  getUserById: null,
+  loading: { userProfile: false, updateUserProfile: false },
+  error: false,
+  getUserProfile: () => console.warn('UserProvider not yet initialized or no user ID.'), // Manual refetch
+  updateUserProfile: async () => {
+    console.warn('UserProvider not yet initialized or no user ID.');
+    return null;
+  },
+};
 
-// --- Provider Component ---
+const UserContext = createContext(defaultUserContextValue);
+
 export const UserProvider = ({ children }) => {
-  // --- State ---
-  // Use original state variable names
-  const [getUserById, setGetUserById] = useState(null);
+  const [getUserById, setGetUserById] = useState(null); // Stores the fetched user profile data
   const [loading, setLoading] = useState({
-    userProfile: false, // Initialize with false, useEffect will trigger initial load
+    userProfile: false, // Should be true if we expect an immediate fetch and have a userId
     updateUserProfile: false,
   });
-  const [error, setError] = useState(false); // Original boolean error state
+  const [error, setError] = useState(false);
 
-  // --- Hooks ---
-  const user = useUser(); // Get user info (id, etc.)
-  const userId = user?.id; // Safely access user ID
+  const user = useUser(); // Hook to get authenticated user details
+  const userId = user?.id; // Extract user ID, could be null initially
 
-  // --- API Call Logic (Memoized with useCallback, using original names) ---
-
-  // Function to fetch the user profile (Original Name: getUserProfile)
-  const getUserProfile = useCallback(async () => {
-    // Only fetch if userId is available
+  // --- Core Data Fetching Logic ---
+  // This function contains the actual API call to fetch the profile.
+  // It's defined within the provider so it can access/set state.
+  const performFetchUserProfile = async () => {
     if (!userId) {
-      console.log('User ID not available yet. Skipping profile fetch.');
-      // Clear previous data if user ID is lost (e.g., logout)
-      // setGetUserById(null);
+      console.log('User ID not available. Clearing profile data and stopping load.');
+      setGetUserById(null);
+      setLoading(prev => ({ ...prev, userProfile: false })); // Ensure loading is false
+      setError(false); // Reset error if there's no user
       return;
     }
 
     const token = localStorage.getItem('accessToken');
     if (!token) {
-        console.error('No access token found.');
-        setError(true); // Set original boolean error
-        return;
+      console.error('No access token found for fetching profile.');
+      setError(true);
+      setLoading(prev => ({ ...prev, userProfile: false }));
+      return;
     }
 
-    console.log(`Workspaceing profile for user ID: ${userId}`);
-    setLoading(prev => ({ ...prev, userProfile: true })); // Update loading state
-    setError(false); 
+    console.log(`Workspaceing profile for user ID: ${userId}`); // Corrected "Workspaceing"
+    setLoading(prev => ({ ...prev, userProfile: true }));
+    setError(false); // Clear previous errors before a new fetch
 
     try {
       const { data } = await axiosInstance.get(
-        userEndpoints.profileByid(userId),
+        userEndpoints.profileById(userId),
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setGetUserById(data); // Update state using the original setter name
+      setGetUserById(data);
       console.log('Profile fetched successfully:', data);
     } catch (err) {
       console.error('Failed to fetch user profile:', err);
-      setError(true); // Set original boolean error on failure
+      setError(true); // Set error state on failure
     } finally {
-      setLoading(prev => ({ ...prev, userProfile: false })); // Reset loading state
+      setLoading(prev => ({ ...prev, userProfile: false })); // Always stop loading state
     }
-  }, [userId]); // Dependency: re-create only if userId changes
+  };
 
-  // Function to update the user profile (Original Name: updateUserProfile)
-  const updateUserProfile = useCallback(async (updates) => {
+
+
+  // Function exposed on context to update the user profile.
+  const updateUserProfileForContext = async (updates) => {
     if (!userId) {
-        console.error('Cannot update profile without User ID.');
-        setError(true);
-        return null;
+      console.error('Cannot update profile: User ID not available.');
+      setError(true);
+      return null; // Indicate failure
     }
     const token = localStorage.getItem('accessToken');
-     if (!token) {
-        console.error('No access token found for update.');
-        setError(true);
-        return null;
+    if (!token) {
+      console.error('Cannot update profile: No access token found.');
+      setError(true);
+      return null; // Indicate failure
     }
 
     console.log(`Updating profile for user ID: ${userId}`, updates);
-    setLoading(prev => ({ ...prev, updateUserProfile: true })); // Update loading state
+    setLoading(prev => ({ ...prev, updateUserProfile: true }));
     setError(false); // Clear previous errors
 
     try {
       const { data } = await axiosInstance.patch(
-        userEndpoints.updateProfile(userId), // Use correct endpoint function
+        userEndpoints.updateProfile(userId),
         updates,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log('Profile updated successfully:', data);
-
-      // Re-fetch the profile after successful update using the original function name
-      await getUserProfile();
-
-      return data; // Return response data
+      // After a successful update, re-fetch the profile data to ensure UI consistency.
+      await performFetchUserProfile(userId);
+      return data; // Return the response from the PATCH request
     } catch (err) {
       console.error('Failed to update user profile:', err);
-      setError(true); // Set original boolean error on failure
-      return null;
+      setError(true); // Set error state on failure
+      return null; // Indicate failure
     } finally {
-      setLoading(prev => ({ ...prev, updateUserProfile: false })); // Reset loading state
+      setLoading(prev => ({ ...prev, updateUserProfile: false })); // Stop update loading state
     }
-    // Add getUserProfile here because it's used inside this callback
-  }, [userId, getUserProfile]);
+  };
 
-  // --- Effect for Initial Fetch ---
-  // Use useEffect to call getUserProfile when the component mounts or userId changes
-  useEffect(() => {
-    if (userId) {
-      getUserProfile(); // Call the fetch function (using original name)
-    } else {
-      // Handle case where user logs out or ID becomes unavailable
-      setGetUserById(null); // Clear data if user logs out
-      console.log("User ID not available, clearing profile data.");
-    }
-    // Include getUserProfile in dependencies because it's defined outside the effect
-    // useCallback ensures it's stable unless userId changes.
-  }, [userId, getUserProfile]);
+  // The value provided to context consumers.
+  // Without useMemo, this object is re-created on every render of UserProvider.
+  // This will cause consumers to re-render if they depend on the context object reference,
+  // even if the underlying data (getUserById, loading, error) hasn't changed.
+  const contextValue = {
+    getUserById,
+    loading,
+    error,
+    getUserProfile: performFetchUserProfile, 
+    updateUserProfile: updateUserProfileForContext,
+  };
 
-  // --- Context Value ---
-  // Memoize the context value using original variable names
-  const contextValue = useMemo(() => ({
-    getUserById,         
-    loading,             
-    error,               
-    getUserProfile,      
-    updateUserProfile,   
-  }), [getUserById, loading, error, getUserProfile, updateUserProfile]);
-
-  // --- Render Provider ---
   return (
     <UserContext.Provider value={contextValue}>
       {children}
@@ -138,6 +130,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// --- Consumer Hook ---
-// Export the consumer hook with the original name: UserProfile
+// Custom hook to consume the UserContext easily
 export const UserProfile = () => useContext(UserContext);
