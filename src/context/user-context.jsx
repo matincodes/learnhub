@@ -6,12 +6,13 @@ import { createContext, useContext, useState } from 'react'
 const userEndpoints = {
   profileById: id => `/student/profile/${id}/`, // Renamed for clarity from profileByid
   updateProfile: id => `/student/profile/${id}/`,
+  changePassword: '/student/settings/change-password/',
 }
 
 // Define a default shape for the context, useful for consumers and testing
 const defaultUserContextValue = {
   getUserById: null,
-  loading: { userProfile: false, updateUserProfile: false },
+  loading: { userProfile: false, updateUserProfile: false, passWord: false },
   error: false,
   getUserProfile: () =>
     console.warn('UserProvider not yet initialized or no user ID.'), // Manual refetch
@@ -28,7 +29,11 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState({
     userProfile: false, // Should be true if we expect an immediate fetch and have a userId
     updateUserProfile: false,
+    passWord: false,
   })
+  // const [newError, setnewError] = useState({
+  //   passWord: false, // State for password error
+  // })
   const [error, setError] = useState(false)
 
   const user = useUser() // Hook to get authenticated user details
@@ -103,12 +108,12 @@ export const UserProvider = ({ children }) => {
       const existingUser =
         JSON.parse(localStorage.getItem('learnhub-user')) || {}
 
-        const normalizedData = {
-          ...(updates.first_name && { firstName: updates.first_name }),
-          ...(updates.last_name && { lastName: updates.last_name }),
-          ...(updates.email && { email: updates.email }),
-          ...(updates.profile_image && { profile_image: updates.profile_image }),
-        };
+      const normalizedData = {
+        ...(updates.first_name && { firstName: updates.first_name }),
+        ...(updates.last_name && { lastName: updates.last_name }),
+        ...(updates.email && { email: updates.email }),
+        ...(updates.profile_image && { profile_image: updates.profile_image }),
+      }
 
       const newUpdates = { ...existingUser, ...normalizedData }
 
@@ -127,6 +132,32 @@ export const UserProvider = ({ children }) => {
     }
   }
 
+  const changePassword = async updatedData => {
+    const token = localStorage.getItem('accessToken')
+    if (!token) {
+      console.error('No access token found for fetching profile.')
+      // setnewError(true)
+      return
+    }
+    setLoading(prev => ({ ...prev, passWord: true }))
+
+    try {
+      const { data } = await axiosInstance.post(
+        userEndpoints.changePassword,
+        updatedData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+
+      return data
+    } catch (error) {
+      console.error('Password change error:', error)
+    } finally {
+      setLoading(prev => ({ ...prev, passWord: false }))
+    }
+  }
+
   // The value provided to context consumers.
   // Without useMemo, this object is re-created on every render of UserProvider.
   // This will cause consumers to re-render if they depend on the context object reference,
@@ -137,6 +168,7 @@ export const UserProvider = ({ children }) => {
     error,
     getUserProfile: performFetchUserProfile,
     updateUserProfile: updateUserProfileForContext,
+    changePassword,
   }
 
   return (
