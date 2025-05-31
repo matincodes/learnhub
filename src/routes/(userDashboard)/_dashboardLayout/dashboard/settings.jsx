@@ -9,8 +9,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { UserProfile } from '@/context/user-context'
+import { toast } from '@/hooks/use-toast'
 import { createFileRoute } from '@tanstack/react-router'
 import { Ban, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
@@ -22,6 +23,33 @@ export const Route = createFileRoute(
 })
 
 function SettingsContent() {
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const { changePassword, loading } = UserProfile()
+
+  async function handleChangePassword(e) {
+    e.preventDefault()
+    const data = {
+      old_password: oldPassword,
+      new_password: newPassword,
+    }
+    const result = await changePassword(data)
+    if (result) {
+      toast({
+        variant: 'default',
+        title: 'Success',
+        description: 'Password changed successfully.',
+      })
+    }else{
+       toast({
+            variant: 'destructive',
+            title: 'Uh oh! Something went wrong.',
+            description: 'Change failed, please try again.',
+          })
+    }
+    setOldPassword('')
+    setNewPassword('')
+  }
   return (
     <div className="min-h-screen w-full rounded-xl bg-white">
       <div className="mx-auto max-w-4xl space-y-8 p-4 lg:p-6">
@@ -34,16 +62,26 @@ function SettingsContent() {
             </p>
           </div>
 
-          <div className="space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
-            <PasswordInput placeholder="Current Password" />
-            <PasswordInput placeholder="New Password" />
-          </div>
-          <Button
-            variant="outline"
-            className="w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow"
-          >
-            Change Password
-          </Button>
+          <form onSubmit={handleChangePassword}>
+            <div className="space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
+              <PasswordInput
+                placeholder="Old password"
+                value={oldPassword}
+                onChange={e => setOldPassword(e.target.value)}
+              />
+              <PasswordInput
+                placeholder="New password"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className={`${loading.passWord ? 'cursor-not-allowed bg-[#FDE6BF]' : ''} mt-5 w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow`}
+            >
+              {loading.passWord ? 'Please wait...' : 'Change Password'}
+            </button>
+          </form>
         </div>
 
         {/* Notification Settings */}
@@ -118,18 +156,21 @@ function SettingsContent() {
 }
 
 // Password Input Component
-function PasswordInput({ placeholder }) {
+function PasswordInput({ placeholder, value, onChange }) {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className="relative flex-1">
-      <Input
+      <input
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
-        className="pr-10"
+        className="w-full rounded border px-3 py-2 pr-10"
+        value={value}
+        onChange={onChange}
       />
       <button
-        className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
+        type="button"
+        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
         onClick={() => setShowPassword(!showPassword)}
       >
         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -137,7 +178,6 @@ function PasswordInput({ placeholder }) {
     </div>
   )
 }
-
 // Notification Toggle Component
 function NotificationToggle({ label, description }) {
   return (
