@@ -23,6 +23,7 @@ function Profile() {
   // Change Image
   const handleImageChange = () =>{
     
+    
     const image = (userprofile.current.files[0])
     if(image){
       const reader = new FileReader()
@@ -43,22 +44,24 @@ function Profile() {
   }
 
   function HandleSubmit(e) {
-    e.preventDefault()
-    const firstName = firstNameRef.current.value
-    const lastName = lastNameRef.current.value
-    const email = emailRef.current.value
-    const data = {
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      profile_image:profile,
-    }
-    
-    console.log(data)
-    updateUserProfile(data)
-   
-    // Handle form submission logic here
+    e.preventDefault();
+  
+    const firstName = firstNameRef.current.value.trim();
+    const lastName = lastNameRef.current.value.trim();
+    const email = emailRef.current.value.trim();
+    const profileImage = profile; 
+  
+    // Construct data object with only non-empty fields
+    const data = {};
+    if (firstName) data.first_name = firstName;
+    if (lastName) data.last_name = lastName;
+    if (email) data.email = email;
+    if (profileImage) data.profile_image = profileImage;
+  
+    console.log(data);
+    updateUserProfile(data); // Send only the fields that are filled in
   }
+  
   
   const handleInputTextChange = () =>{
 
