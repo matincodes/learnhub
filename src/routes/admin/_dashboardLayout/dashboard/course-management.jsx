@@ -1,0 +1,20 @@
+import CourseList from '@/components/manage_course/courseList'
+import Nav from '@/components/manage_course/Nav'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute(
+  '/admin/_dashboardLayout/dashboard/course-management',
+)({
+  component: DashboardCourseManagementComponent,
+})
+
+function DashboardCourseManagementComponent() {
+  return (
+    <div className="h-screen w-full px-8">
+      <Nav />
+      <CourseList />
+    </div>
+  )
+}
+
+export default DashboardCourseManagementComponent

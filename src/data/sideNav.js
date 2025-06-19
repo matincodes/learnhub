@@ -26,7 +26,6 @@ export const navLinks = [
   },
 ]
 
-
 export const adminNavLinks = [
   {
     link: '/admin/dashboard',
@@ -35,7 +34,7 @@ export const adminNavLinks = [
   },
   {
     link: '/admin/dashboard/courses',
-    name: 'Manage Courses',
+    name: 'Course Management',
     iconImage: '/assets/courses.png',
   },
   {
@@ -49,5 +48,3 @@ export const adminNavLinks = [
     iconImage: '/assets/fi-br-notebook.png',
   },
 ]
-
-
