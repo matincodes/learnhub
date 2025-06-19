@@ -1,5 +1,5 @@
-import CourseList from '@/components/manage_course/courseList'
-import Nav from '@/components/manage_course/Nav'
+import CourseList from '@/components/manage_course/course_management/courseList'
+import Nav from '@/components/manage_course/course_management/Nav'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(

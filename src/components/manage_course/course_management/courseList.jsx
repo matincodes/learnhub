@@ -1,5 +1,5 @@
-import CourseCard from '../cards/CourseCard'
-import Filter from './filter_courses/filter'
+import CourseCard from '../../cards/CourseCard'
+import Filter from '../filter_courses/filter'
 
 const totalCourse = [
   {

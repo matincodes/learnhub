@@ -27,6 +27,7 @@ import { Route as AdminDashboardLayoutDashboardIndexRouteImport } from './routes
 import { Route as userDashboardDashboardLayoutDashboardIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
 import { Route as AdminDashboardLayoutDashboardUsersRouteImport } from './routes/admin/_dashboardLayout/dashboard/users'
 import { Route as AdminDashboardLayoutDashboardSettingsRouteImport } from './routes/admin/_dashboardLayout/dashboard/settings'
+import { Route as AdminDashboardLayoutDashboardNewCourseRouteImport } from './routes/admin/_dashboardLayout/dashboard/new-course'
 import { Route as AdminDashboardLayoutDashboardCourseManagementRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management'
 import { Route as AdminDashboardLayoutDashboardCourseDetailsRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-details'
 import { Route as AdminDashboardLayoutDashboardAddModuleRouteImport } from './routes/admin/_dashboardLayout/dashboard/add-module'
@@ -140,6 +141,12 @@ const AdminDashboardLayoutDashboardSettingsRoute =
   AdminDashboardLayoutDashboardSettingsRouteImport.update({
     id: '/dashboard/settings',
     path: '/dashboard/settings',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+const AdminDashboardLayoutDashboardNewCourseRoute =
+  AdminDashboardLayoutDashboardNewCourseRouteImport.update({
+    id: '/dashboard/new-course',
+    path: '/dashboard/new-course',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
 const AdminDashboardLayoutDashboardCourseManagementRoute =
@@ -256,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
   '/admin/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
   '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -287,6 +295,7 @@ export interface FileRoutesByTo {
   '/admin/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
   '/admin/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
   '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -324,6 +333,7 @@ export interface FileRoutesById {
   '/admin/_dashboardLayout/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
   '/admin/_dashboardLayout/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
   '/admin/_dashboardLayout/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/_dashboardLayout/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
   '/admin/_dashboardLayout/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/_dashboardLayout/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/(userDashboard)/_dashboardLayout/dashboard/': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -357,6 +367,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard/add-module'
     | '/admin/dashboard/course-details'
     | '/admin/dashboard/course-management'
+    | '/admin/dashboard/new-course'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -388,6 +399,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard/add-module'
     | '/admin/dashboard/course-details'
     | '/admin/dashboard/course-management'
+    | '/admin/dashboard/new-course'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -424,6 +436,7 @@ export interface FileRouteTypes {
     | '/admin/_dashboardLayout/dashboard/add-module'
     | '/admin/_dashboardLayout/dashboard/course-details'
     | '/admin/_dashboardLayout/dashboard/course-management'
+    | '/admin/_dashboardLayout/dashboard/new-course'
     | '/admin/_dashboardLayout/dashboard/settings'
     | '/admin/_dashboardLayout/dashboard/users'
     | '/(userDashboard)/_dashboardLayout/dashboard/'
@@ -579,6 +592,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/settings'
       fullPath: '/admin/dashboard/settings'
       preLoaderRoute: typeof AdminDashboardLayoutDashboardSettingsRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/new-course': {
+      id: '/admin/_dashboardLayout/dashboard/new-course'
+      path: '/dashboard/new-course'
+      fullPath: '/admin/dashboard/new-course'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardNewCourseRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
     '/admin/_dashboardLayout/dashboard/course-management': {
@@ -781,6 +801,7 @@ interface AdminDashboardLayoutRouteChildren {
   AdminDashboardLayoutDashboardAddModuleRoute: typeof AdminDashboardLayoutDashboardAddModuleRoute
   AdminDashboardLayoutDashboardCourseDetailsRoute: typeof AdminDashboardLayoutDashboardCourseDetailsRoute
   AdminDashboardLayoutDashboardCourseManagementRoute: typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  AdminDashboardLayoutDashboardNewCourseRoute: typeof AdminDashboardLayoutDashboardNewCourseRoute
   AdminDashboardLayoutDashboardSettingsRoute: typeof AdminDashboardLayoutDashboardSettingsRoute
   AdminDashboardLayoutDashboardUsersRoute: typeof AdminDashboardLayoutDashboardUsersRoute
   AdminDashboardLayoutDashboardIndexRoute: typeof AdminDashboardLayoutDashboardIndexRoute
@@ -795,6 +816,8 @@ const AdminDashboardLayoutRouteChildren: AdminDashboardLayoutRouteChildren = {
     AdminDashboardLayoutDashboardCourseDetailsRoute,
   AdminDashboardLayoutDashboardCourseManagementRoute:
     AdminDashboardLayoutDashboardCourseManagementRoute,
+  AdminDashboardLayoutDashboardNewCourseRoute:
+    AdminDashboardLayoutDashboardNewCourseRoute,
   AdminDashboardLayoutDashboardSettingsRoute:
     AdminDashboardLayoutDashboardSettingsRoute,
   AdminDashboardLayoutDashboardUsersRoute:
