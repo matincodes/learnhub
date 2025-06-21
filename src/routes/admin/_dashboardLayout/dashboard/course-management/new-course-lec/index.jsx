@@ -1,18 +1,18 @@
-import CreateCourse from '@/components/manage_course/course_management/add_course/CreateCourse'
+import CreateCourseLecturer from '@/components/manage_course/course_management/add_course/CreateCourseLecturer'
 import Nav from '@/components/manage_course/course_management/add_course/Nav'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/admin/_dashboardLayout/dashboard/new-course',
+  '/admin/_dashboardLayout/dashboard/course-management/new-course-lec/',
 )({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   return (
-    <div className="h-screen w-full px-8">
+    <div className="h-screen w-full px-16">
       <Nav />
-      <CreateCourse />
+      <CreateCourseLecturer />
     </div>
   )
 }

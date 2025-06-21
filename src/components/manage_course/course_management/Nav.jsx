@@ -7,7 +7,7 @@ function Nav() {
       <h1 className="text-[32px] font-[600] text-[#303031]">
         Course management
       </h1>
-      <Link to="/admin/dashboard/new-course">
+      <Link to="/admin/dashboard/course-management/new-course">
         <Button className="bg-[#F7AE30] px-2">
           <span className="text-white"> Create new Course</span>
           <svg

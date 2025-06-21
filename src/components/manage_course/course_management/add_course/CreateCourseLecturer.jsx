@@ -9,7 +9,7 @@ function CreateCourseLecturer() {
         <Button className="px-8 py-2">
           <span className="text-[#F7AE30]">Go back</span>
         </Button>
-        <Link to="/admin/dashboard/preview-courses">
+        <Link to="/admin/dashboard/course-management/preview-courses">
           <Button className="bg-[#F7AE30] px-8 py-2">
             <span className="text-white">Preview</span>
           </Button>

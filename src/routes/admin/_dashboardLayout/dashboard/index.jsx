@@ -11,7 +11,7 @@ function DashboardIndexComponent() {
   return (
     <>
       {pathname.includes('/admin/dashboard') && role === 'admin' && (
-        <div className="h-full w-full space-y-[52px] pb-[12px]">
+        <div className="h-full w-full space-y-[52px] px-16 pb-[12px]">
           <div className="mt-24 grid w-full gap-4 lg:grid-cols-3">
             <AdminInventory
               title="Total Users"

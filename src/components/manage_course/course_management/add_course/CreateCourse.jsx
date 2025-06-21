@@ -20,7 +20,7 @@ function CreateCourse() {
         <Button className="px-8 py-2" onClick={handleBack}>
           <span className="text-[#F7AE30]">Go back</span>
         </Button>
-        <Link to="/admin/dashboard/new-course-lec">
+        <Link to="/admin/dashboard/course-management/new-course-lec">
           <Button className="bg-[#F7AE30] px-8 py-2">
             <span className="text-white">Next</span>
           </Button>
