@@ -29,6 +29,9 @@ function Nav() {
           />
         </svg>
 
+
+
+
         <span>New course</span>
       </h1>
     </div>
