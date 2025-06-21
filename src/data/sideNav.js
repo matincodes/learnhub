@@ -33,7 +33,7 @@ export const adminNavLinks = [
     iconImage: '/assets/dashboard.png',
   },
   {
-    link: '/admin/dashboard/courses',
+    link: '/admin/dashboard/course-management',
     name: 'Course Management',
     iconImage: '/assets/courses.png',
   },

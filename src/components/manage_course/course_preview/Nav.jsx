@@ -1,20 +1,12 @@
-import { useNavigate } from '@tanstack/react-router'
-import { Pointer } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-function Nav() {
-  const navigate = useNavigate()
-
-  const handleBack = () => {
-    navigate(-1) // Go back to the previous page
-  }
+function Nav({ onOpen }) {
   return (
     <div className="flex h-[79px] w-full items-center justify-between">
-      <h1 className="flex items-center gap-[8px] text-[32px] font-[600] text-[#303031]">
+      <h1 className="flex items-center gap-[8px] text-[25px] font-[600] text-[#303031]">
         <svg
-          onClick={handleBack}
           width="40"
           height="40"
-          cursor={Pointer}
           className="cursor-pointer"
           viewBox="0 0 40 40"
           fill="none"
@@ -28,9 +20,12 @@ function Nav() {
             strokeLinejoin="round"
           />
         </svg>
-
-        <span>New course</span>
+        <span> New course (preview)</span>
       </h1>
+
+      <Button className="bg-[#F7AE30] px-2" onClick={() => onOpen(true)}>
+        <span className="text-white"> Upload Course</span>
+      </Button>
     </div>
   )
 }
