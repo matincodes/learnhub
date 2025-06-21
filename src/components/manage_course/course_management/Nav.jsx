@@ -4,7 +4,7 @@ import { Button } from '../../ui/button'
 function Nav() {
   return (
     <div className="flex h-[79px] w-full items-center justify-between">
-      <h1 className="text-[32px] font-[600] text-[#303031]">
+      <h1 className="text-3xl font-[600] text-[#303031]">
         Course management
       </h1>
       <Link to="/admin/dashboard/course-management/new-course">

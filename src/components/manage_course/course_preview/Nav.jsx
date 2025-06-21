@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 function Nav({ onOpen }) {
   return (
     <div className="flex h-[79px] w-full items-center justify-between">
-      <h1 className="flex items-center gap-[8px] text-[25px] font-[600] text-[#303031]">
+      <h1 className="flex items-center gap-[8px] text-3xl font-[600] text-[#303031]">
         <svg
           width="40"
           height="40"
