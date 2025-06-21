@@ -84,7 +84,10 @@ const ManageUsers = () => {
   }
 
   return (
-    <div className="">
+    <div className=" px-16 ">
+      <div className='fixed top-0 w-full bg-gray-100 py-3'>
+        <h1 className='font-san text-[32px] font-semibold'>User management</h1>
+      </div>
       <div className="mt-[100px] flex h-full w-full flex-col rounded-lg bg-white px-10 py-7">
         <form className="flex w-[400px] items-center gap-3 rounded-lg border-[2px] border-[#F7F7F7] px-4 py-2">
           <img

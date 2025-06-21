@@ -8,7 +8,7 @@ const CourseCard = ({e}) => {
           className="cursor-pointer"
         />
       </div>
-      <p className="font-san mt-2 text-base font-semibold leading-[19px]">
+      <p className="font-san text-base font-semibold leading-[19px]">
         {e.title}
       </p>
     </div>

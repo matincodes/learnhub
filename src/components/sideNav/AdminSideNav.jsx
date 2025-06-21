@@ -18,7 +18,7 @@ const navItems = [
   },
   {
     label: 'Course Management',
-    to: '/admin/dashboard/courses',
+    to: '/admin/dashboard/course-management' || '/admin/dashboard/new-course',
     Icon: CourseIcon,
   },
   {

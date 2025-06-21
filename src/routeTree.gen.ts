@@ -27,10 +27,10 @@ import { Route as AdminDashboardLayoutDashboardIndexRouteImport } from './routes
 import { Route as userDashboardDashboardLayoutDashboardIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
 import { Route as AdminDashboardLayoutDashboardUsersRouteImport } from './routes/admin/_dashboardLayout/dashboard/users'
 import { Route as AdminDashboardLayoutDashboardSettingsRouteImport } from './routes/admin/_dashboardLayout/dashboard/settings'
-import { Route as AdminDashboardLayoutDashboardCoursesRouteImport } from './routes/admin/_dashboardLayout/dashboard/courses'
-import { Route as AdminDashboardLayoutDashboardCourseDetailsRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-details'
-import { Route as AdminDashboardLayoutDashboardAddModuleRouteImport } from './routes/admin/_dashboardLayout/dashboard/add-module'
-import { Route as AdminDashboardLayoutDashboardAddCourseRouteImport } from './routes/admin/_dashboardLayout/dashboard/add-course'
+import { Route as AdminDashboardLayoutDashboardPreviewCoursesRouteImport } from './routes/admin/_dashboardLayout/dashboard/preview-courses'
+import { Route as AdminDashboardLayoutDashboardNewCourseLecRouteImport } from './routes/admin/_dashboardLayout/dashboard/new-course-lec'
+import { Route as AdminDashboardLayoutDashboardNewCourseRouteImport } from './routes/admin/_dashboardLayout/dashboard/new-course'
+import { Route as AdminDashboardLayoutDashboardCourseManagementRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management'
 import { Route as userDashboardDashboardLayoutDashboardSettingsRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
@@ -142,28 +142,28 @@ const AdminDashboardLayoutDashboardSettingsRoute =
     path: '/dashboard/settings',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
-const AdminDashboardLayoutDashboardCoursesRoute =
-  AdminDashboardLayoutDashboardCoursesRouteImport.update({
-    id: '/dashboard/courses',
-    path: '/dashboard/courses',
+const AdminDashboardLayoutDashboardPreviewCoursesRoute =
+  AdminDashboardLayoutDashboardPreviewCoursesRouteImport.update({
+    id: '/dashboard/preview-courses',
+    path: '/dashboard/preview-courses',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
-const AdminDashboardLayoutDashboardCourseDetailsRoute =
-  AdminDashboardLayoutDashboardCourseDetailsRouteImport.update({
-    id: '/dashboard/course-details',
-    path: '/dashboard/course-details',
+const AdminDashboardLayoutDashboardNewCourseLecRoute =
+  AdminDashboardLayoutDashboardNewCourseLecRouteImport.update({
+    id: '/dashboard/new-course-lec',
+    path: '/dashboard/new-course-lec',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
-const AdminDashboardLayoutDashboardAddModuleRoute =
-  AdminDashboardLayoutDashboardAddModuleRouteImport.update({
-    id: '/dashboard/add-module',
-    path: '/dashboard/add-module',
+const AdminDashboardLayoutDashboardNewCourseRoute =
+  AdminDashboardLayoutDashboardNewCourseRouteImport.update({
+    id: '/dashboard/new-course',
+    path: '/dashboard/new-course',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
-const AdminDashboardLayoutDashboardAddCourseRoute =
-  AdminDashboardLayoutDashboardAddCourseRouteImport.update({
-    id: '/dashboard/add-course',
-    path: '/dashboard/add-course',
+const AdminDashboardLayoutDashboardCourseManagementRoute =
+  AdminDashboardLayoutDashboardCourseManagementRouteImport.update({
+    id: '/dashboard/course-management',
+    path: '/dashboard/course-management',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
 const userDashboardDashboardLayoutDashboardSettingsRoute =
@@ -252,10 +252,10 @@ export interface FileRoutesByFullPath {
   '/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/dashboard/add-course': typeof AdminDashboardLayoutDashboardAddCourseRoute
-  '/admin/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
-  '/admin/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
-  '/admin/dashboard/courses': typeof AdminDashboardLayoutDashboardCoursesRoute
+  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
+  '/admin/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
+  '/admin/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -283,10 +283,10 @@ export interface FileRoutesByTo {
   '/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/dashboard/add-course': typeof AdminDashboardLayoutDashboardAddCourseRoute
-  '/admin/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
-  '/admin/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
-  '/admin/dashboard/courses': typeof AdminDashboardLayoutDashboardCoursesRoute
+  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
+  '/admin/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
+  '/admin/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -320,10 +320,10 @@ export interface FileRoutesById {
   '/(userDashboard)/_dashboardLayout/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/(userDashboard)/_dashboardLayout/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/(userDashboard)/_dashboardLayout/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/_dashboardLayout/dashboard/add-course': typeof AdminDashboardLayoutDashboardAddCourseRoute
-  '/admin/_dashboardLayout/dashboard/add-module': typeof AdminDashboardLayoutDashboardAddModuleRoute
-  '/admin/_dashboardLayout/dashboard/course-details': typeof AdminDashboardLayoutDashboardCourseDetailsRoute
-  '/admin/_dashboardLayout/dashboard/courses': typeof AdminDashboardLayoutDashboardCoursesRoute
+  '/admin/_dashboardLayout/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  '/admin/_dashboardLayout/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
+  '/admin/_dashboardLayout/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
+  '/admin/_dashboardLayout/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/_dashboardLayout/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/_dashboardLayout/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/(userDashboard)/_dashboardLayout/dashboard/': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -353,10 +353,10 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/search'
     | '/dashboard/settings'
-    | '/admin/dashboard/add-course'
-    | '/admin/dashboard/add-module'
-    | '/admin/dashboard/course-details'
-    | '/admin/dashboard/courses'
+    | '/admin/dashboard/course-management'
+    | '/admin/dashboard/new-course'
+    | '/admin/dashboard/new-course-lec'
+    | '/admin/dashboard/preview-courses'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -384,10 +384,10 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/search'
     | '/dashboard/settings'
-    | '/admin/dashboard/add-course'
-    | '/admin/dashboard/add-module'
-    | '/admin/dashboard/course-details'
-    | '/admin/dashboard/courses'
+    | '/admin/dashboard/course-management'
+    | '/admin/dashboard/new-course'
+    | '/admin/dashboard/new-course-lec'
+    | '/admin/dashboard/preview-courses'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -420,10 +420,10 @@ export interface FileRouteTypes {
     | '/(userDashboard)/_dashboardLayout/dashboard/profile'
     | '/(userDashboard)/_dashboardLayout/dashboard/search'
     | '/(userDashboard)/_dashboardLayout/dashboard/settings'
-    | '/admin/_dashboardLayout/dashboard/add-course'
-    | '/admin/_dashboardLayout/dashboard/add-module'
-    | '/admin/_dashboardLayout/dashboard/course-details'
-    | '/admin/_dashboardLayout/dashboard/courses'
+    | '/admin/_dashboardLayout/dashboard/course-management'
+    | '/admin/_dashboardLayout/dashboard/new-course'
+    | '/admin/_dashboardLayout/dashboard/new-course-lec'
+    | '/admin/_dashboardLayout/dashboard/preview-courses'
     | '/admin/_dashboardLayout/dashboard/settings'
     | '/admin/_dashboardLayout/dashboard/users'
     | '/(userDashboard)/_dashboardLayout/dashboard/'
@@ -581,32 +581,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardLayoutDashboardSettingsRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
-    '/admin/_dashboardLayout/dashboard/courses': {
-      id: '/admin/_dashboardLayout/dashboard/courses'
-      path: '/dashboard/courses'
-      fullPath: '/admin/dashboard/courses'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardCoursesRouteImport
+    '/admin/_dashboardLayout/dashboard/preview-courses': {
+      id: '/admin/_dashboardLayout/dashboard/preview-courses'
+      path: '/dashboard/preview-courses'
+      fullPath: '/admin/dashboard/preview-courses'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardPreviewCoursesRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
-    '/admin/_dashboardLayout/dashboard/course-details': {
-      id: '/admin/_dashboardLayout/dashboard/course-details'
-      path: '/dashboard/course-details'
-      fullPath: '/admin/dashboard/course-details'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseDetailsRouteImport
+    '/admin/_dashboardLayout/dashboard/new-course-lec': {
+      id: '/admin/_dashboardLayout/dashboard/new-course-lec'
+      path: '/dashboard/new-course-lec'
+      fullPath: '/admin/dashboard/new-course-lec'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardNewCourseLecRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
-    '/admin/_dashboardLayout/dashboard/add-module': {
-      id: '/admin/_dashboardLayout/dashboard/add-module'
-      path: '/dashboard/add-module'
-      fullPath: '/admin/dashboard/add-module'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardAddModuleRouteImport
+    '/admin/_dashboardLayout/dashboard/new-course': {
+      id: '/admin/_dashboardLayout/dashboard/new-course'
+      path: '/dashboard/new-course'
+      fullPath: '/admin/dashboard/new-course'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardNewCourseRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
-    '/admin/_dashboardLayout/dashboard/add-course': {
-      id: '/admin/_dashboardLayout/dashboard/add-course'
-      path: '/dashboard/add-course'
-      fullPath: '/admin/dashboard/add-course'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardAddCourseRouteImport
+    '/admin/_dashboardLayout/dashboard/course-management': {
+      id: '/admin/_dashboardLayout/dashboard/course-management'
+      path: '/dashboard/course-management'
+      fullPath: '/admin/dashboard/course-management'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
     '/(userDashboard)/_dashboardLayout/dashboard/settings': {
@@ -777,24 +777,24 @@ const AdminAuthRouteWithChildren = AdminAuthRoute._addFileChildren(
 )
 
 interface AdminDashboardLayoutRouteChildren {
-  AdminDashboardLayoutDashboardAddCourseRoute: typeof AdminDashboardLayoutDashboardAddCourseRoute
-  AdminDashboardLayoutDashboardAddModuleRoute: typeof AdminDashboardLayoutDashboardAddModuleRoute
-  AdminDashboardLayoutDashboardCourseDetailsRoute: typeof AdminDashboardLayoutDashboardCourseDetailsRoute
-  AdminDashboardLayoutDashboardCoursesRoute: typeof AdminDashboardLayoutDashboardCoursesRoute
+  AdminDashboardLayoutDashboardCourseManagementRoute: typeof AdminDashboardLayoutDashboardCourseManagementRoute
+  AdminDashboardLayoutDashboardNewCourseRoute: typeof AdminDashboardLayoutDashboardNewCourseRoute
+  AdminDashboardLayoutDashboardNewCourseLecRoute: typeof AdminDashboardLayoutDashboardNewCourseLecRoute
+  AdminDashboardLayoutDashboardPreviewCoursesRoute: typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   AdminDashboardLayoutDashboardSettingsRoute: typeof AdminDashboardLayoutDashboardSettingsRoute
   AdminDashboardLayoutDashboardUsersRoute: typeof AdminDashboardLayoutDashboardUsersRoute
   AdminDashboardLayoutDashboardIndexRoute: typeof AdminDashboardLayoutDashboardIndexRoute
 }
 
 const AdminDashboardLayoutRouteChildren: AdminDashboardLayoutRouteChildren = {
-  AdminDashboardLayoutDashboardAddCourseRoute:
-    AdminDashboardLayoutDashboardAddCourseRoute,
-  AdminDashboardLayoutDashboardAddModuleRoute:
-    AdminDashboardLayoutDashboardAddModuleRoute,
-  AdminDashboardLayoutDashboardCourseDetailsRoute:
-    AdminDashboardLayoutDashboardCourseDetailsRoute,
-  AdminDashboardLayoutDashboardCoursesRoute:
-    AdminDashboardLayoutDashboardCoursesRoute,
+  AdminDashboardLayoutDashboardCourseManagementRoute:
+    AdminDashboardLayoutDashboardCourseManagementRoute,
+  AdminDashboardLayoutDashboardNewCourseRoute:
+    AdminDashboardLayoutDashboardNewCourseRoute,
+  AdminDashboardLayoutDashboardNewCourseLecRoute:
+    AdminDashboardLayoutDashboardNewCourseLecRoute,
+  AdminDashboardLayoutDashboardPreviewCoursesRoute:
+    AdminDashboardLayoutDashboardPreviewCoursesRoute,
   AdminDashboardLayoutDashboardSettingsRoute:
     AdminDashboardLayoutDashboardSettingsRoute,
   AdminDashboardLayoutDashboardUsersRoute:
