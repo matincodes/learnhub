@@ -30,7 +30,7 @@ const totalCourse = [
 ]
 function CourseList() {
   return (
-    <div className="h-[464px] w-full bg-white px-4 py-3">
+    <div className="h-[464px] w-full bg-white px-4 py-3 mt-[120px] ">
       <Filter />
       <div className="mt-7 grid grid-cols-4 gap-[29px]">
         {totalCourse.map(item => (

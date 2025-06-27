@@ -3,17 +3,19 @@ import Nav from '@/components/manage_course/course_management/Nav'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/admin/_dashboardLayout/dashboard/course-management',
+  '/admin/_dashboardLayout/dashboard/course-management/',
 )({
   component: DashboardCourseManagementComponent,
 })
 
 function DashboardCourseManagementComponent() {
   return (
-    <div className="h-screen w-full px-8">
+    <>
       <Nav />
-      <CourseList />
-    </div>
+      <div className="w-full px-16">
+        <CourseList />
+      </div>
+    </>
   )
 }
 

@@ -27,19 +27,23 @@ import { Route as AdminDashboardLayoutDashboardIndexRouteImport } from './routes
 import { Route as userDashboardDashboardLayoutDashboardIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/index'
 import { Route as AdminDashboardLayoutDashboardUsersRouteImport } from './routes/admin/_dashboardLayout/dashboard/users'
 import { Route as AdminDashboardLayoutDashboardSettingsRouteImport } from './routes/admin/_dashboardLayout/dashboard/settings'
-import { Route as AdminDashboardLayoutDashboardPreviewCoursesRouteImport } from './routes/admin/_dashboardLayout/dashboard/preview-courses'
-import { Route as AdminDashboardLayoutDashboardNewCourseLecRouteImport } from './routes/admin/_dashboardLayout/dashboard/new-course-lec'
-import { Route as AdminDashboardLayoutDashboardNewCourseRouteImport } from './routes/admin/_dashboardLayout/dashboard/new-course'
-import { Route as AdminDashboardLayoutDashboardCourseManagementRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management'
 import { Route as userDashboardDashboardLayoutDashboardSettingsRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/settings'
 import { Route as userDashboardDashboardLayoutDashboardSearchRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/search'
 import { Route as userDashboardDashboardLayoutDashboardProfileRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/profile'
 import { Route as userDashboardDashboardLayoutDashboardNotificationsRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/notifications'
 import { Route as userDashboardDashboardLayoutDashboardMentorRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/mentor'
 import { Route as userDashboardDashboardLayoutDashboardLeaderboardRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/leaderboard'
+import { Route as AdminDashboardLayoutDashboardQuizzesManagementIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/index'
+import { Route as AdminDashboardLayoutDashboardCourseManagementIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/index'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/index'
 import { Route as userDashboardDashboardLayoutDashboardMyCoursesIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/index'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIdRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
+import { Route as AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/preview/index'
+import { Route as AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/index'
+import { Route as AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz-lec/index'
+import { Route as AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/preview-courses/index'
+import { Route as AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/new-course/index'
+import { Route as AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/new-course-lec/index'
 import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/index'
 import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid'
 
@@ -142,30 +146,6 @@ const AdminDashboardLayoutDashboardSettingsRoute =
     path: '/dashboard/settings',
     getParentRoute: () => AdminDashboardLayoutRoute,
   } as any)
-const AdminDashboardLayoutDashboardPreviewCoursesRoute =
-  AdminDashboardLayoutDashboardPreviewCoursesRouteImport.update({
-    id: '/dashboard/preview-courses',
-    path: '/dashboard/preview-courses',
-    getParentRoute: () => AdminDashboardLayoutRoute,
-  } as any)
-const AdminDashboardLayoutDashboardNewCourseLecRoute =
-  AdminDashboardLayoutDashboardNewCourseLecRouteImport.update({
-    id: '/dashboard/new-course-lec',
-    path: '/dashboard/new-course-lec',
-    getParentRoute: () => AdminDashboardLayoutRoute,
-  } as any)
-const AdminDashboardLayoutDashboardNewCourseRoute =
-  AdminDashboardLayoutDashboardNewCourseRouteImport.update({
-    id: '/dashboard/new-course',
-    path: '/dashboard/new-course',
-    getParentRoute: () => AdminDashboardLayoutRoute,
-  } as any)
-const AdminDashboardLayoutDashboardCourseManagementRoute =
-  AdminDashboardLayoutDashboardCourseManagementRouteImport.update({
-    id: '/dashboard/course-management',
-    path: '/dashboard/course-management',
-    getParentRoute: () => AdminDashboardLayoutRoute,
-  } as any)
 const userDashboardDashboardLayoutDashboardSettingsRoute =
   userDashboardDashboardLayoutDashboardSettingsRouteImport.update({
     id: '/dashboard/settings',
@@ -202,6 +182,18 @@ const userDashboardDashboardLayoutDashboardLeaderboardRoute =
     path: '/dashboard/leaderboard',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
+const AdminDashboardLayoutDashboardQuizzesManagementIndexRoute =
+  AdminDashboardLayoutDashboardQuizzesManagementIndexRouteImport.update({
+    id: '/dashboard/quizzes-management/',
+    path: '/dashboard/quizzes-management/',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+const AdminDashboardLayoutDashboardCourseManagementIndexRoute =
+  AdminDashboardLayoutDashboardCourseManagementIndexRouteImport.update({
+    id: '/dashboard/course-management/',
+    path: '/dashboard/course-management/',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
 const userDashboardDashboardLayoutDashboardQuizzesIndexRoute =
   userDashboardDashboardLayoutDashboardQuizzesIndexRouteImport.update({
     id: '/dashboard/quizzes/',
@@ -220,6 +212,50 @@ const userDashboardDashboardLayoutDashboardQuizzesIdRoute =
     path: '/dashboard/quizzes/$id',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
+const AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute =
+  AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRouteImport.update({
+    id: '/dashboard/quizzes-management/preview/',
+    path: '/dashboard/quizzes-management/preview/',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+const AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute =
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRouteImport.update({
+    id: '/dashboard/quizzes-management/new-quiz/',
+    path: '/dashboard/quizzes-management/new-quiz/',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
+const AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute =
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRouteImport.update(
+    {
+      id: '/dashboard/quizzes-management/new-quiz-lec/',
+      path: '/dashboard/quizzes-management/new-quiz-lec/',
+      getParentRoute: () => AdminDashboardLayoutRoute,
+    } as any,
+  )
+const AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute =
+  AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRouteImport.update(
+    {
+      id: '/dashboard/course-management/preview-courses/',
+      path: '/dashboard/course-management/preview-courses/',
+      getParentRoute: () => AdminDashboardLayoutRoute,
+    } as any,
+  )
+const AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute =
+  AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRouteImport.update(
+    {
+      id: '/dashboard/course-management/new-course/',
+      path: '/dashboard/course-management/new-course/',
+      getParentRoute: () => AdminDashboardLayoutRoute,
+    } as any,
+  )
+const AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute =
+  AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRouteImport.update(
+    {
+      id: '/dashboard/course-management/new-course-lec/',
+      path: '/dashboard/course-management/new-course-lec/',
+      getParentRoute: () => AdminDashboardLayoutRoute,
+    } as any,
+  )
 const userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute =
   userDashboardDashboardLayoutDashboardMyCoursesIdIndexRouteImport.update({
     id: '/dashboard/my-courses/$id/',
@@ -252,10 +288,6 @@ export interface FileRoutesByFullPath {
   '/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
-  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
-  '/admin/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
-  '/admin/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -263,7 +295,15 @@ export interface FileRoutesByFullPath {
   '/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
   '/dashboard/my-courses': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/dashboard/quizzes': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
+  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
+  '/admin/dashboard/quizzes-management': typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRoute
   '/dashboard/my-courses/$id': typeof userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute
+  '/admin/dashboard/course-management/new-course-lec': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute
+  '/admin/dashboard/course-management/new-course': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute
+  '/admin/dashboard/course-management/preview-courses': typeof AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute
+  '/admin/dashboard/quizzes-management/new-quiz-lec': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute
+  '/admin/dashboard/quizzes-management/new-quiz': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute
+  '/admin/dashboard/quizzes-management/preview': typeof AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute
   '/dashboard/my-courses/$id/learn/lecture/$lectureid': typeof userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute
 }
 export interface FileRoutesByTo {
@@ -283,10 +323,6 @@ export interface FileRoutesByTo {
   '/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
-  '/admin/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
-  '/admin/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
-  '/admin/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -294,7 +330,15 @@ export interface FileRoutesByTo {
   '/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
   '/dashboard/my-courses': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/dashboard/quizzes': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
+  '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
+  '/admin/dashboard/quizzes-management': typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRoute
   '/dashboard/my-courses/$id': typeof userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute
+  '/admin/dashboard/course-management/new-course-lec': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute
+  '/admin/dashboard/course-management/new-course': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute
+  '/admin/dashboard/course-management/preview-courses': typeof AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute
+  '/admin/dashboard/quizzes-management/new-quiz-lec': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute
+  '/admin/dashboard/quizzes-management/new-quiz': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute
+  '/admin/dashboard/quizzes-management/preview': typeof AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute
   '/dashboard/my-courses/$id/learn/lecture/$lectureid': typeof userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute
 }
 export interface FileRoutesById {
@@ -320,10 +364,6 @@ export interface FileRoutesById {
   '/(userDashboard)/_dashboardLayout/dashboard/profile': typeof userDashboardDashboardLayoutDashboardProfileRoute
   '/(userDashboard)/_dashboardLayout/dashboard/search': typeof userDashboardDashboardLayoutDashboardSearchRoute
   '/(userDashboard)/_dashboardLayout/dashboard/settings': typeof userDashboardDashboardLayoutDashboardSettingsRoute
-  '/admin/_dashboardLayout/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementRoute
-  '/admin/_dashboardLayout/dashboard/new-course': typeof AdminDashboardLayoutDashboardNewCourseRoute
-  '/admin/_dashboardLayout/dashboard/new-course-lec': typeof AdminDashboardLayoutDashboardNewCourseLecRoute
-  '/admin/_dashboardLayout/dashboard/preview-courses': typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   '/admin/_dashboardLayout/dashboard/settings': typeof AdminDashboardLayoutDashboardSettingsRoute
   '/admin/_dashboardLayout/dashboard/users': typeof AdminDashboardLayoutDashboardUsersRoute
   '/(userDashboard)/_dashboardLayout/dashboard/': typeof userDashboardDashboardLayoutDashboardIndexRoute
@@ -331,7 +371,15 @@ export interface FileRoutesById {
   '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
+  '/admin/_dashboardLayout/dashboard/course-management/': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
+  '/admin/_dashboardLayout/dashboard/quizzes-management/': typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRoute
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/': typeof userDashboardDashboardLayoutDashboardMyCoursesIdIndexRoute
+  '/admin/_dashboardLayout/dashboard/course-management/new-course-lec/': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute
+  '/admin/_dashboardLayout/dashboard/course-management/new-course/': typeof AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute
+  '/admin/_dashboardLayout/dashboard/course-management/preview-courses/': typeof AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute
+  '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz-lec/': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute
+  '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/': typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute
+  '/admin/_dashboardLayout/dashboard/quizzes-management/preview/': typeof AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid': typeof userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLectureidRoute
 }
 export interface FileRouteTypes {
@@ -353,10 +401,6 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/search'
     | '/dashboard/settings'
-    | '/admin/dashboard/course-management'
-    | '/admin/dashboard/new-course'
-    | '/admin/dashboard/new-course-lec'
-    | '/admin/dashboard/preview-courses'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -364,7 +408,15 @@ export interface FileRouteTypes {
     | '/dashboard/quizzes/$id'
     | '/dashboard/my-courses'
     | '/dashboard/quizzes'
+    | '/admin/dashboard/course-management'
+    | '/admin/dashboard/quizzes-management'
     | '/dashboard/my-courses/$id'
+    | '/admin/dashboard/course-management/new-course-lec'
+    | '/admin/dashboard/course-management/new-course'
+    | '/admin/dashboard/course-management/preview-courses'
+    | '/admin/dashboard/quizzes-management/new-quiz-lec'
+    | '/admin/dashboard/quizzes-management/new-quiz'
+    | '/admin/dashboard/quizzes-management/preview'
     | '/dashboard/my-courses/$id/learn/lecture/$lectureid'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -384,10 +436,6 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/search'
     | '/dashboard/settings'
-    | '/admin/dashboard/course-management'
-    | '/admin/dashboard/new-course'
-    | '/admin/dashboard/new-course-lec'
-    | '/admin/dashboard/preview-courses'
     | '/admin/dashboard/settings'
     | '/admin/dashboard/users'
     | '/dashboard'
@@ -395,7 +443,15 @@ export interface FileRouteTypes {
     | '/dashboard/quizzes/$id'
     | '/dashboard/my-courses'
     | '/dashboard/quizzes'
+    | '/admin/dashboard/course-management'
+    | '/admin/dashboard/quizzes-management'
     | '/dashboard/my-courses/$id'
+    | '/admin/dashboard/course-management/new-course-lec'
+    | '/admin/dashboard/course-management/new-course'
+    | '/admin/dashboard/course-management/preview-courses'
+    | '/admin/dashboard/quizzes-management/new-quiz-lec'
+    | '/admin/dashboard/quizzes-management/new-quiz'
+    | '/admin/dashboard/quizzes-management/preview'
     | '/dashboard/my-courses/$id/learn/lecture/$lectureid'
   id:
     | '__root__'
@@ -420,10 +476,6 @@ export interface FileRouteTypes {
     | '/(userDashboard)/_dashboardLayout/dashboard/profile'
     | '/(userDashboard)/_dashboardLayout/dashboard/search'
     | '/(userDashboard)/_dashboardLayout/dashboard/settings'
-    | '/admin/_dashboardLayout/dashboard/course-management'
-    | '/admin/_dashboardLayout/dashboard/new-course'
-    | '/admin/_dashboardLayout/dashboard/new-course-lec'
-    | '/admin/_dashboardLayout/dashboard/preview-courses'
     | '/admin/_dashboardLayout/dashboard/settings'
     | '/admin/_dashboardLayout/dashboard/users'
     | '/(userDashboard)/_dashboardLayout/dashboard/'
@@ -431,7 +483,15 @@ export interface FileRouteTypes {
     | '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
     | '/(userDashboard)/_dashboardLayout/dashboard/my-courses/'
     | '/(userDashboard)/_dashboardLayout/dashboard/quizzes/'
+    | '/admin/_dashboardLayout/dashboard/course-management/'
+    | '/admin/_dashboardLayout/dashboard/quizzes-management/'
     | '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/'
+    | '/admin/_dashboardLayout/dashboard/course-management/new-course-lec/'
+    | '/admin/_dashboardLayout/dashboard/course-management/new-course/'
+    | '/admin/_dashboardLayout/dashboard/course-management/preview-courses/'
+    | '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz-lec/'
+    | '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/'
+    | '/admin/_dashboardLayout/dashboard/quizzes-management/preview/'
     | '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/learn/lecture/$lectureid'
   fileRoutesById: FileRoutesById
 }
@@ -581,34 +641,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardLayoutDashboardSettingsRouteImport
       parentRoute: typeof AdminDashboardLayoutRoute
     }
-    '/admin/_dashboardLayout/dashboard/preview-courses': {
-      id: '/admin/_dashboardLayout/dashboard/preview-courses'
-      path: '/dashboard/preview-courses'
-      fullPath: '/admin/dashboard/preview-courses'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardPreviewCoursesRouteImport
-      parentRoute: typeof AdminDashboardLayoutRoute
-    }
-    '/admin/_dashboardLayout/dashboard/new-course-lec': {
-      id: '/admin/_dashboardLayout/dashboard/new-course-lec'
-      path: '/dashboard/new-course-lec'
-      fullPath: '/admin/dashboard/new-course-lec'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardNewCourseLecRouteImport
-      parentRoute: typeof AdminDashboardLayoutRoute
-    }
-    '/admin/_dashboardLayout/dashboard/new-course': {
-      id: '/admin/_dashboardLayout/dashboard/new-course'
-      path: '/dashboard/new-course'
-      fullPath: '/admin/dashboard/new-course'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardNewCourseRouteImport
-      parentRoute: typeof AdminDashboardLayoutRoute
-    }
-    '/admin/_dashboardLayout/dashboard/course-management': {
-      id: '/admin/_dashboardLayout/dashboard/course-management'
-      path: '/dashboard/course-management'
-      fullPath: '/admin/dashboard/course-management'
-      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementRouteImport
-      parentRoute: typeof AdminDashboardLayoutRoute
-    }
     '/(userDashboard)/_dashboardLayout/dashboard/settings': {
       id: '/(userDashboard)/_dashboardLayout/dashboard/settings'
       path: '/dashboard/settings'
@@ -651,6 +683,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardLeaderboardRouteImport
       parentRoute: typeof userDashboardDashboardLayoutRoute
     }
+    '/admin/_dashboardLayout/dashboard/quizzes-management/': {
+      id: '/admin/_dashboardLayout/dashboard/quizzes-management/'
+      path: '/dashboard/quizzes-management'
+      fullPath: '/admin/dashboard/quizzes-management'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/course-management/': {
+      id: '/admin/_dashboardLayout/dashboard/course-management/'
+      path: '/dashboard/course-management'
+      fullPath: '/admin/dashboard/course-management'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': {
       id: '/(userDashboard)/_dashboardLayout/dashboard/quizzes/'
       path: '/dashboard/quizzes'
@@ -671,6 +717,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/quizzes/$id'
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardQuizzesIdRouteImport
       parentRoute: typeof userDashboardDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/quizzes-management/preview/': {
+      id: '/admin/_dashboardLayout/dashboard/quizzes-management/preview/'
+      path: '/dashboard/quizzes-management/preview'
+      fullPath: '/admin/dashboard/quizzes-management/preview'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/': {
+      id: '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/'
+      path: '/dashboard/quizzes-management/new-quiz'
+      fullPath: '/admin/dashboard/quizzes-management/new-quiz'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz-lec/': {
+      id: '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz-lec/'
+      path: '/dashboard/quizzes-management/new-quiz-lec'
+      fullPath: '/admin/dashboard/quizzes-management/new-quiz-lec'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/course-management/preview-courses/': {
+      id: '/admin/_dashboardLayout/dashboard/course-management/preview-courses/'
+      path: '/dashboard/course-management/preview-courses'
+      fullPath: '/admin/dashboard/course-management/preview-courses'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/course-management/new-course/': {
+      id: '/admin/_dashboardLayout/dashboard/course-management/new-course/'
+      path: '/dashboard/course-management/new-course'
+      fullPath: '/admin/dashboard/course-management/new-course'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
+    '/admin/_dashboardLayout/dashboard/course-management/new-course-lec/': {
+      id: '/admin/_dashboardLayout/dashboard/course-management/new-course-lec/'
+      path: '/dashboard/course-management/new-course-lec'
+      fullPath: '/admin/dashboard/course-management/new-course-lec'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
     }
     '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/': {
       id: '/(userDashboard)/_dashboardLayout/dashboard/my-courses/$id/'
@@ -777,30 +865,42 @@ const AdminAuthRouteWithChildren = AdminAuthRoute._addFileChildren(
 )
 
 interface AdminDashboardLayoutRouteChildren {
-  AdminDashboardLayoutDashboardCourseManagementRoute: typeof AdminDashboardLayoutDashboardCourseManagementRoute
-  AdminDashboardLayoutDashboardNewCourseRoute: typeof AdminDashboardLayoutDashboardNewCourseRoute
-  AdminDashboardLayoutDashboardNewCourseLecRoute: typeof AdminDashboardLayoutDashboardNewCourseLecRoute
-  AdminDashboardLayoutDashboardPreviewCoursesRoute: typeof AdminDashboardLayoutDashboardPreviewCoursesRoute
   AdminDashboardLayoutDashboardSettingsRoute: typeof AdminDashboardLayoutDashboardSettingsRoute
   AdminDashboardLayoutDashboardUsersRoute: typeof AdminDashboardLayoutDashboardUsersRoute
   AdminDashboardLayoutDashboardIndexRoute: typeof AdminDashboardLayoutDashboardIndexRoute
+  AdminDashboardLayoutDashboardCourseManagementIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
+  AdminDashboardLayoutDashboardQuizzesManagementIndexRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRoute
+  AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute
+  AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute
+  AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute
+  AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute
 }
 
 const AdminDashboardLayoutRouteChildren: AdminDashboardLayoutRouteChildren = {
-  AdminDashboardLayoutDashboardCourseManagementRoute:
-    AdminDashboardLayoutDashboardCourseManagementRoute,
-  AdminDashboardLayoutDashboardNewCourseRoute:
-    AdminDashboardLayoutDashboardNewCourseRoute,
-  AdminDashboardLayoutDashboardNewCourseLecRoute:
-    AdminDashboardLayoutDashboardNewCourseLecRoute,
-  AdminDashboardLayoutDashboardPreviewCoursesRoute:
-    AdminDashboardLayoutDashboardPreviewCoursesRoute,
   AdminDashboardLayoutDashboardSettingsRoute:
     AdminDashboardLayoutDashboardSettingsRoute,
   AdminDashboardLayoutDashboardUsersRoute:
     AdminDashboardLayoutDashboardUsersRoute,
   AdminDashboardLayoutDashboardIndexRoute:
     AdminDashboardLayoutDashboardIndexRoute,
+  AdminDashboardLayoutDashboardCourseManagementIndexRoute:
+    AdminDashboardLayoutDashboardCourseManagementIndexRoute,
+  AdminDashboardLayoutDashboardQuizzesManagementIndexRoute:
+    AdminDashboardLayoutDashboardQuizzesManagementIndexRoute,
+  AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute:
+    AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute,
+  AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute:
+    AdminDashboardLayoutDashboardCourseManagementNewCourseIndexRoute,
+  AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute:
+    AdminDashboardLayoutDashboardCourseManagementPreviewCoursesIndexRoute,
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute:
+    AdminDashboardLayoutDashboardQuizzesManagementNewQuizLecIndexRoute,
+  AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute:
+    AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRoute,
+  AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute:
+    AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRoute,
 }
 
 const AdminDashboardLayoutRouteWithChildren =

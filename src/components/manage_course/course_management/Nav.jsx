@@ -3,11 +3,11 @@ import { Button } from '../../ui/button'
 
 function Nav() {
   return (
-    <div className="flex h-[79px] w-full items-center justify-between">
-      <h1 className="text-[32px] font-[600] text-[#303031]">
+    <div className="flex w-full items-center justify-between bg-gray-100 px-20 py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)]">
+      <h1 className="text-3xl font-[600] text-[#303031]">
         Course management
       </h1>
-      <Link to="/admin/dashboard/new-course">
+      <Link to="/admin/dashboard/course-management/new-course">
         <Button className="bg-[#F7AE30] px-2">
           <span className="text-white"> Create new Course</span>
           <svg

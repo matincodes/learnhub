@@ -5,7 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
 export const Route = createFileRoute(
-  '/admin/_dashboardLayout/dashboard/preview-courses',
+  '/admin/_dashboardLayout/dashboard/course-management/preview-courses/',
 )({
   component: RouteComponent,
 })
@@ -13,7 +13,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
   const [showLoadingCourse, setShowLoadingCourse] = useState(false)
   return (
-    <div className="h-screen w-full px-8">
+    <div className="h-screen w-full px-16">
       <Nav onOpen={setShowLoadingCourse} />
       <PreviewCourse />
       <UploadingCourse

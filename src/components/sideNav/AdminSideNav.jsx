@@ -9,37 +9,52 @@ import {
   SettingIcon,
   UserIcon,
 } from './customIcon'
-
 const navItems = [
   {
     label: 'Dashboard',
     to: '/admin/dashboard',
     Icon: HomeIcon,
+    activePaths: ['/admin/dashboard'],
   },
   {
     label: 'Course Management',
-    to: '/admin/dashboard/course-management' || '/admin/dashboard/new-course',
+    to: '/admin/dashboard/course-management',
     Icon: CourseIcon,
+    activePaths: [
+      '/admin/dashboard/course-management',
+      '/admin/dashboard/course-management/new-course',
+      '/admin/dashboard/course-management/new-course-lec',
+      '/admin/dashboard/course-management/preview-courses',
+    ],
   },
   {
     label: 'User Management',
     to: '/admin/dashboard/users',
     Icon: UserIcon,
+    activePaths: ['/admin/dashboard/users'],
   },
   {
     label: 'Manage Quizzes',
-    to: '/admin/dashboard/quizzes',
+    to: '/admin/dashboard/quizzes-management',
     Icon: QuizzeIcon,
+    activePaths: [
+      '/admin/dashboard/quizzes-management',
+      '/admin/dashboard/quizzes-management/new-quiz',
+      '/admin/dashboard/quizzes-management/new-quiz-lec',
+      '/admin/dashboard/quizzes-management/preview',
+    ],
   },
   {
     label: 'Manage Category',
     to: '/admin/dashboard/categories',
     Icon: CategoryIcon,
+    activePaths: ['/admin/dashboard/categories'],
   },
   {
     label: 'Settings',
     to: '/admin/dashboard/settings',
     Icon: SettingIcon,
+    activePaths: ['/admin/dashboard/settings'],
     extraMarginTop: true,
   },
 ]
@@ -71,8 +86,8 @@ const AdminSideNav = () => {
 
         {/* Navigation Links */}
         <div className="mt-5 flex w-full flex-col gap-4 border-t-[4px] border-[#F7F7F7] py-7 font-sans text-lg font-normal text-black">
-          {navItems.map(({ label, to, Icon, extraMarginTop }) => {
-            const isActive = pathname === to
+          {navItems.map(({ label, to, Icon, extraMarginTop, activePaths }) => {
+            const isActive = activePaths.includes(pathname)
 
             return (
               <button
@@ -80,12 +95,11 @@ const AdminSideNav = () => {
                 onClick={() => router.navigate({ to })}
                 className={`${
                   extraMarginTop ? 'mt-20' : ''
-                } flex items-center gap-2 rounded-[10px] px-5 py-2 duration-100 ease-in-out hover:bg-[#F7F7F7] ${
+                } flex items-center gap-2 rounded-[10px] px-5 py-2 hover:bg-[#F7F7F7] ${
                   isActive ? 'bg-[#F7F7F7] text-[#F7AE30]' : 'text-black'
                 }`}
               >
                 {Icon && <Icon isActive={isActive} />}
-
                 {label}
               </button>
             )
