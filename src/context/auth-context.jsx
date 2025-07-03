@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(tokens.refresh)
       saveAuthData(user, tokens)
       setIsAuthenticated(true)
+      console.log(tokens)
       return { succes: true, redirect}
     } catch (err) {
       console.error(err)

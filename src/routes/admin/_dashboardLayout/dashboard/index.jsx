@@ -1,10 +1,12 @@
-import { createFileRoute, useLocation } from '@tanstack/react-router'
+import { createFileRoute, Link, useLocation } from '@tanstack/react-router'
 import AdminInventory from '@/components/inventory/adminInventory'
 import Chart from '@/components/charts/charts'
 import { useState } from 'react'
 import NotificationModal from '@/components/topNav/notificationModal'
+import { useAdmin } from '@/context/admin-context'
 
 function DashboardIndexComponent() {
+  const {  dashboard } = useAdmin()
   const [isOpen, setIsOpen] = useState(false)
 
   const pathname = useLocation({
@@ -14,6 +16,10 @@ function DashboardIndexComponent() {
   function onToggle() {
     setIsOpen(!isOpen)
   }
+
+
+
+  const { total_courses, total_users } = dashboard
   return (
     <>
       {pathname.includes('/admin/dashboard') && role === 'admin' && (
@@ -34,12 +40,12 @@ function DashboardIndexComponent() {
             <div className="mt-24 grid w-full gap-4 lg:grid-cols-3">
               <AdminInventory
                 title="Total Users"
-                metrics="642"
+                metrics={total_users ?? '0'}
                 image="/assets/user.svg"
               />
               <AdminInventory
                 title="Active Courses"
-                metrics="45"
+                metrics={total_courses ?? '0'}
                 image="/assets/active-course.svg"
               />
               <AdminInventory
@@ -59,9 +65,12 @@ function DashboardIndexComponent() {
                     alt="plus icon"
                     className="h-[52px] w-[52px]"
                   />
-                  <h1 className="text-[20px] font-[600] text-[#000000]">
+                  <Link
+                    to="/admin/dashboard/quizzes-management"
+                    className="text-[20px] font-[600] text-[#000000]"
+                  >
                     Create Quiz
-                  </h1>
+                  </Link>
                 </div>
                 <div className="flex h-[92px] w-[348px] flex-row items-center gap-[20px] rounded-lg border-[1.5px] border-[#F2F2F2] bg-[#FFFFFF] px-5">
                   <img
@@ -69,9 +78,12 @@ function DashboardIndexComponent() {
                     alt="plus icon"
                     className="h-[52px] w-[52px]"
                   />
-                  <h1 className="text-[20px] font-[600] text-[#000000]">
+                  <Link
+                    to="/admin/dashboard/course-management"
+                    className="text-[20px] font-[600] text-[#000000]"
+                  >
                     Create Course
-                  </h1>
+                  </Link>
                 </div>
               </div>
             </div>

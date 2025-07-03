@@ -8,6 +8,7 @@ import NotFound from '@/components/notFound/notFound'
 import { routeTree } from './routeTree.gen'
 import { AuthProvider, useAuth } from '@/context/auth-context'
 import { UserProvider } from './context/user-context'
+import { AdminProvider } from './context/admin-context'
 
 // Create a new router instance
 const router = createRouter({
@@ -31,11 +32,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-    <UserProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-      </UserProvider>
+      <AdminProvider>
+        <UserProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </UserProvider>
+      </AdminProvider>
     </StrictMode>,
   )
 }
@@ -43,6 +46,6 @@ if (!rootElement.innerHTML) {
 export function App() {
   const auth = useAuth()
   console.log('Auth context:', auth)
-  
+
   return <RouterProvider router={router} context={{ ...auth }} />
 }

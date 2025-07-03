@@ -9,6 +9,8 @@ import {
   SettingIcon,
   UserIcon,
 } from './customIcon'
+import { useAdmin } from '@/context/admin-context'
+import { useEffect } from 'react'
 const navItems = [
   {
     label: 'Dashboard',
@@ -63,20 +65,25 @@ const AdminSideNav = () => {
   const location = useLocation()
   const router = useRouter()
   const pathname = location.pathname
-
+  const { loadDashboard, dashboard, loading } = useAdmin()
+  useEffect(() => {
+    loadDashboard()
+  }, [])
+   if (loading || !dashboard) return
+  const { profile_image , first_name } = dashboard.admin_data
   return (
     <div className="fixed z-[20] flex h-full w-[280px] flex-col items-center rounded-[20px] bg-white py-7">
       <div className="w-full px-3">
         {/* Admin Avatar */}
         <div className="flex gap-2 px-3">
           <img
-            src="/assets/adim-avatar.svg"
+            src={`${profile_image}`}
             alt="avatar"
-            className="size-[40px]"
+            className="size-[40px] rounded-full"
           />
           <span>
             <h1 className="font-san text-[14px] font-semibold text-[#303031]">
-              Reginald Jacobs
+             {first_name}
             </h1>
             <p className="font-sans text-xs font-normal text-[#303031]">
               Admin
