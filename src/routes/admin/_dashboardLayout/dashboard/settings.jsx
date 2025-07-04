@@ -9,11 +9,12 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { useAdmin } from '@/context/admin-context'
 import { createFileRoute } from '@tanstack/react-router'
 import { Ban, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute(
   '/admin/_dashboardLayout/dashboard/settings',
@@ -22,6 +23,17 @@ export const Route = createFileRoute(
 })
 
 function SettingsContent() {
+  const { updatePassword, dashboard } = useAdmin()
+  const { first_name } = dashboard.admin_data
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const { register, handleSubmit, reset } = useForm()
+  const onSubmit = async data => {
+    await updatePassword(data)
+    reset()
+  }
+
   return (
     <>
       <div className="flex w-full items-center justify-between bg-gray-100 px-20 py-3 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)]">
@@ -30,7 +42,7 @@ function SettingsContent() {
             Settings
           </h1>
           <p className="font-sans text-xl font-normal text-[#848484]">
-            Welcome Back, Reginald 👋
+            Welcome Back, {first_name} 👋
           </p>
         </div>
         <img
@@ -50,17 +62,45 @@ function SettingsContent() {
                   Modify your current password.
                 </p>
               </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="mt-[40px] space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
+                  <div className="relative flex-1">
+                    <input
+                      {...register('old_password', { required: true })}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Current Password"
+                      className="'border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring disabled:opacity-50' flex h-10 w-full rounded-md border px-3 py-2 pr-10 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed"
+                    />
+                    <button
+                      className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
 
-              <div className="mt-[40px] space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
-                <PasswordInput placeholder="Current Password" />
-                <PasswordInput placeholder="New Password" />
-              </div>
-              <Button
-                variant="outline"
-                className="mt-[54px] w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow"
-              >
-                Save Password
-              </Button>
+                  <div className="relative flex-1">
+                    <input
+                      {...register('new_password', { required: true })}
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="New Password"
+                      className="'border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring disabled:opacity-50' flex h-10 w-full rounded-md border px-3 py-2 pr-10 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed"
+                    />
+                    <button
+                      className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="mt-[54px] w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow"
+                >
+                  Save Password
+                </button>
+              </form>
             </div>
             <div className="mx-[25px] my-10 border-[3px] border-[#F7F7F7]" />
 
@@ -113,7 +153,7 @@ function SettingsContent() {
                 </AlertDialogTrigger>
                 <AlertDialogContent className="max-w-md bg-white p-0 px-0">
                   <AlertDialogHeader>
-                    <div className='flex justify-between items-center'>
+                    <div className="flex items-center justify-between">
                       <AlertDialogTitle className="px-10 py-3">
                         Delete Account?
                       </AlertDialogTitle>
@@ -151,25 +191,6 @@ function SettingsContent() {
 }
 
 // Password Input Component
-function PasswordInput({ placeholder }) {
-  const [showPassword, setShowPassword] = useState(false)
-
-  return (
-    <div className="relative flex-1">
-      <Input
-        type={showPassword ? 'text' : 'password'}
-        placeholder={placeholder}
-        className="pr-10"
-      />
-      <button
-        className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
-        onClick={() => setShowPassword(!showPassword)}
-      >
-        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-      </button>
-    </div>
-  )
-}
 
 // Notification Toggle Component
 function NotificationToggle({ label, description }) {

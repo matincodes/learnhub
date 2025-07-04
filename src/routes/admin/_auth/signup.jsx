@@ -1,8 +1,6 @@
 import { adminSignUp } from '@/api/adminApiService'
 import { Button } from '@/components/ui/button'
-import { useAdmin } from '@/context/admin-context'
-// import { useAdmin } from '@/context/admin-context'
-// import { useAuth } from '@/context/auth-context'
+
 import { useToast } from '@/hooks/use-toast'
 import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
@@ -24,7 +22,6 @@ function SignUp() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { toast } = useToast()
-  const { loadDashboard } = useAdmin()
 
   const onSubmit = async data => {
     setIsLoading(true)
@@ -34,7 +31,6 @@ function SignUp() {
       const tokens = res?.data?.tokens
       saveAdminAuthData(tokens)
       reset()
-      loadDashboard()
       router.invalidate()
       router.navigate({
         to: '/admin/dashboard',
@@ -50,20 +46,7 @@ function SignUp() {
       setIsLoading(false)
     }
 
-    // if (await signUpAdmin(data)) {
-    //   reset()
-    //   router.invalidate()
-    //   router.navigate({
-    //     to: '/admin/dashboard',
-    //   })
-    // } else {
-    //   setIsLoading(false)
-    //   return toast({
-    //     variant: 'destructive',
-    //     title: 'Uh oh! Something went wrong.',
-    //     description: 'Signup failed, please try again.',
-    //   })
-    // }
+   
   }
 
   return (

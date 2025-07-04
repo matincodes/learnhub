@@ -33,3 +33,13 @@ export const adminDashboard = async () => {
   const response = await api.get('/admin/dashboard/')
   return response.data
 }
+
+export const adminUserManagement = async () => {
+  const response = await api.get('/users/')
+  return response.data
+}
+
+export const adminChangePassword = async data => {
+  const response = await api.post('/admin/settings/change-password/', data)
+  return response
+}

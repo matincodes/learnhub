@@ -17,6 +17,7 @@ import { useState } from 'react'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from 'lucide-react'
 import { RemoveUser } from '@/components/dialog/RemoveUser'
+import { useAdmin } from '@/context/admin-context'
 const data = [
   {
     id: 1,
@@ -69,6 +70,7 @@ const data = [
 const USERS_PER_PAGE = 5
 
 const ManageUsers = () => {
+  const {userManagement} = useAdmin()
   const [page, setPage] = useState(1)
 
   const totalPages = Math.ceil(data.length / USERS_PER_PAGE)

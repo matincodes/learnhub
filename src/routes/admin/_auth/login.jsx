@@ -19,7 +19,6 @@ function Login() {
   // const redirect = Route.useSearch({ select: s => s.redirect })
 
   const onSubmit = async data => {
-    console.log(data)
     setIsLoading(true)
     try {
       const res = await adminLogin(data)
@@ -35,11 +34,10 @@ function Login() {
       return toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
-        description: 'Signup failed, please try again.',
+        description: 'login failed, please try again.',
       })
     } finally {
       setIsLoading(false)
-      
     }
   }
 

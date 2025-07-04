@@ -1,20 +1,19 @@
-import { adminDashboard } from '@/api/adminApiService'
-import { createContext, useContext, useState } from 'react'
+import {
+  adminChangePassword,
+  adminDashboard,
+  adminUserManagement,
+} from '@/api/adminApiService'
+import { toast } from '@/hooks/use-toast'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const AdminContext = createContext()
 
 export const AdminProvider = ({ children }) => {
   const [dashboard, setDashboard] = useState(null)
+  const [userManagement, setUserManagement] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  // const signUpAdmin = async data => {
-  //   try {
-  //     const res = await adminSignUp(data)
-  //     console.log(res)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+
   const loadDashboard = async (force = false) => {
     if (dashboard && !force) return // ✅ Use cached data
     setLoading(true)
@@ -33,6 +32,35 @@ export const AdminProvider = ({ children }) => {
     }
   }
 
+  const loadUserManagement = async () => {
+    try {
+      const data = await adminUserManagement()
+      setUserManagement(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const updatePassword = async data => {
+    try {
+      await adminChangePassword(data)
+      toast({
+        variant: 'destructive',
+        title: 'Password updated successfully.',
+        description: 'Password updated successfully.',
+      })
+    } catch (error) {
+      return toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'password change failed, please try again.',
+      })
+    }
+  }
+  useEffect(() => {
+    loadUserManagement()
+    loadDashboard()
+  }, [])
+
   return (
     <AdminContext.Provider
       value={{
@@ -40,6 +68,9 @@ export const AdminProvider = ({ children }) => {
         loadDashboard,
         loading,
         error,
+        loadUserManagement,
+        userManagement,
+        updatePassword,
         // signUpAdmin,
       }}
     >
