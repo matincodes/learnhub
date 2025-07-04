@@ -3,22 +3,22 @@ import {
   adminChangePassword,
   adminDashboard,
   adminGetQuizzes,
-  adminUserManagement,
+  adminStudents,
 } from '@/api/adminApiService'
 import { toast } from '@/hooks/use-toast'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const AdminContext = createContext()
 
 export const AdminProvider = ({ children }) => {
   const [dashboard, setDashboard] = useState(null)
-  const [userManagement, setUserManagement] = useState(null)
-  const [quizzes, setQuizzes] = useState(null)
+  const [students, setStudents] = useState([])
+  const [quizzes, setQuizzes] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
   const loadDashboard = async (force = false) => {
-    if (dashboard && !force) return // ✅ Use cached data
+    if (dashboard && !force) return //
     setLoading(true)
     try {
       const data = await adminDashboard()
@@ -35,10 +35,10 @@ export const AdminProvider = ({ children }) => {
     }
   }
 
-  const loadUserManagement = async () => {
+  const loadStudents = async () => {
     try {
-      const data = await adminUserManagement()
-      setUserManagement(data)
+      const data = await adminStudents()
+      setStudents(data)
     } catch (error) {
       console.log(error)
     }
@@ -84,12 +84,6 @@ export const AdminProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    loadUserManagement()
-    loadDashboard()
-    loadQuizzes()
-  }, [])
-
   return (
     <AdminContext.Provider
       value={{
@@ -97,11 +91,12 @@ export const AdminProvider = ({ children }) => {
         loadDashboard,
         loading,
         error,
-        loadUserManagement,
-        userManagement,
+        loadStudents,
+        students,
         updatePassword,
         quizzes,
         addQuizzes,
+        loadQuizzes,
         // signUpAdmin,
       }}
     >

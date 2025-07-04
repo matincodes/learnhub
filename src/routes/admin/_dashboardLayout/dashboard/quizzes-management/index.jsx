@@ -1,7 +1,7 @@
 import QuizeCard from '@/components/cards/QuizeCard'
 import { useAdmin } from '@/context/admin-context'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const Route = createFileRoute(
   '/admin/_dashboardLayout/dashboard/quizzes-management/',
@@ -46,9 +46,11 @@ export const Route = createFileRoute(
 //   },
 // ]
 function RouteComponent() {
-  const { quizzes } = useAdmin()
+  const { quizzes, loadQuizzes } = useAdmin()
   const [openId, setOpenId] = useState(null)
-
+  useEffect(() => {
+    loadQuizzes()
+  }, [])
 
   return (
     <>

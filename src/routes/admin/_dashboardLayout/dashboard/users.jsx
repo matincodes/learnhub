@@ -13,71 +13,73 @@ import {
   PopoverTrigger,
 } from '@radix-ui/react-popover'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from 'lucide-react'
 import { RemoveUser } from '@/components/dialog/RemoveUser'
 import { useAdmin } from '@/context/admin-context'
-const data = [
-  {
-    id: 1,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 45,
-    courses: 9,
-  },
-  { id: 2, name: ' Divine', email: 'divine45@gmail.com', xp: 3745, courses: 9 },
-  { id: 3, name: 'new user', email: 'effiongd@gmail.com', xp: 305, courses: 9 },
-  {
-    id: 4,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 245,
-    courses: 9,
-  },
-  {
-    id: 5,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 345,
-    courses: 9,
-  },
-  {
-    id: 6,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 3145,
-    courses: 9,
-  },
-  {
-    id: 7,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 12,
-    courses: 9,
-  },
-  { id: 8, name: 'jame user', email: 'jame@gmail.com', xp: 100, courses: 9 },
-  {
-    id: 9,
-    name: 'Effiong Divine',
-    email: 'effiongdivine45@gmail.com',
-    xp: 345,
-    courses: 9,
-  },
-  { id: 10, name: 'lucy ', email: 'lucy45@gmail.com', xp: 345, courses: 9 },
-]
+
+// const data = [
+//   {
+//     id: 1,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 45,
+//     courses: 9,
+//   },
+//   { id: 2, name: ' Divine', email: 'divine45@gmail.com', xp: 3745, courses: 9 },
+//   { id: 3, name: 'new user', email: 'effiongd@gmail.com', xp: 305, courses: 9 },
+//   {
+//     id: 4,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 245,
+//     courses: 9,
+//   },
+//   {
+//     id: 5,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 345,
+//     courses: 9,
+//   },
+//   {
+//     id: 6,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 3145,
+//     courses: 9,
+//   },
+//   {
+//     id: 7,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 12,
+//     courses: 9,
+//   },
+//   { id: 8, name: 'jame user', email: 'jame@gmail.com', xp: 100, courses: 9 },
+//   {
+//     id: 9,
+//     name: 'Effiong Divine',
+//     email: 'effiongdivine45@gmail.com',
+//     xp: 345,
+//     courses: 9,
+//   },
+//   { id: 10, name: 'lucy ', email: 'lucy45@gmail.com', xp: 345, courses: 9 },
+// ]
 
 const USERS_PER_PAGE = 5
 
 const ManageUsers = () => {
-  const { userManagement } = useAdmin()
+  const { students , loadStudents } = useAdmin()
   const [page, setPage] = useState(1)
 
-  console.log(userManagement)
-
-  const totalPages = Math.ceil(data.length / USERS_PER_PAGE)
+  useEffect(() => {
+    loadStudents()
+  }, [])
+const totalPages = Math.ceil((students?.length || 0) / USERS_PER_PAGE)
   const startIndex = (page - 1) * USERS_PER_PAGE
-  const paginatedData = data.slice(startIndex, startIndex + USERS_PER_PAGE)
+const paginatedData = (students || []).slice(startIndex, startIndex + USERS_PER_PAGE)
 
   const handleNext = () => {
     if (page < totalPages) setPage(prev => prev + 1)
@@ -172,7 +174,10 @@ const ManageUsers = () => {
                           alt="icon"
                           className="size-[40px]"
                         />
-                        {item.name}
+                        <p>
+                          {' '}
+                          {item?.first_name} {item?.last_name}
+                        </p>
                       </div>
                     </TableCell>
                     <TableCell className="">{item.email}</TableCell>

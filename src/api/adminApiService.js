@@ -34,8 +34,8 @@ export const adminDashboard = async () => {
   return response.data
 }
 
-export const adminUserManagement = async () => {
-  const response = await api.get('/users/')
+export const adminStudents = async () => {
+  const response = await api.get('/admin/students/')
   return response.data
 }
 

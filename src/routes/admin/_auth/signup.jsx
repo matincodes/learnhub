@@ -1,5 +1,6 @@
 import { adminSignUp } from '@/api/adminApiService'
 import { Button } from '@/components/ui/button'
+import { useAdmin } from '@/context/admin-context'
 
 import { useToast } from '@/hooks/use-toast'
 import { saveAdminAuthData } from '@/lib/adminTokenStorage'
@@ -13,6 +14,8 @@ export const Route = createFileRoute('/admin/_auth/signup')({
 })
 
 function SignUp() {
+  const { loadDashboard } = useAdmin()
+
   const {
     register,
     handleSubmit,
@@ -35,6 +38,7 @@ function SignUp() {
       router.navigate({
         to: '/admin/dashboard',
       })
+      loadDashboard()
     } catch (error) {
       console.log(error)
       return toast({
@@ -45,8 +49,6 @@ function SignUp() {
     } finally {
       setIsLoading(false)
     }
-
-   
   }
 
   return (

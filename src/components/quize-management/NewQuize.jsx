@@ -1,5 +1,11 @@
 import DropdownSelect from '@/components/ui/dropdownselect'
 
+const Category = [
+  { key: 1, name: 'Easy' },
+  { key: 2, name: 'Medium' },
+  { key: 3, name: 'Hard' },
+]
+
 const Difficulty = [
   { key: 1, name: 'Easy' },
   { key: 2, name: 'Medium' },
@@ -32,7 +38,7 @@ function NewQuize({handleSelect , register}) {
         </label>
         <DropdownSelect
           className="w-full"
-          options={Difficulty}
+          options={Category}
           defaultLabel="All Categories"
           onSelect={handleSelect}
           labelColor="text-[#AAAAAA]"
