@@ -1,33 +1,29 @@
 import DropdownSelect from '@/components/ui/dropdownselect'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-const DROPDOWNCONTENT = [
-  { key: 1, name: 'Front-end Development' },
-  { key: 2, name: 'Back-end Development' },
-  { key: 3, name: 'Programming/Coding' },
-  { key: 4, name: 'Foundational Skills' },
-  { key: 5, name: 'Digital Skills' },
+
+const Difficulty = [
+  { key: 1, name: 'Easy' },
+  { key: 2, name: 'Medium' },
+  { key: 3, name: 'Hard' },
 ]
 
-function NewQuize() {
-  const handleSelect = item => {
-    console.log('Selected category:', item.name)
-  }
+function NewQuize({handleSelect , register}) {
+ 
   return (
-    <form className="h-full w-[550px] space-y-[50px]">
+    <div className="h-full w-[550px] space-y-[50px]">
       <div className="flex w-full flex-col gap-[10px]">
         <label htmlFor="Course title" className="text-[16px] font-[400]">
           Quiz title
         </label>
-        <Input className="" placeHolder="Enter Title" />
+        <input     {...register('title', { required: true })} className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" placeholder="Enter Title" />
       </div>
       <div className="flex w-full flex-col gap-[10px]">
         <label htmlFor="Description" className="text-[16px] font-[400]">
           Description
         </label>
-        <Textarea
-          className="h-[159px] outline-none focus:border-none focus:outline-none"
-          placeHolder="Enter description"
+        <textarea
+         {...register('description', { required: true })}
+          className="h-[159px] border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex  w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          placeholder="Enter description"
         />
       </div>
       <div className="flex w-full flex-col gap-[10px]">
@@ -36,7 +32,7 @@ function NewQuize() {
         </label>
         <DropdownSelect
           className="w-full"
-          options={DROPDOWNCONTENT}
+          options={Difficulty}
           defaultLabel="All Categories"
           onSelect={handleSelect}
           labelColor="text-[#AAAAAA]"
@@ -63,7 +59,7 @@ function NewQuize() {
             </p>
             <DropdownSelect
               className="w-full"
-              options={DROPDOWNCONTENT}
+              options={Difficulty}
               defaultLabel="Select Passing Score"
               onSelect={handleSelect}
               labelColor="text-[#AAAAAA]"
@@ -77,13 +73,13 @@ function NewQuize() {
         </label>
         <DropdownSelect
           className="w-full"
-          options={DROPDOWNCONTENT}
+          options={Difficulty}
           defaultLabel="Select Difficulty"
           onSelect={handleSelect}
           labelColor="text-[#AAAAAA]"
         />
       </div>
-    </form>
+    </div>
   )
 }
 

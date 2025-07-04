@@ -43,3 +43,13 @@ export const adminChangePassword = async data => {
   const response = await api.post('/admin/settings/change-password/', data)
   return response
 }
+
+export const adminGetQuizzes = async () => {
+  const response = await api.get('/admin/quizzes/')
+  return response
+}
+
+export const adminAddQuizzes = async () => {
+  const response = await api.post('/admin/quiz/create/')
+  return response
+}

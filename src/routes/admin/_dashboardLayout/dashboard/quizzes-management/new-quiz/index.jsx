@@ -2,6 +2,7 @@ import NewQuize from '@/components/quize-management/NewQuize'
 import QuizeThumbnail from '@/components/quize-management/QuizeThumbnail'
 import { Link, useRouter } from '@tanstack/react-router'
 import { createFileRoute } from '@tanstack/react-router'
+import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute(
   '/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/',
@@ -15,12 +16,23 @@ function RouteComponent() {
   const handleBack = () => {
     router.history.go(-1)
   }
+  const { register, handleSubmit, reset } = useForm()
+
+  const handleSelect = item => {
+    console.log('Selected category:', item.name)
+  }
+
+  const onSubmit = async data => {
+    console.log(data)
+    reset()
+  }
+
   return (
     <>
       <section className="flex w-full items-center justify-between bg-gray-100 px-20 py-3 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)]">
         <button className="flex items-center gap-3 font-san text-[32px] font-semibold text-[#303031] outline-0">
           <img
-          onClick={handleBack}
+            onClick={handleBack}
             src="\assets\quiz\arrow-left.svg"
             alt="icon"
             className="size-5"
@@ -29,10 +41,13 @@ function RouteComponent() {
         </button>
       </section>
       <div className="mt-[120px] px-16">
-        <section className="mt-[59px] rounded-[10px] bg-white px-[10px] py-[26px]">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-[59px] rounded-[10px] bg-white px-[10px] py-[26px]"
+        >
           <div className="flex items-start gap-[50px]">
             <QuizeThumbnail />
-            <NewQuize />
+            <NewQuize register={register} handleSelect={handleSelect} />
           </div>
 
           {/* button */}
@@ -50,7 +65,7 @@ function RouteComponent() {
               Next
             </Link>
           </div>
-        </section>
+        </form>
       </div>
     </>
   )

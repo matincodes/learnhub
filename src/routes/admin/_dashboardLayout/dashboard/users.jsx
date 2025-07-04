@@ -70,8 +70,10 @@ const data = [
 const USERS_PER_PAGE = 5
 
 const ManageUsers = () => {
-  const {userManagement} = useAdmin()
+  const { userManagement } = useAdmin()
   const [page, setPage] = useState(1)
+
+  console.log(userManagement)
 
   const totalPages = Math.ceil(data.length / USERS_PER_PAGE)
   const startIndex = (page - 1) * USERS_PER_PAGE

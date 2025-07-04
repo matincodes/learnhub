@@ -1,6 +1,8 @@
 import {
+  adminAddQuizzes,
   adminChangePassword,
   adminDashboard,
+  adminGetQuizzes,
   adminUserManagement,
 } from '@/api/adminApiService'
 import { toast } from '@/hooks/use-toast'
@@ -11,6 +13,7 @@ const AdminContext = createContext()
 export const AdminProvider = ({ children }) => {
   const [dashboard, setDashboard] = useState(null)
   const [userManagement, setUserManagement] = useState(null)
+  const [quizzes, setQuizzes] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -40,6 +43,8 @@ export const AdminProvider = ({ children }) => {
       console.log(error)
     }
   }
+  // change password
+
   const updatePassword = async data => {
     try {
       await adminChangePassword(data)
@@ -56,9 +61,33 @@ export const AdminProvider = ({ children }) => {
       })
     }
   }
+
+  // get all quizzes
+
+  const loadQuizzes = async () => {
+    try {
+      const data = await adminGetQuizzes()
+      setQuizzes(data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // add quizzes
+
+  const addQuizzes = async () => {
+    try {
+      const data = await adminAddQuizzes()
+      return data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     loadUserManagement()
     loadDashboard()
+    loadQuizzes()
   }, [])
 
   return (
@@ -71,6 +100,8 @@ export const AdminProvider = ({ children }) => {
         loadUserManagement,
         userManagement,
         updatePassword,
+        quizzes,
+        addQuizzes,
         // signUpAdmin,
       }}
     >
