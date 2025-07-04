@@ -27,7 +27,7 @@ function SignUp() {
       toast({
         variant: 'destructive',
         title: 'Password mismatch',
-        description: 'Please make sure your passwords match.',
+        description: 'Please make sure your password match.',
       })
       setIsLoading(false)
       return
