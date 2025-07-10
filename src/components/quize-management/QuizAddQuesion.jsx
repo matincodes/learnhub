@@ -1,26 +1,34 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '../ui/switch'
 import { Link, useRouter } from '@tanstack/react-router'
-
-const option = ['option 1', 'option 2', 'option 3', 'option 4']
+import { useAdmin } from '@/context/admin-context'
 
 function QuizAddQuesion() {
+  const { dispatch } = useAdmin()
   const [sections, setSections] = useState([
     {
       id: Date.now(),
       title: 'Section 1',
       name: '',
+      mark: 0,
       attachment: null,
       showAttachmentUI: false,
+      choices: [
+        { text: 'Option 1', is_correct: false },
+        { text: 'Option 2', is_correct: false },
+        { text: 'Option 3', is_correct: false },
+        { text: 'Option 4', is_correct: false },
+      ],
     },
   ])
 
   const [openSectionId, setOpenSectionId] = useState(null)
   const fileInputRefs = useRef({})
+  const router = useRouter()
 
   const toggleSection = id => {
     setOpenSectionId(openSectionId === id ? null : id)
@@ -30,7 +38,24 @@ function QuizAddQuesion() {
     const { name, value } = e.target
     setSections(prev =>
       prev.map(section =>
-        section.id === id ? { ...section, [name]: value } : section,
+        section.id === id
+          ? { ...section, [name]: name === 'mark' ? Number(value) : value }
+          : section,
+      ),
+    )
+  }
+
+  const handleChoiceChange = (sectionId, index, key, value) => {
+    setSections(prev =>
+      prev.map(section =>
+        section.id === sectionId
+          ? {
+              ...section,
+              choices: section.choices.map((choice, i) =>
+                i === index ? { ...choice, [key]: value } : choice,
+              ),
+            }
+          : section,
       ),
     )
   }
@@ -43,11 +68,23 @@ function QuizAddQuesion() {
         id: newId,
         title: `Section ${prev.length + 1}`,
         name: '',
+        mark: 0,
         attachment: null,
         showAttachmentUI: false,
+        choices: [
+          { text: 'Option 1', is_correct: false },
+          { text: 'Option 2', is_correct: false },
+          { text: 'Option 3', is_correct: false },
+          { text: 'Option 4', is_correct: false },
+        ],
       },
     ])
     setOpenSectionId(newId)
+  }
+
+  const handleDeleteSection = id => {
+    setSections(prev => prev.filter(section => section.id !== id))
+    if (openSectionId === id) setOpenSectionId(null)
   }
 
   const toggleAttachmentUI = sectionId => {
@@ -78,21 +115,27 @@ function QuizAddQuesion() {
     )
   }
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    console.log('Submitting all data:', sections)
-    // Upload `sections` to your backend
-  }
-  const router = useRouter()
+  useEffect(() => {
+    if (sections.length) {
+      const formatted = sections.map(sec => ({
+        title: sec.name,
+        mark: sec.mark,
+        thurmnail: sec.attachment ? URL.createObjectURL(sec.attachment) : '',
+        choices: sec.choices,
+      }))
+
+      const questionData = { questions: formatted }
+      dispatch({ type: 'QUIZE_QUESTION', payload: questionData })
+    }
+  }, [sections])
+
 
   const handleBack = () => {
     router.history.go(-1)
   }
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full space-y-6 overflow-auto rounded-[10px] bg-white px-4 py-4"
-    >
+    <div className="w-full space-y-6 overflow-auto rounded-[10px] bg-white px-4 py-4">
       {sections.map(section => (
         <div
           key={section.id}
@@ -115,27 +158,57 @@ function QuizAddQuesion() {
               <div className="w-[50%] space-y-2">
                 <Input
                   name="name"
-                  className="w-full text-[16px] font-[400] placeholder:text-[#AAAAAA]"
+                  className="w-full"
                   placeholder="Question"
                   value={section.name}
                   onChange={e => handleChange(section.id, e)}
                 />
+                <Input
+                  type="number"
+                  name="mark"
+                  className="w-full"
+                  placeholder="Mark"
+                  value={section.mark}
+                  onChange={e => handleChange(section.id, e)}
+                />
                 <div className="flex flex-col justify-between">
-                  {option.map((item, index) => (
+                  {section.choices.map((choice, index) => (
                     <div
                       key={index}
                       className="mb-10 mt-[30px] flex items-center justify-between"
                     >
-                      <span className="flex items-center gap-2 font-san text-base font-normal text-[#AAAAAA]">
+                      <span className="flex items-center gap-2">
                         <img
                           src="/assets/quiz/radio.svg"
                           alt="icon"
                           className="size-6"
                         />
-                        {item}
+                        <Input
+                          type="text"
+                          value={choice.text}
+                          onChange={e =>
+                            handleChoiceChange(
+                              section.id,
+                              index,
+                              'text',
+                              e.target.value,
+                            )
+                          }
+                          className="w-60"
+                        />
                       </span>
-
-                      <Switch className="h-[20px] w-[35px] data-[state=checked]:bg-[#F7AE30] data-[state=unchecked]:bg-[#808080]" />
+                      <Switch
+                        checked={choice.is_correct}
+                        onCheckedChange={val =>
+                          handleChoiceChange(
+                            section.id,
+                            index,
+                            'is_correct',
+                            val,
+                          )
+                        }
+                        className="h-[20px] w-[35px] data-[state=checked]:bg-[#F7AE30] data-[state=unchecked]:bg-[#808080]"
+                      />
                     </div>
                   ))}
                   <div className="flex items-start gap-3">
@@ -146,14 +219,21 @@ function QuizAddQuesion() {
                     />
                     <p className="text-[15px] font-normal text-[#848484]">
                       Use the toggle at the side of each option to select if
-                      it’s the <br /> right option to the question given.
+                      it’s the right option to the question given.
                     </p>
                   </div>
                 </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handleDeleteSection(section.id)}
+                  className="text-red-500"
+                >
+                  Delete Section
+                </Button>
               </div>
 
               <div className="flex flex-col items-start">
-                {/* Show "Add attachment" only if no file is uploaded */}
                 {!section.attachment && (
                   <Button
                     type="button"
@@ -194,7 +274,6 @@ function QuizAddQuesion() {
                   </div>
                 )}
 
-                {/* Show image preview and delete option */}
                 {section.attachment && (
                   <div className="mt-6 w-full">
                     <img
@@ -233,7 +312,7 @@ function QuizAddQuesion() {
           <span className="text-[#F7AE30]">Add new section</span>
         </Button>
       </div>
-      {/* button */}
+
       <div className="mt-10 flex items-center justify-between rounded-[8px] bg-white font-san text-sm font-medium">
         <button
           onClick={handleBack}
@@ -242,13 +321,13 @@ function QuizAddQuesion() {
           Go back
         </button>
         <Link
-          to="/admin/dashboard/quizzes-management/preview"
+          to="/admin/dashboard/quizzes-management/preview/"
           className="rounded-[10px] bg-[#F7AE30] px-8 py-2 text-white"
         >
           Next
         </Link>
       </div>
-    </form>
+    </div>
   )
 }
 

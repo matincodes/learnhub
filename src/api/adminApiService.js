@@ -49,7 +49,7 @@ export const adminGetQuizzes = async () => {
   return response
 }
 
-export const adminAddQuizzes = async () => {
-  const response = await api.post('/admin/quiz/create/')
+export const adminAddQuizzes = async dataObj => {
+  const response = await api.post('/admin/quiz/create/', dataObj)
   return response
 }

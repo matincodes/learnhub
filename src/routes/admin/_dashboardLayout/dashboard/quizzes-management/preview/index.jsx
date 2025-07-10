@@ -1,4 +1,5 @@
 import UploadQuize from '@/components/quize-management/UploadQuize'
+import { useAdmin } from '@/context/admin-context'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -8,15 +9,8 @@ export const Route = createFileRoute(
   component: RouteComponent,
 })
 
-const data = [
-  '10 questions',
-  'Click “Next” to proceed, “Submit” when finished',
-  'Ranking based on cumulative score and time taken',
-  'Take fresh quizzes to improve ranking',
-  'Click Take Challenge to begin.',
-]
-
 function RouteComponent() {
+  const { addQuizzes, state } = useAdmin()
   const [showLoadingCourse, setShowLoadingCourse] = useState(false)
   const router = useRouter()
 
@@ -24,6 +18,39 @@ function RouteComponent() {
     router.history.go(-1)
   }
 
+  const {
+    quize_category,
+    quize_title,
+    quize_description,
+    quize_time_limit,
+    quize_passingCriteria,
+    quize_questions,
+  } = state
+
+  const dataObj = {
+    category: quize_category,
+    title: quize_title,
+    description: quize_description,
+    time_limit: quize_time_limit,
+    passing_criteria: quize_passingCriteria,
+    questions: quize_questions,
+    due_date: '2025-07-09 09:00:54',
+  }
+  console.log(dataObj)
+  const handleSubmit = async () => {
+    const result = await addQuizzes(dataObj)
+    console.log(result)
+    setShowLoadingCourse(true)
+  }
+  const numberOfQuestion = quize_questions?.questions.length
+
+  const data = [
+    `${numberOfQuestion} questions`,
+    'Click “Next” to proceed, “Submit” when finished',
+    'Ranking based on cumulative score and time taken',
+    'Take fresh quizzes to improve ranking',
+    'Click Take Challenge to begin.',
+  ]
   return (
     <>
       <section className="flex w-full items-center justify-between bg-gray-100 px-20 py-3 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)]">
@@ -41,7 +68,7 @@ function RouteComponent() {
           openCourseLoading={showLoadingCourse}
         />
         <button
-          onClick={() => setShowLoadingCourse(true)}
+          onClick={handleSubmit}
           className="rounded-[10px] bg-[#F7AE30] px-[11px] py-[7px] font-san text-base text-white"
         >
           Upload Quiz
@@ -56,11 +83,10 @@ function RouteComponent() {
           />
           <div className="px-5">
             <h1 className="mt-[42px] font-san text-[32px] font-semibold text-[#101828]">
-              Test Your Coding Skills!
+              {quize_title}
             </h1>
             <p className="mt-[26px] font-san text-[20px] font-normal text-[#303031]">
-              This quiz covers JavaScript fundamentals, advanced concepts, and
-              best practices for building dynamic web applications.{' '}
+              {quize_description}
             </p>
             <ul className="mt-[85px] space-y-6">
               {data.map((item, index) => (
