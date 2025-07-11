@@ -1,4 +1,5 @@
 import QuizeCard from '@/components/cards/QuizeCard'
+import Spinner from '@/components/spinner/Spinner'
 import { useAdmin } from '@/context/admin-context'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
@@ -8,50 +9,23 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
 })
-// const quizData = [
-//   {
-//     id: 1,
-//     url: '/assets/quiz/image-1.svg',
-//     title: 'Test your coding skills',
-//     noOfQuesion: 10,
-//     limit: 3,
-//   },
-//   {
-//     id: 2,
-//     url: '/assets/quiz/image-2.svg',
-//     title: 'Strenghten your UI/UX Game',
-//     noOfQuesion: 10,
-//     limit: 5,
-//   },
-//   {
-//     id: 3,
-//     url: '/assets/quiz/image-1.svg',
-//     title: 'Test your coding skills',
-//     noOfQuesion: 10,
-//     limit: 5,
-//   },
-//   {
-//     id: 4,
-//     url: '/assets/quiz/image-3.svg',
-//     title: 'Strenghten your UI/UX Game',
-//     noOfQuesion: 34,
-//     limit: 5,
-//   },
-//   {
-//     id: 5,
-//     url: '/assets/quiz/image-3.svg',
-//     title: 'Test your coding skills',
-//     noOfQuesion: 10,
-//     limit: 8,
-//   },
-// ]
+
 function RouteComponent() {
-  const { quizzes, loadQuizzes } = useAdmin()
+  const { quizzes, isLoadingQuize, loadQuizzes } = useAdmin()
   const [openId, setOpenId] = useState(null)
   useEffect(() => {
-    loadQuizzes()
-  }, [])
+    if (!quizzes || quizzes.length === 0) {
+      loadQuizzes()
+    }
+  }, [loadQuizzes, quizzes])
 
+  if (isLoadingQuize) {
+    return (
+      <div className="flex h-[calc(100vh-120px)] items-center justify-center">
+        <Spinner />
+      </div>
+    )
+  }
   return (
     <>
       {/* header */}

@@ -8,23 +8,40 @@ import { Link, useRouter } from '@tanstack/react-router'
 import { useAdmin } from '@/context/admin-context'
 
 function QuizAddQuesion() {
-  const { dispatch } = useAdmin()
-  const [sections, setSections] = useState([
-    {
-      id: Date.now(),
-      title: 'Section 1',
-      name: '',
-      mark: 0,
-      attachment: null,
-      showAttachmentUI: false,
-      choices: [
-        { text: 'Option 1', is_correct: false },
-        { text: 'Option 2', is_correct: false },
-        { text: 'Option 3', is_correct: false },
-        { text: 'Option 4', is_correct: false },
-      ],
-    },
-  ])
+  const { state, dispatch } = useAdmin()
+  const { quize_questions } = state
+
+  const [sections, setSections] = useState(() => {
+    if (quize_questions?.questions?.length) {
+      return quize_questions.questions.map((q, i) => ({
+        id: Date.now() + i,
+        title: `Section ${i + 1}`,
+        name: q.title,
+        mark: q.mark,
+        attachment: q.thurmnail
+          ? { preview: q.thurmnail } // restore base64 from context
+          : null,
+        showAttachmentUI: false,
+        choices: q.choices || [],
+      }))
+    }
+    return [
+      {
+        id: Date.now(),
+        title: 'Section 1',
+        name: '',
+        mark: 0,
+        attachment: null,
+        showAttachmentUI: false,
+        choices: [
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
+        ],
+      },
+    ]
+  })
 
   const [openSectionId, setOpenSectionId] = useState(null)
   const fileInputRefs = useRef({})
@@ -72,10 +89,10 @@ function QuizAddQuesion() {
         attachment: null,
         showAttachmentUI: false,
         choices: [
-          { text: 'Option 1', is_correct: false },
-          { text: 'Option 2', is_correct: false },
-          { text: 'Option 3', is_correct: false },
-          { text: 'Option 4', is_correct: false },
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
+          { text: '', is_correct: false },
         ],
       },
     ])
@@ -98,13 +115,29 @@ function QuizAddQuesion() {
   }
 
   const handleFileChange = (sectionId, file) => {
-    setSections(prev =>
-      prev.map(section =>
-        section.id === sectionId
-          ? { ...section, attachment: file, showAttachmentUI: false }
-          : section,
-      ),
-    )
+    const reader = new FileReader()
+
+    reader.onloadend = () => {
+      const base64String = reader.result
+
+      setSections(prev =>
+        prev.map(section =>
+          section.id === sectionId
+            ? {
+                ...section,
+                attachment: {
+                  preview: base64String, 
+                },
+                showAttachmentUI: false,
+              }
+            : section,
+        ),
+      )
+    }
+
+    if (file) {
+      reader.readAsDataURL(file) 
+    }
   }
 
   const removeFile = sectionId => {
@@ -116,19 +149,14 @@ function QuizAddQuesion() {
   }
 
   useEffect(() => {
-    if (sections.length) {
-      const formatted = sections.map(sec => ({
-        title: sec.name,
-        mark: sec.mark,
-        thurmnail: sec.attachment ? URL.createObjectURL(sec.attachment) : '',
-        choices: sec.choices,
-      }))
-
-      const questionData = { questions: formatted }
-      dispatch({ type: 'QUIZE_QUESTION', payload: questionData })
-    }
+    const formatted = sections.map(sec => ({
+      title: sec.name,
+      mark: sec.mark,
+      thurmnail: sec.attachment?.preview ?? '',
+      choices: sec.choices,
+    }))
+    dispatch({ type: 'QUIZE_QUESTION', payload: { questions: formatted } })
   }, [sections])
-
 
   const handleBack = () => {
     router.history.go(-1)
@@ -163,21 +191,24 @@ function QuizAddQuesion() {
                   value={section.name}
                   onChange={e => handleChange(section.id, e)}
                 />
-                <Input
+
+                {/* input field for mark */}
+
+                {/* <Input
                   type="number"
                   name="mark"
                   className="w-full"
                   placeholder="Mark"
                   value={section.mark}
                   onChange={e => handleChange(section.id, e)}
-                />
+                /> */}
                 <div className="flex flex-col justify-between">
                   {section.choices.map((choice, index) => (
                     <div
                       key={index}
-                      className="mb-10 mt-[30px] flex items-center justify-between"
+                      className="mb-10 mt-[30px] flex items-center justify-between gap-5"
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex w-full items-center gap-2 rounded-[8px] border-[1px] border-dotted border-[#3333331A] px-2">
                         <img
                           src="/assets/quiz/radio.svg"
                           alt="icon"
@@ -186,6 +217,7 @@ function QuizAddQuesion() {
                         <Input
                           type="text"
                           value={choice.text}
+                          placeHolder={`Option ${index + 1}`}
                           onChange={e =>
                             handleChoiceChange(
                               section.id,
@@ -194,7 +226,7 @@ function QuizAddQuesion() {
                               e.target.value,
                             )
                           }
-                          className="w-60"
+                          className="w-full border-none font-san text-base text-[#303031]"
                         />
                       </span>
                       <Switch
@@ -223,14 +255,17 @@ function QuizAddQuesion() {
                     </p>
                   </div>
                 </div>
-                <Button
+
+                {/* delete section button */}
+
+                {/* <Button
                   type="button"
                   variant="outline"
                   onClick={() => handleDeleteSection(section.id)}
                   className="text-red-500"
                 >
                   Delete Section
-                </Button>
+                </Button> */}
               </div>
 
               <div className="flex flex-col items-start">
@@ -277,7 +312,7 @@ function QuizAddQuesion() {
                 {section.attachment && (
                   <div className="mt-6 w-full">
                     <img
-                      src={URL.createObjectURL(section.attachment)}
+                      src={section.attachment?.preview}
                       alt="Preview"
                       className="h-[350px] w-full rounded-[10px] object-cover"
                     />

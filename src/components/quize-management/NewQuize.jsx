@@ -22,13 +22,9 @@ const passingCriteria = [
 function NewQuize({ handleSelect }) {
   const { dispatch, state } = useAdmin()
   // console.log(selectedCategory)
-  const {
-    quize_category,
-    quize_title,
-    quize_description,
-    quize_time_limit,
-  } = state
-  console.log(quize_title)
+  const { quize_category, quize_title, quize_description, quize_time_limit , quize_passingCriteria} =
+    state
+  console.log(quize_category)
 
   return (
     <div className="h-full w-[550px] space-y-[50px]">
@@ -66,9 +62,9 @@ function NewQuize({ handleSelect }) {
           className="w-full"
           options={Category}
           value={quize_category}
-          defaultLabel="All Categories"
-          onSelect={e =>
-            dispatch({ type: 'QUIZE_CATEGORY', payload: e.target.value })
+          defaultLabel={`${quize_category ? quize_category : "All Categories"}`}
+          onSelect={
+            value => dispatch({ type: 'QUIZE_CATEGORY', payload: value.name }) 
           }
           labelColor="text-[#AAAAAA]"
         />
@@ -102,14 +98,16 @@ function NewQuize({ handleSelect }) {
             <p className="mt-6 font-san text-base font-normal text-black">
               Passing Criteria
             </p>
+
             <DropdownSelect
               className="w-full"
               options={passingCriteria}
-              defaultLabel="Select Passing Score"
-              onSelect={e =>
+              value={quize_passingCriteria}
+              defaultLabel={`${quize_passingCriteria ? quize_passingCriteria : "Select Passing Score"}`}
+              onSelect={value =>
                 dispatch({
                   type: 'QUIZE_PASSING_CRITERIA',
-                  payload: e.target.value,
+                  payload: value.name,
                 })
               }
               labelColor="text-[#AAAAAA]"

@@ -1,12 +1,17 @@
 import {
-  adminAddQuizzes,
   adminChangePassword,
   adminDashboard,
   adminGetQuizzes,
   adminStudents,
 } from '@/api/adminApiService'
 import { toast } from '@/hooks/use-toast'
-import { createContext, useContext, useReducer, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useReducer,
+  useState,
+} from 'react'
 
 // Initial state
 const initialState = {
@@ -14,8 +19,9 @@ const initialState = {
   quize_title: '',
   quize_description: '',
   quize_time_limit: '',
-  quize_passingCriteria:null,
-  quize_questions:[],
+  quize_passingCriteria: null,
+  quize_thumbnail: '',
+  quize_questions: [],
 }
 
 // Reducer function
@@ -29,10 +35,12 @@ function reducer(state, action) {
       return { ...state, quize_description: action.payload }
     case 'QUIZE_TIME_LIMIT':
       return { ...state, quize_time_limit: action.payload }
-          case 'QUIZE_PASSING_CRITERIA':
+    case 'QUIZE_PASSING_CRITERIA':
       return { ...state, quize_passingCriteria: action.payload }
-           case 'QUIZE_QUESTION':
+    case 'QUIZE_QUESTION':
       return { ...state, quize_questions: action.payload }
+    case 'QUIZE_THUMNAIL':
+      return { ...state, quize_thumbnail: action.payload }
     default:
       return state
   }
@@ -46,7 +54,9 @@ export const AdminProvider = ({ children }) => {
 
   const [dashboard, setDashboard] = useState(null)
   const [students, setStudents] = useState([])
+  const [isLoadingStudents, setIsLoadingStudents] = useState(false)
   const [quizzes, setQuizzes] = useState([])
+  const [isLoadingQuize, setIsLoadingQuize] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -68,14 +78,17 @@ export const AdminProvider = ({ children }) => {
     }
   }
 
-  const loadStudents = async () => {
+  const loadStudents = useCallback(async () => {
+    setIsLoadingStudents(true)
     try {
       const data = await adminStudents()
       setStudents(data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoadingStudents(false)
     }
-  }
+  }, [])
   // change password
 
   const updatePassword = async data => {
@@ -97,26 +110,39 @@ export const AdminProvider = ({ children }) => {
 
   // get all quizzes
 
-  const loadQuizzes = async () => {
+  const loadQuizzes = useCallback(async () => {
     try {
+      setIsLoadingQuize(true)
+
       const data = await adminGetQuizzes()
       setQuizzes(data.data)
     } catch (error) {
-      console.log(error)
+      return toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Failed to retrieve quizzes',
+      })
+    } finally {
+      setIsLoadingQuize(false)
     }
-  }
+  }, [])
 
   // add quizzes
 
-  const addQuizzes = async dataObj => {
-    try {
-      const data = await adminAddQuizzes(dataObj)
-      console.log(data)
-      return data
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const addQuizzes = async dataObj => {
+  //   try {
+  //     const data = await adminAddQuizzes(dataObj)
+  //     console.log(data)
+  //     return data
+  //   } catch (error) {
+  //     console.log(error)
+  //     return toast({
+  //       variant: 'destructive',
+  //       title: 'Uh oh! Something went wrong.',
+  //       description: 'Cannot add quize at this moment.',
+  //     })
+  //   }
+  // }
 
   return (
     <AdminContext.Provider
@@ -129,10 +155,11 @@ export const AdminProvider = ({ children }) => {
         students,
         updatePassword,
         quizzes,
-        addQuizzes,
         loadQuizzes,
         state,
         dispatch,
+        isLoadingQuize,
+        isLoadingStudents
         // signUpAdmin,
       }}
     >

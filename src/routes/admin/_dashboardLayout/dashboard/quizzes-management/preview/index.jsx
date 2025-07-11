@@ -1,5 +1,7 @@
+import { adminAddQuizzes } from '@/api/adminApiService'
 import UploadQuize from '@/components/quize-management/UploadQuize'
 import { useAdmin } from '@/context/admin-context'
+import { toast } from '@/hooks/use-toast'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -10,8 +12,10 @@ export const Route = createFileRoute(
 })
 
 function RouteComponent() {
-  const { addQuizzes, state } = useAdmin()
+  const { state } = useAdmin()
   const [showLoadingCourse, setShowLoadingCourse] = useState(false)
+  const [progress, setProgress] = useState(0)
+
   const router = useRouter()
 
   const handleBack = () => {
@@ -33,16 +37,54 @@ function RouteComponent() {
     description: quize_description,
     time_limit: quize_time_limit,
     passing_criteria: quize_passingCriteria,
-    questions: quize_questions,
+    questions: quize_questions.questions,
     due_date: '2025-07-09 09:00:54',
   }
+
   console.log(dataObj)
   const handleSubmit = async () => {
-    const result = await addQuizzes(dataObj)
-    console.log(result)
-    setShowLoadingCourse(true)
+    try {
+      setShowLoadingCourse(true)
+      setProgress(0)
+
+      await adminAddQuizzes(dataObj, progressEvent => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / (progressEvent.total || 1),
+        )
+
+        if (percentCompleted < 95) {
+          setProgress(percentCompleted)
+        }
+      })
+
+      // If successful, finish the progress bar
+      setProgress(100)
+
+      toast({
+        variant: 'default',
+        title: 'Quiz uploaded successfully',
+      })
+    } catch (error) {
+      console.error(error)
+      setProgress(0)
+
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'Cannot add quize.',
+      })
+    } finally {
+      setTimeout(() => {
+        setShowLoadingCourse(false)
+        setProgress(0)
+      }, 2000)
+    }
   }
-  const numberOfQuestion = quize_questions?.questions.length
+
+  const numberOfQuestion =
+    quize_questions.length === 0
+      ? quize_questions.length
+      : quize_questions?.questions.length
 
   const data = [
     `${numberOfQuestion} questions`,
@@ -66,7 +108,9 @@ function RouteComponent() {
         <UploadQuize
           onOpen={setShowLoadingCourse}
           openCourseLoading={showLoadingCourse}
+          progress={progress}
         />
+
         <button
           onClick={handleSubmit}
           className="rounded-[10px] bg-[#F7AE30] px-[11px] py-[7px] font-san text-base text-white"

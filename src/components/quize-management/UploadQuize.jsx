@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -10,23 +9,8 @@ import {
 } from '@/components/ui/dialog'
 import * as Progress from '@radix-ui/react-progress'
 
-function UploadQuize({ openCourseLoading, onOpen }) {
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 50) {
-          clearInterval(interval)
-          return 50
-        }
-        return prev + 1
-      })
-    }, 100)
-
-    return () => clearInterval(interval)
-  }, [])
-
+// UploadQuize.jsx or .tsx
+function UploadQuize({ openCourseLoading, onOpen, progress }) {
   return (
     <Dialog open={openCourseLoading}>
       <DialogContent className="w-[396px] bg-white">
@@ -36,7 +20,7 @@ function UploadQuize({ openCourseLoading, onOpen }) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="">
+        <div>
           <img
             src="/assets/coursesImages/imgaeuploading.svg"
             alt="preview image uploading"
@@ -55,7 +39,7 @@ function UploadQuize({ openCourseLoading, onOpen }) {
               value={progress}
             >
               <Progress.Indicator
-                className="h-full bg-[#F7AE30] transition-transform duration-500 ease-in-out"
+                className="h-full bg-[#F7AE30] transition-transform duration-700 ease-in-out"
                 style={{ transform: `translateX(-${100 - progress}%)` }}
               />
             </Progress.Root>
@@ -68,9 +52,7 @@ function UploadQuize({ openCourseLoading, onOpen }) {
         <DialogFooter className="w-full sm:justify-start">
           <DialogClose
             className="w-full"
-            onClick={() => {
-              onOpen(false)
-            }}
+            onClick={() => onOpen(false)}
           >
             <Button
               type="button"
@@ -88,3 +70,4 @@ function UploadQuize({ openCourseLoading, onOpen }) {
 }
 
 export default UploadQuize
+

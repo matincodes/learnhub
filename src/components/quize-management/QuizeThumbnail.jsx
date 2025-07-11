@@ -1,21 +1,13 @@
-
-
-
-
 'use client'
 import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useAdmin } from '@/context/admin-context'
 
 function QuizeThumbnail() {
+  const { dispatch, state } = useAdmin()
   const fileInputRef = useRef(null)
-  const [selectedFile, setSelectedFile] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
-
-  const handleFileChange = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0])
-    }
-  }
+  const { quize_thumbnail } = state
 
   const handleUploadClick = e => {
     e.stopPropagation()
@@ -26,7 +18,13 @@ function QuizeThumbnail() {
     e.preventDefault()
     setIsDragging(false)
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setSelectedFile(e.dataTransfer.files[0])
+      const droppedFile = e.dataTransfer.files[0]
+      dispatch({
+        type: 'QUIZE_THUMNAIL',
+        payload: droppedFile,
+      })
+      // Optionally clear dragged files
+      e.dataTransfer.clearData()
     }
   }
 
@@ -43,7 +41,7 @@ function QuizeThumbnail() {
     <div className="w-[356px] rounded-[10px]">
       <h1 className="text-[16px] font-[400]">Quiz Thumbnail</h1>
       <div
-        className={`dotted flex h-[332px] mt-5 w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed ${
+        className={`dotted mt-5 flex h-[332px] w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed ${
           isDragging ? 'border-yellow-400 bg-yellow-50' : 'border-[#3333331A]'
         } p-4 transition-colors`}
         onClick={handleUploadClick}
@@ -69,14 +67,19 @@ function QuizeThumbnail() {
         <input
           type="file"
           ref={fileInputRef}
-          onChange={handleFileChange}
+          onChange={e =>
+            dispatch({
+              type: 'QUIZE_THUMNAIL',
+              payload: e.target.files[0],
+            })
+          }
           className="hidden"
           accept="image/*"
         />
 
-        {selectedFile && (
+        {quize_thumbnail && (
           <p className="mt-3 text-sm text-gray-700">
-            Selected: {selectedFile.name}
+            Selected: {quize_thumbnail.name}
           </p>
         )}
       </div>
