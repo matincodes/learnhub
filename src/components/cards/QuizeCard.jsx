@@ -19,7 +19,7 @@ const QuizeCard = ({ e, openId, setOpenId }) => {
           alt="icon"
           className="size-6 cursor-pointer"
         />
-        {openId === id && <QuizePopper />}
+        {openId === id && <QuizePopper id={id} />}
       </div>
       <div className="relative mt-[10px]">
         <h2 className="font-san text-base font-semibold leading-[19px]">

@@ -38,6 +38,10 @@ export const adminStudents = async () => {
   const response = await api.get('/admin/students/')
   return response.data
 }
+export const adminRemoveStudents = async id => {
+  const response = await api.delete(`/admin/student/delete/${id}/`)
+  return response.data
+}
 
 export const adminChangePassword = async data => {
   const response = await api.post('/admin/settings/change-password/', data)
@@ -49,9 +53,19 @@ export const adminGetQuizzes = async () => {
   return response
 }
 
-export const adminAddQuizzes = async (dataObj , onUploadProgress) => {
-  const response = await api.post('/admin/quiz/create/', dataObj , {
-    onUploadProgress
+export const adminAddQuizzes = async (dataObj, onUploadProgress) => {
+  const response = await api.post('/admin/quiz/create/', dataObj, {
+    onUploadProgress,
   })
+  return response
+}
+
+export const adminDeleteQuiz = async id => {
+  const response = await api.delete(`/admin/quiz/${id}/`)
+  return response
+}
+
+export const adminGetCategories = async () => {
+  const response = await api.get(`/admin/categories/`)
   return response
 }

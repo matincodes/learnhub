@@ -1,12 +1,6 @@
 import DropdownSelect from '@/components/ui/dropdownselect'
 import { useAdmin } from '@/context/admin-context'
 
-const Category = [
-  { key: 1, name: 1 },
-  { key: 2, name: 2 },
-  { key: 3, name: 3 },
-]
-
 const Difficulty = [
   { key: 1, name: 'Easy' },
   { key: 2, name: 'Medium' },
@@ -20,12 +14,19 @@ const passingCriteria = [
 ]
 
 function NewQuize({ handleSelect }) {
-  const { dispatch, state } = useAdmin()
+  const { dispatch, state, category } = useAdmin()
   // console.log(selectedCategory)
-  const { quize_category, quize_title, quize_description, quize_time_limit , quize_passingCriteria} =
-    state
-  console.log(quize_category)
-
+  const {
+    quize_category,
+    quize_title,
+    quize_description,
+    quize_time_limit,
+    quize_passingCriteria,
+  } = state
+  const categoryData = category.map(item => ({
+    key: item.id,
+    name: item.title,
+  }))
   return (
     <div className="h-full w-[550px] space-y-[50px]">
       <div className="flex w-full flex-col gap-[10px]">
@@ -60,11 +61,11 @@ function NewQuize({ handleSelect }) {
         </label>
         <DropdownSelect
           className="w-full"
-          options={Category}
+          options={categoryData}
           value={quize_category}
-          defaultLabel={`${quize_category ? quize_category : "All Categories"}`}
-          onSelect={
-            value => dispatch({ type: 'QUIZE_CATEGORY', payload: value.name }) 
+          defaultLabel={`${quize_category ? quize_category : 'All Categories'}`}
+          onSelect={value =>
+            dispatch({ type: 'QUIZE_CATEGORY', payload: value.name })
           }
           labelColor="text-[#AAAAAA]"
         />
@@ -103,7 +104,7 @@ function NewQuize({ handleSelect }) {
               className="w-full"
               options={passingCriteria}
               value={quize_passingCriteria}
-              defaultLabel={`${quize_passingCriteria ? quize_passingCriteria : "Select Passing Score"}`}
+              defaultLabel={`${quize_passingCriteria ? quize_passingCriteria : 'Select Passing Score'}`}
               onSelect={value =>
                 dispatch({
                   type: 'QUIZE_PASSING_CRITERIA',

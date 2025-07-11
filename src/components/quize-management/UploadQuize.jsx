@@ -8,9 +8,16 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import * as Progress from '@radix-ui/react-progress'
+import { Link } from '@tanstack/react-router'
 
 // UploadQuize.jsx or .tsx
-function UploadQuize({ openCourseLoading, onOpen, progress }) {
+function UploadQuize({
+  openCourseLoading,
+  onOpen,
+  progress,
+  title,
+  numberOfQuestion,
+}) {
   return (
     <Dialog open={openCourseLoading}>
       <DialogContent className="w-[396px] bg-white">
@@ -26,11 +33,9 @@ function UploadQuize({ openCourseLoading, onOpen, progress }) {
             alt="preview image uploading"
             className="w-full rounded-t-[15px]"
           />
-          <h2 className="text-[20px] font-[500] text-black">
-            Test your coding skills
-          </h2>
+          <h2 className="text-[20px] font-[500] text-black">{title}</h2>
           <p className="font-san text-[10px] font-normal text-[#303031]">
-            No of Questions - 10
+            No of Questions - {numberOfQuestion}
           </p>
 
           <div className="mt-[31px] space-y-1">
@@ -50,17 +55,17 @@ function UploadQuize({ openCourseLoading, onOpen, progress }) {
         </div>
 
         <DialogFooter className="w-full sm:justify-start">
-          <DialogClose
-            className="w-full"
-            onClick={() => onOpen(false)}
-          >
+          <DialogClose className="w-full" onClick={() => onOpen(false)}>
             <Button
               type="button"
               className="w-full rounded-[11.44px] border border-[#3333331A] py-7"
             >
-              <span className="text-[22.87px] font-[400] text-[#AAAAAA]">
+              <Link
+                to="/admin/dashboard/quizzes-management"
+                className="text-[22.87px] font-[400] text-[#AAAAAA]"
+              >
                 Go Home
-              </span>
+              </Link>
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -70,4 +75,3 @@ function UploadQuize({ openCourseLoading, onOpen, progress }) {
 }
 
 export default UploadQuize
-

@@ -6,7 +6,7 @@ import NotificationModal from '@/components/topNav/notificationModal'
 import { useAdmin } from '@/context/admin-context'
 
 function DashboardIndexComponent() {
-  const {  dashboard } = useAdmin()
+  const { dashboard } = useAdmin()
   const [isOpen, setIsOpen] = useState(false)
 
   const pathname = useLocation({
@@ -16,8 +16,6 @@ function DashboardIndexComponent() {
   function onToggle() {
     setIsOpen(!isOpen)
   }
-
-
 
   const { total_courses, total_users } = dashboard
   return (
@@ -59,32 +57,32 @@ function DashboardIndexComponent() {
                 Quick actions
               </h1>
               <div className="flex w-full items-center gap-[21px]">
-                <div className="flex h-[92px] w-[348px] flex-row items-center gap-[20px] rounded-lg border-[1.5px] border-[#F2F2F2] bg-[#FFFFFF] px-5">
+                <Link
+                  to="/admin/dashboard/quizzes-management"
+                  className="flex h-[92px] w-[348px] flex-row items-center gap-[20px] rounded-lg border-[1.5px] border-[#F2F2F2] bg-[#FFFFFF] px-5"
+                >
                   <img
                     src="/assets/plus.svg"
                     alt="plus icon"
                     className="h-[52px] w-[52px]"
                   />
-                  <Link
-                    to="/admin/dashboard/quizzes-management"
-                    className="text-[20px] font-[600] text-[#000000]"
-                  >
+                  <p className="text-[20px] font-[600] text-[#000000]">
                     Create Quiz
-                  </Link>
-                </div>
-                <div className="flex h-[92px] w-[348px] flex-row items-center gap-[20px] rounded-lg border-[1.5px] border-[#F2F2F2] bg-[#FFFFFF] px-5">
+                  </p>
+                </Link>
+                <Link
+                  to="/admin/dashboard/course-management"
+                  className="flex h-[92px] w-[348px] flex-row items-center gap-[20px] rounded-lg border-[1.5px] border-[#F2F2F2] bg-[#FFFFFF] px-5"
+                >
                   <img
                     src="/assets/plus.svg"
                     alt="plus icon"
                     className="h-[52px] w-[52px]"
                   />
-                  <Link
-                    to="/admin/dashboard/course-management"
-                    className="text-[20px] font-[600] text-[#000000]"
-                  >
+                  <p className="text-[20px] font-[600] text-[#000000]">
                     Create Course
-                  </Link>
-                </div>
+                  </p>
+                </Link>
               </div>
             </div>
             <Chart />

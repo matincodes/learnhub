@@ -13,9 +13,11 @@ export const Route = createFileRoute('/admin/_dashboardLayout')({
 })
 
 function AdminDashboardComponent() {
-  const { loadDashboard, error, loading, dashboard } = useAdmin()
+  const { loadDashboard, error, loading, loadCategories, dashboard } =
+    useAdmin()
   useEffect(() => {
     loadDashboard()
+    loadCategories()
   }, [])
   if (loading || (!dashboard && !error)) {
     return (

@@ -75,7 +75,6 @@ function RouteComponent() {
       })
     } finally {
       setTimeout(() => {
-        setShowLoadingCourse(false)
         setProgress(0)
       }, 2000)
     }
@@ -109,6 +108,8 @@ function RouteComponent() {
           onOpen={setShowLoadingCourse}
           openCourseLoading={showLoadingCourse}
           progress={progress}
+          title={quize_title}
+          numberOfQuestion={numberOfQuestion}
         />
 
         <button

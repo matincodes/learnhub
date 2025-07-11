@@ -1,6 +1,7 @@
 import {
   adminChangePassword,
   adminDashboard,
+  adminGetCategories,
   adminGetQuizzes,
   adminStudents,
 } from '@/api/adminApiService'
@@ -51,7 +52,7 @@ const AdminContext = createContext()
 export const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   // console.log(state)
-
+  const [category, setCategory] = useState(null)
   const [dashboard, setDashboard] = useState(null)
   const [students, setStudents] = useState([])
   const [isLoadingStudents, setIsLoadingStudents] = useState(false)
@@ -127,23 +128,17 @@ export const AdminProvider = ({ children }) => {
     }
   }, [])
 
-  // add quizzes
+  // get categories
 
-  // const addQuizzes = async dataObj => {
-  //   try {
-  //     const data = await adminAddQuizzes(dataObj)
-  //     console.log(data)
-  //     return data
-  //   } catch (error) {
-  //     console.log(error)
-  //     return toast({
-  //       variant: 'destructive',
-  //       title: 'Uh oh! Something went wrong.',
-  //       description: 'Cannot add quize at this moment.',
-  //     })
-  //   }
-  // }
-
+  const loadCategories = useCallback(async () => {
+    try {
+      const data = await adminGetCategories()
+      setCategory(data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+  // loadCategories()
   return (
     <AdminContext.Provider
       value={{
@@ -159,7 +154,9 @@ export const AdminProvider = ({ children }) => {
         state,
         dispatch,
         isLoadingQuize,
-        isLoadingStudents
+        isLoadingStudents,
+        category,
+        loadCategories,
         // signUpAdmin,
       }}
     >

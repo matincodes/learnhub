@@ -165,7 +165,7 @@ const ManageUsers = () => {
                         >
                           <div className="flex flex-col">
                             <ViewMore />
-                            <RemoveUser />
+                            <RemoveUser e={item} />
                           </div>
                         </PopoverContent>
                       </Popover>
