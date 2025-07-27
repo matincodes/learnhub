@@ -16,7 +16,7 @@ function UploadQuize({
   onOpen,
   progress,
   title,
-  numberOfQuestion,
+  // numberOfQuestion,
 }) {
   return (
     <Dialog open={openCourseLoading}>
@@ -35,7 +35,7 @@ function UploadQuize({
           />
           <h2 className="text-[20px] font-[500] text-black">{title}</h2>
           <p className="font-san text-[10px] font-normal text-[#303031]">
-            No of Questions - {numberOfQuestion}
+            {/* No of Questions - {numberOfQuestion} */}
           </p>
 
           <div className="mt-[31px] space-y-1">

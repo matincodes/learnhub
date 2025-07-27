@@ -78,6 +78,7 @@ const ManageUsers = () => {
                     <Checkbox.Root
                       className="flex size-[25px] cursor-pointer items-center justify-center rounded-[5px] border-[2px] border-[#F7F7F7] bg-white data-[state=checked]:bg-[#F7AE30]"
                       id="c1"
+                      
                     >
                       <Checkbox.Indicator className="text-white">
                         <CheckIcon className="size-6 text-[#F7F7F7]" />
@@ -93,7 +94,7 @@ const ManageUsers = () => {
                     Courses
                   </TableHead>
                   <TableHead className="px-0">
-                    <Popover>
+                    {/* <Popover>
                       <PopoverTrigger>
                         <img
                           src="/assets/dot.svg"
@@ -109,7 +110,7 @@ const ManageUsers = () => {
                       >
                         <RemoveUser />
                       </PopoverContent>
-                    </Popover>
+                    </Popover> */}
                   </TableHead>
                 </TableRow>
               </TableHeader>

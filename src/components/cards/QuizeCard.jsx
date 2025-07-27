@@ -3,7 +3,7 @@ import QuizePopper from '../ui/QuizePopper'
 
 const QuizeCard = ({ e, openId, setOpenId }) => {
   const { id, title, thumbnail, time_limit, total_questions } = e
-
+console.log(e)
   const togglePopper = useCallback(() => {
     setOpenId(prev => (prev === e.id ? null : e.id))
   }, [e.id, setOpenId])

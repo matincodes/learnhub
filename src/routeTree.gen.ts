@@ -37,6 +37,7 @@ import { Route as AdminDashboardLayoutDashboardQuizzesManagementIndexRouteImport
 import { Route as AdminDashboardLayoutDashboardCourseManagementIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/index'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/index'
 import { Route as userDashboardDashboardLayoutDashboardMyCoursesIndexRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/my-courses/index'
+import { Route as AdminDashboardLayoutDashboardCourseManagementTableDataRouteImport } from './routes/admin/_dashboardLayout/dashboard/course-management/TableData'
 import { Route as userDashboardDashboardLayoutDashboardQuizzesIdRouteImport } from './routes/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
 import { Route as AdminDashboardLayoutDashboardQuizzesManagementPreviewIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/preview/index'
 import { Route as AdminDashboardLayoutDashboardQuizzesManagementNewQuizIndexRouteImport } from './routes/admin/_dashboardLayout/dashboard/quizzes-management/new-quiz/index'
@@ -206,6 +207,12 @@ const userDashboardDashboardLayoutDashboardMyCoursesIndexRoute =
     path: '/dashboard/my-courses/',
     getParentRoute: () => userDashboardDashboardLayoutRoute,
   } as any)
+const AdminDashboardLayoutDashboardCourseManagementTableDataRoute =
+  AdminDashboardLayoutDashboardCourseManagementTableDataRouteImport.update({
+    id: '/dashboard/course-management/TableData',
+    path: '/dashboard/course-management/TableData',
+    getParentRoute: () => AdminDashboardLayoutRoute,
+  } as any)
 const userDashboardDashboardLayoutDashboardQuizzesIdRoute =
   userDashboardDashboardLayoutDashboardQuizzesIdRouteImport.update({
     id: '/dashboard/quizzes/$id',
@@ -293,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
   '/admin/dashboard': typeof AdminDashboardLayoutDashboardIndexRoute
   '/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
+  '/admin/dashboard/course-management/TableData': typeof AdminDashboardLayoutDashboardCourseManagementTableDataRoute
   '/dashboard/my-courses': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/dashboard/quizzes': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
   '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
@@ -328,6 +336,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof userDashboardDashboardLayoutDashboardIndexRoute
   '/admin/dashboard': typeof AdminDashboardLayoutDashboardIndexRoute
   '/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
+  '/admin/dashboard/course-management/TableData': typeof AdminDashboardLayoutDashboardCourseManagementTableDataRoute
   '/dashboard/my-courses': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/dashboard/quizzes': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
   '/admin/dashboard/course-management': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
@@ -369,6 +378,7 @@ export interface FileRoutesById {
   '/(userDashboard)/_dashboardLayout/dashboard/': typeof userDashboardDashboardLayoutDashboardIndexRoute
   '/admin/_dashboardLayout/dashboard/': typeof AdminDashboardLayoutDashboardIndexRoute
   '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': typeof userDashboardDashboardLayoutDashboardQuizzesIdRoute
+  '/admin/_dashboardLayout/dashboard/course-management/TableData': typeof AdminDashboardLayoutDashboardCourseManagementTableDataRoute
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/': typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRoute
   '/(userDashboard)/_dashboardLayout/dashboard/quizzes/': typeof userDashboardDashboardLayoutDashboardQuizzesIndexRoute
   '/admin/_dashboardLayout/dashboard/course-management/': typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
@@ -406,6 +416,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/admin/dashboard'
     | '/dashboard/quizzes/$id'
+    | '/admin/dashboard/course-management/TableData'
     | '/dashboard/my-courses'
     | '/dashboard/quizzes'
     | '/admin/dashboard/course-management'
@@ -441,6 +452,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/admin/dashboard'
     | '/dashboard/quizzes/$id'
+    | '/admin/dashboard/course-management/TableData'
     | '/dashboard/my-courses'
     | '/dashboard/quizzes'
     | '/admin/dashboard/course-management'
@@ -481,6 +493,7 @@ export interface FileRouteTypes {
     | '/(userDashboard)/_dashboardLayout/dashboard/'
     | '/admin/_dashboardLayout/dashboard/'
     | '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
+    | '/admin/_dashboardLayout/dashboard/course-management/TableData'
     | '/(userDashboard)/_dashboardLayout/dashboard/my-courses/'
     | '/(userDashboard)/_dashboardLayout/dashboard/quizzes/'
     | '/admin/_dashboardLayout/dashboard/course-management/'
@@ -711,6 +724,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof userDashboardDashboardLayoutDashboardMyCoursesIndexRouteImport
       parentRoute: typeof userDashboardDashboardLayoutRoute
     }
+    '/admin/_dashboardLayout/dashboard/course-management/TableData': {
+      id: '/admin/_dashboardLayout/dashboard/course-management/TableData'
+      path: '/dashboard/course-management/TableData'
+      fullPath: '/admin/dashboard/course-management/TableData'
+      preLoaderRoute: typeof AdminDashboardLayoutDashboardCourseManagementTableDataRouteImport
+      parentRoute: typeof AdminDashboardLayoutRoute
+    }
     '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id': {
       id: '/(userDashboard)/_dashboardLayout/dashboard/quizzes/$id'
       path: '/dashboard/quizzes/$id'
@@ -868,6 +888,7 @@ interface AdminDashboardLayoutRouteChildren {
   AdminDashboardLayoutDashboardSettingsRoute: typeof AdminDashboardLayoutDashboardSettingsRoute
   AdminDashboardLayoutDashboardUsersRoute: typeof AdminDashboardLayoutDashboardUsersRoute
   AdminDashboardLayoutDashboardIndexRoute: typeof AdminDashboardLayoutDashboardIndexRoute
+  AdminDashboardLayoutDashboardCourseManagementTableDataRoute: typeof AdminDashboardLayoutDashboardCourseManagementTableDataRoute
   AdminDashboardLayoutDashboardCourseManagementIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementIndexRoute
   AdminDashboardLayoutDashboardQuizzesManagementIndexRoute: typeof AdminDashboardLayoutDashboardQuizzesManagementIndexRoute
   AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute: typeof AdminDashboardLayoutDashboardCourseManagementNewCourseLecIndexRoute
@@ -885,6 +906,8 @@ const AdminDashboardLayoutRouteChildren: AdminDashboardLayoutRouteChildren = {
     AdminDashboardLayoutDashboardUsersRoute,
   AdminDashboardLayoutDashboardIndexRoute:
     AdminDashboardLayoutDashboardIndexRoute,
+  AdminDashboardLayoutDashboardCourseManagementTableDataRoute:
+    AdminDashboardLayoutDashboardCourseManagementTableDataRoute,
   AdminDashboardLayoutDashboardCourseManagementIndexRoute:
     AdminDashboardLayoutDashboardCourseManagementIndexRoute,
   AdminDashboardLayoutDashboardQuizzesManagementIndexRoute:

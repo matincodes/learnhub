@@ -29,25 +29,60 @@ function RouteComponent() {
     quize_time_limit,
     quize_passingCriteria,
     quize_questions,
+    quize_thumbnail,
+    quize_preview,
   } = state
+  // const dataObj = {
+  //   category: quize_category,
+  //   title: quize_title,
+  //   description: quize_description,
+  //   time_limit: quize_time_limit,
+  //   thumbnail: quize_thumbnail,
+  //   passing_criteria: quize_passingCriteria,
+  //   questions: quize_questions.questions,
+  //   due_date: '2025-07-09 09:00:54',
+  // }
 
-  const dataObj = {
-    category: quize_category,
-    title: quize_title,
-    description: quize_description,
-    time_limit: quize_time_limit,
-    passing_criteria: quize_passingCriteria,
-    questions: quize_questions.questions,
-    due_date: '2025-07-09 09:00:54',
-  }
-
-  console.log(dataObj)
   const handleSubmit = async () => {
+    const formData = new FormData()
+
+    // Append all other fields...
+    formData.append('category', quize_category)
+    formData.append('title', quize_title)
+    formData.append('description', quize_description)
+    formData.append('time_limit', quize_time_limit)
+    formData.append('due_date', '2025-07-09 09:00:54')
+    formData.append('passing_criteria', quize_passingCriteria)
+
+    if (quize_thumbnail instanceof File) {
+      formData.append('thumbnail', quize_thumbnail)
+    }
+
+    // Loop through questions and serialize nested choices
+    quize_questions.questions.forEach((question, qIndex) => {
+      formData.append(`questions[${qIndex}][title]`, question.title)
+      formData.append(`questions[${qIndex}][mark]`, question.mark)
+
+      question.choices.forEach((choice, cIndex) => {
+        formData.append(
+          `questions[${qIndex}][choices][${cIndex}][text]`,
+          choice.text,
+        )
+        formData.append(
+          `questions[${qIndex}][choices][${cIndex}][is_correct]`,
+          String(choice.is_correct),
+        )
+      })
+    })
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value)
+    }
     try {
       setShowLoadingCourse(true)
       setProgress(0)
 
-      await adminAddQuizzes(dataObj, progressEvent => {
+      await adminAddQuizzes(formData, progressEvent => {
         const percentCompleted = Math.round(
           (progressEvent.loaded * 100) / (progressEvent.total || 1),
         )
@@ -57,8 +92,8 @@ function RouteComponent() {
         }
       })
 
-      // If successful, finish the progress bar
       setProgress(100)
+      router.navigate({ to: '/admin/dashboard/quizzes-management' })
 
       toast({
         variant: 'default',
@@ -66,7 +101,7 @@ function RouteComponent() {
       })
     } catch (error) {
       console.error(error)
-      setProgress(0)
+      // setProgress(0)
 
       toast({
         variant: 'destructive',
@@ -76,6 +111,7 @@ function RouteComponent() {
     } finally {
       setTimeout(() => {
         setProgress(0)
+        setShowLoadingCourse(false)
       }, 2000)
     }
   }
@@ -121,11 +157,20 @@ function RouteComponent() {
       </section>
       <div className="px-16">
         <section className="mt-[120px] rounded-[10px] bg-white pb-[117px]">
-          <img
-            src="\assets\quiz\image-4.svg"
-            alt="icon"
-            className="h-[207px]"
-          />
+          {quize_preview ? (
+            <img
+              src={`${quize_preview}`}
+              alt="icon"
+              className="h-[307px] w-full object-cover object-center"
+            />
+          ) : (
+            <img
+              src="\assets\quiz\image-4.svg"
+              alt="icon"
+              className="h-[307px] w-full object-cover object-center"
+            />
+          )}
+
           <div className="px-5">
             <h1 className="mt-[42px] font-san text-[32px] font-semibold text-[#101828]">
               {quize_title}

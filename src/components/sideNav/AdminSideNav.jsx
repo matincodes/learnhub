@@ -2,7 +2,6 @@
 
 import { useLocation, useRouter } from '@tanstack/react-router'
 import {
-  CategoryIcon,
   CourseIcon,
   HomeIcon,
   QuizzeIcon,
@@ -46,12 +45,7 @@ const navItems = [
       '/admin/dashboard/quizzes-management/preview',
     ],
   },
-  {
-    label: 'Manage Category',
-    to: '/admin/dashboard/categories',
-    Icon: CategoryIcon,
-    activePaths: ['/admin/dashboard/categories'],
-  },
+
   {
     label: 'Settings',
     to: '/admin/dashboard/settings',
@@ -69,8 +63,8 @@ const AdminSideNav = () => {
   useEffect(() => {
     loadDashboard()
   }, [])
-   if (loading || !dashboard) return
-  const { profile_image , first_name } = dashboard.admin_data
+  if (loading || !dashboard) return
+  const { profile_image, first_name } = dashboard.admin_data
   return (
     <div className="fixed z-[20] flex h-full w-[280px] flex-col items-center rounded-[20px] bg-white py-7">
       <div className="w-full px-3">
@@ -83,7 +77,7 @@ const AdminSideNav = () => {
           />
           <span>
             <h1 className="font-san text-[14px] font-semibold text-[#303031]">
-             {first_name}
+              {first_name}
             </h1>
             <p className="font-sans text-xs font-normal text-[#303031]">
               Admin
