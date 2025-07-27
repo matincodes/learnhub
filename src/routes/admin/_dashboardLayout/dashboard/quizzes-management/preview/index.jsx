@@ -12,7 +12,7 @@ export const Route = createFileRoute(
 })
 
 function RouteComponent() {
-  const { state } = useAdmin()
+  const { state, loadQuizzes, dispatch } = useAdmin()
   const [showLoadingCourse, setShowLoadingCourse] = useState(false)
   const [progress, setProgress] = useState(0)
 
@@ -32,16 +32,6 @@ function RouteComponent() {
     quize_thumbnail,
     quize_preview,
   } = state
-  // const dataObj = {
-  //   category: quize_category,
-  //   title: quize_title,
-  //   description: quize_description,
-  //   time_limit: quize_time_limit,
-  //   thumbnail: quize_thumbnail,
-  //   passing_criteria: quize_passingCriteria,
-  //   questions: quize_questions.questions,
-  //   due_date: '2025-07-09 09:00:54',
-  // }
 
   const handleSubmit = async () => {
     const formData = new FormData()
@@ -60,24 +50,21 @@ function RouteComponent() {
 
     // Loop through questions and serialize nested choices
     quize_questions.questions.forEach((question, qIndex) => {
-      formData.append(`questions[${qIndex}][title]`, question.title)
-      formData.append(`questions[${qIndex}][mark]`, question.mark)
+      formData.append(`questions[${qIndex}]title`, question.title)
+      // formData.append(`questions[${qIndex}][mark]`, question.mark)
 
       question.choices.forEach((choice, cIndex) => {
         formData.append(
-          `questions[${qIndex}][choices][${cIndex}][text]`,
+          `questions[${qIndex}]choices[${cIndex}]option`,
           choice.text,
         )
         formData.append(
-          `questions[${qIndex}][choices][${cIndex}][is_correct]`,
+          `questions[${qIndex}]choices[${cIndex}]is_correct`,
           String(choice.is_correct),
         )
       })
     })
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value)
-    }
     try {
       setShowLoadingCourse(true)
       setProgress(0)
@@ -93,6 +80,9 @@ function RouteComponent() {
       })
 
       setProgress(100)
+      loadQuizzes()
+      dispatch({ type: 'RESET_QUIZ' })
+
       router.navigate({ to: '/admin/dashboard/quizzes-management' })
 
       toast({

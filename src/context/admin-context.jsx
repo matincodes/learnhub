@@ -45,6 +45,8 @@ function reducer(state, action) {
       return { ...state, quize_thumbnail: action.payload }
       case 'QUIZE_PREVIEW':
       return { ...state, quize_preview: action.payload }
+      case 'RESET_QUIZ':
+      return { ...initialState }
     default:
       return state
   }

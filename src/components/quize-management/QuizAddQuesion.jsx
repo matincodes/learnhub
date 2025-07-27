@@ -79,7 +79,7 @@ function QuizAddQuesion() {
       ...prev,
       {
         id: newId,
-        title: `Section ${prev.length + 1}`,
+        title: `Question ${prev.length + 1}`,
         mark: 0,
         attachment: null,
         choices: [

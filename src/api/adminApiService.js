@@ -1,7 +1,7 @@
 import {
   getAdminAuthData,
   saveAdminAuthData,
-  clearAdminAuthData
+  clearAdminAuthData,
 } from '@/lib/adminTokenStorage'
 import axios from 'axios'
 
@@ -28,7 +28,7 @@ api.interceptors.request.use(
 )
 
 api.interceptors.response.use(
-  response => response, 
+  response => response,
   async error => {
     const originalRequest = error.config
 
@@ -51,9 +51,9 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         return api(originalRequest)
       } catch (refreshError) {
-        clearAdminAuthData() 
+        clearAdminAuthData()
         // Optionally redirect to login page
-        window.location.href = 'admin/login'
+        window.location.replace('/admin/login')
         return Promise.reject(refreshError)
       }
     }
