@@ -102,8 +102,14 @@ function courseReducer(state, action) {
           ...state.course_sections,
           {
             section_id: action.payload.id,
-            section_title: action.payload.title,
-            section_items: [],
+            section_items: [
+              {
+                item_id: 'item-1',
+                item_type: '',
+                item_title: '',
+                item_url: '',
+              },
+            ],
           },
         ],
       }
