@@ -42,15 +42,16 @@ function Login() {
   }
 
   return (
-    <div className="">
-      <div className="flex h-auto w-full">
-        <div className="hidden h-auto w-[50%] lg:flex">
+    <div className="h-screen">
+      <div className="flex w-full">
+        <div className="hidden h-screen w-[50%] lg:flex">
           {/* Logo */}
           <img
             src="/assets/mockupAdmin.svg"
             alt="Logo"
             width="100%"
             height="100%"
+            className="object-cover"
           />
           {/* Logo */}
         </div>
