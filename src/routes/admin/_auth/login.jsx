@@ -1,6 +1,7 @@
+import { adminLogin } from '@/api/adminApiService'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
+import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { forwardRef, useState } from 'react'
@@ -13,44 +14,49 @@ export const Route = createFileRoute('/admin/_auth/login')({
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, reset } = useForm()
-  const { login } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
-  const redirect = Route.useSearch({ select: s => s.redirect })
+  // const redirect = Route.useSearch({ select: s => s.redirect })
 
   const onSubmit = async data => {
     setIsLoading(true)
-    if (await login('admin', data)) {
+    try {
+      const res = await adminLogin(data)
+      console.log(res)
+      const tokens = res?.data?.tokens
+      console.log(tokens)
+      saveAdminAuthData(tokens)
       reset()
       router.invalidate()
-      if (redirect) router.history.push(redirect)
-      else router.navigate({ to: '/' })
-    } else {
-      setIsLoading(false)
+      router.navigate({ to: '/admin/dashboard' })
+    } catch (error) {
+      console.log(error)
       return toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
-        description: 'Login failed, please try again.',
+        description: 'login failed, please try again.',
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <div className="">
-      <div className="flex h-auto w-full">
-        <div className=" hidden w-[50%] h-auto lg:flex ">
+    <div className="h-screen">
+      <div className="flex w-full">
+        <div className="hidden h-screen w-[50%] lg:flex">
           {/* Logo */}
           <img
             src="/assets/mockupAdmin.svg"
             alt="Logo"
             width="100%"
             height="100%"
+            className="object-cover"
           />
           {/* Logo */}
-
         </div>
 
-        <div className=" h-auto w-full mt-[49px] lg:w-[50%] flex flex-col justify-center items-center ">
+        <div className="mt-[49px] flex h-auto w-full flex-col items-center justify-center lg:w-[50%]">
           {/* Logo */}
           <div className="flex place-content-center lg:hidden">
             <img
@@ -63,7 +69,7 @@ function Login() {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-[90%] space-y-9 p-[10px] "
+            className="w-[90%] space-y-9 p-[10px]"
           >
             <h3 className="font-san text-[38px] font-semibold">Admin Login</h3>
 
@@ -72,7 +78,7 @@ function Login() {
               <div className="inputs grid space-y-2">
                 <label
                   htmlFor="email"
-                  className="font-normal text-[12px] font-san tracking-wide text-[#303031] lg:text-[16px]"
+                  className="font-san text-[12px] font-normal tracking-wide text-[#303031] lg:text-[16px]"
                 >
                   Email address
                 </label>
@@ -90,14 +96,13 @@ function Login() {
               <div className="inputs grid space-y-2">
                 <label
                   htmlFor="password"
-                  className="font-normal text-[12px] font-san tracking-wide text-[#303031] lg:text-[16px]"
+                  className="font-san text-[12px] font-normal tracking-wide text-[#303031] lg:text-[16px]"
                 >
                   Password
                 </label>
                 <PasswordInput
                   {...register('password', { required: true })}
                   id="password"
-
                 />
                 <div className="mt-1 flex items-center justify-between">
                   <div className="flex items-center space-x-1">
@@ -114,7 +119,7 @@ function Login() {
                       Remember Password
                     </label>
                   </div>
-                  <p className="font-san text-[8px] font-normal  text-[#626262] lg:text-[12px]">
+                  <p className="font-san text-[8px] font-normal text-[#626262] lg:text-[12px]">
                     Forgot Password?
                   </p>
                 </div>
@@ -139,7 +144,7 @@ function Login() {
               </Button>
             )}
 
-            <p className="font-san text-[#616161] font-normal text-[15px] text-center">
+            <p className="text-center font-san text-[15px] font-normal text-[#616161]">
               Need access? Contact your system administrator.
             </p>
           </form>
@@ -159,7 +164,7 @@ const PasswordInput = forwardRef(({ ...props }, ref) => {
         ref={ref}
         {...props}
         placeholder="Enter password"
-        className="w-full rounded-md border border-[#84848481] p-[12px] font-normal font-san text-[#AAAAAA]"
+        className="w-full rounded-md border border-[#84848481] p-[12px] font-san font-normal text-[#AAAAAA]"
       />
       <button
         className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 hover:text-gray-700"
