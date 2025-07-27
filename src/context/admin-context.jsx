@@ -50,6 +50,43 @@ function reducer(state, action) {
   }
 }
 
+// Initial state for courses
+const initialCourseState = {
+  course_id: null,
+  course_title: '',
+  course_description: '',
+  course_duration: '',
+  course_thumbnail: null,
+  course_category: 'All Categories',
+  course_difficulty: '',
+  course_content: [],
+}
+// Reducer function for courses
+function courseReducer(state, action) {
+  switch (action.type) {
+    case 'COURSE_ID':
+      return { ...state, course_id: action.payload }
+    case 'COURSE_TITLE':
+      return { ...state, course_title: action.payload }
+    case 'COURSE_DESCRIPTION':
+      return { ...state, course_description: action.payload }
+    case 'COURSE_DURATION':
+      return { ...state, course_duration: action.payload }
+    case 'COURSE_THUMBNAIL':
+      return { ...state, course_thumbnail: action.payload }
+    case 'COURSE_CONTENT':
+      return { ...state, course_content: action.payload }
+    case 'COURSE_CATEGORY':
+      return { ...state, course_category: action.payload }
+    case 'COURSE_DIFFICULTY':
+      return { ...state, course_difficulty: action.payload }
+    default:
+      return state
+  }
+}
+
+
+
 const AdminContext = createContext()
 
 export const AdminProvider = ({ children }) => {
@@ -63,6 +100,9 @@ export const AdminProvider = ({ children }) => {
   const [isLoadingQuize, setIsLoadingQuize] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  // course management
+  const [courseState, dispatchCourseAction] = useReducer(courseReducer, initialCourseState)
 
   const loadDashboard = async (force = false) => {
     if (dashboard && !force) return //
@@ -162,6 +202,8 @@ export const AdminProvider = ({ children }) => {
         category,
         loadCategories,
         // signUpAdmin,
+        courseState,
+        dispatchCourseAction,
       }}
     >
       {children}
