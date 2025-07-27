@@ -1,7 +1,7 @@
 const CourseCard = ({e}) => {
   return (
     <div className=" ">
-      <div  style={{ backgroundImage: `url(${e.src})` }} className={` bg-cover bg-center flex h-[120px] w-full items-start justify-end rounded-t-[8px]  p-2`}>
+      <div style={{ backgroundImage: `url(${e.thumbnail})` }} className={` bg-cover bg-center flex h-[120px] w-full items-start justify-end rounded-t-[8px]  p-2`}>
         <img
           src="\assets\dots-vertical.svg"
           alt="icon"
