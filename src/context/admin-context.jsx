@@ -23,7 +23,7 @@ const initialState = {
   quize_passingCriteria: null,
   quize_thumbnail: '',
   quize_questions: [],
-  quize_preview:null,
+  quize_preview: null,
 }
 
 // Reducer function
@@ -43,9 +43,9 @@ function reducer(state, action) {
       return { ...state, quize_questions: action.payload }
     case 'QUIZE_THUMNAIL':
       return { ...state, quize_thumbnail: action.payload }
-      case 'QUIZE_PREVIEW':
+    case 'QUIZE_PREVIEW':
       return { ...state, quize_preview: action.payload }
-      case 'RESET_QUIZ':
+    case 'RESET_QUIZ':
       return { ...initialState }
     default:
       return state
@@ -61,7 +61,22 @@ const initialCourseState = {
   course_thumbnail: null,
   course_category: 'All Categories',
   course_difficulty: '',
-  course_content: [],
+  course_sections: [
+    {
+      section_id: 'section-1',
+      section_title: 'Introduction',
+      section_items: [
+        {
+          item_id: 'item-1',
+          item_type: 'video',
+          item_title: 'Welcome to the course',
+          item_url: 'https://example.com/video.mp4',
+        },
+        // more items...
+      ],
+    },
+    // more sections...
+  ],
 }
 // Reducer function for courses
 function courseReducer(state, action) {
@@ -76,18 +91,90 @@ function courseReducer(state, action) {
       return { ...state, course_duration: action.payload }
     case 'COURSE_THUMBNAIL':
       return { ...state, course_thumbnail: action.payload }
-    case 'COURSE_CONTENT':
-      return { ...state, course_content: action.payload }
     case 'COURSE_CATEGORY':
       return { ...state, course_category: action.payload }
     case 'COURSE_DIFFICULTY':
       return { ...state, course_difficulty: action.payload }
+    case 'ADD_SECTION':
+      return {
+        ...state,
+        course_sections: [
+          ...state.course_sections,
+          {
+            section_id: action.payload.id,
+            section_title: action.payload.title,
+            section_items: [],
+          },
+        ],
+      }
+
+    case 'UPDATE_SECTION_TITLE':
+      return {
+        ...state,
+        course_sections: state.course_sections.map(section =>
+          section.section_id === action.payload.id
+            ? { ...section, section_title: action.payload.title }
+            : section,
+        ),
+      }
+
+    case 'REMOVE_SECTION':
+      return {
+        ...state,
+        course_sections: state.course_sections.filter(
+          section => section.section_id !== action.payload.id,
+        ),
+      }
+
+    case 'ADD_ITEM_TO_SECTION':
+      return {
+        ...state,
+        course_sections: state.course_sections.map(section =>
+          section.section_id === action.payload.sectionId
+            ? {
+                ...section,
+                section_items: [...section.section_items, action.payload.item],
+              }
+            : section,
+        ),
+      }
+
+    case 'UPDATE_ITEM_IN_SECTION':
+      return {
+        ...state,
+        course_sections: state.course_sections.map(section =>
+          section.section_id === action.payload.sectionId
+            ? {
+                ...section,
+                section_items: section.section_items.map(item =>
+                  item.item_id === action.payload.item.item_id
+                    ? { ...item, ...action.payload.item }
+                    : item,
+                ),
+              }
+            : section,
+        ),
+      }
+
+    case 'REMOVE_ITEM_FROM_SECTION':
+      return {
+        ...state,
+        course_sections: state.course_sections.map(section =>
+          section.section_id === action.payload.sectionId
+            ? {
+                ...section,
+                section_items: section.section_items.filter(
+                  item => item.item_id !== action.payload.itemId,
+                ),
+              }
+            : section,
+        ),
+      }
+
     default:
       return state
   }
 }
-
-
 
 const AdminContext = createContext()
 
@@ -104,7 +191,10 @@ export const AdminProvider = ({ children }) => {
   const [error, setError] = useState(false)
 
   // course management
-  const [courseState, dispatchCourseAction] = useReducer(courseReducer, initialCourseState)
+  const [courseState, dispatchCourseAction] = useReducer(
+    courseReducer,
+    initialCourseState,
+  )
 
   const loadDashboard = async (force = false) => {
     if (dashboard && !force) return //
