@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import DropdownSelect from '@/components/ui/dropdownselect'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useAdmin } from '@/context/admin-context'
 const DROPDOWNCONTENT = [
   { key: 1, name: 'Front-end Development' },
   { key: 2, name: 'Back-end Development' },
@@ -11,8 +12,18 @@ const DROPDOWNCONTENT = [
 ]
 
 function CourseForm() {
-  const handleSelect = item => {
-    console.log('Selected category:', item.name)
+  const { courseState, dispatchCourseAction } = useAdmin()
+  const handleCategorySelect = item => {
+    dispatchCourseAction({
+      type: 'COURSE_CATEGORY',
+      payload: item.name,
+    })
+  }
+  const handleDifficultySelect = item => {
+    dispatchCourseAction({
+      type: 'COURSE_DIFFICULTY',
+      payload: item.name,
+    })
   }
   return (
     <form className="h-full w-[450px] space-y-[50px]">
@@ -20,7 +31,17 @@ function CourseForm() {
         <label htmlFor="Course title" className="text-[16px] font-[400]">
           Course title
         </label>
-        <Input className="" placeHolder="Enter a course title" />
+        <Input
+          className=""
+          value={courseState.course_title}
+          onChange={e =>
+            dispatchCourseAction({
+              type: 'COURSE_TITLE',
+              payload: e.target.value,
+            })
+          }
+          placeHolder="Enter a course title"
+        />
       </div>
       <div className="flex h-[188px] w-full flex-col gap-[10px]">
         <label htmlFor="Description" className="text-[16px] font-[400]">
@@ -28,6 +49,13 @@ function CourseForm() {
         </label>
         <Textarea
           className="h-[159px] outline-none focus:border-none focus:outline-none"
+          value={courseState.course_description}
+          onChange={e =>
+            dispatchCourseAction({
+              type: 'COURSE_DESCRIPTION',
+              payload: e.target.value,
+            })
+          }
           placeHolder="Enter description"
         />
       </div>
@@ -39,7 +67,8 @@ function CourseForm() {
           className="w-full"
           options={DROPDOWNCONTENT}
           defaultLabel="All Categories"
-          onSelect={handleSelect}
+          value={courseState.course_category}
+          onSelect={handleCategorySelect}
           labelColor="text-[#AAAAAA]"
         />
         <Input className="" placeHolder="Add new category" />
@@ -77,7 +106,8 @@ function CourseForm() {
           className="w-full"
           options={DROPDOWNCONTENT}
           defaultLabel="All Categories"
-          onSelect={handleSelect}
+          value={courseState.course_difficulty}
+          onSelect={handleDifficultySelect}
           labelColor="text-[#AAAAAA]"
         />
       </div>
