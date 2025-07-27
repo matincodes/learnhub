@@ -1,16 +1,20 @@
 import { Separator } from '@/components/ui/separator'
 import { UserProfile } from '@/context/user-context'
+import { useAuth } from '@/context/auth-context'
 import { navLinks, adminNavLinks } from '@/data/sideNav'
 import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
+// import { useNavigate } from 'react-router-dom'
 
 const SideNav = () => {
-  const {  getUserById } = UserProfile()
+  const { getUserById } = UserProfile()
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
- 
-  const role = 'admin'
+  // const navigate = useNavigate()
+  const { logout } = useAuth()
 
-  const profileImage = localStorage.getItem('user-image') || '/assets/profile.png'
+  
+
+  const role = 'admin'
 
   return (
     <div className="fixed inset-y-0 left-0 z-[70] hidden min-h-screen lg:block">
@@ -21,17 +25,17 @@ const SideNav = () => {
               <div className="grid basis-[50%] place-content-center">
                 <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
                   <img
-                    src={profileImage}
+                    src={getUserById?.profile_image || '/assets/profile.png'}
                     alt="profile image"
                     className="object-cover"
                   />
                 </div>
               </div>
               <div className="flex w-full flex-col justify-center">
-                <p className="font-semibold">
-                  { getUserById?.first_name}, { getUserById?.last_name}
+                <p className="font-semibold text-sm">
+                  { getUserById?.first_name} { getUserById?.last_name}
                 </p>
-                <p className="text-xs sm:text-sm">
+                <p className="text-sm sm:text-sm">
                   {pathname.includes('/admin/dashboard') && role === 'admin'
                     ? 'Admin'
                     : 'View Profile'}
@@ -78,7 +82,7 @@ const SideNav = () => {
             </ul>
           </div>
 
-          <div className="flex w-full items-center justify-center px-3">
+          <div className="flex-col w-full items-center justify-center px-3">
             <Link
               to={`${pathname.includes('/admin/dashboard') && role === 'admin' ? '/admin/dashboard/settings' : '/dashboard/settings'}`}
               activeProps={{
@@ -95,19 +99,29 @@ const SideNav = () => {
                       className="absolute left-[-4px]"
                     />
                   )}
-                  <div className="flex w-full items-center space-x-7">
+                  <div className="flex w-full items-center space-x-4">
                     <img src={'/assets/settings.png'} alt="" />
                     <span>Settings</span>
                   </div>
                 </>
               )}
             </Link>
+            <div className="flex items-center space-x-2 px-3 py-12 font-medium text-[#FF3D00]/80 cursor-pointer" onClick={() => {
+              logout()
+              // navigate('/login')
+            }}>
+                  <img src={'/assets/logout.png'} alt="logout" />
+                  <span>Logout</span>
+              </div>
+
           </div>
 
           <div className="w-full px-3">
             <Separator className="my-4 bg-[#98989A]" />
             <div className="flex w-full items-center justify-center">
-              <img src={'/assets/learnhub.png'} alt="" />
+              <Link to='/'>
+                <img src={'/assets/learnhub.png'} alt="" />
+              </Link>
             </div>
           </div>
         </div>

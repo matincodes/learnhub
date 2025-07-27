@@ -10,7 +10,8 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout/dashboar
 })
 
 function Profile() {
-  const [profile, setProfile] = useState('')
+ const [profileImageFile, setProfileImageFile] = useState(null); // <-- Store the file object
+  const [profileImageUrl, setProfileImageUrl] = useState('');
   const [editFormState, setEditFormState] = useState(false)
   const userprofile = useRef()
   const firstNameRef = useRef()
@@ -23,15 +24,10 @@ function Profile() {
   // Change Image
   const handleImageChange = () =>{
     
-    
-    const image = (userprofile.current.files[0])
-    if(image){
-      const reader = new FileReader()
-      reader.onloadend = () =>{
-        const base64String = reader.result
-        setProfile(base64String)
-      }
-      reader.readAsDataURL(image)
+    const image = userprofile.current.files[0];
+    if (image) {
+      setProfileImageFile(image); // <-- Store the actual file
+      setProfileImageUrl(URL.createObjectURL(image)); // <-- Create a temporary URL for preview
     }
   }
 
@@ -46,20 +42,25 @@ function Profile() {
   function HandleSubmit(e) {
     e.preventDefault();
   
+    // Use FormData to send the data
+    const formData = new FormData();
+
+
     const firstName = firstNameRef.current.value.trim();
     const lastName = lastNameRef.current.value.trim();
     const email = emailRef.current.value.trim();
-    const profileImage = profile; 
+   
   
-    // Construct data object with only non-empty fields
-    const data = {};
-    if (firstName) data.first_name = firstName;
-    if (lastName) data.last_name = lastName;
-    if (email) data.email = email;
-    if (profileImage) data.profile_image = profileImage;
+    // Append fields that have a value
+    if (firstName) formData.append('first_name', firstName);
+    if (lastName) formData.append('last_name', lastName);
+    if (email) formData.append('email', email);
+    if (profileImageFile) {
+        formData.append('profile_image', profileImageFile);
+    }
   
-    console.log(data);
-    updateUserProfile(data); // Send only the fields that are filled in
+    console.log('Submitting FormData...');
+    updateUserProfile(formData); // Send only the fields that are filled in
   }
   
   
@@ -87,7 +88,7 @@ function Profile() {
           <div className="flex flex-col items-center justify-center space-y-2">
             <div className="grid h-[100px] w-[100px] justify-center overflow-hidden rounded-full ">
               <img
-                src={profile? profile : '/assets/profile.png'}
+                src={profileImageUrl || getUserById?.profile_image || '/assets/profile.png'}
                 alt=""
                 className="w-full object-cover bg-red-500"
               />
@@ -160,7 +161,7 @@ function Profile() {
         <div className="relative flex items-center justify-center">
           <div className="lg:absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
             <img
-              src={profile? profile : '/assets/profile.png'}
+              src={profileImageUrl || getUserById?.profile_image || '/assets/profile.png'}
               alt=""
               className="w-full h-full object-cover"
             />

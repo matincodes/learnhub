@@ -15,6 +15,8 @@ export const login = async (role, credentials) => {
 
   const userDataResponse = data.data
 
+  console.log('Login successful response:', data)
+
   return {
     user: {
       id: userDataResponse.id,

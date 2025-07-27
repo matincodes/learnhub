@@ -1,5 +1,6 @@
 import axiosInstance from '@/api/axiosInstance'
 import { useUser } from '@/hooks/use-user'
+import { useAuth } from '@/context/auth-context'
 import { createContext, useContext, useState } from 'react'
 
 // Configuration for API endpoints
@@ -31,33 +32,22 @@ export const UserProvider = ({ children }) => {
     updateUserProfile: false,
     passWord: false,
   })
-  // const [newError, setnewError] = useState({
-  //   passWord: false, // State for password error
-  // })
+
   const [error, setError] = useState(false)
 
-  const user = useUser() // Hook to get authenticated user details
-  const userId = user?.id // Extract user ID, could be null initially
+  const user = useUser() 
+  const userId = user?.id 
+
+   const { secureRequest } = useAuth()
 
   // --- Core Data Fetching Logic ---
-  // This function contains the actual API call to fetch the profile.
-  // It's defined within the provider so it can access/set state.
   const performFetchUserProfile = async () => {
     if (!userId) {
       console.log(
         'User ID not available. Clearing profile data and stopping load.',
       )
       setGetUserById(null)
-      setLoading(prev => ({ ...prev, userProfile: false })) // Ensure loading is false
       setError(false) // Reset error if there's no user
-      return
-    }
-
-    const token = localStorage.getItem('accessToken')
-    if (!token) {
-      console.error('No access token found for fetching profile.')
-      setError(true)
-      setLoading(prev => ({ ...prev, userProfile: false }))
       return
     }
 
@@ -66,10 +56,13 @@ export const UserProvider = ({ children }) => {
     setError(false) // Clear previous errors before a new fetch
 
     try {
-      const { data } = await axiosInstance.get(
-        userEndpoints.profileById(userId),
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+
+      const apiCall = (token) =>
+        axiosInstance.get(userEndpoints.profileById(userId), {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+4
+      const { data } = await secureRequest(apiCall)
       setGetUserById(data)
       console.log('Profile fetched successfully:', data)
     } catch (err) {
@@ -87,26 +80,24 @@ export const UserProvider = ({ children }) => {
       setError(true)
       return null // Indicate failure
     }
-    const token = localStorage.getItem('accessToken')
-    if (!token) {
-      console.error('Cannot update profile: No access token found.')
-      setError(true)
-      return null // Indicate failure
-    }
+    
 
     console.log(`Updating profile for user ID: ${userId}`, updates)
     setLoading(prev => ({ ...prev, updateUserProfile: true }))
     setError(false) // Clear previous errors
 
     try {
-      const { data } = await axiosInstance.patch(
-        userEndpoints.updateProfile(userId),
-        updates,
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
+
+      const apiCall = (token) =>
+            axiosInstance.patch(
+                userEndpoints.updateProfile(userId),
+                updates,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+      const { data } = await secureRequest(apiCall)
       // Merge with existing user data from localStorage
-      const existingUser =
-        JSON.parse(localStorage.getItem('learnhub-user')) || {}
+      const existingUser = JSON.parse(localStorage.getItem('learnhub-user')) || {}
 
       const normalizedData = {
         ...(updates.first_name && { firstName: updates.first_name }),
@@ -121,7 +112,7 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem('learnhub-user', JSON.stringify(newUpdates))
 
       // After a successful update, re-fetch the profile data to ensure UI consistency.
-      await performFetchUserProfile(userId)
+      await performFetchUserProfile()
       return data // Return the response from the PATCH request
     } catch (err) {
       console.error('Failed to update user profile:', err.message)
@@ -133,22 +124,19 @@ export const UserProvider = ({ children }) => {
   }
 
   const changePassword = async updatedData => {
-    const token = localStorage.getItem('accessToken')
-    if (!token) {
-      console.error('No access token found for fetching profile.')
-      // setnewError(true)
-      return
-    }
+   
     setLoading(prev => ({ ...prev, passWord: true }))
 
     try {
-      const { data } = await axiosInstance.post(
-        userEndpoints.changePassword,
-        updatedData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
+
+      const apiCall = (token) =>
+            axiosInstance.post(
+                userEndpoints.changePassword,
+                updatedData,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+      const { data } = await secureRequest(apiCall)
 
       return data
     } catch (error) {

@@ -113,7 +113,6 @@ const TopNav = () => {
               />
             )}
             {courseTitle ? courseTitle : title}
-            {/* {} */}
           </h2>
           {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
           <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
@@ -137,7 +136,6 @@ const TopNav = () => {
             {pathname.includes('/admin/dashboard') || pathname.includes('/admin/dashboard/courses') || pathname.includes('/admin/dashboard/course-details') || pathname.includes('/admin/dashboard/add-course') || pathname.includes('/admin/dashboard/add-module') && pathname == '/admin/dashboard' ? 'Dashboard' : ''}
 
             {courseTitle ? courseTitle : title}
-
           </h2>
           {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
             <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>

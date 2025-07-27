@@ -19,12 +19,15 @@ import {
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5'
+import { getAuthData } from '@/lib/tokenStorage'
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/leaderboard',
 )({
   component: LeaderBoard,
 })
+
+
 
 function DataTable({ data, columns }) {
   const table = useReactTable({
@@ -179,18 +182,19 @@ const columns = [
 
 function LeaderBoard() {
   const [leaderboardData, setLeaderBoardData] = useState([])
-    const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ2MTEzODAxLCJpYXQiOjE3NDYwMjc0MDEsImp0aSI6ImU4YzFmNmRiNTZlNTQwN2Y5NGIxODM4MzYxY2FlYmQwIiwidXNlcl9pZCI6OH0.inTlwRTL_SnBzucxXuT4VZe7JovqXk0AsINa2wzneqI'
+
+  const { accessToken } = getAuthData()
+
   
     useEffect(() => {
-      const getCourses = async () => {
-        const coursesData = await fetchLeaderBoard(token)
-        console.log(coursesData)
-        setLeaderBoardData(coursesData)
+      const getLeaderboard = async () => {
+        const leaderboardData = await fetchLeaderBoard(accessToken)
+        console.log(leaderboardData)
+        setLeaderBoardData(leaderboardData)
       }
   
-      getCourses()
-    }, [token])
+      getLeaderboard()
+    }, [accessToken])
 
   return (
     <div className="mx-auto w-full max-w-[1300px] rounded-xl bg-white p-4 sm:p-6">

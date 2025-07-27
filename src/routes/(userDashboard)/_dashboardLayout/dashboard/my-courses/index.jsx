@@ -37,6 +37,11 @@ function MyCourses() {
     }
   }, [course_title, navigate])
 
+
+  const handleButtonClick = () => {
+    navigate({ to: '/courses' })
+  }
+
   return (
     <div className="w-full rounded-xl bg-white p-4 sm:p-6">
       <div className="mb-10 flex w-full items-center justify-between sm:mb-12">
@@ -58,7 +63,7 @@ function MyCourses() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button className="flex h-12 items-center justify-center gap-x-2 rounded-xl bg-normal_yellow px-4 text-white">
+        <Button onClick={handleButtonClick} className="flex h-12 items-center justify-center gap-x-2 rounded-xl bg-normal_yellow px-4 text-white">
           <p className="hidden text-base font-medium sm:block">
             Add New Courses
           </p>
@@ -81,7 +86,8 @@ function MyCourses() {
       image={'/assets/empty.png'}
       mainText="No recent courses yet"
       miniText="Add courses to continue your learning journey"
-      button
+      button={true}
+      handleButtonClick={handleButtonClick}
     />
   )}
 </div>

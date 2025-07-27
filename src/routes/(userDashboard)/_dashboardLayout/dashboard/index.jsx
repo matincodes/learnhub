@@ -89,7 +89,11 @@ function DashboardIndexComponent() {
           image={'/assets/empty.png'}
           mainText="No recent courses yet."
           miniText="Add courses to continue your learning journey."
-          button // Assuming this implies a button defined in NullState
+          button={true}
+          handleButtonClick={() => {
+            // Navigate to courses page or handle button click
+            window.location.href = '/courses'; // Example navigation
+          }}
        />
     );
   };

@@ -39,7 +39,7 @@ function SignUp() {
       console.log('Signup successful')
       reset()
       router.invalidate()
-      router.navigate({ to: result.redirect || '/' })
+      router.navigate({ to: '/pricing' })
     } else {
       toast({
         variant: 'destructive',

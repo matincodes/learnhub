@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-// import { Courses } from '@/data/courses'
 import { useEffect, useState } from 'react'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import Footer from '@/components/footer/footer'
@@ -21,22 +20,35 @@ export const Route = createFileRoute('/courses/')({
 })
 
 function Course() {
-  const [courseTitle, setCourseTitle] = useState('All Courses')
+  const [courseCategory, setCourseCategory] = useState('All Courses')
   const [courses, setCourses] = useState([])
-  const token = localStorage.getItem('accessToken')
+  const [loading, setLoading] = useState(true)
+
+
   useEffect(() => {
     const getCourses = async () => {
-      const coursesData = await fetchCourses(token)
+      setLoading(true)
+      try {
+      const coursesData = await fetchCourses()
       console.log(coursesData)
-      setCourses(coursesData)
+      setCourses(coursesData || [])
+      } catch (error) {
+        console.error('Error fetching courses:', error)
+        setCourses([])
+      } finally {
+        setLoading(false) 
+      }
     }
     getCourses()
   }, [])
 
 
   const handleSelecetChange = value => {
-    setCourseTitle(value)
+    setCourseCategory(value)
   }
+
+  const uniqueCategories = ["All Courses", ...new Set(courses.map(({ category }) => category))]
+
 
   // console
   return (
@@ -46,7 +58,7 @@ function Course() {
       {/* Navbar */}
 
       <Header
-        main_text={courseTitle}
+        main_text={courseCategory}
         paragraph="Access courses with flexible pricing options—choose a monthly or yearly subscription that fits your budget and learning needs!"
       />
 
@@ -58,9 +70,9 @@ function Course() {
           </SelectTrigger>
           <SelectContent className="bg-white">
             <SelectGroup>
-              {courses.map(({ category, id }) => (
+              {uniqueCategories.map(( category, index ) => (
                 <SelectItem
-                  key={id}
+                  key={index}
                   className="focus:bg-gray-100"
                   value={category}
                 >
@@ -73,39 +85,44 @@ function Course() {
       </div>
 
       <div
-  className={`flex items-center justify-center p-2 lg:p-5 ${
-    courses.length >= 0 ? 'h-[90vh]' : ''
-  } `}
->
-  <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
-    {Array.isArray(courses) && courses.length > 0 ? (
-      courses.map(category =>
-        courseTitle === category.category && Array.isArray(category.courses)
-          ? category.courses.map((item, id) => (
-              <div className="flex w-fit justify-center" key={id}>
-                <a href={`/courses/${item.title}`}>
-                  <SearchCourseCard
-                    image={item.image}
-                    title={item.title}
-                    lesson={item.lesson}
-                    duration={item.duration}
-                  />
-                </a>
-              </div>
-            ))
-          : null,
-      )
-    ) : (
-      <NullState
-        image={'/assets/empty.png'}
-        mainText="Opps! No courses yet."
-        miniText="New courses will be added shortly. Stay tuned!"
-        link={'/'}
-        linkText={'Go To Homepage'}
-      />
-    )}
-  </div>
-</div>
+        className={`flex items-center justify-center p-2 lg:p-5 ${
+          courses.length > 0 ? 'min-h-[60vh]' : 'h-[60vh]' // Use min-h for content
+        } `}
+      >
+        <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
+    
+          {loading ? (
+            <p>Loading courses...</p> // You can replace this with a spinner or skeleton loaders
+          ) : Array.isArray(courses) && courses.length > 0 ? (
+            courses.map(course => {
+              // Condition to display courses
+              if (courseCategory === 'All Courses' || courseCategory === course.category) {
+                return (
+                  <div className="flex w-fit justify-center" key={`${course.id}`}>
+                    <a href={`/courses/${course.title}`}>
+                      <SearchCourseCard
+                        image={course.thumbnail}
+                        title={course.title}
+                        lesson={course.lesson}
+                        duration={course.duration}
+                      />
+                    </a>
+                  </div>
+                );
+              }
+              return null; // Return null if the category doesn't match
+            })
+          ) : (
+            <NullState
+              image={'/assets/empty.png'}
+              mainText="Oops! No courses yet."
+              miniText="New courses will be added shortly. Stay tuned!"
+              link={'/'}
+              linkText={'Go To Homepage'}
+            />
+          )}
+        </div>
+      </div>
 
       {/* Footer */}
       <Footer />
@@ -113,3 +130,4 @@ function Course() {
     </>
   )
 }
+

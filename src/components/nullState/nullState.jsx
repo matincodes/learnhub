@@ -26,7 +26,7 @@ function NullState(e) {
      
      {/* Button */}
      {e.button ? 
-      <Button className="h-12 items-center justify-center gap-x-2 rounded-xl border border-normal_yellow bg-none px-4 text-normal_yellow">
+      <Button onClick={e.handleButtonClick} className="h-12 items-center justify-center gap-x-2 rounded-xl border border-normal_yellow bg-none px-4 text-normal_yellow">
         <FiPlus size={24} />
         <p>Add Courses</p>
       </Button>

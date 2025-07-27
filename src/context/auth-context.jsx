@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 import { login, signup, refreshAccessToken } from '@/api/authService'
 import { saveAuthData, getAuthData, clearAuthData } from '@/lib/tokenStorage'
+// routing from tanstack router
+import { useRouter } from '@tanstack/react-router'
 
 const AuthContext = createContext()
 
@@ -11,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(storedToken)
   const [refreshToken, setRefreshToken] = useState(storedRefresh)
   const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser)
+  const router = useRouter()
 
   const handleLogin = async (role, credentials) => {
     try {
@@ -20,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(tokens.refresh)
       saveAuthData(user, tokens)
       setIsAuthenticated(true)
-      return { succes: true, redirect}
+      return { success: true, redirect}
     } catch (err) {
       console.error(err)
       return { succes: false, error: err.response?.data?.error || 'An error occurred' }
@@ -33,12 +36,13 @@ export const AuthProvider = ({ children }) => {
     console.log('Role:', role)
     try {
       const { user, tokens, redirect } = await signup(role, userData)
+      console.log('Signup successful:', user, tokens, redirect)
       setUser(user)
       setAccessToken(tokens.access)
       setRefreshToken(tokens.refresh)
       saveAuthData(user, tokens)
       setIsAuthenticated(true)
-      return { succes: true, redirect}
+      return { success: true, redirect}
     } catch (err) {
       console.error(err)
       return { succes: false, error: err.response?.data?.error || 'An error occurred' }
@@ -46,6 +50,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = () => {
+    //route to login page
+    console.log('Logging out user:', user?.id)
+    router.navigate({ to: '/_auth/login' })
     clearAuthData()
     setUser(null)
     setAccessToken(null)

@@ -11,9 +11,6 @@ const defaultAvatar = '/assets/profile.png'
 
 const NavBar = ({ NavStatus }) => {
   const user = useUser()
-  // const userImage 
-  console.log(user)
-  // const { getUserById } = UserProfile()
 
 
   const renderUserMenu = () => (
@@ -21,7 +18,7 @@ const NavBar = ({ NavStatus }) => {
       {/* Profile Image */}
       <div className="h-[50px] w-[50px] overflow-hidden rounded-full border bg-white">
         <img
-          src={user?.image || defaultAvatar}
+          src={user?.profile_image || defaultAvatar}
           alt="Profile"
           onError={(e) => (e.target.src = defaultAvatar)}
           className="h-full w-full"

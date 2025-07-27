@@ -26,7 +26,7 @@ function Login() {
       reset()
       router.invalidate()
       if (redirect) router.history.push(redirect)
-      else router.navigate({ to: result.redirect || '/' })
+      else router.navigate({ to: result.redirect })
     } else {
       toast({
         variant: 'destructive',
