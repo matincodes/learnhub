@@ -117,3 +117,8 @@ export const adminGetCategories = async () => {
   const response = await api.get(`/admin/categories/`)
   return response
 }
+
+export const adminGetAllCourses = async () => {
+  const response = await api.get(`/admin/courses/`)
+  return response
+}
