@@ -1,15 +1,20 @@
 'use client'
 import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useAdmin } from '@/context/admin-context'
 
 function UploadFile() {
+  const { courseState, dispatchCourseAction } = useAdmin()
+  const { course_thumbnail } = courseState
   const fileInputRef = useRef(null)
-  const [selectedFile, setSelectedFile] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
 
   const handleFileChange = e => {
     if (e.target.files && e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0])
+      dispatchCourseAction({
+        type: 'COURSE_THUMBNAIL',
+        payload: e.target.files[0],
+      })
     }
   }
 
@@ -22,7 +27,10 @@ function UploadFile() {
     e.preventDefault()
     setIsDragging(false)
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setSelectedFile(e.dataTransfer.files[0])
+      dispatchCourseAction({
+        type: 'COURSE_THUMBNAIL',
+        payload: e.dataTransfer.files[0],
+      })
     }
   }
 
@@ -70,9 +78,9 @@ function UploadFile() {
           accept="image/*"
         />
 
-        {selectedFile && (
+        {course_thumbnail && (
           <p className="mt-3 text-sm text-gray-700">
-            Selected: {selectedFile.name}
+            Selected: {course_thumbnail.name}
           </p>
         )}
       </div>
