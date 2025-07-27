@@ -1,0 +1,11 @@
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/admin/_dashboardLayout/dashboard/users')(
+  {
+    component: RouteComponent,
+  },
+)
+
+function RouteComponent() {
+  return <div>Hello "/admin/_dashboardLayout/dashboard/users"!</div>
+}

@@ -1,6 +1,9 @@
+import { adminSignUp } from '@/api/adminApiService'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/auth-context'
+import { useAdmin } from '@/context/admin-context'
+
 import { useToast } from '@/hooks/use-toast'
+import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -11,6 +14,8 @@ export const Route = createFileRoute('/admin/_auth/signup')({
 })
 
 function SignUp() {
+  const { loadDashboard } = useAdmin()
+
   const {
     register,
     handleSubmit,
@@ -18,27 +23,31 @@ function SignUp() {
     // formState: { errors },
   } = useForm()
   const [isLoading, setIsLoading] = useState(false)
-  const { signup } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
 
   const onSubmit = async data => {
     setIsLoading(true)
 
-    
-    if (await signup('admin', data)) {
+    try {
+      const res = await adminSignUp(data)
+      const tokens = res?.data?.tokens
+      saveAdminAuthData(tokens)
       reset()
       router.invalidate()
       router.navigate({
-        to: '/',
+        to: '/admin/dashboard',
       })
-    } else {
-      setIsLoading(false)
+      loadDashboard()
+    } catch (error) {
+      console.log(error)
       return toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
         description: 'Signup failed, please try again.',
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -202,7 +211,7 @@ function SignUp() {
             <p className="font-san">
               Already have an account?&nbsp;
               <Link
-                to={`/login`}
+                to={`/admin/login`}
                 className="font-semibold text-normal_green underline"
               >
                 Log in
