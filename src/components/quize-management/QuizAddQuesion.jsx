@@ -15,24 +15,20 @@ function QuizAddQuesion() {
     if (quize_questions?.questions?.length) {
       return quize_questions.questions.map((q, i) => ({
         id: Date.now() + i,
-        title: `Section ${i + 1}`,
-        name: q.title,
+        title: `Question ${i + 1}`,
         mark: q.mark,
         attachment: q.thurmnail
           ? { preview: q.thurmnail } // restore base64 from context
           : null,
-        showAttachmentUI: false,
-        choices: q.choices || [],
+        choices: q.choices ,
       }))
     }
     return [
       {
         id: Date.now(),
-        title: 'Section 1',
-        name: '',
+        title: 'Question 1',
         mark: 0,
         attachment: null,
-        showAttachmentUI: false,
         choices: [
           { text: '', is_correct: false },
           { text: '', is_correct: false },
@@ -84,10 +80,8 @@ function QuizAddQuesion() {
       {
         id: newId,
         title: `Section ${prev.length + 1}`,
-        name: '',
         mark: 0,
         attachment: null,
-        showAttachmentUI: false,
         choices: [
           { text: '', is_correct: false },
           { text: '', is_correct: false },
@@ -99,10 +93,10 @@ function QuizAddQuesion() {
     setOpenSectionId(newId)
   }
 
-  const handleDeleteSection = id => {
-    setSections(prev => prev.filter(section => section.id !== id))
-    if (openSectionId === id) setOpenSectionId(null)
-  }
+  // const handleDeleteSection = id => {
+  //   setSections(prev => prev.filter(section => section.id !== id))
+  //   if (openSectionId === id) setOpenSectionId(null)
+  // }
 
   const toggleAttachmentUI = sectionId => {
     setSections(prev =>

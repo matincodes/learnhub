@@ -42,7 +42,7 @@ function Login() {
   }
 
   return (
-    <div className="">
+    <div className="max-h-screen">
       <div className="flex h-auto w-full">
         <div className="hidden h-auto w-[50%] lg:flex">
           {/* Logo */}

@@ -23,6 +23,7 @@ const initialState = {
   quize_passingCriteria: null,
   quize_thumbnail: '',
   quize_questions: [],
+  quize_preview:null,
 }
 
 // Reducer function
@@ -42,6 +43,8 @@ function reducer(state, action) {
       return { ...state, quize_questions: action.payload }
     case 'QUIZE_THUMNAIL':
       return { ...state, quize_thumbnail: action.payload }
+      case 'QUIZE_PREVIEW':
+      return { ...state, quize_preview: action.payload }
     default:
       return state
   }
@@ -150,6 +153,7 @@ export const AdminProvider = ({ children }) => {
         students,
         updatePassword,
         quizzes,
+        setQuizzes,
         loadQuizzes,
         state,
         dispatch,

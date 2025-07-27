@@ -85,7 +85,7 @@ function NewQuize({ handleSelect }) {
                     payload: e.target.value,
                   })
                 }
-                placeholder="20:00 Time frame"
+                placeholder="20 Time frame"
                 className="outline-0"
               />
               <img
@@ -99,20 +99,16 @@ function NewQuize({ handleSelect }) {
             <p className="mt-6 font-san text-base font-normal text-black">
               Passing Criteria
             </p>
+            <input
+          value={quize_passingCriteria}
+          onChange={e =>
+            dispatch({ type: 'QUIZE_PASSING_CRITERIA', payload: e.target.value })
+          }
+          className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          placeholder="50"
+        />
 
-            <DropdownSelect
-              className="w-full"
-              options={passingCriteria}
-              value={quize_passingCriteria}
-              defaultLabel={`${quize_passingCriteria ? quize_passingCriteria : 'Select Passing Score'}`}
-              onSelect={value =>
-                dispatch({
-                  type: 'QUIZE_PASSING_CRITERIA',
-                  payload: value.name,
-                })
-              }
-              labelColor="text-[#AAAAAA]"
-            />
+           
           </div>
         </div>
       </div>

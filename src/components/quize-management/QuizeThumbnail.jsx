@@ -1,4 +1,5 @@
 'use client'
+
 import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAdmin } from '@/context/admin-context'
@@ -7,23 +8,33 @@ function QuizeThumbnail() {
   const { dispatch, state } = useAdmin()
   const fileInputRef = useRef(null)
   const [isDragging, setIsDragging] = useState(false)
-  const { quize_thumbnail } = state
-
+  const { quize_thumbnail, quize_preview } = state
+  console.log(quize_thumbnail)
   const handleUploadClick = e => {
     e.stopPropagation()
     fileInputRef.current?.click()
   }
 
-  const handleDrop = e => {
+  const convertToBase64 = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = error => reject(error)
+    })
+  }
+
+  const handleDrop = async e => {
     e.preventDefault()
     setIsDragging(false)
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const droppedFile = e.dataTransfer.files[0]
+      const base64 = await convertToBase64(droppedFile)
       dispatch({
         type: 'QUIZE_THUMNAIL',
-        payload: droppedFile,
+        payload: base64,
       })
-      // Optionally clear dragged files
       e.dataTransfer.clearData()
     }
   }
@@ -35,6 +46,21 @@ function QuizeThumbnail() {
 
   const handleDragLeave = () => {
     setIsDragging(false)
+  }
+
+  const handleFileChange = async e => {
+    const file = e.target.files[0]
+    const preview = URL.createObjectURL(file)
+    if (file) {
+      dispatch({
+        type: 'QUIZE_THUMNAIL',
+        payload: file,
+      })
+      dispatch({
+        type: 'QUIZE_PREVIEW',
+        payload: preview,
+      })
+    }
   }
 
   return (
@@ -67,20 +93,20 @@ function QuizeThumbnail() {
         <input
           type="file"
           ref={fileInputRef}
-          onChange={e =>
-            dispatch({
-              type: 'QUIZE_THUMNAIL',
-              payload: e.target.files[0],
-            })
-          }
+          onChange={handleFileChange}
           className="hidden"
           accept="image/*"
         />
 
-        {quize_thumbnail && (
-          <p className="mt-3 text-sm text-gray-700">
-            Selected: {quize_thumbnail.name}
-          </p>
+        {quize_preview && (
+          <div className="mt-3 text-center">
+            <p className="text-sm text-gray-700">Preview:</p>
+            <img
+              src={quize_preview}
+              alt="Thumbnail Preview"
+              className="mt-2 max-h-[200px] w-auto rounded"
+            />
+          </div>
         )}
       </div>
     </div>

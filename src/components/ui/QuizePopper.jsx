@@ -4,21 +4,39 @@ import { toast } from '@/hooks/use-toast'
 import { useState } from 'react'
 
 const QuizePopper = ({ id }) => {
-  const { loadQuizzes } = useAdmin()
+  const { setQuizzes } = useAdmin()
   const [isLoading, setIsLoading] = useState(false)
   const handleDelete = async () => {
     if (!id) return
     setIsLoading(true)
+
+    let deletedQuiz = null
+
     try {
+      setQuizzes(prevQuizzes =>
+        prevQuizzes.filter(quiz => {
+          if (quiz.id === id) {
+            deletedQuiz = quiz
+          }
+          return quiz.id !== id
+        }),
+      )
+
       await adminDeleteQuiz(id)
       toast({
-        variant: 'destructive',
         title: 'Quize deleted successfully.',
         description: 'Quize deletedsuccessfully.',
       })
-      loadQuizzes()
+      // loadQuizzes()
     } catch (error) {
       console.log(error)
+      // Rollback the state change if deletion fails
+      setQuizzes(prevQuizzes => {
+        if (deletedQuiz) {
+          return [...prevQuizzes, deletedQuiz]
+        }
+        return prevQuizzes
+      })
       return toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',
