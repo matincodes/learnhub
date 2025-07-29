@@ -71,6 +71,7 @@ const initialCourseState = {
           item_type: 'video',
           item_title: 'Welcome to the course',
           item_url: 'https://example.com/video.mp4',
+          item_file: null
         },
         // more items...
       ],
