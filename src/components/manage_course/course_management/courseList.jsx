@@ -10,20 +10,23 @@ function CourseList() {
 
   useEffect(() => {
     let ignore = false
-    setCourses([])
-    setLoading(true)
 
     const fetchCourses = async () => {
+      setLoading(true)
       try {
         const response = await adminGetAllCourses()
         if (!ignore) {
           setCourses(response.data)
-          console.log('Fetched courses:', response.data)
         }
       } catch (error) {
         console.error('Error fetching courses:', error)
+        if (!ignore) {
+          setCourses([]) // fallback for failed fetch
+        }
       } finally {
-        setLoading(false)
+        if (!ignore) {
+          setLoading(false)
+        }
       }
     }
 
@@ -47,12 +50,11 @@ function CourseList() {
     )
   }
 
-  if (courses.length === 0) {
+  if (!loading && courses.length === 0) {
     return (
       <div className="mt-[120px] h-[464px] w-full bg-white px-4 py-3">
         <Filter />
         <div className="mt-7 flex h-full w-full items-center justify-center">
-          {/* No courses available message */}
           <div className="items-center text-center text-gray-500">
             No courses available
           </div>
