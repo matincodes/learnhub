@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       saveAuthData(user, tokens)
       setIsAuthenticated(true)
       console.log(tokens)
-      return { succes: true, redirect}
+      return { success: true, redirect}
     } catch (err) {
       console.error(err)
       return { succes: false, error: err.response?.data?.error || 'An error occurred' }
