@@ -39,10 +39,10 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(tokens.refresh)
       saveAuthData(user, tokens)
       setIsAuthenticated(true)
-      return { succes: true, redirect}
+      return { success: true, redirect}
     } catch (err) {
       console.error(err)
-      return { succes: false, error: err.response?.data?.error || 'An error occurred' }
+      return { success: false, error: err.response?.data?.error || 'An error occurred' }
     }
   }
 
