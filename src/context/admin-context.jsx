@@ -64,13 +64,13 @@ const initialCourseState = {
   course_sections: [
     {
       section_id: 'section-1',
-      section_title: 'Introduction',
+      section_title: '',
       section_items: [
         {
           item_id: 'item-1',
-          item_type: 'video',
-          item_title: 'Welcome to the course',
-          item_url: 'https://example.com/video.mp4',
+          item_type: '',
+          item_title: '',
+          item_url: '',
           item_file: null
         },
         // more items...
