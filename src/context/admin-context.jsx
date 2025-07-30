@@ -109,6 +109,7 @@ function courseReducer(state, action) {
                 item_type: '',
                 item_title: '',
                 item_url: '',
+                item_file: null,
               },
             ],
           },
