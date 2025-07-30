@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
       return { success: true, redirect}
     } catch (err) {
       console.error(err)
-      return { succes: false, error: err.response?.data?.error || 'An error occurred' }
+      return { success: false, error: err.response?.data?.error || 'An error occurred' }
     }
   }
 
