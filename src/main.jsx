@@ -5,10 +5,10 @@ import './index.css'
 
 import NotFound from '@/components/notFound/notFound'
 // Import the generated route tree
-import { routeTree } from './routeTree.gen'
 import { AuthProvider, useAuth } from '@/context/auth-context'
-import { UserProvider } from './context/user-context'
 import { AdminProvider } from './context/admin-context'
+import { UserProvider } from './context/user-context'
+import { routeTree } from './routeTree.gen'
 
 // Create a new router instance
 const router = createRouter({
@@ -32,13 +32,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AdminProvider>
-        <UserProvider>
-          <AuthProvider>
+      <AuthProvider>
+        <AdminProvider>
+          <UserProvider>
             <App />
-          </AuthProvider>
-        </UserProvider>
-      </AdminProvider>
+          </UserProvider>
+        </AdminProvider>
+      </AuthProvider>
     </StrictMode>,
   )
 }
