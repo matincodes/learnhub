@@ -81,7 +81,7 @@ function App() {
                className="w-fit border-2 border-normal_green bg-normal_green px-[25px] py-[25px] font-san text-[16px] text-white"
                asChild
              >
-               <Link to="/sigup"> View All Courses </Link>
+               <Link to="/signup"> View All Courses </Link>
              </Button>
              <Button
                className="w-fit border-2 border-normal_green px-[25px] py-[25px] font-san text-[16px] text-normal_green"
