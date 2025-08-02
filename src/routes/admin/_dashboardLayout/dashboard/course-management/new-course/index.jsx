@@ -10,7 +10,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   return (
-    <div className="h-screen w-full px-16">
+    <div className="min-h-screen w-full px-16">
       <Nav />
       <CreateCourse />
     </div>
