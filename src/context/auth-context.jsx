@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 import { login, signup, refreshAccessToken } from '@/api/authService'
 import { saveAuthData, getAuthData, clearAuthData } from '@/lib/tokenStorage'
-// routing from tanstack router
 import { useRouter } from '@tanstack/react-router'
+
 
 const AuthContext = createContext()
 
@@ -52,12 +52,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     //route to login page
     console.log('Logging out user:', user?.id)
-    router.navigate({ to: '/_auth/login' })
     clearAuthData()
     setUser(null)
     setAccessToken(null)
     setRefreshToken(null)
     setIsAuthenticated(false)
+    router.navigate({ to: '/login' })
   }
 
   const secureRequest = async (axiosRequest) => {

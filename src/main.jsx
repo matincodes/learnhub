@@ -32,11 +32,14 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AuthProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </AuthProvider>
+      <AdminProvider>
+        <AuthProvider>
+          <UserProvider>
+              <App />
+          </UserProvider>
+        </AuthProvider>
+      </AdminProvider>
+      
     </StrictMode>,
   )
 }
