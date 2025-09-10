@@ -15,6 +15,7 @@ import {
   useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { UserProfile } from '@/context/user-context'
 
 export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
@@ -32,7 +33,7 @@ export const Route = createFileRoute('/checkout')({
 
 export const Checkout = () => {
   const router = useRouter()
-  const user = useRouteContext({ select: s => s.user })
+  const { getUserById } = UserProfile()
 
   return (
     <div className="flex h-screen flex-col font-san lg:flex-row">
@@ -55,14 +56,14 @@ export const Checkout = () => {
                   Full name :
                 </label>
                 <span>
-                  {user.firstName}&nbsp;{user.lastName}
+                  {getUserById?.first_name}&nbsp;{getUserById.last_name}
                 </span>
               </div>
               <div className="flex items-end gap-4">
                 <label className="font-medium text-[#303031]">
                   Email address :
                 </label>
-                <span>{user.email}</span>
+                <span>{getUserById?.email}</span>
               </div>
             </div>
           </div>
