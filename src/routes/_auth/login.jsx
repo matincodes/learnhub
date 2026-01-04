@@ -3,20 +3,31 @@ import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/login')({
+  validateSearch: (search) => ({
+    redirect: search.redirect || undefined,
+  }),
   component: Login,
 })
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, reset } = useForm()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
   const redirect = Route.useSearch({ select: s => s.redirect })
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.invalidate().then(() => {
+        router.navigate({ to: redirect || '/' })
+      })
+    }
+  }, [isAuthenticated, router, redirect])
 
   const onSubmit = async data => {
     setIsLoading(true)
@@ -24,9 +35,11 @@ function Login() {
 
     if (result.success) {
       reset()
-      router.invalidate()
-      if (redirect) router.history.push(redirect)
-      else router.navigate({ to: result.redirect })
+      toast({
+        variant: 'success',
+        title: 'Login Successful',
+        description: 'You have been logged in successfully.',
+      })
     } else {
       toast({
         variant: 'destructive',

@@ -1,12 +1,12 @@
 
 const SearchCourseCard = ({ image, title, lesson, duration }) => {
   return (
-    <div className="flex flex-col space-y-1 lg:w-[350px]">
-      <div className="h-[120px] w-full sm:h-[141px] ">
+    <div className="flex flex-col space-y-1 lg:w-[270px]">
+      <div className="h-[141px] w-full overflow-hidden rounded-t-lg bg-gray-100">
         <img
           src={image}
-          className="h-full w-full rounded-t-lg object-cover "
-          alt=""
+          alt={title || 'course image'}
+          className="w-full h-full object-cover"
         />
       </div>
       <p className="lg:text-[15px] text-[12px] font-[700] text-[#101828] ">{title}</p>

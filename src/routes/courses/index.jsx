@@ -89,7 +89,7 @@ function Course() {
           courses.length > 0 ? 'min-h-[60vh]' : 'h-[60vh]' // Use min-h for content
         } `}
       >
-        <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-3 lg:gap-9 lg:p-4">
+        <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-4 lg:gap-4 lg:p-4">
     
           {loading ? (
             <p>Loading courses...</p> // You can replace this with a spinner or skeleton loaders

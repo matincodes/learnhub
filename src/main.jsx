@@ -7,7 +7,7 @@ import NotFound from '@/components/notFound/notFound'
 // Import the generated route tree
 import { AuthProvider, useAuth } from '@/context/auth-context'
 import { AdminProvider } from './context/admin-context'
-import { UserProvider } from './context/user-context'
+import { UserProvider} from './context/user-context'
 import { routeTree } from './routeTree.gen'
 
 // Create a new router instance
@@ -39,14 +39,12 @@ if (!rootElement.innerHTML) {
           </UserProvider>
         </AuthProvider>
       </AdminProvider>
-      
     </StrictMode>,
   )
 }
 
 export function App() {
   const auth = useAuth()
-  console.log('Auth context:', auth)
-
+  console.log('Auth context in App:', auth)
   return <RouterProvider router={router} context={{ ...auth }} />
 }

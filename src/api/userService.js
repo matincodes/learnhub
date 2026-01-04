@@ -1,17 +1,33 @@
-// import { useUser } from '@/hooks/use-user'
-// import axiosInstance from './axiosInstance'
-// const userEndpoints = {
-//   profileByid: id => `/student/profile/${id}/`,
-// }
+// @/services/userService.js
+import axiosInstance from '@/api/axiosInstance'
 
-// export const getUserProfile = async (userId) => {
+const endpoints = {
+  profile: (id) => `student/profile/${id}/`,
+  updateProfile: (id) => `student/profile/${id}/`,
+  changePassword: 'student/settings/change-password/',
+}
 
-//   const token = localStorage.getItem('accessToken')
-//   const { data } = await axiosInstance.get(userEndpoints.profileByid(5), {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//   console.log(data)
-//   return data
-// }
+export const userService = {
+  fetchProfile: async (userId, token) => {
+    const response = await axiosInstance.get(endpoints.profile(userId), {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return response.data
+  },
+
+  updateProfile: async (userId, updates, token) => {
+    const response = await axiosInstance.patch(endpoints.updateProfile(userId), updates, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return response.data
+  },
+
+  changePassword: async (data, token) => {
+    const response = await axiosInstance.post(endpoints.changePassword, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    return response.data
+  }
+}
+
+export default userService

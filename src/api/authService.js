@@ -39,7 +39,7 @@ export const signup = async (role, userData) => {
     console.log('Signup successful response:', data);
 
     // Optional: Add a check to ensure the response structure is as expected
-    if (!data || !data.user_data || !data.user_data.tokens) {
+    if (!data || !data.user_data) {
         console.error("Signup response missing expected fields:", data);
         // Throw a specific error if the successful response is malformed
         throw new Error("Received invalid data structure from server.");
@@ -49,20 +49,23 @@ export const signup = async (role, userData) => {
 
     // Return the formatted data on success
     return {
+      success: true,
       user: {
         id: userDataResponse.id,
         firstName: userDataResponse.first_name,
         lastName: userDataResponse.last_name,
         email: userDataResponse.email,
-      },
-      tokens: userDataResponse.tokens,
-      redirect: data.redirect_url,
+      }
     };
 
   } catch (error) {
-    // --- Error handling logic goes in the catch block ---
-    console.error('Signup API call failed:', error.response.data); // Log the error object
+    const errorMessage = error.response?.data || error.message || 'An error occurred during signup';
 
+    console.error('Signup failed:', errorMessage);
+    return {
+      success: false,
+      error: errorMessage
+    };
    
   }
 };

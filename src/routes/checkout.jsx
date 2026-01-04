@@ -31,125 +31,12 @@ export const Route = createFileRoute('/checkout')({
   },
 })
 
-export const Checkout = () => {
-  const router = useRouter()
-  const { getUserById } = UserProfile()
-
-  return (
-    <div className="flex h-screen flex-col font-san lg:flex-row">
-      <div className="w-full space-y-14 bg-white lg:mx-28 lg:mt-14">
-        <div className="">
-          <button
-            onClick={() => router.history.back()}
-            className="text-gray-500 underline hover:text-gray-700"
-          >
-            Go back
-          </button>
-        </div>
-        <div className="space-y-12">
-          <h1 className="text-3xl font-semibold">Checkout</h1>
-          <div>
-            <h2 className="mb-2 text-lg font-medium">Personal Details</h2>
-            <div className="space-y-2">
-              <div className="flex items-end gap-4">
-                <label className="font-medium text-[#303031]">
-                  Full name :
-                </label>
-                <span>
-                  {getUserById?.first_name}&nbsp;{getUserById.last_name}
-                </span>
-              </div>
-              <div className="flex items-end gap-4">
-                <label className="font-medium text-[#303031]">
-                  Email address :
-                </label>
-                <span>{getUserById?.email}</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h2 className="mb-2 text-xl font-medium">Subscription Details</h2>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label
-                  htmlFor="months"
-                  className="block text-sm font-medium text-[#303031]"
-                >
-                  Select number of months
-                </label>
-
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="subscription" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white">
-                    <SelectItem value="1_month">1 Month</SelectItem>
-                    <SelectItem value="1_year">1 Year</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <img
-                    src="/monthly-plan.png"
-                    alt="Monthly Plan"
-                    className="h-12 w-auto"
-                  />
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-base font-medium text-gray-900">
-                    Monthly Plan
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    With this plan you will have access to all courses and
-                    dashboard for selected months month
-                  </p>
-                  <p className="text-base font-medium text-gray-900">
-                    NGN 20,000 / 1 month
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="w-full space-y-12 px-14 lg:h-screen lg:max-w-md lg:bg-gray-100 lg:pt-32">
-        <h2 className="text-3xl font-semibold">Summary</h2>
-        <div>
-          <h3 className="mb-2 text-xl font-medium">Payment Overview</h3>
-          <div className="space-y-2">
-            <div className="flex items-end gap-4">
-              <label className="font-medium text-[#303031]">Duration :</label>
-              <span>1 Month</span>
-            </div>
-            <div className="flex items-end gap-4">
-              <label className="font-medium text-[#303031]">
-                Total Price :
-              </label>
-              <span>NGN 20,000</span>
-            </div>
-          </div>
-        </div>
-        <button
-          type="button"
-          className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-        >
-          Checkout with Paystack
-          <img
-            src="/assets/download__4__1-removebg-preview 1.png"
-            alt="Monthly Plan"
-            className="h-12 w-auto"
-          />
-        </button>
-      </div>
-    </div>
-  )
-}
 
 function CheckoutPage() {
   const [selectedYear, setselectedYear] = useState("1");
   const [totalPrice, setTotalPrice] = useState(null);
   const plan = localStorage.getItem('plan');
+  const { userProfile } = UserProfile()
 
   useEffect(() => {
     const MONTHLY_RATE = 20000;
@@ -192,11 +79,11 @@ function CheckoutPage() {
               <div className="space-y-2">
                 <div className='text-[#303031]'>
                   <span className="text-lg font-semibold">Full name: </span>
-                  <span className="text-sm">Abiola Elizabeth</span>
+                  <span className="text-sm">{userProfile?.first_name}&nbsp;{userProfile?.last_name}</span>
                 </div>
                 <div className='text-[#303031]'>
                   <span className="text-lg font-semibold">Email address: </span>
-                  <span className="text-sm">Abiolaelizabethxh0@gmail.com</span>
+                  <span className="text-sm">{userProfile?.email}</span>
                 </div>
               </div>
             </div>
@@ -204,7 +91,7 @@ function CheckoutPage() {
             <div>
               <h2 className="mb-4 text-2xl font-medium mt-11">Subscription Details</h2>
               <div className="space-y-4">
-                <div>
+                {/* <div>
                   <label className="text-sm font-semibold text-gray-600">
                     {plan === 'Year' ? 'Select number of years' : 'Select number of months'}
                   </label>
@@ -228,11 +115,11 @@ function CheckoutPage() {
                       )}
                     </SelectContent>
                   </Select>
-                </div>
+                </div> */}
 
                 <Card>
                   <CardContent className="flex items-start gap-4 p-0">
-                    <div className="h-16 w-64 overflow-hidden rounded-lg bg-gray-100">
+                    <div className="h-24 w-72 overflow-hidden rounded-lg bg-gray-100">
                       <img
                         src="/assets/monthly plan 1.png"
                         alt={`${plan}ly Plan`}

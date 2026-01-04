@@ -8,6 +8,7 @@ import { Courses } from '@/data/courses'
 import CourseOption from '@/components/options/options'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import { useUser } from '@/hooks/use-user'
+import { UserProfile } from '@/context/user-context'
 
 import {
   cardSectionOne,
@@ -45,7 +46,8 @@ function App() {
   const stopNav = useRef(null)
   const [courseOption, setCourseOption] = useState('Frontend Development')
   const user = useUser()
-
+  console.log('User in Home Page:', user)
+  UserProfile();
 
   // For Filtering Courses
   const getOptionValue = e => {

@@ -7,7 +7,7 @@ import { Link, useLocation } from '@tanstack/react-router'
 // import { useNavigate } from 'react-router-dom'
 
 const SideNav = () => {
-  const { getUserById } = UserProfile()
+  const { userProfile } = UserProfile()
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
   // const navigate = useNavigate()
   const { logout } = useAuth()
@@ -25,7 +25,7 @@ const SideNav = () => {
               <div className="grid basis-[50%] place-content-center">
                 <div className="h-[60px] w-[60px] overflow-hidden rounded-full">
                   <img
-                    src={getUserById?.profile_image || '/assets/profile.png'}
+                    src={userProfile?.profile_image || '/assets/profile.png'}
                     alt="profile image"
                     className="object-cover"
                   />
@@ -33,7 +33,7 @@ const SideNav = () => {
               </div>
               <div className="flex w-full flex-col justify-center">
                 <p className="font-semibold text-sm">
-                  { getUserById?.first_name} { getUserById?.last_name}
+                  {userProfile?.first_name} {userProfile?.last_name}
                 </p>
                 <p className="text-sm sm:text-sm">
                   {pathname.includes('/admin/dashboard') && role === 'admin'

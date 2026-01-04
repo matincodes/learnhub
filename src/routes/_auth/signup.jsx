@@ -2,9 +2,10 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { Loader2, CheckCircle2Icon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export const Route = createFileRoute('/_auth/signup')({
   component: SignUp,
@@ -13,14 +14,17 @@ export const Route = createFileRoute('/_auth/signup')({
 function SignUp() {
   const { register, handleSubmit, reset } = useForm()
   const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+
   const { signup } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
 
+  const REDIRECT_DELAY_MS = 120000 // 2 minutes
+  const [remainingMs, setRemainingMs] = useState(REDIRECT_DELAY_MS)
+
   const onSubmit = async data => {
     setIsLoading(true)
-
-    console.log('Form data:', data)
 
     // Client-side check for password match
     if (data.password !== data.confirm_password) {
@@ -37,9 +41,8 @@ function SignUp() {
 
     if (result.success) {
       console.log('Signup successful')
+      setIsSuccess(true)
       reset()
-      router.invalidate()
-      router.navigate({ to: '/pricing' })
     } else {
       toast({
         variant: 'destructive',
@@ -49,6 +52,60 @@ function SignUp() {
     }
 
     setIsLoading(false)
+  }
+
+  const formatTime = ms => {
+    const totalSeconds = Math.floor(ms / 1000)
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds % 60
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  useEffect(() => {
+    if (!isSuccess) return
+
+    const start = Date.now()
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start
+      const remaining = Math.max(REDIRECT_DELAY_MS - elapsed, 0)
+      setRemainingMs(remaining)
+
+      if (remaining - elapsed <= 0) {
+        clearInterval(interval)
+        router.navigate({ to: '/' })
+      }
+    }, 250)
+
+    return () => clearInterval(interval)
+  }, [isSuccess, router])
+
+
+  if (isSuccess) {
+    return (
+      <div className="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 mt-20">
+        <div className="flex flex-col items-center text-center space-y-6 p-6 bg-white rounded-lg shadow-md font-san">
+          {/* Large centered icon */}
+          <CheckCircle2Icon className="h-28 w-28 text-green-500" />
+
+          {/* Bigger heading */}
+          <h2 className="text-3xl sm:text-4xl font-semibold">
+            Signup Successful!
+          </h2>
+
+          {/* Description */}
+          <p className="text-sm text-gray-600 max-w-lg">
+            Your account has been created successfully. Please check your email
+            to verify your account.
+          </p>
+
+          {/* Countdown */}
+          <p className="text-sm text-gray-500">
+            Redirecting to home in <span className="font-medium">{formatTime(remainingMs)}</span>
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -110,6 +167,7 @@ function SignUp() {
                     className="font-san tracking-wide text-[#303031]"
                   >
                     First name
+                    <span className='text-red-600'>*</span>
                   </label>
                   <input
                     {...register('first_name', { required: true })}
@@ -125,11 +183,12 @@ function SignUp() {
                     className="font-san tracking-wide text-[#303031]"
                   >
                     Last name
+                    <span className='text-red-600'>*</span>
                   </label>
                   <input
                     {...register('last_name', { required: true })}
                     id="last_name"
-                    placeholder="Enter email address"
+                    placeholder="Enter last name"
                     className="rounded-md border border-[#84848481] p-[12px] font-san text-[#AAAAAA]"
                   />
                 </div>
@@ -143,6 +202,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Email address
+                  <span className='text-red-600'>*</span>
                 </label>
                 <input
                   type="email"
@@ -161,6 +221,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Password
+                  <span className='text-red-600'>*</span>
                 </label>
                 <input
                   type="password"
@@ -179,6 +240,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Confirm password
+                  <span className='text-red-600'>*</span>
                 </label>
                 <input
                   type="password"

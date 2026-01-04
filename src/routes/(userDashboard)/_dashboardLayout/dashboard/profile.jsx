@@ -18,7 +18,7 @@ function Profile() {
   const lastNameRef = useRef()
   const emailRef = useRef()
  
-  const { getUserById , loading , updateUserProfile} = UserProfile()
+  const { userProfile, loading , updateUserProfile} = UserProfile()
 
 
   // Change Image
@@ -27,6 +27,7 @@ function Profile() {
     const image = userprofile.current.files[0];
     if (image) {
       setProfileImageFile(image); // <-- Store the actual file
+      console.log(image);
       setProfileImageUrl(URL.createObjectURL(image)); // <-- Create a temporary URL for preview
     }
   }
@@ -56,6 +57,7 @@ function Profile() {
     if (lastName) formData.append('last_name', lastName);
     if (email) formData.append('email', email);
     if (profileImageFile) {
+      console.log('Profile Image File:', profileImageFile);
         formData.append('profile_image', profileImageFile);
     }
   
@@ -63,10 +65,6 @@ function Profile() {
     updateUserProfile(formData); // Send only the fields that are filled in
   }
   
-  
-  const handleInputTextChange = () =>{
-
-  }
   
 
 
@@ -88,13 +86,13 @@ function Profile() {
           <div className="flex flex-col items-center justify-center space-y-2">
             <div className="grid h-[100px] w-[100px] justify-center overflow-hidden rounded-full ">
               <img
-                src={profileImageUrl || getUserById?.profile_image || '/assets/profile.png'}
+                src={profileImageUrl || userProfile?.profile_image || '/assets/profile.png'}
                 alt=""
                 className="w-full object-cover bg-red-500"
               />
             </div>
             <p className="text-center font-san text-[18px] font-medium">
-              {getUserById?.first_name} {getUserById?.last_name}
+              {userProfile?.first_name} {userProfile?.last_name}
             </p>
           </div>
           {/* Image and name */}
@@ -105,13 +103,13 @@ function Profile() {
               <p className="text-[13px] font-[500] text-[#989494]">
                 Course Completed
               </p>
-              <h2 className="text-[20px] font-bold">{getUserById?.completed_courses}</h2>
+              <h2 className="text-[20px] font-bold">{userProfile?.completed_courses}</h2>
             </div>
             <div className="lg:basis-[45%] space-y-2 rounded-2xl border p-2 font-san">
               <p className="text-[13px] font-[500] text-[#989494]">
                 On Going Courses
               </p>
-              <h2 className="text-[20px] font-bold">{getUserById?.ongoing_courses}</h2>
+              <h2 className="text-[20px] font-bold">{userProfile?.ongoing_courses}</h2>
             </div>
           </div>
           {/* Cards */}
@@ -161,7 +159,7 @@ function Profile() {
         <div className="relative flex items-center justify-center">
           <div className="lg:absolute grid h-[200px] w-[200px] justify-center overflow-hidden rounded-full ">
             <img
-              src={profileImageUrl || getUserById?.profile_image || '/assets/profile.png'}
+              src={profileImageUrl || userProfile?.profile_image || '/assets/profile.png'}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -192,11 +190,10 @@ function Profile() {
             </label>
             <div className="basis-full flex justify-between gap-4">
             <input
-              id="lastName"
-              placeholder={getUserById?.first_name}
+              id="firstName"
+              defaultValue={userProfile?.first_name}
               type="text"
-              ref={lastNameRef}
-              onChange={() => handleInputTextChange(lastNameRef)}
+              ref={firstNameRef}
               // readOnly = {inputFocusState}
               className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
@@ -206,7 +203,7 @@ function Profile() {
           {/* LastName */}
           <div className="grid space-y-3">
             <label
-              htmlFor="firstName"
+              htmlFor="lastName"
               className="font-san text-[17px] lg:font-medium tracking-wide text-[#000] lg:basis-0 basis-[40%] lg:p-0 pb-3"
             >
               Last Name
@@ -215,10 +212,9 @@ function Profile() {
             <div className="basis-full flex justify-between gap-4">
             <input
               id="lastName"
-              placeholder={getUserById?.last_name}
+              defaultValue={userProfile?.last_name}
               type="text"
-              ref={firstNameRef}
-              onChange={() => handleInputTextChange(firstNameRef)}
+              ref={lastNameRef}
               // readOnly = {inputFocusState}
               className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
@@ -238,10 +234,9 @@ function Profile() {
           <div className="basis-full flex justify-between gap-4">
             <input
               id="email"
-              placeholder={getUserById?.email}
+              defaultValue={userProfile?.email}
               type="email"
               ref={emailRef}
-              onChange={() => handleInputTextChange(emailRef)}
               // readOnly = {inputFocusState}
               className="w-full font-san lg:text-[20px] text-[17px] lg:font-medium placeholder:text-[#000] placeholder:text-[#aaaa] font-semibold lg:text-[#AAAAAA] outline-none] p-2 rounded-xl flex items-center"
             />
