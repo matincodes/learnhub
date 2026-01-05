@@ -11,17 +11,6 @@ export const Route = createFileRoute('/admin/_auth/login')({
   component: Login,
 })
 
-// Validation helper
-const validateLoginForm = data => {
-  if (!data.email?.trim()) {
-    return { valid: false, error: 'Email is required' }
-  }
-  if (!data.password) {
-    return { valid: false, error: 'Password is required' }
-  }
-  return { valid: true }
-}
-
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, reset } = useForm()
@@ -32,17 +21,6 @@ function Login() {
     async data => {
       // Prevent double submission
       if (isLoading) return
-
-      // Validate form before submission
-      const validation = validateLoginForm(data)
-      if (!validation.valid) {
-        toast({
-          variant: 'destructive',
-          title: 'Validation Error',
-          description: validation.error,
-        })
-        return
-      }
 
       setIsLoading(true)
       try {
