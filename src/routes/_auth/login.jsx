@@ -46,9 +46,8 @@ function Login() {
           })
 
           const destination = redirect || result.redirect || '/'
-          router.invalidate().then(() => {
-            router.navigate({ to: destination })
-          })
+          await router.invalidate()
+          await router.navigate({ to: destination })
         } else {
           toast({
             variant: 'destructive',

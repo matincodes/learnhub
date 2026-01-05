@@ -60,7 +60,7 @@ function SignUp() {
         saveAdminAuthData(tokens)
         reset()
         await router.invalidate()
-        router.navigate({ to: '/admin/dashboard' })
+        await router.navigate({ to: '/admin/dashboard' })
         loadDashboard()
       } catch (error) {
         toast({

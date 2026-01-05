@@ -91,16 +91,14 @@ function VerifyRoute() {
     return `${seconds}s`
   }
 
-  const handleRetry = useCallback(() => {
+  const handleRetry = useCallback(async () => {
     // Navigate to self with same token to trigger re-verification
-    router.invalidate().then(() =>
-      router.navigate({
-        to: '/_auth/verify',
-        search: s => ({ ...s, token }),
-      }),
-    )
+    await router.invalidate()
+    await router.navigate({
+      to: '/_auth/verify',
+      search: s => ({ ...s, token }),
+    })
   }, [router, token])
-
   // --- UI ---
   if (status === 'no-token') {
     return (
