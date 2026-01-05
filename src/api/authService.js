@@ -78,11 +78,37 @@ export const refreshAccessToken = async (refreshToken) => {
 // Verify email / account using the token sent via email
 export const verifyEmail = async (token) => {
   try {
-    const { data } = await axiosInstance.get(`/email-verify/?token=${token}`)
+    const { data } = await axiosInstance.get(`/verify/?token=${token}`)
     return { success: true, data }
   } catch (error) {
     const err = error.response?.data || error.message || 'Verification failed'
     console.error('Email verification failed:', err)
+    return { success: false, error: err }
+  }
+}
+
+export const requestPasswordReset = async (email) => {
+  try {
+    const { data } = await axiosInstance.post('student/request-password-reset/', { email })
+    return { success: true, data }
+  } catch (error) {
+    const err = error.response?.data || error.message || 'Password reset request failed'
+    console.error('Password reset request failed:', err)
+    return { success: false, error: err }
+  }
+}
+
+export const     confirmResetPassword = async (id, token, newPassword) => {
+  try {
+    const { data } = await axiosInstance.post('student/reset-password/', {
+      id,
+      token,
+      new_password: newPassword,
+    })
+    return { success: true, data }
+  } catch (error) {
+    const err = error.response?.data || error.message || 'Password reset failed'
+    console.error('Password reset failed:', err)
     return { success: false, error: err }
   }
 }

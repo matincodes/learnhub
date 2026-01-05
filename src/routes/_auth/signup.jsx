@@ -43,6 +43,11 @@ function SignUp() {
       console.log('Signup successful')
       setIsSuccess(true)
       reset()
+      toast({
+        variant: 'success',
+        title: 'Signup Successful',
+        description: 'You have been signed up successfully.',
+      })
     } else {
       toast({
         variant: 'destructive',

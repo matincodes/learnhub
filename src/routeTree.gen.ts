@@ -51,6 +51,8 @@ import { Route as userDashboardDashboardLayoutDashboardMyCoursesIdLearnLectureLe
 
 const AdminRouteImport = createFileRoute('/admin')()
 const userDashboardRouteImport = createFileRoute('/(userDashboard)')()
+const ResetPasswordLazyRouteImport = createFileRoute('/reset-password')()
+const ForgotPasswordLazyRouteImport = createFileRoute('/forgot-password')()
 const IndexLazyRouteImport = createFileRoute('/')()
 
 const AdminRoute = AdminRouteImport.update({
@@ -62,6 +64,20 @@ const userDashboardRoute = userDashboardRouteImport.update({
   id: '/(userDashboard)',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordLazyRoute = ResetPasswordLazyRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/reset-password.lazy').then((d) => d.Route),
+)
+const ForgotPasswordLazyRoute = ForgotPasswordLazyRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/forgot-password.lazy').then((d) => d.Route),
+)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -288,6 +304,8 @@ export interface FileRoutesByFullPath {
   '/': typeof userDashboardDashboardLayoutRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/pricing': typeof PricingRoute
+  '/forgot-password': typeof ForgotPasswordLazyRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/verify': typeof AuthVerifyRoute
@@ -325,6 +343,8 @@ export interface FileRoutesByTo {
   '/': typeof userDashboardDashboardLayoutRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/pricing': typeof PricingRoute
+  '/forgot-password': typeof ForgotPasswordLazyRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/verify': typeof AuthVerifyRoute
@@ -364,6 +384,8 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/pricing': typeof PricingRoute
+  '/forgot-password': typeof ForgotPasswordLazyRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
   '/(userDashboard)': typeof userDashboardRouteWithChildren
   '/(userDashboard)/_dashboardLayout': typeof userDashboardDashboardLayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
@@ -407,6 +429,8 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/pricing'
+    | '/forgot-password'
+    | '/reset-password'
     | '/login'
     | '/signup'
     | '/verify'
@@ -444,6 +468,8 @@ export interface FileRouteTypes {
     | '/'
     | '/checkout'
     | '/pricing'
+    | '/forgot-password'
+    | '/reset-password'
     | '/login'
     | '/signup'
     | '/verify'
@@ -482,6 +508,8 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/checkout'
     | '/pricing'
+    | '/forgot-password'
+    | '/reset-password'
     | '/(userDashboard)'
     | '/(userDashboard)/_dashboardLayout'
     | '/_auth/login'
@@ -525,6 +553,8 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   CheckoutRoute: typeof CheckoutRoute
   PricingRoute: typeof PricingRoute
+  ForgotPasswordLazyRoute: typeof ForgotPasswordLazyRoute
+  ResetPasswordLazyRoute: typeof ResetPasswordLazyRoute
   userDashboardRoute: typeof userDashboardRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
   CoursesCourseRoute: typeof CoursesCourseRoute
@@ -545,6 +575,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof userDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -967,6 +1011,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   CheckoutRoute: CheckoutRoute,
   PricingRoute: PricingRoute,
+  ForgotPasswordLazyRoute: ForgotPasswordLazyRoute,
+  ResetPasswordLazyRoute: ResetPasswordLazyRoute,
   userDashboardRoute: userDashboardRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   CoursesCourseRoute: CoursesCourseRoute,

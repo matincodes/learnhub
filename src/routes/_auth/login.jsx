@@ -99,7 +99,7 @@ function Login() {
                     />
                     <label htmlFor="remember_password" className="font-san text-[15px]">Remember Password</label>
                   </div>
-                  <p className="font-san text-[15px] text-[#FA5B66] cursor-pointer">Forgot Password?</p>
+                  <Link to="/forgot-password" className="font-san text-[15px] text-[#FA5B66] cursor-pointer">Forgot Password?</Link>
                 </div>
               </div>
             </div>
