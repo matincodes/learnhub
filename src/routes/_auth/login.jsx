@@ -43,8 +43,8 @@ function Login() {
     } else {
       toast({
         variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Login failed, please try again.',
+        title: 'Login Failed',
+        description: 'Invalid email or password.',
       })
     }
 
