@@ -39,8 +39,7 @@ const validateSignupForm = data => {
 
 function SignUp() {
   const { register, handleSubmit, reset } = useForm()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success'
   const [remainingMs, setRemainingMs] = useState(REDIRECT_DELAY_MS)
 
   const { signup } = useAuth()
@@ -57,7 +56,7 @@ function SignUp() {
   const onSubmit = useCallback(
     async data => {
       // Prevent double submission
-      if (isLoading || isSuccess) return
+      if (status !== 'idle') return
 
       // Validate form before submission
       const validation = validateSignupForm(data)
@@ -70,13 +69,13 @@ function SignUp() {
         return
       }
 
-      setIsLoading(true)
+      setStatus('loading')
 
       try {
         const result = await signup('student', data)
 
         if (result.success) {
-          setIsSuccess(true)
+          setStatus('success')
           reset()
           toast({
             variant: 'success',
@@ -84,22 +83,28 @@ function SignUp() {
             description: 'You have been signed up successfully.',
           })
         } else {
+          setStatus('idle')
           toast({
             variant: 'destructive',
             title: 'Signup Failed',
             description: result.message || 'Signup failed, please try again.',
           })
         }
-      } finally {
-        setIsLoading(false)
+      } catch (error) {
+        setStatus('idle')
+        toast({
+          variant: 'destructive',
+          title: 'Signup Failed',
+          description: error.message || 'Signup failed, please try again.',
+        })
       }
     },
-    [isLoading, isSuccess, signup, reset, toast],
+    [status, signup, reset, toast],
   )
 
   // Countdown timer - only active when signup is successful
   useEffect(() => {
-    if (!isSuccess) return
+    if (status !== 'success') return
 
     const startTime = Date.now()
     let intervalId = null
@@ -119,9 +124,9 @@ function SignUp() {
     return () => {
       if (intervalId) clearInterval(intervalId)
     }
-  }, [isSuccess, router])
+  }, [status, router])
 
-  if (isSuccess) {
+  if (status === 'success') {
     return (
       <div className="mt-20 flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center space-y-6 rounded-lg bg-white p-6 text-center font-san shadow-md">
@@ -294,7 +299,7 @@ function SignUp() {
               {/* Confirm Password */}
             </div>
 
-            {!isLoading ? (
+            {status !== 'loading' ? (
               <Button
                 type="submit"
                 className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"
