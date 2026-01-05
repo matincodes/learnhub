@@ -3,7 +3,7 @@ import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { forwardRef, useState, useEffect } from 'react'
+import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_auth/login')({
@@ -29,27 +29,45 @@ function Login() {
     }
   }, [isAuthenticated, router, redirect])
 
-  const onSubmit = async data => {
-    setIsLoading(true)
-    const result = await login('student', data)
+  const onSubmit = useCallback(
+    async data => {
+      if (isLoading) return
 
-    if (result.success) {
-      reset()
-      toast({
-        variant: 'success',
-        title: 'Login Successful',
-        description: 'You have been logged in successfully.',
-      })
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Login Failed',
-        description: 'Invalid email or password.',
-      })
-    }
+      setIsLoading(true)
+      try {
+        const result = await login('student', data)
 
-    setIsLoading(false)
-  }
+        if (result.success) {
+          reset()
+          toast({
+            variant: 'success',
+            title: 'Login Successful',
+            description: 'You have been logged in successfully.',
+          })
+
+          const destination = redirect || result.redirect || '/'
+          router.invalidate().then(() => {
+            router.navigate({ to: destination })
+          })
+        } else {
+          toast({
+            variant: 'destructive',
+            title: 'Login Failed',
+            description: result.error || 'Invalid email or password.',
+          })
+        }
+      } catch (err) {
+        toast({
+          variant: 'destructive',
+          title: 'Login Failed',
+          description: err.message || 'Invalid email or password.',
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [isLoading, login, redirect, reset, router, toast],
+  )
 
   return (
     <div className="relative grid p-[20px]">

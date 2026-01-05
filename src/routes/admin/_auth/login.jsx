@@ -33,8 +33,9 @@ function Login() {
 
         saveAdminAuthData(tokens)
         reset()
-        router.invalidate()
-        router.navigate({ to: '/admin/dashboard' })
+        router.invalidate().then(() => {
+          router.navigate({ to: '/admin/dashboard' })
+        })
       } catch (error) {
         const errorMessage =
           error.response?.data?.message ||
