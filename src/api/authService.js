@@ -74,3 +74,15 @@ export const refreshAccessToken = async (refreshToken) => {
   const { data } = await axiosInstance.post('/refresh', { refreshToken })
   return data.accessToken
 }
+
+// Verify email / account using the token sent via email
+export const verifyEmail = async (token) => {
+  try {
+    const { data } = await axiosInstance.get(`/email-verify/?token=${token}`)
+    return { success: true, data }
+  } catch (error) {
+    const err = error.response?.data || error.message || 'Verification failed'
+    console.error('Email verification failed:', err)
+    return { success: false, error: err }
+  }
+}

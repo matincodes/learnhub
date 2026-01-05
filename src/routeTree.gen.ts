@@ -18,6 +18,7 @@ import { Route as CoursesIndexRouteImport } from './routes/courses/index'
 import { Route as CoursesCourseRouteImport } from './routes/courses/$course'
 import { Route as AdminDashboardLayoutRouteImport } from './routes/admin/_dashboardLayout'
 import { Route as AdminAuthRouteImport } from './routes/admin/_auth'
+import { Route as AuthVerifyRouteImport } from './routes/_auth/verify'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as userDashboardDashboardLayoutRouteImport } from './routes/(userDashboard)/_dashboardLayout'
@@ -97,6 +98,11 @@ const AdminDashboardLayoutRoute = AdminDashboardLayoutRouteImport.update({
 const AdminAuthRoute = AdminAuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => AdminRoute,
+} as any)
+const AuthVerifyRoute = AuthVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/signup',
@@ -284,6 +290,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
+  '/verify': typeof AuthVerifyRoute
   '/admin': typeof AdminDashboardLayoutRouteWithChildren
   '/courses/$course': typeof CoursesCourseRoute
   '/courses': typeof CoursesIndexRoute
@@ -320,6 +327,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
+  '/verify': typeof AuthVerifyRoute
   '/admin': typeof AdminDashboardLayoutRouteWithChildren
   '/courses/$course': typeof CoursesCourseRoute
   '/courses': typeof CoursesIndexRoute
@@ -360,6 +368,7 @@ export interface FileRoutesById {
   '/(userDashboard)/_dashboardLayout': typeof userDashboardDashboardLayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/verify': typeof AuthVerifyRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin/_auth': typeof AdminAuthRouteWithChildren
   '/admin/_dashboardLayout': typeof AdminDashboardLayoutRouteWithChildren
@@ -400,6 +409,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/login'
     | '/signup'
+    | '/verify'
     | '/admin'
     | '/courses/$course'
     | '/courses'
@@ -436,6 +446,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/login'
     | '/signup'
+    | '/verify'
     | '/admin'
     | '/courses/$course'
     | '/courses'
@@ -475,6 +486,7 @@ export interface FileRouteTypes {
     | '/(userDashboard)/_dashboardLayout'
     | '/_auth/login'
     | '/_auth/signup'
+    | '/_auth/verify'
     | '/admin'
     | '/admin/_auth'
     | '/admin/_dashboardLayout'
@@ -590,6 +602,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AdminAuthRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_auth/verify': {
+      id: '/_auth/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof AuthVerifyRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_auth/signup': {
       id: '/_auth/signup'
@@ -800,11 +819,13 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  AuthVerifyRoute: typeof AuthVerifyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
+  AuthVerifyRoute: AuthVerifyRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
