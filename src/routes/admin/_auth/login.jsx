@@ -4,42 +4,76 @@ import { useToast } from '@/hooks/use-toast'
 import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/admin/_auth/login')({
   component: Login,
 })
 
+// Validation helper
+const validateLoginForm = data => {
+  if (!data.email?.trim()) {
+    return { valid: false, error: 'Email is required' }
+  }
+  if (!data.password) {
+    return { valid: false, error: 'Password is required' }
+  }
+  return { valid: true }
+}
+
 function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, reset } = useForm()
   const router = useRouter()
   const { toast } = useToast()
-  // const redirect = Route.useSearch({ select: s => s.redirect })
 
-  const onSubmit = async data => {
-    setIsLoading(true)
-    try {
-      const res = await adminLogin(data)
-      console.log(res)
-      const tokens = res?.data?.tokens
-      console.log(tokens)
-      saveAdminAuthData(tokens)
-      reset()
-      router.invalidate()
-      router.navigate({ to: '/admin/dashboard' })
-    } catch (error) {
-      console.log(error)
-      return toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'login failed, please try again.',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const onSubmit = useCallback(
+    async data => {
+      // Prevent double submission
+      if (isLoading) return
+
+      // Validate form before submission
+      const validation = validateLoginForm(data)
+      if (!validation.valid) {
+        toast({
+          variant: 'destructive',
+          title: 'Validation Error',
+          description: validation.error,
+        })
+        return
+      }
+
+      setIsLoading(true)
+      try {
+        const res = await adminLogin(data)
+        const tokens = res?.data?.tokens
+
+        if (!tokens) {
+          throw new Error('No tokens received from server')
+        }
+
+        saveAdminAuthData(tokens)
+        reset()
+        router.invalidate()
+        router.navigate({ to: '/admin/dashboard' })
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          'Login failed, please try again.'
+
+        toast({
+          variant: 'destructive',
+          title: 'Login Failed',
+          description: errorMessage,
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [isLoading, reset, router, toast],
+  )
 
   return (
     <div className="h-screen">
