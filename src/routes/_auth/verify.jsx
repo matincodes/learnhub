@@ -65,7 +65,7 @@ function VerifyRoute() {
 
       if (rem <= 0) {
         clearInterval(interval)
-        router.navigate({ to: '/' })
+        router.navigate({ to: '/login' })
       }
     }, 250)
 
@@ -112,7 +112,7 @@ function VerifyRoute() {
   if (status === 'error') {
     return (
       <PageShell>
-        <div className="max-w-md w-full rounded-lg border p-6 text-center">
+        <div className="max-w-md w-full rounded-lg border-2 border-gray-200 p-6 text-center">
           <XCircle className="mx-auto h-12 w-12 text-red-500" />
           <h2 className="text-xl font-semibold mb-2 mt-2">Verification failed</h2>
           <p className="text-sm text-gray-600 mb-4">{String(error) || 'An error occurred during verification.'}</p>
@@ -140,7 +140,7 @@ function VerifyRoute() {
   if (status === 'success') {
     return (
       <PageShell>
-        <div className="flex flex-col items-center text-center space-y-6">
+        <div className="flex flex-col items-center border-2 border-gray-200 p-6 rounded-lg text-center space-y-6">
           <CheckCircle2Icon className="h-20 w-20 text-green-500" />
           <h2 className="text-3xl font-semibold">Email Verified!</h2>
           <p className="text-base text-gray-600">Thank you — your email has been verified successfully.</p>
