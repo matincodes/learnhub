@@ -16,21 +16,6 @@ const COUNTDOWN_UPDATE_INTERVAL = 250
 
 // Validation helper
 const validateSignupForm = data => {
-  if (!data.first_name?.trim()) {
-    return { valid: false, error: 'First name is required' }
-  }
-  if (!data.last_name?.trim()) {
-    return { valid: false, error: 'Last name is required' }
-  }
-  if (!data.email?.trim()) {
-    return { valid: false, error: 'Email is required' }
-  }
-  if (!data.password) {
-    return { valid: false, error: 'Password is required' }
-  }
-  if (!data.confirm_password) {
-    return { valid: false, error: 'Please confirm your password' }
-  }
   if (data.password !== data.confirm_password) {
     return { valid: false, error: 'Passwords do not match' }
   }
