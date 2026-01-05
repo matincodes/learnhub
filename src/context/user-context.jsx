@@ -1,8 +1,13 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { useUser } from '@/hooks/use-user'
-import { useAuth } from '@/context/auth-context'
 import { userService } from '@/api/userService'
-
+import { useAuth } from '@/context/auth-context'
+import { useUser } from '@/hooks/use-user'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 // Define a default shape for the context, useful for consumers and testing
 const defaultUserContextValue = {
@@ -21,7 +26,6 @@ const defaultUserContextValue = {
   },
 }
 
-
 const UserContext = createContext(defaultUserContextValue)
 
 export const UserProvider = ({ children }) => {
@@ -34,8 +38,8 @@ export const UserProvider = ({ children }) => {
 
   const [error, setError] = useState(null)
 
-  const user = useUser() 
-  const userId = user?.id 
+  const user = useUser()
+  const userId = user?.id
   const { secureRequest } = useAuth()
 
   // --- Core Data Fetching Logic ---
@@ -68,13 +72,12 @@ export const UserProvider = ({ children }) => {
   }, [userId, secureRequest])
 
   // Function exposed on context to update the user profile.
-  const updateUserProfile = async (updates) => {
+  const updateUserProfile = async updates => {
     if (!userId) {
       console.error('Cannot update profile: User ID not available.')
       setError(true)
       return null // Indicate failure
     }
-    
 
     console.log(`Updating profile for user ID: ${userId}`, updates)
     setLoading(prev => ({ ...prev, update: true }))
@@ -87,21 +90,22 @@ export const UserProvider = ({ children }) => {
       setUserProfile(data)
       console.log('Profile updated successfully:', data)
 
-      updateLocalUserStorage(updates);
-      fetchUserProfile(); // Refresh profile data after update
+      updateLocalUserStorage(updates)
+      fetchUserProfile() // Refresh profile data after update
       return data // Return the response from the PATCH request
     } catch (err) {
       console.error('Failed to update user profile:', err.message)
-      setError("Failed to update user profile") // Set error state on failure
+      setError('Failed to update user profile') // Set error state on failure
       return null // Indicate failure
     } finally {
-      setLoading(prev => ({ ...prev, updateUserProfile: false })) // Stop update loading state
+      setLoading(prev => ({ ...prev, update: false })) // Stop update loading state
     }
   }
 
-  const updateLocalUserStorage = (updates) => {
+  const updateLocalUserStorage = updates => {
     try {
-      const existingUser = JSON.parse(localStorage.getItem('learnhub-user')) || {}
+      const existingUser =
+        JSON.parse(localStorage.getItem('learnhub-user')) || {}
       const normalized = {
         ...(updates.first_name && { firstName: updates.first_name }),
         ...(updates.last_name && { lastName: updates.last_name }),
@@ -115,10 +119,7 @@ export const UserProvider = ({ children }) => {
     }
   }
 
-
-
   const changePassword = async updatedData => {
-   
     setLoading(prev => ({ ...prev, passWord: true }))
 
     try {
@@ -141,7 +142,7 @@ export const UserProvider = ({ children }) => {
       fetchUserProfile()
     }
   }, [userId, fetchUserProfile])
- 
+
   const value = {
     userProfile,
     loading,
@@ -151,11 +152,8 @@ export const UserProvider = ({ children }) => {
     changePassword,
   }
 
-  return (
-    <UserContext.Provider value={value}>{children}</UserContext.Provider>
-  )
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 // Custom hook to consume the UserContext easily
 export const UserProfile = () => useContext(UserContext)
-  

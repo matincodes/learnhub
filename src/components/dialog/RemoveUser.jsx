@@ -50,7 +50,7 @@ export function RemoveUser({ e }) {
           <DialogClose asChild>
             <button className="rounded-full bg-[#F7F7F7] p-2">
               <img
-                src="\assets\closeIcon.svg"
+                src="/assets/closeIcon.svg"
                 alt="icon"
                 className="size-[15px]"
               />
