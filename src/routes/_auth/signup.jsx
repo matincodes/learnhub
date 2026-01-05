@@ -51,8 +51,8 @@ function SignUp() {
     } else {
       toast({
         variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Signup failed, please try again.',
+        title: 'Signup Failed',
+        description: result.message || 'Signup failed, please try again.',
       })
     }
 
