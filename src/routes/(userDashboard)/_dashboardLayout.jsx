@@ -38,7 +38,7 @@ function DashboardComponent() {
   useEffect(() => {
     // Fetch user profile data when component mounts
     getUserProfile()
-  }, [getUserProfile])
+  }, [])
 
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">

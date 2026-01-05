@@ -137,7 +137,6 @@ function VerifyRoute() {
   }
 
   if (status === 'error') {
-
     return (
       <PageShell>
         <div className="w-full max-w-md rounded-lg border-2 border-gray-200 p-6 text-center">
