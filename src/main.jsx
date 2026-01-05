@@ -1,30 +1,12 @@
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
-import NotFound from '@/components/notFound/notFound'
-// Import the generated route tree
 import { AuthProvider, useAuth } from '@/context/auth-context'
 import { AdminProvider } from './context/admin-context'
-import { UserProvider} from './context/user-context'
-import { routeTree } from './routeTree.gen'
-
-// Create a new router instance
-const router = createRouter({
-  routeTree,
-  defaultNotFoundComponent: NotFound,
-  context: {
-    user: undefined,
-    isAuthenticated: false,
-    login: undefined,
-    signup: undefined,
-    logout: undefined,
-    authFetch: undefined,
-    accessToken: undefined,
-  },
-  defaultStructuralSharing: true,
-})
+import { UserProvider } from './context/user-context'
+import { router } from './router'
 
 // Render the app
 const rootElement = document.getElementById('root')
@@ -35,7 +17,7 @@ if (!rootElement.innerHTML) {
       <AdminProvider>
         <AuthProvider>
           <UserProvider>
-              <App />
+            <App />
           </UserProvider>
         </AuthProvider>
       </AdminProvider>
@@ -45,6 +27,5 @@ if (!rootElement.innerHTML) {
 
 export function App() {
   const auth = useAuth()
-  console.log('Auth context in App:', auth)
   return <RouterProvider router={router} context={{ ...auth }} />
 }

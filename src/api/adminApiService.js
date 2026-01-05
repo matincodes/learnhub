@@ -45,7 +45,7 @@ api.interceptors.response.use(
         })
 
         const newAccessToken = res.data.accessToken
-        saveAdminAuthData(newAccessToken) // Save the new token
+        saveAdminAuthData({ access: newAccessToken, refresh: refreshToken })
 
         // Update the header and retry original request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`

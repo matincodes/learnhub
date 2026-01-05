@@ -1,14 +1,20 @@
 // src/router.js (Create this file)
 import { createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
 import NotFound from '@/components/notFound/notFound'
+import { routeTree } from './routeTree.gen'
 
-// Define the router here and export it
+// Define a single router instance consumed across the app
 export const router = createRouter({
   routeTree,
   defaultNotFoundComponent: NotFound,
+  defaultStructuralSharing: true,
   context: {
-    // Initial context values
-    auth: undefined, 
+    user: undefined,
+    isAuthenticated: false,
+    login: undefined,
+    signup: undefined,
+    logout: undefined,
+    secureRequest: undefined,
+    accessToken: undefined,
   },
 })
