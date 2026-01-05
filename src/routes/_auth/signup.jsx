@@ -2,111 +2,137 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/context/auth-context'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { Loader2, CheckCircle2Icon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { CheckCircle2Icon, Loader2 } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export const Route = createFileRoute('/_auth/signup')({
   component: SignUp,
 })
 
+// Constants outside component to prevent recreation
+const REDIRECT_DELAY_MS = 120000 // 2 minutes
+const COUNTDOWN_UPDATE_INTERVAL = 250
+
+// Validation helper
+const validateSignupForm = data => {
+  if (data.password !== data.confirm_password) {
+    return { valid: false, error: 'Passwords do not match' }
+  }
+  return { valid: true }
+}
+
 function SignUp() {
   const { register, handleSubmit, reset } = useForm()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success'
+  const [remainingMs, setRemainingMs] = useState(REDIRECT_DELAY_MS)
 
   const { signup } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
 
-  const REDIRECT_DELAY_MS = 120000 // 2 minutes
-  const [remainingMs, setRemainingMs] = useState(REDIRECT_DELAY_MS)
-
-  const onSubmit = async data => {
-    setIsLoading(true)
-
-    // Client-side check for password match
-    if (data.password !== data.confirm_password) {
-      toast({
-        variant: 'destructive',
-        title: 'Password mismatch',
-        description: 'Please make sure your passwords match.',
-      })
-      setIsLoading(false)
-      return
-    }
-
-    const result = await signup('student', data)
-
-    if (result.success) {
-      console.log('Signup successful')
-      setIsSuccess(true)
-      reset()
-      toast({
-        variant: 'success',
-        title: 'Signup Successful',
-        description: 'You have been signed up successfully.',
-      })
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Signup failed, please try again.',
-      })
-    }
-
-    setIsLoading(false)
-  }
-
-  const formatTime = ms => {
+  const formatTime = useCallback(ms => {
     const totalSeconds = Math.floor(ms / 1000)
     const minutes = Math.floor(totalSeconds / 60)
     const seconds = totalSeconds % 60
     return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
+  }, [])
 
+  const onSubmit = useCallback(
+    async data => {
+      // Prevent double submission
+      if (status !== 'idle') return
+
+      // Validate form before submission
+      const validation = validateSignupForm(data)
+      if (!validation.valid) {
+        toast({
+          variant: 'destructive',
+          title: 'Validation Error',
+          description: validation.error,
+        })
+        return
+      }
+
+      setStatus('loading')
+
+      try {
+        const result = await signup('student', data)
+
+        if (result.success) {
+          setStatus('success')
+          reset()
+          toast({
+            variant: 'success',
+            title: 'Signup Successful',
+            description: 'You have been signed up successfully.',
+          })
+        } else {
+          setStatus('idle')
+          toast({
+            variant: 'destructive',
+            title: 'Signup Failed',
+            description: result.message || 'Signup failed, please try again.',
+          })
+        }
+      } catch (error) {
+        setStatus('idle')
+        toast({
+          variant: 'destructive',
+          title: 'Signup Failed',
+          description: error.message || 'Signup failed, please try again.',
+        })
+      }
+    },
+    [status, signup, reset, toast],
+  )
+
+  // Countdown timer - only active when signup is successful
   useEffect(() => {
-    if (!isSuccess) return
+    if (status !== 'success') return
 
-    const start = Date.now()
+    const startTime = Date.now()
+    let intervalId = null
 
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - start
+    intervalId = setInterval(() => {
+      const elapsed = Date.now() - startTime
       const remaining = Math.max(REDIRECT_DELAY_MS - elapsed, 0)
       setRemainingMs(remaining)
 
-      if (remaining - elapsed <= 0) {
-        clearInterval(interval)
+      // Redirect when time is up
+      if (remaining === 0) {
+        clearInterval(intervalId)
         router.navigate({ to: '/' })
       }
-    }, 250)
+    }, COUNTDOWN_UPDATE_INTERVAL)
 
-    return () => clearInterval(interval)
-  }, [isSuccess, router])
+    return () => {
+      if (intervalId) clearInterval(intervalId)
+    }
+  }, [status, router])
 
-
-  if (isSuccess) {
+  if (status === 'success') {
     return (
-      <div className="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 mt-20">
-        <div className="flex flex-col items-center text-center space-y-6 p-6 bg-white rounded-lg shadow-md font-san">
+      <div className="mt-20 flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center space-y-6 rounded-lg bg-white p-6 text-center font-san shadow-md">
           {/* Large centered icon */}
           <CheckCircle2Icon className="h-28 w-28 text-green-500" />
 
           {/* Bigger heading */}
-          <h2 className="text-3xl sm:text-4xl font-semibold">
+          <h2 className="text-3xl font-semibold sm:text-4xl">
             Signup Successful!
           </h2>
 
           {/* Description */}
-          <p className="text-sm text-gray-600 max-w-lg">
+          <p className="max-w-lg text-sm text-gray-600">
             Your account has been created successfully. Please check your email
             to verify your account.
           </p>
 
           {/* Countdown */}
           <p className="text-sm text-gray-500">
-            Redirecting to home in <span className="font-medium">{formatTime(remainingMs)}</span>
+            Redirecting to home in{' '}
+            <span className="font-medium">{formatTime(remainingMs)}</span>
           </p>
         </div>
       </div>
@@ -172,7 +198,7 @@ function SignUp() {
                     className="font-san tracking-wide text-[#303031]"
                   >
                     First name
-                    <span className='text-red-600'>*</span>
+                    <span className="text-red-600">*</span>
                   </label>
                   <input
                     {...register('first_name', { required: true })}
@@ -188,7 +214,7 @@ function SignUp() {
                     className="font-san tracking-wide text-[#303031]"
                   >
                     Last name
-                    <span className='text-red-600'>*</span>
+                    <span className="text-red-600">*</span>
                   </label>
                   <input
                     {...register('last_name', { required: true })}
@@ -207,7 +233,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Email address
-                  <span className='text-red-600'>*</span>
+                  <span className="text-red-600">*</span>
                 </label>
                 <input
                   type="email"
@@ -226,7 +252,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Password
-                  <span className='text-red-600'>*</span>
+                  <span className="text-red-600">*</span>
                 </label>
                 <input
                   type="password"
@@ -245,7 +271,7 @@ function SignUp() {
                   className="font-san tracking-wide text-[#303031]"
                 >
                   Confirm password
-                  <span className='text-red-600'>*</span>
+                  <span className="text-red-600">*</span>
                 </label>
                 <input
                   type="password"
@@ -258,7 +284,7 @@ function SignUp() {
               {/* Confirm Password */}
             </div>
 
-            {!isLoading ? (
+            {status !== 'loading' ? (
               <Button
                 type="submit"
                 className="h-[51px] w-full rounded-lg bg-normal_green font-san text-[18px] text-white"

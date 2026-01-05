@@ -27,19 +27,19 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
 
 function DashboardComponent() {
   // Destructure loading states and error state from context
-  const { getUserProfile ,error, loading } = UserProfile();
+  const { getUserProfile, error, loading } = UserProfile()
 
   // Determine if the main profile data is loading
-  const isProfileLoading = loading.userProfile;
+  const isProfileLoading = loading.fetch
 
   // NOTE: The 'error' state currently triggers on EITHER profile fetch OR update failure.
   // Consider refining context/error handling if you need different UI for fetch vs update errors.
 
   useEffect(() => {
     // Fetch user profile data when component mounts
-    getUserProfile();
-  }, []); // Empty dependency array ensures this runs only once on mount
-  
+    getUserProfile()
+  }, [])
+
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       {/* Show full-screen spinner ONLY during initial profile load */}
@@ -71,5 +71,5 @@ function DashboardComponent() {
         </>
       )}
     </div>
-  );
+  )
 }

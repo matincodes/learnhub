@@ -247,8 +247,8 @@ function Profile() {
           {/* Email */}
 
           <button
-           className={`rounded-lg border-none ${loading.updateUserProfile  ? ' bg-[#FDE6BF] cursor-not-allowed' : 'bg-normal_yellow' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
-           {loading.updateUserProfile ?  "Please wait..." : 'Save Changes'}
+           className={`rounded-lg border-none ${loading.update ? ' bg-[#FDE6BF] cursor-not-allowed' : 'bg-normal_yellow' } px-[35px] py-[18px] text-[20px] font-medium text-white outline-none`}>
+           {loading.update ?  "Please wait..." : 'Save Changes'}
           </button>
         </form> 
       </div>
