@@ -76,15 +76,10 @@ export const AuthProvider = ({ children }) => {
     [accessToken, refreshToken, logout],
   )
 
-  // Derive user from query cache
-  const user = queryClient.getQueryData(authKeys.user())
-
   return (
     <AuthContext.Provider
       value={{
-        // User state
-        user,
-        isAuthenticated: !!user && !!accessToken,
+        isAuthenticated: !!storedUser && !!accessToken,
         accessToken,
         refreshToken,
 
