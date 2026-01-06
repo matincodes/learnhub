@@ -1,21 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useRouteContext,
-  useRouter,
-} from '@tanstack/react-router'
+import { useUserProfile } from '@/hooks/use-user-profile'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { UserProfile } from '@/context/user-context'
 
 export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
@@ -31,39 +18,39 @@ export const Route = createFileRoute('/checkout')({
   },
 })
 
-
 function CheckoutPage() {
-  const [selectedYear, setselectedYear] = useState("1");
-  const [totalPrice, setTotalPrice] = useState(null);
-  const plan = localStorage.getItem('plan');
-  const { userProfile } = UserProfile()
+  const [selectedYear, setselectedYear] = useState('1')
+  const [totalPrice, setTotalPrice] = useState(null)
+  const plan = localStorage.getItem('plan')
+  const { data: userProfile } = useUserProfile()
 
   useEffect(() => {
-    const MONTHLY_RATE = 20000;
-    const DISCOUNT_RATE = 0.17;
+    const MONTHLY_RATE = 20000
+    const DISCOUNT_RATE = 0.17
 
     const getDiscountedYearlyPrice = () => {
-      const yearlyBase = MONTHLY_RATE * 12;
-      return yearlyBase - (yearlyBase * DISCOUNT_RATE);
-    };
-
-    let calculatedPrice;
-
-    if (plan === 'Year' || selectedYear === '12') {
-      calculatedPrice = getDiscountedYearlyPrice() * (plan === 'Year' ? Number(selectedYear) : 1);
-    } else {
-      calculatedPrice = MONTHLY_RATE * Number(selectedYear);
+      const yearlyBase = MONTHLY_RATE * 12
+      return yearlyBase - yearlyBase * DISCOUNT_RATE
     }
 
-    setTotalPrice(calculatedPrice);
-  }, [selectedYear, plan]);
+    let calculatedPrice
 
+    if (plan === 'Year' || selectedYear === '12') {
+      calculatedPrice =
+        getDiscountedYearlyPrice() *
+        (plan === 'Year' ? Number(selectedYear) : 1)
+    } else {
+      calculatedPrice = MONTHLY_RATE * Number(selectedYear)
+    }
+
+    setTotalPrice(calculatedPrice)
+  }, [selectedYear, plan])
 
   return (
     <div className="min-h-screen bg-white font-san">
       <div className="grid gap-8 md:grid-cols-5">
         {/* Left column */}
-        <div className="md:col-span-3 px-5 md:px-24 py-16">
+        <div className="px-5 py-16 md:col-span-3 md:px-24">
           <Link
             to="/pricing"
             className="mb-6 inline-block text-lg text-gray-500 underline hover:text-gray-700"
@@ -77,11 +64,13 @@ function CheckoutPage() {
             <div>
               <h2 className="mb-4 text-2xl font-medium">Personal Details</h2>
               <div className="space-y-2">
-                <div className='text-[#303031]'>
+                <div className="text-[#303031]">
                   <span className="text-lg font-semibold">Full name: </span>
-                  <span className="text-sm">{userProfile?.first_name}&nbsp;{userProfile?.last_name}</span>
+                  <span className="text-sm">
+                    {userProfile?.first_name}&nbsp;{userProfile?.last_name}
+                  </span>
                 </div>
-                <div className='text-[#303031]'>
+                <div className="text-[#303031]">
                   <span className="text-lg font-semibold">Email address: </span>
                   <span className="text-sm">{userProfile?.email}</span>
                 </div>
@@ -89,7 +78,9 @@ function CheckoutPage() {
             </div>
 
             <div>
-              <h2 className="mb-4 text-2xl font-medium mt-11">Subscription Details</h2>
+              <h2 className="mb-4 mt-11 text-2xl font-medium">
+                Subscription Details
+              </h2>
               <div className="space-y-4">
                 {/* <div>
                   <label className="text-sm font-semibold text-gray-600">
@@ -159,35 +150,44 @@ function CheckoutPage() {
           </div>
         </div>
 
-
         {/* Second container - spans 1 column */}
-        <div className="space-y-8 w-ful l md:bg-gray-100 md:min-h-screen  col-span-2 flex flex-col items-start px-5 md:px-16 py-48">
-          <div className='w-full'>
+        <div className="w-ful l col-span-2 flex flex-col items-start space-y-8 px-5 py-48 md:min-h-screen md:bg-gray-100 md:px-16">
+          <div className="w-full">
             <h2 className="mb-6 text-3xl font-semibold">Summary</h2>
 
-            <div className='w-full'>
+            <div className="w-full">
               <div>
-                <h3 className="mb-4 text-xl font-semibold">
-                  Payment Overview
-                </h3>
+                <h3 className="mb-4 text-xl font-semibold">Payment Overview</h3>
                 <div className="space-y-2">
                   <div className="text-sm">
-                    <span className="text-gray-600 text-lg">Duration : </span>
-                    <span className="text-gray-600 text-sm">
-                      {selectedYear} {Number(selectedYear) > 1 ? (plan === 'Year' ? "Years" : "Months") : (plan === 'Year' ? "Year" : "Month")}
+                    <span className="text-lg text-gray-600">Duration : </span>
+                    <span className="text-sm text-gray-600">
+                      {selectedYear}{' '}
+                      {Number(selectedYear) > 1
+                        ? plan === 'Year'
+                          ? 'Years'
+                          : 'Months'
+                        : plan === 'Year'
+                          ? 'Year'
+                          : 'Month'}
                     </span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-600 text-lg">Total Price : </span>
-                    <span className="text-gray-600 text-sm">
-                      NGN {totalPrice?.toLocaleString("en-NG", { minimumFractionDigits: 0 })}
+                    <span className="text-lg text-gray-600">
+                      Total Price :{' '}
+                    </span>
+                    <span className="text-sm text-gray-600">
+                      NGN{' '}
+                      {totalPrice?.toLocaleString('en-NG', {
+                        minimumFractionDigits: 0,
+                      })}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <Button className="w-full bg-[#006038] hover:bg-green-800 flex gap-2 items-center py-7 mt-16 ">
-                <span className='text-white'>Checkout with   </span>
+              <Button className="mt-16 flex w-full items-center gap-2 bg-[#006038] py-7 hover:bg-green-800">
+                <span className="text-white">Checkout with </span>
                 <img
                   src="/assets/download__4__1-removebg-preview 1.png"
                   alt="Monthly Plan"
@@ -199,6 +199,5 @@ function CheckoutPage() {
         </div>
       </div>
     </div>
-
-  );
+  )
 }

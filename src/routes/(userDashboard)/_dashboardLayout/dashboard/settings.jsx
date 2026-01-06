@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
-import { UserProfile } from '@/context/user-context'
 import { toast } from '@/hooks/use-toast'
+import { useChangePassword } from '@/hooks/use-user-profile'
 import { createFileRoute } from '@tanstack/react-router'
 import { Ban, Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
@@ -25,7 +25,7 @@ export const Route = createFileRoute(
 function SettingsContent() {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
-  const { changePassword, loading } = UserProfile()
+  const changePasswordMutation = useChangePassword()
 
   async function handleChangePassword(e) {
     e.preventDefault()
@@ -33,22 +33,24 @@ function SettingsContent() {
       old_password: oldPassword,
       new_password: newPassword,
     }
-    const result = await changePassword(data)
-    if (result) {
-      toast({
-        variant: 'default',
-        title: 'Success',
-        description: 'Password changed successfully.',
-      })
-    }else{
-       toast({
-            variant: 'destructive',
-            title: 'Uh oh! Something went wrong.',
-            description: 'Change failed, please try again.',
-          })
-    }
-    setOldPassword('')
-    setNewPassword('')
+    changePasswordMutation.mutate(data, {
+      onSuccess: () => {
+        toast({
+          variant: 'default',
+          title: 'Success',
+          description: 'Password changed successfully.',
+        })
+        setOldPassword('')
+        setNewPassword('')
+      },
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'Change failed, please try again.',
+        })
+      },
+    })
   }
   return (
     <div className="min-h-screen w-full rounded-xl bg-white">
@@ -77,9 +79,11 @@ function SettingsContent() {
             </div>
             <button
               type="submit"
-              className={`${loading.passWord ? 'cursor-not-allowed bg-[#FDE6BF]' : ''} mt-5 w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow`}
+              className={`${changePasswordMutation.isPending ? 'cursor-not-allowed bg-[#FDE6BF]' : ''} mt-5 w-auto rounded-xl border border-normal_yellow bg-white px-3 py-2 text-normal_yellow`}
             >
-              {loading.passWord ? 'Please wait...' : 'Change Password'}
+              {changePasswordMutation.isPending
+                ? 'Please wait...'
+                : 'Change Password'}
             </button>
           </form>
         </div>
