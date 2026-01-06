@@ -12,7 +12,6 @@ import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { FiPlus } from 'react-icons/fi'
 
 import NullState from '@/components/nullState/nullState'
-
 import RecentCourseCard from '@/components/widgets/recent_course_card'
 
 export const Route = createFileRoute(
@@ -28,7 +27,7 @@ function MyCourses() {
   if (course_title) {
     navigate({ to: `${location.pathname}/${course_title}` })
   }
-  
+
   const handleButtonClick = () => {
     navigate({ to: '/courses' })
   }
