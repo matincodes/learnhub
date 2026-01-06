@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
@@ -12,13 +8,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { coursesFilter, UserCourses } from '@/data/userCourses'
-import { Button } from '@/components/ui/button'
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { FiPlus } from 'react-icons/fi'
 
 import NullState from '@/components/nullState/nullState'
 
 import RecentCourseCard from '@/components/widgets/recent_course_card'
-import { useEffect } from 'react'
+
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/',
 )({
@@ -29,15 +25,10 @@ function MyCourses() {
   const { course_title } = useSearch('')
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (course_title) {
-      navigate({ to: `${location.pathname}/${course_title}` })
-    } else {
-      console.log('dfdf')
-    }
-  }, [course_title, navigate])
-
-
+  if (course_title) {
+    navigate({ to: `${location.pathname}/${course_title}` })
+  }
+  
   const handleButtonClick = () => {
     navigate({ to: '/courses' })
   }
@@ -63,7 +54,10 @@ function MyCourses() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button onClick={handleButtonClick} className="flex h-12 items-center justify-center gap-x-2 rounded-xl bg-normal_yellow px-4 text-white">
+        <Button
+          onClick={handleButtonClick}
+          className="flex h-12 items-center justify-center gap-x-2 rounded-xl bg-normal_yellow px-4 text-white"
+        >
           <p className="hidden text-base font-medium sm:block">
             Add New Courses
           </p>
@@ -72,25 +66,25 @@ function MyCourses() {
       </div>
 
       <div className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-5 lg:grid-cols-2 xl:grid-cols-4">
-  {Array.isArray(UserCourses) && UserCourses.length > 0 ? (
-    UserCourses.map((item, index) => (
-      <a
-        href={`/dashboard/my-courses/?course_title=${item.title}`}
-        key={index}
-      >
-        <RecentCourseCard className="w-full sm:w-full" {...item} />
-      </a>
-    ))
-  ) : (
-    <NullState
-      image={'/assets/empty.png'}
-      mainText="No recent courses yet"
-      miniText="Add courses to continue your learning journey"
-      button={true}
-      handleButtonClick={handleButtonClick}
-    />
-  )}
-</div>
+        {Array.isArray(UserCourses) && UserCourses.length > 0 ? (
+          UserCourses.map((item, index) => (
+            <a
+              href={`/dashboard/my-courses/?course_title=${item.title}`}
+              key={index}
+            >
+              <RecentCourseCard className="w-full sm:w-full" {...item} />
+            </a>
+          ))
+        ) : (
+          <NullState
+            image={'/assets/empty.png'}
+            mainText="No recent courses yet"
+            miniText="Add courses to continue your learning journey"
+            button={true}
+            handleButtonClick={handleButtonClick}
+          />
+        )}
+      </div>
     </div>
   )
 }
