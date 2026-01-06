@@ -2,7 +2,14 @@ import { refreshAccessTokenApi } from '@/api/authService'
 import { clearAuthData, getAuthData, saveAuthData } from '@/lib/tokenStorage'
 import { router } from '@/router'
 import { useQueryClient } from '@tanstack/react-query'
-import { createContext, useCallback, useContext, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 const AuthContext = createContext()
 
@@ -19,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     refreshToken: storedRefresh,
   } = getAuthData()
   const queryClient = useQueryClient()
+  const initialized = useRef(false)
 
   // Set defaults for specific keys
   queryClient.setQueryDefaults(authKeys.user(), {
@@ -29,10 +37,17 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(storedToken)
   const [refreshToken, setRefreshToken] = useState(storedRefresh)
 
-  // Initialize query cache with stored user
-  if (storedUser && !queryClient.getQueryData(authKeys.user())) {
-    queryClient.setQueryData(authKeys.user(), storedUser)
-  }
+  // Initialize query cache with stored user - moved to useEffect for React 18 concurrent rendering
+  useEffect(() => {
+    if (
+      !initialized.current &&
+      storedUser &&
+      !queryClient.getQueryData(authKeys.user())
+    ) {
+      queryClient.setQueryData(authKeys.user(), storedUser)
+      initialized.current = true
+    }
+  }, [storedUser, queryClient])
 
   // Helper to set auth data after login - used by useLogin hook
   const setAuthData = useCallback(

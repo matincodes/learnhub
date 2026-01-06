@@ -13,6 +13,7 @@ import { FiPlus } from 'react-icons/fi'
 
 import NullState from '@/components/nullState/nullState'
 import RecentCourseCard from '@/components/widgets/recent_course_card'
+import { useEffect } from 'react'
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/my-courses/',
@@ -24,9 +25,11 @@ function MyCourses() {
   const { course_title } = useSearch('')
   const navigate = useNavigate()
 
-  if (course_title) {
-    navigate({ to: `${location.pathname}/${course_title}` })
-  }
+  useEffect(() => {
+    if (course_title) {
+      navigate({ to: `${location.pathname}/${course_title}` })
+    }
+  }, [course_title, navigate])
 
   const handleButtonClick = () => {
     navigate({ to: '/courses' })

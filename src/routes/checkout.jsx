@@ -151,7 +151,7 @@ function CheckoutPage() {
         </div>
 
         {/* Second container - spans 1 column */}
-        <div className="w-ful l col-span-2 flex flex-col items-start space-y-8 px-5 py-48 md:min-h-screen md:bg-gray-100 md:px-16">
+        <div className="w-full col-span-2 flex flex-col items-start space-y-8 px-5 py-48 md:min-h-screen md:bg-gray-100 md:px-16">
           <div className="w-full">
             <h2 className="mb-6 text-3xl font-semibold">Summary</h2>
 

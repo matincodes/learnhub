@@ -60,7 +60,7 @@ function DashboardIndexComponent() {
 
   // Helper to Render Recent Courses Section
   const renderRecentCourses = () => {
-    {
+    
       /*if (loadingProfile) {
       // Show skeleton loaders while fetching courses
       return (
@@ -71,7 +71,7 @@ function DashboardIndexComponent() {
         </div>
       );
     }*/
-    }
+    
 
     if (recentCourses.length > 0) {
       return (
