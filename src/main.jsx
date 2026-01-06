@@ -5,6 +5,7 @@ import './index.css'
 
 import { AuthProvider, useAuth } from '@/context/auth-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AdminProvider } from './context/admin-context'
 import { UserProvider } from './context/user-context'
 import { router } from './router'
@@ -25,6 +26,7 @@ if (!rootElement.innerHTML) {
             </UserProvider>
           </AuthProvider>
         </AdminProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </StrictMode>,
   )
