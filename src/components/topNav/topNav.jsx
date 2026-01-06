@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import useTopNavLogic from '@/hooks/use-top-nav'
-import { useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 import { HiXMark } from 'react-icons/hi2'
 import { adminNotification, notifications } from '../../data/notificationData'
 import Notification from './notification'
@@ -9,21 +9,39 @@ const TopNav = () => {
   const { state, actions } = useTopNavLogic()
 
   // Common Elements
-  const ActionsGroup = (
-    <div className="flex items-center gap-3 md:gap-4">
-      {state.showSearch && (
-        <>
-          <NavSearch
-            value={state.searchInputValue}
-            onFocus={actions.handleOpenSearch}
-            onChange={actions.handleSearchInput}
-            onClose={actions.handleCloseSearch}
-          />
-          <StreakBadge />
-        </>
-      )}
-      <NotificationMenu pathname={state.pathname} role={state.role} />
-    </div>
+  const actionsGroup = useMemo(
+    () => (
+      <div className="flex items-center gap-3 md:gap-4">
+        {state.showSearch && (
+          <>
+            <NavSearch
+              value={state.searchInputValue}
+              isSearchOpen={state.isSearchOpen}
+              onFocus={actions.handleOpenSearch}
+              onChange={actions.handleSearchInput}
+              onClose={actions.handleCloseSearch}
+            />
+            <StreakBadge />
+          </>
+        )}
+        <NotificationMenu
+          isAdmin={
+            state.pathname.includes('/admin/dashboard') &&
+            state.role === 'admin'
+          }
+        />
+      </div>
+    ),
+    [
+      actions.handleCloseSearch,
+      actions.handleOpenSearch,
+      actions.handleSearchInput,
+      state.pathname,
+      state.isSearchOpen,
+      state.role,
+      state.searchInputValue,
+      state.showSearch,
+    ],
   )
 
   return (
@@ -49,7 +67,12 @@ const TopNav = () => {
                 onClose={actions.handleCloseSearch}
               />
             ) : (
-              <NotificationMenu pathname={state.pathname} role={state.role} />
+              <NotificationMenu
+                isAdmin={
+                  state.pathname.includes('/admin/dashboard') &&
+                  state.role === 'admin'
+                }
+              />
             )}
           </div>
         </div>
@@ -77,7 +100,7 @@ const TopNav = () => {
         />
 
         <div className="flex items-center justify-end gap-x-4 lg:basis-[45%]">
-          {ActionsGroup}
+          {actionsGroup}
         </div>
       </div>
     </div>
@@ -97,11 +120,11 @@ function BackButton({ onClick }) {
   )
 }
 
-function StreakBadge() {
+function StreakBadge({ streak = 12 }) {
   return (
-    <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
-      <p className="font-semibold">10</p>
-      <img src="/assets/fire.svg" alt="Streak" />
+    <button className="flex h-8 items-center justify-center gap-1 rounded-full bg-white p-3">
+      <p className="font-semibold">{streak}</p>
+      <img src="/assets/fire.svg" alt="Streak" className="h-5 w-5" />
     </button>
   )
 }
@@ -122,34 +145,40 @@ function NavTitle({ title, showBack, showWelcome, userName, onBack }) {
   )
 }
 
-function NavSearch({ value, onFocus, onChange, onClose }) {
+function NavSearch({ value, isSearchOpen, onFocus, onChange, onClose }) {
   return (
     <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow">
+      {!isSearchOpen && (
+        <img src="/assets/search-01.svg" alt="Search" className="ml-3" />
+      )}
       <Input
         type="text"
-        placeholder="Search here"
-        className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
+        placeholder="Search for courses in your collection"
+        className="border-none outline-none placeholder:font-['Nunito'] placeholder:text-sm placeholder:font-light placeholder:leading-5 placeholder:text-zinc-500"
         value={value}
         onFocus={onFocus}
         onChange={onChange}
       />
-      <HiXMark
-        size={28}
-        className="cursor-pointer text-[#303031]"
-        onClick={onClose}
-      />
+      {isSearchOpen && (
+        <HiXMark
+          size={28}
+          className="cursor-pointer text-[#303031]"
+          onClick={onClose}
+        />
+      )}
     </div>
   )
 }
 
-function NotificationMenu({ pathname, role }) {
+const NotificationMenu = memo(function NotificationMenu({ isAdmin }) {
   const [activeTab, setActiveTab] = useState(1)
 
+  const handleClearAll = useCallback(() => {
+    console.log('Clear logic here')
+  }, [])
+
   // 2. Calculate data based on props
-  const sourceData =
-    pathname.includes('/admin/dashboard') && role === 'admin'
-      ? adminNotification
-      : notifications
+  const sourceData = isAdmin ? adminNotification : notifications
 
   const unreadCount = sourceData.filter(v => v?.unread).length
 
@@ -160,8 +189,8 @@ function NotificationMenu({ pathname, role }) {
   return (
     <Notification>
       {/* Trigger */}
-      <Notification.Trigger className="relative grid place-content-center rounded-full bg-white p-[10px]">
-        <img src="/assets/Vector.svg" alt="Bell" className="w-[23px]" />
+      <Notification.Trigger className="relative grid size-8 place-content-center rounded-full bg-white p-2 hover:bg-gray-100">
+        <img src="/assets/Vector.svg" alt="Bell" />
       </Notification.Trigger>
 
       {/* Content - Now we pass data INTO it */}
@@ -169,7 +198,7 @@ function NotificationMenu({ pathname, role }) {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         unreadCount={unreadCount}
-        onClearAll={() => console.log('Clear logic here')}
+        onClearAll={handleClearAll}
       >
         {/* We map the items HERE, giving us full control */}
         {displayData.map((item, index) => (
@@ -178,6 +207,9 @@ function NotificationMenu({ pathname, role }) {
       </Notification.Content>
     </Notification>
   )
-}
+})
 
-export default TopNav
+NotificationMenu.displayName = 'NotificationMenu'
+
+TopNav.displayName = 'TopNav'
+export default memo(TopNav)
