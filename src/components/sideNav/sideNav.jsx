@@ -9,7 +9,7 @@ import { Link, useLocation } from '@tanstack/react-router'
 
 
 // 1. User Profile Card
-const NavProfile = memo(function({ image, name, subtitle, to }) {
+const NavProfile = memo(function NavProfile({ image, name, subtitle, to }) {
   return (
     <div className="w-full px-4">
       <Link to={to} className="group flex">
@@ -35,7 +35,7 @@ const NavProfile = memo(function({ image, name, subtitle, to }) {
 NavProfile.displayName = 'NavProfile'
 
 // 2. Navigation Item (Handles Active State internally)
-const NavItem = memo(function({ to, icon, label, pathname }) {
+const NavItem = memo(function NavItem({ to, icon, label, pathname }) {
   const isSelected = isActive(pathname, to)
 
   return (
@@ -65,7 +65,7 @@ const NavItem = memo(function({ to, icon, label, pathname }) {
 NavItem.displayName = 'NavItem'
 
 // 3. Footer Action (Settings & Logout)
-const NavFooter = memo(function({
+const NavFooter = memo(function NavFooter({
   settingsPath,
   onLogout,
   pathname,
@@ -93,7 +93,7 @@ const NavFooter = memo(function({
 NavFooter.displayName = 'NavFooter'
 
 // 4. Brand Logo
-const NavBrand = memo(function() {
+const NavBrand = memo(function NavBrand() {
   return (
     <div className="">
       <Separator className="my-4 bg-[#98989A]" />

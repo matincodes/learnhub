@@ -9,7 +9,7 @@ const SearchedCourse = ({ courseResult = [] }) => {
       <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {courseResult.map((course, index) => (
           <SearchCourseCard
-            key={course?.id || course?.title || index}
+            key={course?.id || course?.title}
             title={course.title}
             image={course.image}
             lesson={course.lesson}

@@ -27,7 +27,7 @@ function useLocalStorageSync(key, initialValue) {
         // 2. Update React State (for the component that called this)
         setStoredValue(newValue)
 
-        // 3. Dispatch a CUSTOM event so other components in THIS tab usually know
+        // 3. Dispatch a CUSTOM event so other components in THIS tab can also be notified
         // (This fixes the "same tab" silence issue)
         window.dispatchEvent(new Event('local-storage'))
       } catch (error) {

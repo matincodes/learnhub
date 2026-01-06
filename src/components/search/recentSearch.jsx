@@ -29,7 +29,7 @@ const RecentSearch = () => {
           <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3 justify-center">
             {recentCourses.map((courses, index) => (
               <SearchCourseCard
-                key={courses?.id || courses?.title || index}
+                key={courses?.id ?? courses?.title}
                 title={courses.title}
                 image={courses.image}
                 lesson={courses.lesson}
