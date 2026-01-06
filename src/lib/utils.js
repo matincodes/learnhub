@@ -12,3 +12,12 @@ export const isActive = (pathname, link) => {
 export const isAdmin = (role) =>{
   return role === 'admin'
 }
+
+export const isUser = role => {
+  return role === 'user'
+}
+
+export function extractCourseTitle(pathname) {
+  const match = pathname.match(/my-courses\/([^/]+)/)
+  return match ? decodeURIComponent(match[1]) : null
+}
