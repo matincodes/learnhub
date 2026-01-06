@@ -13,7 +13,7 @@ export const Route = createFileRoute(
 })
 
 function Search() {
-  const [openSearchStatus] = useLocalStorageSync('openSearchStatus', 'false')
+  const [isSearchOpen] = useLocalStorageSync('isSearchOpen', false)
   const [rawSearchValue] = useLocalStorageSync('searchValue', '')
 
   // Debounce search value to avoid filtering on every keystroke
@@ -22,7 +22,6 @@ function Search() {
     300,
   )
 
-  const isSearchOpen = openSearchStatus === 'true'
   const hasSearchQuery = debouncedSearchValue.length > 0
 
   // Memoize filtered courses to avoid recalculating on every render

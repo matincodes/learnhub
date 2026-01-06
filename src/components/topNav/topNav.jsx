@@ -1,189 +1,181 @@
 import { Input } from '@/components/ui/input'
+import { UserProfile } from '@/context/user-context'
 import { topNavData } from '@/data/topNav'
-import {
-  useLocation,
-  useNavigate,
-  useRouter,
-} from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import useLocalStorageSync from '@/hooks/use-localstorage-sync'
+import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
+import { useCallback, useMemo, useState } from 'react'
 import { HiXMark } from 'react-icons/hi2'
 import NotificationModal from './notificationModal'
-import { UserProfile } from '@/context/user-context'
+
+// Pages where back button should NOT appear
+const DASHBOARD_PAGES = [
+  '/dashboard',
+  '/admin/dashboard',
+  '/admin/dashboard/courses',
+  '/admin/dashboard/course-details',
+]
 
 const TopNav = () => {
-  const [openSearchStatus, setOpenSearchStatus] = useState(false)
-  const [searchInputValue, setSearchInputValue] = useState('')
-  const [isOpen, setIsOpen] = useState(false)
-  const [inputLength, setInputLength] = useState(0)
-    const { userProfile } = UserProfile()
-  
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useLocalStorageSync(
+    'isSearchOpen',
+    false,
+  )
+  const [searchInputValue, setSearchInputValue] = useLocalStorageSync(
+    'searchValue',
+    '',
+  )
 
-
+  const { userProfile } = UserProfile()
   const router = useRouter()
   const navigate = useNavigate()
-  const role = "admin"
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
+
+  // Derived state
+  const role = 'admin'
   const title = topNavData[pathname]?.title
-  const regex = /my-courses\/([^/]+)/;
-  const match = pathname.match(regex);
-  const courseTitle = match ? decodeURIComponent(match[1]) : null;
+  const courseTitle = useMemo(() => {
+    const match = pathname.match(/my-courses\/([^/]+)/)
+    return match ? decodeURIComponent(match[1]) : null
+  }, [pathname])
 
-  // console.log(title, courseTitle, useLocation({select: s => s.pathname}))
-  // console.log(useRouteContext( { select: s => s } ))
+  const displayTitle = courseTitle || title
+  const isDashboardPage = DASHBOARD_PAGES.includes(pathname)
+  const showBackButton = !isDashboardPage
+  const showWelcomeMessage =
+    pathname === '/dashboard' || pathname === '/admin/dashboard'
 
-  // To switch from the normal icon to the search input field && This point the recent searches section comes up
-  const openSearch = () => {
-    setOpenSearchStatus(true)
-    navigate({
-      to: '/dashboard/search',
-    })
-  }
+  // Handlers
+  const handleOpenSearch = useCallback(() => {
+    setIsSearchOpen(true)
+    navigate({ to: '/dashboard/search' })
+  }, [navigate, setIsSearchOpen])
 
-  // To see not if the close button will cancel the text input or will return the search to the initial state
-  const getLength = e => {
-    const inputValue = e.target.value
-    setInputLength(inputValue.length)
-    setSearchInputValue(inputValue)
-  }
+  const handleSearchInput = useCallback(
+    e => {
+      setSearchInputValue(e.target.value)
+    },
+    [setSearchInputValue],
+  )
 
-  // When the length of the values passed is > 0 the value will be null and the butt will only clear the text value, if the input value is === 0 it will close the whole search button
-  const closeSearchButton = () => {
-    if (openSearchStatus === true && inputLength === 0) {
-      setOpenSearchStatus(false)
+  const handleCloseSearch = useCallback(() => {
+    if (searchInputValue.length === 0) {
+      setIsSearchOpen(false)
       navigate({ to: router.history.back() })
-    } else if (openSearchStatus === true && inputLength > 0) {
-      setOpenSearchStatus(true)
+    } else {
       setSearchInputValue('')
-      setInputLength(0)
     }
-  }
+  }, [searchInputValue, setIsSearchOpen, setSearchInputValue, router, navigate])
 
-  useEffect(() => {
-    localStorage.setItem('openSearchStatus', openSearchStatus)
-    localStorage.setItem('searchValue', searchInputValue)
-  }, [searchInputValue, openSearchStatus])
+  const toggleNotification = useCallback(() => {
+    setIsNotificationOpen(prev => !prev)
+  }, [])
 
-  function onToggle() {
-    setIsOpen(!isOpen)
-  }
+  const handleGoBack = useCallback(() => {
+    navigate({ to: router.history.back() })
+  }, [router, navigate])
+
+  // Sub-components for cleaner JSX
+  const BackButton = showBackButton && (
+    <img
+      src="/assets/arrow-left-01.svg"
+      onClick={handleGoBack}
+      className="cursor-pointer"
+      alt="Go back"
+    />
+  )
+
+  const WelcomeMessage = showWelcomeMessage && (
+    <p className="capitalize">{`Welcome Back, ${userProfile?.first_name} 👋`}</p>
+  )
+
+  const NotificationButton = (
+    <button
+      onClick={toggleNotification}
+      className="relative grid place-content-center rounded-full bg-white p-[10px]"
+    >
+      <img src="/assets/Vector.svg" alt="Notifications" className="w-[23px]" />
+      {isNotificationOpen && <NotificationModal close={toggleNotification} />}
+    </button>
+  )
+
+  const SearchBar = role !== 'admin' && (
+    <>
+      <div className="flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow">
+        <Input
+          type="text"
+          id="search"
+          placeholder="Search here"
+          className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
+          value={searchInputValue}
+          onFocus={handleOpenSearch}
+          onChange={handleSearchInput}
+        />
+        <HiXMark
+          size={28}
+          strokeWidth={0}
+          color="#303031"
+          className="cursor-pointer"
+          onClick={handleCloseSearch}
+        />
+      </div>
+      <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
+        <p className="font-semibold">10</p>
+        <img src="/assets/fire.svg" alt="Streak" />
+      </button>
+    </>
+  )
+
   return (
-    <div className="flex w-full bg-gray-100 items-center justify-between  px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)] lg:px-6  min-[1024px]:float-right">
+    <div className="flex w-full items-center justify-between bg-gray-100 px-3 py-3 sm:px-6 sm:py-4 lg:fixed lg:right-0 lg:z-50 lg:w-[calc(100%-280px)] lg:px-6 min-[1024px]:float-right">
+      {/* Mobile View */}
       <div className="flex w-full flex-col items-start gap-y-4 p-2 lg:hidden">
         <div className="flex w-full items-center justify-between">
-          {openSearchStatus === false && (
-            <img src={'/assets/learnhub-nobg.png'} alt="" />
+          {!isSearchOpen && (
+            <img src="/assets/learnhub-nobg.png" alt="LearnHub" />
           )}
 
-          {/* response */}
           <div
-            className={`items-center ${openSearchStatus === false ? 'flex w-full items-center justify-end gap-3' : 'w-full'}`}
+            className={
+              isSearchOpen
+                ? 'w-full'
+                : 'flex w-full items-center justify-end gap-3'
+            }
           >
-      
-            {/* responsive Input Search */}
-
-            {openSearchStatus === false && (
+            {!isSearchOpen && (
               <div className="flex items-center justify-evenly space-x-3">
-                {/* <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
-                  <p className="font-semibold">10</p>
-                  <img src="/assets/fire.svg" alt="" />
-                </button> */}
-
-                <button
-                  onClick={onToggle}
-                  className="relative grid place-content-center rounded-full bg-white p-[10px]"
-                >
-                  <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
-
-                  {isOpen && <NotificationModal close={onToggle} />}
-                </button>
-
+                {NotificationButton}
               </div>
             )}
           </div>
         </div>
 
-        <div className="my-5 flex flex-col items-start justify-start relative">
-          <h2 className="flex text-lg font-semibold sm:text-2xl items-center">
-            {pathname != '/dashboard' || pathname != '/admin/dashboard' || pathname != '/admin/dashboard/courses' || pathname !== '/admin/dashboard/course-details' && (
-              <img
-                src="/assets/arrow-left-01.svg"
-                onClick={() => router.history.back()}
-                className="cursor-pointer"
-                alt="arrow left"
-              />
-            )}
-            {courseTitle ? courseTitle : title}
+        <div className="relative my-5 flex flex-col items-start justify-start">
+          <h2 className="flex items-center text-lg font-semibold sm:text-2xl">
+            {BackButton}
+            {displayTitle}
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
-          <p className="capitalize">{ `Welcome Back, ${userProfile?.first_name} 👋`}</p>
-          )}
+          {WelcomeMessage}
         </div>
       </div>
 
       {/* Desktop View */}
-      <div className="hidden w-full items-center justify-between md:flex-col gap-4 lg:flex-row lg:flex">
-        <div className="flex flex-col items-start justify-start relative ">
-          <h2 className="flex items-center text-nowrap text-3xl font-semibold capitalize lg:text-2xl ">
-            {pathname != '/dashboard' || pathname != '/admin/dashboard' && (
-              <img
-                src="/assets/arrow-left-01.svg"
-                onClick={() => router.history.back()}
-                className="cursor-pointer"
-                alt="arrow left"
-              />
-            )}
-            {/* {title} */}
-            {pathname.includes('/admin/dashboard') || pathname.includes('/admin/dashboard/courses') || pathname.includes('/admin/dashboard/course-details') || pathname.includes('/admin/dashboard/add-course') || pathname.includes('/admin/dashboard/add-module') && pathname == '/admin/dashboard' ? 'Dashboard' : ''}
-
-            {courseTitle ? courseTitle : title}
+      <div className="hidden w-full items-center justify-between gap-4 md:flex-col lg:flex lg:flex-row">
+        <div className="relative flex flex-col items-start justify-start">
+          <h2 className="flex items-center text-nowrap text-3xl font-semibold capitalize lg:text-2xl">
+            {BackButton}
+            {displayTitle}
           </h2>
-          {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
-            <p className="capitalize">{ `Welcome Back, ${userProfile?.first_name} 👋`}</p>
-          )}
+          {WelcomeMessage}
         </div>
 
         <div className="relative flex items-center justify-end gap-x-4 md:basis-[55%] lg:basis-[45%]">
-          {role == 'admin' ? ""
-            :
-            <>
-              <div className={`flex h-10 w-full items-center justify-between overflow-hidden rounded-lg border bg-white pr-2 focus-within:border-normal_yellow`}>
-                <Input
-                  type="text"
-                  id="search"
-                  placeholder="Search here"
-                  className="border-none outline-none placeholder:text-[14px] placeholder:font-medium placeholder:text-[#848484]"
-                  value={searchInputValue}
-                  onFocus={openSearch}
-                  onChange={getLength}
-                />
-
-                <HiXMark
-                  size={28}
-                  strokeWidth={0}
-                  color="#303031"
-                  className="cursor-pointer"
-                  onClick={closeSearchButton}
-                />
-              </div>
-
-              <button className="flex h-10 items-center justify-center gap-1 rounded-full bg-white p-3">
-                <p className="font-semibold">10</p>
-                <img src="/assets/fire.svg" alt="" />
-              </button>
-
-            </>
-          }
-          <button
-            onClick={onToggle}
-            className="relative grid place-content-center rounded-full bg-white p-[10px]"
-          >
-            <img src="/assets/Vector.svg" alt="" className="w-[23px]" />
-
-            {isOpen && <NotificationModal close={onToggle} />}
-          </button>
+          {SearchBar}
+          {NotificationButton}
         </div>
       </div>
     </div>
   )
 }
+
 export default TopNav
