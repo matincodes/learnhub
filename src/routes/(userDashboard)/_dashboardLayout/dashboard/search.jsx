@@ -1,8 +1,10 @@
 import RecentSearch from '@/components/search/recentSearch'
 import SearchedCourse from '@/components/search/searchedCourses'
 import { searchedCourses } from '@/data/dashboard'
+import { useDebounce } from '@/hooks/use-debounce'
+import useLocalStorageSync from '@/hooks/use-localstorage-sync'
 import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/search',
@@ -10,54 +12,15 @@ export const Route = createFileRoute(
   component: Search,
 })
 
-// Debounce hook
-function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay)
-    return () => clearTimeout(timer)
-  }, [value, delay])
-
-  return debouncedValue
-}
-
-// Custom hook to sync with localStorage
-function useLocalStorageSync(key, defaultValue = '') {
-  const [value, setValue] = useState(
-    () => window.localStorage.getItem(key) ?? defaultValue,
-  )
-
-  useEffect(() => {
-    // Listen for storage events from other tabs/windows
-    const handleStorageChange = e => {
-      if (e.key === key) {
-        setValue(e.newValue ?? defaultValue)
-      }
-    }
-
-    // Also poll for changes from the same tab (storage event doesn't fire for same-tab changes)
-    const intervalId = setInterval(() => {
-      const currentValue = window.localStorage.getItem(key) ?? defaultValue
-      setValue(prev => (prev !== currentValue ? currentValue : prev))
-    }, 150)
-
-    window.addEventListener('storage', handleStorageChange)
-    return () => {
-      window.removeEventListener('storage', handleStorageChange)
-      clearInterval(intervalId)
-    }
-  }, [key, defaultValue])
-
-  return value
-}
-
 function Search() {
-  const openSearchStatus = useLocalStorageSync('openSearchStatus', 'false')
-  const rawSearchValue = useLocalStorageSync('searchValue', '')
+  const [openSearchStatus] = useLocalStorageSync('openSearchStatus', 'false')
+  const [rawSearchValue] = useLocalStorageSync('searchValue', '')
 
   // Debounce search value to avoid filtering on every keystroke
-  const debouncedSearchValue = useDebounce(rawSearchValue.toLowerCase(), 300)
+  const debouncedSearchValue = useDebounce(
+    typeof rawSearchValue === 'string' ? rawSearchValue.toLowerCase() : '',
+    300,
+  )
 
   const isSearchOpen = openSearchStatus === 'true'
   const hasSearchQuery = debouncedSearchValue.length > 0
@@ -107,8 +70,8 @@ function Search() {
         <div className="flex h-full flex-col items-center justify-center text-center">
           <img src="/assets/mockups/no_course.png" alt="No results" />
           <p className="mb-4 mt-2 font-inter font-[400] text-[#808080] lg:w-[36%]">
-            Oops! We couldn't find your search in the collection. Please check
-            for typos or try again.
+            Oops! We couldn&apos;t find your search in the collection. Please
+            check for typos or try again.
           </p>
           <button
             onClick={() => window.history.back()}
