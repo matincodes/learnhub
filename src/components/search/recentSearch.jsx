@@ -1,8 +1,6 @@
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import { recentSearchedCourses } from '@/data/dashboard'
 import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-
 
 
 
@@ -29,9 +27,9 @@ const RecentSearch = () => {
             </button>
           </div>
           <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-            {recentCourses.map(courses => (
+            {recentCourses.map((courses, index) => (
               <SearchCourseCard
-                key={uuidv4()}
+                key={courses?.id || courses?.title || index}
                 title={courses.title}
                 image={courses.image}
                 lesson={courses.lesson}
