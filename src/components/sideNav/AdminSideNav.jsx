@@ -1,6 +1,6 @@
-'use client'
-
+import { useAdmin } from '@/context/admin-context'
 import { useLocation, useRouter } from '@tanstack/react-router'
+import { useEffect } from 'react'
 import {
   CourseIcon,
   HomeIcon,
@@ -8,8 +8,7 @@ import {
   SettingIcon,
   UserIcon,
 } from './customIcon'
-import { useAdmin } from '@/context/admin-context'
-import { useEffect } from 'react'
+
 const navItems = [
   {
     label: 'Dashboard',
@@ -62,8 +61,10 @@ const AdminSideNav = () => {
   const { loadDashboard, dashboard, loading } = useAdmin()
   useEffect(() => {
     loadDashboard()
-  }, [])
-  if (loading || !dashboard) return
+  }, [loadDashboard])
+
+  if (loading || !dashboard) return null
+
   const { profile_image, first_name } = dashboard.admin_data
   return (
     <div className="fixed z-[20] flex h-full w-[280px] flex-col items-center rounded-[20px] bg-white py-7">

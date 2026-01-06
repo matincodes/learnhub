@@ -9,13 +9,17 @@ import {
 import { navLinks } from '@/data/sideNav'
 import { isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
+import { memo } from 'react'
 
-export default function BottomNav() {
-  const { pathname } = useLocation()
+const PRIMARY_NAV_LINKS = navLinks.slice(0, 3)
+const DROPDOWN_ITEMS = ['Profile', 'Billing', 'Team', 'Subscription']
+
+const BottomNav = () => {
+  const pathname = useLocation({ select: s => s.pathname })
 
   return (
     <nav className="fixed inset-x-0 bottom-0 flex h-24 flex-row items-center justify-around bg-white lg:hidden">
-      {navLinks.slice(0, 3).map(({ link, name, iconImage }) => {
+      {PRIMARY_NAV_LINKS.map(({ link, name, iconImage }) => {
         return (
           <div key={name} className="flex items-center justify-center p-3">
             <Link
@@ -32,17 +36,20 @@ export default function BottomNav() {
       })}
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center justify-center p-3">
-          <img src="/assets/hamburger.svg" className='font-bold' alt="menu" />
+          <img src="/assets/hamburger.svg" className="font-bold" alt="menu" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='bg-white'>
+        <DropdownMenuContent className="bg-white">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          {DROPDOWN_ITEMS.map(item => (
+            <DropdownMenuItem key={item}>{item}</DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>
   )
 }
+
+BottomNav.displayName = 'BottomNav'
+
+export default memo(BottomNav)
