@@ -1,4 +1,4 @@
-import { useAuth } from '@/context/auth-context'
+import { useVerifyEmail } from '@/hooks/use-auth-mutations'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { CheckCircle2Icon, Loader2, XCircle } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
@@ -26,7 +26,7 @@ export const Route = createFileRoute('/_auth/verify')({
 function VerifyRoute() {
   const token = Route.useSearch({ select: s => s.token })
   const router = useRouter()
-  const { verifyEmail } = useAuth()
+  const verifyEmailMutation = useVerifyEmail()
 
   const [status, setStatus] = useState('idle') // idle, loading, success, error, no-token
   const [error, setError] = useState(null)
@@ -42,23 +42,24 @@ function VerifyRoute() {
     let mounted = true
     setStatus('loading')
     setError(null) // Clear previous errors
-    ;(async () => {
-      const res = await verifyEmail(token)
-      if (!mounted) return
 
-      if (res.success) {
+    verifyEmailMutation.mutate(token, {
+      onSuccess: () => {
+        if (!mounted) return
         setStatus('success')
         setRemainingMs(REDIRECT_DELAY_MS)
-      } else {
+      },
+      onError: err => {
+        if (!mounted) return
         setStatus('error')
-        setError(res.error)
-      }
-    })()
+        setError(err.response?.data || err.message || 'Verification failed')
+      },
+    })
 
     return () => {
       mounted = false
     }
-  }, [token, verifyEmail])
+  }, [token]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Redirect countdown when verification succeeds
   useEffect(() => {

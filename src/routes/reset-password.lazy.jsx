@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/auth-context'
+import { useConfirmResetPassword } from '@/hooks/use-auth-mutations'
 import { useToast } from '@/hooks/use-toast'
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
@@ -18,7 +18,7 @@ function ResetPassword() {
   const { uid, token } = Route.useSearch()
 
   const { register, handleSubmit } = useForm()
-  const { confirmResetPassword, confirmResetPasswordMutation } = useAuth()
+  const confirmResetPasswordMutation = useConfirmResetPassword()
   const router = useRouter()
   const { toast } = useToast()
 
@@ -30,23 +30,28 @@ function ResetPassword() {
       return
     }
 
-    const result = await confirmResetPassword(uid, token, data.password)
-
-    if (result.success) {
-      toast({
-        title: 'Success',
-        description: 'Password reset successfully. Please login.',
-      })
-      router.navigate({ to: '/login' })
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Failed',
-        description:
-          result.error ||
-          'Link may be invalid or expired. Try requesting a new one.',
-      })
-    }
+    confirmResetPasswordMutation.mutate(
+      { id: uid, token, newPassword: data.password },
+      {
+        onSuccess: () => {
+          toast({
+            title: 'Success',
+            description: 'Password reset successfully. Please login.',
+          })
+          router.navigate({ to: '/login' })
+        },
+        onError: err => {
+          toast({
+            variant: 'destructive',
+            title: 'Failed',
+            description:
+              err.response?.data?.message ||
+              err.message ||
+              'Link may be invalid or expired. Try requesting a new one.',
+          })
+        },
+      },
+    )
   }
 
   // If the link is broken (missing token), show error immediately

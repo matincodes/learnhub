@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/auth-context'
+import { useRequestPasswordReset } from '@/hooks/use-auth-mutations'
 import { useToast } from '@/hooks/use-toast'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { Loader2, XCircle } from 'lucide-react'
@@ -22,7 +22,7 @@ export const Route = createLazyFileRoute('/forgot-password')({
 
 function ForgotPassword() {
   const { register, handleSubmit } = useForm()
-  const { requestPasswordReset, requestPasswordResetMutation } = useAuth()
+  const requestPasswordResetMutation = useRequestPasswordReset()
   const { toast } = useToast()
 
   const isLoading = requestPasswordResetMutation.isPending
@@ -33,21 +33,25 @@ function ForgotPassword() {
     null
 
   const onSubmit = async data => {
-    const result = await requestPasswordReset(data.email)
-
-    if (result.success) {
-      toast({
-        variant: 'success',
-        title: 'Email Sent',
-        description: 'Check your inbox for the reset link.',
-      })
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: result.error || 'Something went wrong. Please try again.',
-      })
-    }
+    requestPasswordResetMutation.mutate(data.email, {
+      onSuccess: () => {
+        toast({
+          variant: 'success',
+          title: 'Email Sent',
+          description: 'Check your inbox for the reset link.',
+        })
+      },
+      onError: err => {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description:
+            err.response?.data?.message ||
+            err.message ||
+            'Something went wrong. Please try again.',
+        })
+      },
+    })
   }
 
   if (emailSent) {
