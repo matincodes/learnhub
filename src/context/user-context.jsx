@@ -6,6 +6,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react'
 
@@ -72,35 +73,38 @@ export const UserProvider = ({ children }) => {
   }, [userId, secureRequest])
 
   // Function exposed on context to update the user profile.
-  const updateUserProfile = async updates => {
-    if (!userId) {
-      console.error('Cannot update profile: User ID not available.')
-      setError(true)
-      return null // Indicate failure
-    }
+  const updateUserProfile = useCallback(
+    async updates => {
+      if (!userId) {
+        console.error('Cannot update profile: User ID not available.')
+        setError(true)
+        return null // Indicate failure
+      }
 
-    console.log(`Updating profile for user ID: ${userId}`, updates)
-    setLoading(prev => ({ ...prev, update: true }))
-    setError(null) // Clear previous errors
+      console.log(`Updating profile for user ID: ${userId}`, updates)
+      setLoading(prev => ({ ...prev, update: true }))
+      setError(null) // Clear previous errors
 
-    try {
-      const { data } = await secureRequest(token =>
-        userService.updateProfile(userId, updates, token),
-      )
-      setUserProfile(data)
-      console.log('Profile updated successfully:', data)
+      try {
+        const { data } = await secureRequest(token =>
+          userService.updateProfile(userId, updates, token),
+        )
+        setUserProfile(data)
+        console.log('Profile updated successfully:', data)
 
-      updateLocalUserStorage(updates)
-      fetchUserProfile() // Refresh profile data after update
-      return data // Return the response from the PATCH request
-    } catch (err) {
-      console.error('Failed to update user profile:', err.message)
-      setError('Failed to update user profile') // Set error state on failure
-      return null // Indicate failure
-    } finally {
-      setLoading(prev => ({ ...prev, update: false })) // Stop update loading state
-    }
-  }
+        updateLocalUserStorage(updates)
+        fetchUserProfile() // Refresh profile data after update
+        return data // Return the response from the PATCH request
+      } catch (err) {
+        console.error('Failed to update user profile:', err.message)
+        setError('Failed to update user profile') // Set error state on failure
+        return null // Indicate failure
+      } finally {
+        setLoading(prev => ({ ...prev, update: false })) // Stop update loading state
+      }
+    },
+    [userId, secureRequest, fetchUserProfile],
+  )
 
   const updateLocalUserStorage = updates => {
     try {
@@ -119,22 +123,25 @@ export const UserProvider = ({ children }) => {
     }
   }
 
-  const changePassword = async updatedData => {
-    setLoading(prev => ({ ...prev, passWord: true }))
+  const changePassword = useCallback(
+    async updatedData => {
+      setLoading(prev => ({ ...prev, passWord: true }))
 
-    try {
-      const data = await secureRequest(token =>
-        userService.changePassword(updatedData, token),
-      )
-      console.log('Password changed successfully:', data)
+      try {
+        const data = await secureRequest(token =>
+          userService.changePassword(updatedData, token),
+        )
+        console.log('Password changed successfully:', data)
 
-      return data
-    } catch (error) {
-      console.error('Password change error:', error)
-    } finally {
-      setLoading(prev => ({ ...prev, passWord: false }))
-    }
-  }
+        return data
+      } catch (error) {
+        console.error('Password change error:', error)
+      } finally {
+        setLoading(prev => ({ ...prev, passWord: false }))
+      }
+    },
+    [secureRequest],
+  )
 
   // Fetch profile on mount and when userId changes
   useEffect(() => {
@@ -143,14 +150,24 @@ export const UserProvider = ({ children }) => {
     }
   }, [userId, fetchUserProfile])
 
-  const value = {
-    userProfile,
-    loading,
-    error,
-    getUserProfile: fetchUserProfile,
-    updateUserProfile,
-    changePassword,
-  }
+  const value = useMemo(
+    () => ({
+      userProfile,
+      loading,
+      error,
+      getUserProfile: fetchUserProfile,
+      updateUserProfile,
+      changePassword,
+    }),
+    [
+      userProfile,
+      loading,
+      error,
+      fetchUserProfile,
+      updateUserProfile,
+      changePassword,
+    ],
+  )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
