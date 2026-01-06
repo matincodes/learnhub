@@ -1,4 +1,4 @@
-import { verifyEmail } from '@/api/authService'
+import { useAuth } from '@/context/auth-context'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { CheckCircle2Icon, Loader2, XCircle } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
@@ -26,6 +26,7 @@ export const Route = createFileRoute('/_auth/verify')({
 function VerifyRoute() {
   const token = Route.useSearch({ select: s => s.token })
   const router = useRouter()
+  const { verifyEmail } = useAuth()
 
   const [status, setStatus] = useState('idle') // idle, loading, success, error, no-token
   const [error, setError] = useState(null)
@@ -42,28 +43,22 @@ function VerifyRoute() {
     setStatus('loading')
     setError(null) // Clear previous errors
     ;(async () => {
-      try {
-        const res = await verifyEmail(token)
-        if (!mounted) return
+      const res = await verifyEmail(token)
+      if (!mounted) return
 
-        if (res.success) {
-          setStatus('success')
-          setRemainingMs(REDIRECT_DELAY_MS)
-        } else {
-          setStatus('error')
-          setError(res.error)
-        }
-      } catch (err) {
-        if (!mounted) return
+      if (res.success) {
+        setStatus('success')
+        setRemainingMs(REDIRECT_DELAY_MS)
+      } else {
         setStatus('error')
-        setError(err.message || 'Failed to verify email')
+        setError(res.error)
       }
     })()
 
     return () => {
       mounted = false
     }
-  }, [token])
+  }, [token, verifyEmail])
 
   // Redirect countdown when verification succeeds
   useEffect(() => {
