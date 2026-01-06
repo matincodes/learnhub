@@ -9,7 +9,7 @@ export const isActive = (pathname, link) => {
   return pathname.split('/').at(-1) === link.split('/').at(-1)
 }
 
-export const isAdmin = (role) =>{
+export const isAdmin = role => {
   return role === 'admin'
 }
 
