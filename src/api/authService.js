@@ -70,9 +70,9 @@ export const signup = async (role, userData) => {
   }
 };
 
-export const refreshAccessToken = async (refreshToken) => {
+export const  refreshAccessToken = async (refreshToken) => {
   const { data } = await axiosInstance.post('/refresh', { refreshToken })
-  return data.accessToken
+  return data.access
 }
 
 // Verify email / account using the token sent via email
@@ -98,7 +98,7 @@ export const requestPasswordReset = async (email) => {
   }
 }
 
-export const     confirmResetPassword = async (id, token, newPassword) => {
+export const confirmResetPassword = async (id, token, newPassword) => {
   try {
     const { data } = await axiosInstance.post('student/reset-password/', {
       id,

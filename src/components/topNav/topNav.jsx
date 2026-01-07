@@ -15,7 +15,7 @@ const TopNav = () => {
   const [searchInputValue, setSearchInputValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [inputLength, setInputLength] = useState(0)
-    const { getUserById } = UserProfile()
+    const { userProfile } = UserProfile()
   
 
 
@@ -115,7 +115,7 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
           </h2>
           {(pathname == '/dashboard' || pathname == '/admin/dashboard') && (
-          <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
+          <p className="capitalize">{ `Welcome Back, ${userProfile?.first_name} 👋`}</p>
           )}
         </div>
       </div>
@@ -138,7 +138,7 @@ const TopNav = () => {
             {courseTitle ? courseTitle : title}
           </h2>
           {(pathname == '/dashboard' || pathname == '/admin/dashboard')&& (
-            <p className="capitalize">{ `Welcome Back, ${getUserById?.first_name} 👋`}</p>
+            <p className="capitalize">{ `Welcome Back, ${userProfile?.first_name} 👋`}</p>
           )}
         </div>
 

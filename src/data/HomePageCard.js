@@ -61,7 +61,7 @@ const paymentSection = [
     description:
       'With this plan you will get to save 17% from the monthly plan in a year',
     plan: '1 Year subscription',
-    durationPlan: 'yearly'
+    durationPlan: 'annual'
   },
 ]
 
