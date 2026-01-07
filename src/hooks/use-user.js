@@ -1,7 +1,9 @@
 // src/hooks/use-user.js
-import { getAuthData } from '@/lib/tokenStorage'
+import { useQueryClient } from '@tanstack/react-query'
+import { authKeys } from '@/context/auth-context'
 
 export const useUser = () => {
-  const { user } = getAuthData()
+  const queryClient = useQueryClient()
+  const user = queryClient.getQueryData(authKeys.user())
   return user
 }

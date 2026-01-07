@@ -1,30 +1,15 @@
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
-import NotFound from '@/components/notFound/notFound'
-// Import the generated route tree
 import { AuthProvider, useAuth } from '@/context/auth-context'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AdminProvider } from './context/admin-context'
-import { UserProvider} from './context/user-context'
-import { routeTree } from './routeTree.gen'
+import { router } from './router'
 
-// Create a new router instance
-const router = createRouter({
-  routeTree,
-  defaultNotFoundComponent: NotFound,
-  context: {
-    user: undefined,
-    isAuthenticated: false,
-    login: undefined,
-    signup: undefined,
-    logout: undefined,
-    authFetch: undefined,
-    accessToken: undefined,
-  },
-  defaultStructuralSharing: true,
-})
+const queryClient = new QueryClient()
 
 // Render the app
 const rootElement = document.getElementById('root')
@@ -32,19 +17,19 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AdminProvider>
-        <AuthProvider>
-          <UserProvider>
-              <App />
-          </UserProvider>
-        </AuthProvider>
-      </AdminProvider>
+      <QueryClientProvider client={queryClient}>
+        <AdminProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </AdminProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </StrictMode>,
   )
 }
 
 export function App() {
   const auth = useAuth()
-  console.log('Auth context in App:', auth)
   return <RouterProvider router={router} context={{ ...auth }} />
 }

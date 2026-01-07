@@ -3,7 +3,6 @@ import QuizePopper from '../ui/QuizePopper'
 
 const QuizeCard = ({ e, openId, setOpenId }) => {
   const { id, title, thumbnail, time_limit, total_questions } = e
-console.log(e)
   const togglePopper = useCallback(() => {
     setOpenId(prev => (prev === e.id ? null : e.id))
   }, [e.id, setOpenId])
@@ -15,7 +14,7 @@ console.log(e)
       >
         <img
           onClick={togglePopper}
-          src="\assets\quiz\menu-dot.svg"
+          src="/assets/quiz/menu-dot.svg"
           alt="icon"
           className="size-6 cursor-pointer"
         />
@@ -27,7 +26,7 @@ console.log(e)
         </h2>
         <p className="mt-[17px] flex items-center gap-3">
           No of Questions - {total_questions}{' '}
-          <img src="\assets\quiz\dot.svg" alt="icon" className="size-1" />
+          <img src="/assets/quiz/dot.svg" alt="icon" className="size-1" />
           Time limit - {time_limit}
         </p>
       </div>

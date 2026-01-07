@@ -1,90 +1,106 @@
-import { createContext, useContext, useState } from 'react'
-import { login, signup, refreshAccessToken } from '@/api/authService'
-import { saveAuthData, getAuthData, clearAuthData } from '@/lib/tokenStorage'
+import { refreshAccessTokenApi } from '@/api/authService'
+import { clearAuthData, getAuthData, saveAuthData } from '@/lib/tokenStorage'
 import { router } from '@/router'
-
+import { useQueryClient } from '@tanstack/react-query'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
-  const { user: storedUser, accessToken: storedToken, refreshToken: storedRefresh } = getAuthData()
+// Query keys for auth-related queries
+export const authKeys = {
+  all: ['auth'],
+  user: () => [...authKeys.all, 'user'],
+}
 
-  const [user, setUser] = useState(storedUser)
+export const AuthProvider = ({ children }) => {
+  const {
+    user: storedUser,
+    accessToken: storedToken,
+    refreshToken: storedRefresh,
+  } = getAuthData()
+  const queryClient = useQueryClient()
+  const initialized = useRef(false)
+
+  // Set defaults for specific keys
+  queryClient.setQueryDefaults(authKeys.user(), {
+    staleTime: Infinity,
+    gcTime: Infinity,
+  })
+
   const [accessToken, setAccessToken] = useState(storedToken)
   const [refreshToken, setRefreshToken] = useState(storedRefresh)
-  const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser)
 
-  const handleLogin = async (role, credentials) => {
-    try {
-      const { user, tokens, redirect } = await login(role, credentials)
-      setUser(user)
+  // Initialize query cache with stored user - moved to useEffect for React 18 concurrent rendering
+  useEffect(() => {
+    if (
+      !initialized.current &&
+      storedUser &&
+      !queryClient.getQueryData(authKeys.user())
+    ) {
+      queryClient.setQueryData(authKeys.user(), storedUser)
+      initialized.current = true
+    }
+  }, [storedUser, queryClient])
+
+  // Helper to set auth data after login - used by useLogin hook
+  const setAuthData = useCallback(
+    (userData, tokens) => {
       setAccessToken(tokens.access)
       setRefreshToken(tokens.refresh)
-      saveAuthData(user, tokens)
-      setIsAuthenticated(true)
-      return { success: true, redirect}
-    } catch (err) {
-      console.error(err)
-      return { success: false, error: err.response?.data?.error || 'An error occurred' }
-    }
-  }
+      saveAuthData(userData, tokens)
+      queryClient.setQueryData(authKeys.user(), userData)
+    },
+    [queryClient],
+  )
 
-  const handleSignup = async (role, userData) => {
-    console.log('User data:', userData)
-    try {
-      const result = await signup(role, userData)
-
-      if (!result || !result.success) {
-        return { success: false, error: result?.message || 'Signup failed' }
-      }
-      console.log('Signup successful:', result.user)
-      return { success: true }
-    } catch (err) {
-      console.error(err)
-      return { success: false, error: err.response?.data?.error || 'An error occurred' }
-    }
-  }
-
-  const logout = () => {
-    //route to login page
-    console.log('Logging out user:', user?.id)
+  const logout = useCallback(() => {
     clearAuthData()
-    setUser(null)
     setAccessToken(null)
     setRefreshToken(null)
-    setIsAuthenticated(false)
+    queryClient.removeQueries({ queryKey: authKeys.all })
     router.navigate({ to: '/login' })
-  }
+  }, [queryClient])
 
-  const secureRequest = async (axiosRequest) => {
-    try {
-      const response = await axiosRequest(accessToken)
-      return response
-    } catch (error) {
-      if (error.response?.status === 401 && refreshToken) {
-        try {
-          const newAccess = await refreshAccessToken(refreshToken)
-          setAccessToken(newAccess)
-          localStorage.setItem('accessToken', newAccess)
-          return axiosRequest(newAccess)
-        } catch (err) {
-          logout()
-          throw err
+  const secureRequest = useCallback(
+    async axiosRequest => {
+      try {
+        const response = await axiosRequest(accessToken)
+        return response
+      } catch (error) {
+        if (error.response?.status === 401 && refreshToken) {
+          try {
+            const newAccess = await refreshAccessTokenApi(refreshToken)
+            setAccessToken(newAccess)
+            localStorage.setItem('accessToken', newAccess)
+            return axiosRequest(newAccess)
+          } catch (err) {
+            logout()
+            throw err
+          }
         }
+        throw error
       }
-      throw error
-    }
-  }
+    },
+    [accessToken, refreshToken, logout],
+  )
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        isAuthenticated,
-        login: handleLogin,
-        signup: handleSignup,
-        logout,
+        isAuthenticated: !!storedUser && !!accessToken,
         accessToken,
+        refreshToken,
+
+        // Auth helpers
+        setAuthData,
+        logout,
         secureRequest,
       }}
     >

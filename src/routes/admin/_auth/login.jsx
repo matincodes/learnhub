@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/use-toast'
 import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/admin/_auth/login')({
@@ -16,30 +16,42 @@ function Login() {
   const { register, handleSubmit, reset } = useForm()
   const router = useRouter()
   const { toast } = useToast()
-  // const redirect = Route.useSearch({ select: s => s.redirect })
 
-  const onSubmit = async data => {
-    setIsLoading(true)
-    try {
-      const res = await adminLogin(data)
-      console.log(res)
-      const tokens = res?.data?.tokens
-      console.log(tokens)
-      saveAdminAuthData(tokens)
-      reset()
-      router.invalidate()
-      router.navigate({ to: '/admin/dashboard' })
-    } catch (error) {
-      console.log(error)
-      return toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'login failed, please try again.',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const onSubmit = useCallback(
+    async data => {
+      // Prevent double submission
+      if (isLoading) return
+
+      setIsLoading(true)
+      try {
+        const res = await adminLogin(data)
+        const tokens = res?.data?.tokens
+
+        if (!tokens) {
+          throw new Error('No tokens received from server')
+        }
+
+        saveAdminAuthData(tokens)
+        reset()
+        await router.invalidate()
+        await router.navigate({ to: '/admin/dashboard' })
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          'Login failed, please try again.'
+
+        toast({
+          variant: 'destructive',
+          title: 'Login Failed',
+          description: errorMessage,
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [isLoading, reset, router, toast],
+  )
 
   return (
     <div className="h-screen">

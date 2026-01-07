@@ -6,12 +6,19 @@ import { useToast } from '@/hooks/use-toast'
 import { saveAdminAuthData } from '@/lib/adminTokenStorage'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/admin/_auth/signup')({
   component: SignUp,
 })
+
+const validateSignupForm = data => {
+  if (data.password !== data.confirm_password) {
+    return { valid: false, error: 'Passwords do not match' }
+  }
+  return { valid: true }
+}
 
 function SignUp() {
   const { loadDashboard } = useAdmin()
@@ -26,30 +33,50 @@ function SignUp() {
   const router = useRouter()
   const { toast } = useToast()
 
-  const onSubmit = async data => {
-    setIsLoading(true)
+  const onSubmit = useCallback(
+    async data => {
+      if (isLoading) return
 
-    try {
-      const res = await adminSignUp(data)
-      const tokens = res?.data?.tokens
-      saveAdminAuthData(tokens)
-      reset()
-      router.invalidate()
-      router.navigate({
-        to: '/admin/dashboard',
-      })
-      loadDashboard()
-    } catch (error) {
-      console.log(error)
-      return toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: 'Signup failed, please try again.',
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
+      const validation = validateSignupForm(data)
+      if (!validation.valid) {
+        toast({
+          variant: 'destructive',
+          title: 'Validation Error',
+          description: validation.error,
+        })
+        return
+      }
+
+      setIsLoading(true)
+
+      try {
+        const res = await adminSignUp(data)
+        const tokens = res?.data?.tokens
+
+        if (!tokens) {
+          throw new Error('No tokens received from server')
+        }
+
+        saveAdminAuthData(tokens)
+        reset()
+        await router.invalidate()
+        await router.navigate({ to: '/admin/dashboard' })
+        loadDashboard()
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Signup Failed',
+          description:
+            error.response?.data?.message ||
+            error.message ||
+            'Signup failed, please try again.',
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [isLoading, loadDashboard, reset, router, toast],
+  )
 
   return (
     <div className="relative place-content-center items-center p-[20px]">

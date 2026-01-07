@@ -28,7 +28,6 @@ export const Route = createFileRoute('/checkout')({
   },
 })
 
-
 function CheckoutPage() {
   const { planId } = Route.useSearch()
   const [currentPlan, setCurrentPlan] = useState(null)
@@ -134,7 +133,7 @@ function CheckoutPage() {
     <div className="min-h-screen bg-white font-san">
       <div className="grid gap-8 md:grid-cols-5">
         {/* Left column */}
-        <div className="md:col-span-3 px-5 md:px-24 py-16">
+        <div className="px-5 py-16 md:col-span-3 md:px-24">
           <Link
             to="/pricing"
             className="mb-6 inline-block text-lg text-gray-500 underline hover:text-gray-700"
@@ -163,11 +162,13 @@ function CheckoutPage() {
             <div>
               <h2 className="mb-4 text-2xl font-medium">Personal Details</h2>
               <div className="space-y-2">
-                <div className='text-[#303031]'>
+                <div className="text-[#303031]">
                   <span className="text-lg font-semibold">Full name: </span>
-                  <span className="text-sm">{userProfile?.first_name}&nbsp;{userProfile?.last_name}</span>
+                  <span className="text-sm">
+                    {userProfile?.first_name}&nbsp;{userProfile?.last_name}
+                  </span>
                 </div>
-                <div className='text-[#303031]'>
+                <div className="text-[#303031]">
                   <span className="text-lg font-semibold">Email address: </span>
                   <span className="text-sm">{userProfile?.email}</span>
                 </div>
@@ -175,7 +176,9 @@ function CheckoutPage() {
             </div>
 
             <div>
-              <h2 className="mb-4 text-2xl font-medium mt-11">Subscription Details</h2>
+              <h2 className="mb-4 mt-11 text-2xl font-medium">
+                Subscription Details
+              </h2>
               <div className="space-y-4">
                 {loading ? (
                   <div className="flex items-center justify-center h-48">
@@ -213,17 +216,14 @@ function CheckoutPage() {
           </div>
         </div>
 
-
         {/* Second container - spans 1 column */}
-        <div className="space-y-8 w-ful l md:bg-gray-100 md:min-h-screen  col-span-2 flex flex-col items-start px-5 md:px-16 py-48">
-          <div className='w-full'>
+        <div className="w-full col-span-2 flex flex-col items-start space-y-8 px-5 py-48 md:min-h-screen md:bg-gray-100 md:px-16">
+          <div className="w-full">
             <h2 className="mb-6 text-3xl font-semibold">Summary</h2>
 
-            <div className='w-full'>
+            <div className="w-full">
               <div>
-                <h3 className="mb-4 text-xl font-semibold">
-                  Payment Overview
-                </h3>
+                <h3 className="mb-4 text-xl font-semibold">Payment Overview</h3>
                 <div className="space-y-2">
                   <div className="text-sm">
                     <span className="text-gray-600 text-lg">Duration : </span>
@@ -262,6 +262,5 @@ function CheckoutPage() {
         </div>
       </div>
     </div>
-
-  );
+  )
 }
