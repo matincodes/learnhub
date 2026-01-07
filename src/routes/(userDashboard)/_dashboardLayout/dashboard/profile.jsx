@@ -27,7 +27,6 @@ function Profile() {
     const image = userprofile.current.files[0]
     if (image) {
       setProfileImageFile(image) // <-- Store the actual file
-      console.log(image)
       setProfileImageUrl(URL.createObjectURL(image)) // <-- Create a temporary URL for preview
     }
   }
@@ -55,11 +54,9 @@ function Profile() {
     if (lastName) formData.append('last_name', lastName)
     if (email) formData.append('email', email)
     if (profileImageFile) {
-      console.log('Profile Image File:', profileImageFile)
       formData.append('profile_image', profileImageFile)
     }
 
-    console.log('Submitting FormData...')
     updateProfileMutation.mutate(formData) // Send only the fields that are filled in
   }
 

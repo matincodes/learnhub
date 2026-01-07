@@ -59,7 +59,7 @@ function VerifyRoute() {
     return () => {
       mounted = false
     }
-  }, [token, verifyEmailMutation])
+  }, [token]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Redirect countdown when verification succeeds
   useEffect(() => {

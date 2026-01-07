@@ -45,7 +45,7 @@ function App() {
   const stopNav = useRef(null)
   const [courseOption, setCourseOption] = useState('Frontend Development')
   const user = useUser()
-  console.log('User in Home Page:', user)
+
 
   // For Filtering Courses
   const getOptionValue = e => {
