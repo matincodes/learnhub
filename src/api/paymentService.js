@@ -27,8 +27,9 @@ export const getCurrentPlan = async (planId) => {
 
 
 export const createPaymentSession = async (planId) => {
+    console.log("planId:", planId);
   try {
-    const { data } = await axiosInstance.post('/payment/initiate', { plan_id: planId }, {
+    const { data } = await axiosInstance.post('/payment/initiate/', { plan_id: planId}, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         }
@@ -43,8 +44,10 @@ export const createPaymentSession = async (planId) => {
 
 export const verifyPayment = async (reference) => {
   try {
-    const { data } = await axiosInstance.post('payment/verify', {
-        reference: reference,
+    const { data } = await axiosInstance.post('/payment/verify/', {reference: reference}, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        }
     });
     return { success: true, data };
   } catch (error) {

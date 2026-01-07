@@ -4,11 +4,9 @@ import {
   createFileRoute,
   Link,
   redirect,
-  useRouteContext,
-  useRouter,
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { UserProfile } from '@/context/user-context'
+import { useUserProfile }  from '@/hooks/use-user-profile'
 import { getCurrentPlan } from '@/api/paymentService'
 import Spinner from '@/components/spinner/Spinner' 
 import { createPaymentSession, verifyPayment } from '@/api/paymentService' 
@@ -36,7 +34,7 @@ function CheckoutPage() {
   const [verificationStatus, setVerificationStatus] = useState(null) // 'success' | 'failed'
   const [verificationMessage, setVerificationMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const { userProfile } = UserProfile()
+  const { data: userProfile } = useUserProfile()
 
   useEffect(() => {
     async function fetchPlan(){
@@ -70,9 +68,7 @@ function CheckoutPage() {
     // Check for payment reference in URL or localStorage to verify payment result after user returns from gateway
     async function checkAndVerify(){
       const params = new URLSearchParams(window.location.search)
-      const refFromUrl = params.get('reference') || params.get('trxref') || params.get('payment_reference') || null
-      const savedRef = localStorage.getItem('pending_payment_reference')
-      const reference = refFromUrl || savedRef
+      const reference = params.get('reference') || params.get('trxref') || params.get('payment_reference') || null
       if(!reference) return
 
       setVerifying(true)
@@ -86,7 +82,6 @@ function CheckoutPage() {
           if(status === 'success' || status === 'verified' || res.data?.payment_status === 'success'){
             setVerificationStatus('success')
             setVerificationMessage('Payment verified — your subscription is now active.')
-            localStorage.removeItem('pending_payment_reference')
           } else {
             setVerificationStatus('failed')
             setVerificationMessage(res.data?.message || 'Payment not successful')
@@ -114,13 +109,9 @@ function CheckoutPage() {
         setCheckoutLoading(false)
         return
       }
-      // store reference in localStorage so we can verify after redirect returns
-      if (paymentSession.data?.reference) {
-        localStorage.setItem('pending_payment_reference', paymentSession.data.reference)
-      }
       console.log("Payment session created successfully:", paymentSession.data) 
       // Redirect to payment gateway URL
-      window.location.href = paymentSession.data.authorization_url
+      window.location.href = paymentSession.data.payment_url
     } catch (error) {
       console.error("Error creating payment session:", error)
     } finally {

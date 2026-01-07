@@ -58,7 +58,7 @@ export const signupApi = async ({ role, userData }) => {
  * Refresh access token API call
  */
 export const refreshAccessTokenApi = async refreshToken => {
-  const { data } = await axiosInstance.post('/refresh', { refreshToken })
+  const { data } = await axiosInstance.post('/refresh/', { refreshToken })
   return data.access
 }
 
@@ -80,7 +80,7 @@ export const requestPasswordResetApi = async email => {
   return data
 }
 
-export const confirmResetPassword = async (id, token, newPassword) => {
+export const confirmResetPasswordApi = async (id, token, newPassword) => {
     const { data } = await axiosInstance.post('student/reset-password/', {
       id,
       token,
