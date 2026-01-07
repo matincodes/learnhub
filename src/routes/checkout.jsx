@@ -1,11 +1,21 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { useUserProfile } from '@/hooks/use-user-profile'
-import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useRouteContext,
+  useRouter,
+} from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { UserProfile } from '@/context/user-context'
+import { getCurrentPlan } from '@/api/paymentService'
+import Spinner from '@/components/spinner/Spinner' 
+import { createPaymentSession, verifyPayment } from '@/api/paymentService' 
 
 export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
+  validateSearch: (search) => ({ planId: search.planId || undefined}),
   beforeLoad: ({ context, location }) => {
     if (!context.isAuthenticated) {
       throw redirect({
@@ -19,32 +29,105 @@ export const Route = createFileRoute('/checkout')({
 })
 
 function CheckoutPage() {
-  const [selectedYear, setselectedYear] = useState('1')
-  const [totalPrice, setTotalPrice] = useState(null)
-  const plan = localStorage.getItem('plan')
-  const { data: userProfile } = useUserProfile()
+  const { planId } = Route.useSearch()
+  const [currentPlan, setCurrentPlan] = useState(null)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [verifying, setVerifying] = useState(false)
+  const [verificationStatus, setVerificationStatus] = useState(null) // 'success' | 'failed'
+  const [verificationMessage, setVerificationMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { userProfile } = UserProfile()
 
   useEffect(() => {
-    const MONTHLY_RATE = 20000
-    const DISCOUNT_RATE = 0.17
-
-    const getDiscountedYearlyPrice = () => {
-      const yearlyBase = MONTHLY_RATE * 12
-      return yearlyBase - yearlyBase * DISCOUNT_RATE
+    async function fetchPlan(){
+      setLoading(true)
+      try {
+         const plan = await getCurrentPlan(planId)
+          
+         if(!plan.success){
+            console.error("Failed to retrieve plan", plan.error)
+            setCurrentPlan(null)
+         } else {
+           setCurrentPlan(plan.data)
+           console.log("Plan fetched successfully:", plan.data)
+         }
+      } catch (error) {
+         console.error("Error fetching plan:", error)
+         setCurrentPlan(null)
+      } finally {
+         setLoading(false)
+      }
     }
 
-    let calculatedPrice
-
-    if (plan === 'Year' || selectedYear === '12') {
-      calculatedPrice =
-        getDiscountedYearlyPrice() *
-        (plan === 'Year' ? Number(selectedYear) : 1)
+    if(planId){
+      fetchPlan() 
     } else {
-      calculatedPrice = MONTHLY_RATE * Number(selectedYear)
+      setCurrentPlan(null)
+    }
+  }, [planId]);
+
+  useEffect(() => {
+    // Check for payment reference in URL or localStorage to verify payment result after user returns from gateway
+    async function checkAndVerify(){
+      const params = new URLSearchParams(window.location.search)
+      const refFromUrl = params.get('reference') || params.get('trxref') || params.get('payment_reference') || null
+      const savedRef = localStorage.getItem('pending_payment_reference')
+      const reference = refFromUrl || savedRef
+      if(!reference) return
+
+      setVerifying(true)
+      try {
+        const res = await verifyPayment(reference)
+        if(!res.success){
+          setVerificationStatus('failed')
+          setVerificationMessage(res.error?.message || res.error || 'Verification failed')
+        } else {
+          const status = res.data?.status || res.data?.payment_status || (res.data?.verified ? 'success' : 'failed')
+          if(status === 'success' || status === 'verified' || res.data?.payment_status === 'success'){
+            setVerificationStatus('success')
+            setVerificationMessage('Payment verified — your subscription is now active.')
+            localStorage.removeItem('pending_payment_reference')
+          } else {
+            setVerificationStatus('failed')
+            setVerificationMessage(res.data?.message || 'Payment not successful')
+          }
+        }
+      } catch (err) {
+        setVerificationStatus('failed')
+        setVerificationMessage(err?.message || 'Verification error')
+      } finally {
+        setVerifying(false)
+      }
     }
 
-    setTotalPrice(calculatedPrice)
-  }, [selectedYear, plan])
+    checkAndVerify()
+  }, [])
+
+  const handleCheckout = async () => {
+    // Implement checkout logic 
+    setCheckoutLoading(true)
+    try {
+      console.log("Plan ID for checkout:", planId)
+      const paymentSession = await createPaymentSession(planId)
+      if(!paymentSession.success){
+        console.error("Failed to create payment session:", paymentSession.error)
+        setCheckoutLoading(false)
+        return
+      }
+      // store reference in localStorage so we can verify after redirect returns
+      if (paymentSession.data?.reference) {
+        localStorage.setItem('pending_payment_reference', paymentSession.data.reference)
+      }
+      console.log("Payment session created successfully:", paymentSession.data) 
+      // Redirect to payment gateway URL
+      window.location.href = paymentSession.data.authorization_url
+    } catch (error) {
+      console.error("Error creating payment session:", error)
+    } finally {
+      setCheckoutLoading(false)
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-white font-san">
@@ -59,6 +142,21 @@ function CheckoutPage() {
           </Link>
 
           <h1 className="mb-11 text-3xl font-semibold">Checkout</h1>
+
+          {verifying && (
+            <div className="mb-4 p-3 rounded bg-yellow-50 text-yellow-700 flex items-center gap-2">
+              <Spinner />
+              <span>Verifying payment, please wait...</span>
+            </div>
+          )}
+
+          {verificationStatus === 'success' && (
+            <div className="mb-4 p-3 rounded bg-green-50 text-green-700">✅ {verificationMessage}</div>
+          )}
+
+          {verificationStatus === 'failed' && (
+            <div className="mb-4 p-3 rounded bg-red-50 text-red-700">⚠️ {verificationMessage}</div>
+          )}
 
           <div className="space-y-6">
             <div>
@@ -82,69 +180,37 @@ function CheckoutPage() {
                 Subscription Details
               </h2>
               <div className="space-y-4">
-                {/* <div>
-                  <label className="text-sm font-semibold text-gray-600">
-                    {plan === 'Year' ? 'Select number of years' : 'Select number of months'}
-                  </label>
-                  <Select defaultValue={selectedYear} onValueChange={setselectedYear}>
-                    <SelectTrigger className="w-[250px]">
-                      <SelectValue placeholder="Select duration" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {plan === 'Year' ? (
-                        <>
-                          <SelectItem value="1">1 Year</SelectItem>
-                          <SelectItem value="2">2 Years</SelectItem>
-                        </>
-                      ) : (
-                        <>
-                          <SelectItem value="1">1 Month</SelectItem>
-                          <SelectItem value="3">3 Months</SelectItem>
-                          <SelectItem value="6">6 Months</SelectItem>
-                          <SelectItem value="12">12 Months</SelectItem>
-                        </>
-                      )}
-                    </SelectContent>
-                  </Select>
-                </div> */}
-
-                <Card>
-                  <CardContent className="flex items-start gap-4 p-0">
-                    <div className="h-24 w-72 overflow-hidden rounded-lg bg-gray-100">
-                      <img
-                        src="/assets/monthly plan 1.png"
-                        alt={`${plan}ly Plan`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">{plan}ly Plan</h3>
-                      <p className="mt-1 text-sm text-gray-600">
-                        {plan === 'Year'
-                          ? 'With this plan you will get to save 17% from the monthly plan in a year'
-                          : 'With this plan you will have access to all courses and dashboard for selected months.'}
-                      </p>
-                      <div className="mt-2">
-                        <span className="font-semibold">
-                          NGN{' '}
-                          {totalPrice?.toLocaleString('en-NG', {
-                            minimumFractionDigits: 0,
-                          })}
-                        </span>
-                        <span>
-                          /{selectedYear}{' '}
-                          {Number(selectedYear) > 1
-                            ? plan === 'Year'
-                              ? 'Years'
-                              : 'Months'
-                            : plan === 'Year'
-                              ? 'Year'
-                              : 'Month'}
-                        </span>
+                {loading ? (
+                  <div className="flex items-center justify-center h-48">
+                    <Spinner />
+                  </div>
+                ) : currentPlan ? (
+                  <Card>
+                    <CardContent className="flex items-start gap-4 p-0">
+                      <div className="h-24 w-72 overflow-hidden rounded-lg bg-gray-100">
+                        <img
+                          src="/assets/monthly plan 1.png"
+                          alt={`${currentPlan?.plan_type} Plan`}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                      <div>
+                        <h3 className="font-semibold">{currentPlan?.plan_type?.toUpperCase()} PLAN</h3>
+                        <p className="mt-1 text-sm text-gray-600">
+                          {currentPlan?.plan_type === 'annual' ? 'With this plan you will get to save 17% from the monthly plan in a year' : 'With this plan you will have access to all courses and dashboard for 30 Days.'}
+                        </p>
+                        <div className="mt-2">
+                          <span className="font-semibold">
+                            NGN{' '}
+                            {currentPlan?.price?.toLocaleString('en-NG', { minimumFractionDigits: 0 })}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div className="text-gray-500">No plan selected.</div>
+                )}
               </div>
             </div>
           </div>
@@ -160,39 +226,36 @@ function CheckoutPage() {
                 <h3 className="mb-4 text-xl font-semibold">Payment Overview</h3>
                 <div className="space-y-2">
                   <div className="text-sm">
-                    <span className="text-lg text-gray-600">Duration : </span>
-                    <span className="text-sm text-gray-600">
-                      {selectedYear}{' '}
-                      {Number(selectedYear) > 1
-                        ? plan === 'Year'
-                          ? 'Years'
-                          : 'Months'
-                        : plan === 'Year'
-                          ? 'Year'
-                          : 'Month'}
+                    <span className="text-gray-600 text-lg">Duration : </span>
+                    <span className="text-gray-600 text-sm">
+                      {loading ? 'Loading...' : currentPlan ? (currentPlan?.plan_type === 'annual' ? '1 Year' : '1 Month') : '—'}
                     </span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-lg text-gray-600">
-                      Total Price :{' '}
-                    </span>
-                    <span className="text-sm text-gray-600">
-                      NGN{' '}
-                      {totalPrice?.toLocaleString('en-NG', {
-                        minimumFractionDigits: 0,
-                      })}
+                    <span className="text-gray-600 text-lg">Total Price : </span>
+                    <span className="text-gray-600 text-sm">
+                      {loading ? 'Loading...' : currentPlan ? `NGN ${currentPlan?.price?.toLocaleString('en-NG', { minimumFractionDigits: 0 })}` : '—'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <Button className="mt-16 flex w-full items-center gap-2 bg-[#006038] py-7 hover:bg-green-800">
-                <span className="text-white">Checkout with </span>
-                <img
-                  src="/assets/download__4__1-removebg-preview 1.png"
-                  alt="Monthly Plan"
-                  className="h-4 w-auto"
-                />
+              <Button disabled={checkoutLoading || loading || !currentPlan} className="w-full bg-[#006038] hover:bg-green-800 flex gap-2 items-center py-7 mt-16" onClick={() => handleCheckout()}>
+                {checkoutLoading ? (
+                  <>
+                    <div className="mr-2"><Spinner /></div>
+                    <span className='text-white'>Redirecting...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className='text-white'>Checkout with</span>
+                    <img
+                      src="/assets/download__4__1-removebg-preview 1.png"
+                      alt="Monthly Plan"
+                      className="h-4 w-auto"
+                    />
+                  </>
+                )}
               </Button>
             </div>
           </div>

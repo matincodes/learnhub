@@ -59,7 +59,7 @@ export const signupApi = async ({ role, userData }) => {
  */
 export const refreshAccessTokenApi = async refreshToken => {
   const { data } = await axiosInstance.post('/refresh', { refreshToken })
-  return data.accessToken
+  return data.access
 }
 
 /**
@@ -80,14 +80,11 @@ export const requestPasswordResetApi = async email => {
   return data
 }
 
-/**
- * Confirm password reset API call
- */
-export const confirmResetPasswordApi = async ({ id, token, newPassword }) => {
-  const { data } = await axiosInstance.post('student/reset-password/', {
-    id,
-    token,
-    new_password: newPassword,
-  })
-  return data
+export const confirmResetPassword = async (id, token, newPassword) => {
+    const { data } = await axiosInstance.post('student/reset-password/', {
+      id,
+      token,
+      new_password: newPassword,
+    })
+    return data
 }
