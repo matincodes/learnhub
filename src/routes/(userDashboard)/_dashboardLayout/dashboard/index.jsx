@@ -1,28 +1,27 @@
-import { createFileRoute } from '@tanstack/react-router';
-import Inventory from '@/components/inventory/inventory';
-import RecentCourseCard from '@/components/widgets/recent_course_card';
-import { ChevronsUp } from 'lucide-react';
+import Inventory from '@/components/inventory/inventory'
+import RecentCourseCard from '@/components/widgets/recent_course_card'
+import { createFileRoute } from '@tanstack/react-router'
+import { ChevronsUp } from 'lucide-react'
 // import { useEffect, useState } from 'react';
 // import { fetchCourses } from '@/lib/apiFunctions';
-import NullState from '@/components/nullState/nullState';
-import { UserProfile } from '@/context/user-context'; 
-// import { Skeleton } from '@/components/ui/skeleton'; 
-
+import NullState from '@/components/nullState/nullState'
+import { useUserProfile } from '@/hooks/use-user-profile'
+// import { Skeleton } from '@/components/ui/skeleton';
 
 export const Route = createFileRoute(
   '/(userDashboard)/_dashboardLayout/dashboard/',
 )({
   component: DashboardIndexComponent,
-});
+})
 
 function DashboardIndexComponent() {
   // State for recent courses data, loading, and error
   // const [recentCourses, setRecentCourses] = useState([]);
-  // const [loadingCourses, setLoadingCourses] = useState(true); 
+  // const [loadingCourses, setLoadingCourses] = useState(true);
   // const [errorCourses, setErrorCourses] = useState(null);
 
-  // Get user profile data AND loading state from context
-  const { getUserById, loading: loadingProfile } = UserProfile(); // Destructure loading state
+  // Get user profile data AND loading state from hook
+  const { data: userProfile, isLoading: loadingProfile } = useUserProfile()
 
   // --- Fetch Recent Courses Effect ---
   // useEffect(() => {
@@ -46,22 +45,23 @@ function DashboardIndexComponent() {
   //   };
 
   //   getCourses();
-  // }, []); 
+  // }, []);
 
-  const recentCourses = getUserById?.ongoing_courses || [];
+  const recentCourses = userProfile?.ongoing_courses || []
   // --- Safe Data Calculation ---
   // Calculate total courses safely, defaulting to 0 if context data is loading/null
   const totalCourses =
-    (getUserById?.ongoing_courses ?? 0) + (getUserById?.completed_courses ?? 0);
+    (userProfile?.ongoing_courses ?? 0) + (userProfile?.completed_courses ?? 0)
 
   // Safely format productivity, show loading state from context
   const productivityMetric = loadingProfile
     ? '...' // Or use a Skeleton component
-    : `${getUserById?.student_productivity ?? 0}%`; // Default to 0 if null/undefined
+    : `${userProfile?.student_productivity ?? 0}%` // Default to 0 if null/undefined
 
   // Helper to Render Recent Courses Section
   const renderRecentCourses = () => {
-    {/*if (loadingProfile) {
+    
+      /*if (loadingProfile) {
       // Show skeleton loaders while fetching courses
       return (
         <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
@@ -70,34 +70,33 @@ function DashboardIndexComponent() {
           ))}
         </div>
       );
-    }*/}
-
+    }*/
+    
 
     if (recentCourses.length > 0) {
       return (
         <div className="flex w-full items-start gap-x-5 sm:gap-x-8">
-          {recentCourses.map((item) => (
+          {recentCourses.map(item => (
             <RecentCourseCard key={item.id || item.title} {...item} />
           ))}
         </div>
-      );
+      )
     }
 
     // Only show NullState if not loading, no error, and no courses
     return (
-       <NullState
-          image={'/assets/empty.png'}
-          mainText="No recent courses yet."
-          miniText="Add courses to continue your learning journey."
-          button={true}
-          handleButtonClick={() => {
-            // Navigate to courses page or handle button click
-            window.location.href = '/courses'; // Example navigation
-          }}
-       />
-    );
-  };
-
+      <NullState
+        image={'/assets/empty.png'}
+        mainText="No recent courses yet."
+        miniText="Add courses to continue your learning journey."
+        button={true}
+        handleButtonClick={() => {
+          // Navigate to courses page or handle button click
+          window.location.href = '/courses' // Example navigation
+        }}
+      />
+    )
+  }
 
   return (
     <div className="w-full space-y-6 sm:space-y-10">
@@ -114,7 +113,7 @@ function DashboardIndexComponent() {
           metrics={productivityMetric} // Uses already calculated safe value
           image={'/assets/fi-br-bulb.png'}
           analytics={
-             /* Static analytics part remains */
+            /* Static analytics part remains */
             <div className="flex items-center gap-x-2 text-sm font-semibold sm:text-base">
               <p>0.00</p>
               <img src="/assets/fi-br-chat-arrow-grow.png" alt="" />
@@ -128,9 +127,7 @@ function DashboardIndexComponent() {
         <h2 className="text-base font-[300] sm:text-xl">Recent Courses</h2>
         <div className="w-full">
           <div className="no-scrollbar w-full overflow-x-auto">
-            <div className="w-full min-w-max">
-              {renderRecentCourses()}
-            </div>
+            <div className="w-full min-w-max">{renderRecentCourses()}</div>
           </div>
         </div>
       </div>
@@ -163,18 +160,18 @@ function DashboardIndexComponent() {
             </h2>
             <ChevronsUp size={40} color="#7f7f7f" />
           </div>
-           {/* TODO: Implement Upcoming Sessions data fetching, state, loading, error handling */}
-           <NullState
-              image={'/assets/timer.png'}
-              mainText="Upcoming Sessions Coming Soon!"
-              miniText="Check back later for scheduled events."
-           />
-           {/* Original mapping structure for reference when implementing
+          {/* TODO: Implement Upcoming Sessions data fetching, state, loading, error handling */}
+          <NullState
+            image={'/assets/timer.png'}
+            mainText="Upcoming Sessions Coming Soon!"
+            miniText="Check back later for scheduled events."
+          />
+          {/* Original mapping structure for reference when implementing
            <div className="mt-4 flex w-full flex-col items-start gap-y-8 sm:gap-y-12">
               // Map over actual session data here
            </div> */}
         </div>
       </div>
     </div>
-  );
+  )
 }

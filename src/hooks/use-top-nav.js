@@ -1,7 +1,6 @@
-
 import { useState, useCallback, useMemo } from 'react'
 import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
-import { UserProfile } from '@/context/user-context'
+import { useUserProfile } from '@/hooks/use-user-profile'
 import useLocalStorageSync from '@/hooks/use-localstorage-sync'
 import { topNavData } from '@/data/topNav'
 import { extractCourseTitle } from '@/lib/utils'
@@ -14,7 +13,7 @@ const DASHBOARD_PAGES = [
 ]
 
 const useTopNavLogic = () => {
-  const { userProfile } = UserProfile()
+  const { data: userProfile } = useUserProfile()
   const router = useRouter()
   const navigate = useNavigate()
 

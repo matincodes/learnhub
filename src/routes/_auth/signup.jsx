@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/context/auth-context'
+import { useSignup } from '@/hooks/use-auth-mutations'
 import { useToast } from '@/hooks/use-toast'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { CheckCircle2Icon, Loader2 } from 'lucide-react'
@@ -24,12 +24,17 @@ const validateSignupForm = data => {
 
 function SignUp() {
   const { register, handleSubmit, reset } = useForm()
-  const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success'
   const [remainingMs, setRemainingMs] = useState(REDIRECT_DELAY_MS)
 
-  const { signup } = useAuth()
+  const signupMutation = useSignup()
   const router = useRouter()
   const { toast } = useToast()
+
+  const status = signupMutation.isPending
+    ? 'loading'
+    : signupMutation.isSuccess
+      ? 'success'
+      : 'idle'
 
   const formatTime = useCallback(ms => {
     const totalSeconds = Math.floor(ms / 1000)
@@ -54,37 +59,31 @@ function SignUp() {
         return
       }
 
-      setStatus('loading')
-
-      try {
-        const result = await signup('student', data)
-
-        if (result.success) {
-          setStatus('success')
-          reset()
-          toast({
-            variant: 'success',
-            title: 'Signup Successful',
-            description: 'You have been signed up successfully.',
-          })
-        } else {
-          setStatus('idle')
-          toast({
-            variant: 'destructive',
-            title: 'Signup Failed',
-            description: result.message || 'Signup failed, please try again.',
-          })
-        }
-      } catch (error) {
-        setStatus('idle')
-        toast({
-          variant: 'destructive',
-          title: 'Signup Failed',
-          description: error.message || 'Signup failed, please try again.',
-        })
-      }
+      signupMutation.mutate(
+        { role: 'student', userData: data },
+        {
+          onSuccess: () => {
+            reset()
+            toast({
+              variant: 'success',
+              title: 'Signup Successful',
+              description: 'You have been signed up successfully.',
+            })
+          },
+          onError: error => {
+            toast({
+              variant: 'destructive',
+              title: 'Signup Failed',
+              description:
+                error.response?.data?.message ||
+                error.message ||
+                'Signup failed, please try again.',
+            })
+          },
+        },
+      )
     },
-    [status, signup, reset, toast],
+    [status, signupMutation, reset, toast],
   )
 
   // Countdown timer - only active when signup is successful

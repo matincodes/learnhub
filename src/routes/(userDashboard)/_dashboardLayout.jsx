@@ -1,12 +1,11 @@
-import BottomNav from '@/components/bottomNav/bottomNav';
-import Error from '@/components/error/Error'; 
-import SideNav from '@/components/sideNav/sideNav';
-import Spinner from '@/components/spinner/Spinner'; 
-import TopNav from '@/components/topNav/topNav';
-import { UserProfile } from '@/context/user-context';
-import { cn } from '@/lib/utils';
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-import { useEffect } from 'react';
+import BottomNav from '@/components/bottomNav/bottomNav'
+import Error from '@/components/error/Error'
+import SideNav from '@/components/sideNav/sideNav'
+import Spinner from '@/components/spinner/Spinner'
+import TopNav from '@/components/topNav/topNav'
+import { useUserProfile } from '@/hooks/use-user-profile'
+import { cn } from '@/lib/utils'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
   component: DashboardComponent,
@@ -19,42 +18,30 @@ export const Route = createFileRoute('/(userDashboard)/_dashboardLayout')({
           // Pass the original intended path to redirect back after login
           redirect: location.href,
         },
-      });
+      })
     }
     // No return needed if user is authenticated, proceeds to load component
   },
-});
+})
 
 function DashboardComponent() {
-  // Destructure loading states and error state from context
-  const { getUserProfile, error, loading } = UserProfile()
-
-  // Determine if the main profile data is loading
-  const isProfileLoading = loading.fetch
-
-  // NOTE: The 'error' state currently triggers on EITHER profile fetch OR update failure.
-  // Consider refining context/error handling if you need different UI for fetch vs update errors.
-
-  useEffect(() => {
-    // Fetch user profile data when component mounts
-    getUserProfile()
-  }, [])
+  // Use React Query hook - automatically fetches when userId is available
+  const { isLoading, isError } = useUserProfile()
 
   return (
     <div className="relative h-full w-full bg-gray-100 font-montserrat text-[13px] sm:text-[15px]">
       {/* Show full-screen spinner ONLY during initial profile load */}
-      {isProfileLoading && (
+      {isLoading && (
         <div className="flex h-screen w-full items-center justify-center">
           <Spinner />
         </div>
       )}
 
-      {/* Show full-screen error if ANY context error occurred (fetch or update) */}
-      {/* Consider making this more granular if needed */}
-      {!isProfileLoading && error && <Error />}
+      {/* Show full-screen error if fetch failed */}
+      {!isLoading && isError && <Error />}
 
       {/* Render the main layout ONLY if profile is NOT loading and there's NO error */}
-      {!isProfileLoading && !error && (
+      {!isLoading && !isError && (
         <>
           <TopNav />
           <div

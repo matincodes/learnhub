@@ -2,11 +2,10 @@ import { memo, useMemo } from 'react'
 
 import { Separator } from '@/components/ui/separator'
 import { useAuth } from '@/context/auth-context'
-import { UserProfile } from '@/context/user-context'
 import { adminNavLinks, navLinks } from '@/data/sideNav'
+import { useUserProfile } from '@/hooks/use-user-profile'
 import { cn, isActive } from '@/lib/utils'
 import { Link, useLocation } from '@tanstack/react-router'
-
 
 // 1. User Profile Card
 const NavProfile = memo(function NavProfile({ image, name, subtitle, to }) {
@@ -110,7 +109,7 @@ NavBrand.displayName = 'NavBrand'
 
 const SideNav = () => {
   // --- 1. Logic Layer ---
-  const { userProfile } = UserProfile()
+  const { data: userProfile } = useUserProfile()
   const { logout } = useAuth()
   const pathname = useLocation({ select: s => s.pathname.replace(/\/$/, '') })
 
