@@ -13,7 +13,8 @@ import { useEffect, useState } from 'react'
 import SearchCourseCard from '@/components/widgets/couse_search_card'
 import Footer from '@/components/footer/footer'
 import NullState from '@/components/nullState/nullState'
-import { fetchCourses } from '@/lib/apiFunctions'
+import { Skeleton } from '@/components/ui/skeleton'
+import { fetchCourses } from '@/lib/apiFunctions' 
 
 export const Route = createFileRoute('/courses/')({
   component: Course,
@@ -92,7 +93,13 @@ function Course() {
         <div className="grid w-fit grid-cols-2 gap-4 p-2 lg:w-[96%] lg:grid-cols-4 lg:gap-4 lg:p-4">
     
           {loading ? (
-            <p>Loading courses...</p> // You can replace this with a spinner or skeleton loaders
+            <>
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div className="flex w-fit justify-center" key={`skeleton-${i}`}>
+                  <Skeleton className="h-[220px] w-[220px] lg:h-[200px] lg:w-[260px] rounded-lg" />
+                </div>
+              ))}
+            </>
           ) : Array.isArray(courses) && courses.length > 0 ? (
             courses.map(course => {
               // Condition to display courses

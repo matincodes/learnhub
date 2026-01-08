@@ -7,9 +7,9 @@ import {
 } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { useUserProfile }  from '@/hooks/use-user-profile'
-import { getCurrentPlan } from '@/api/paymentService'
-import Spinner from '@/components/spinner/Spinner' 
-import { createPaymentSession, verifyPayment } from '@/api/paymentService' 
+import { useCurrentPlan, useCreatePaymentSession } from '@/hooks/use-payment'
+import { Skeleton } from '@/components/ui/skeleton' 
+
 
 export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
@@ -29,95 +29,48 @@ export const Route = createFileRoute('/checkout')({
 function CheckoutPage() {
   const { planId } = Route.useSearch()
   const [currentPlan, setCurrentPlan] = useState(null)
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [verifying, setVerifying] = useState(false)
-  const [verificationStatus, setVerificationStatus] = useState(null) // 'success' | 'failed'
-  const [verificationMessage, setVerificationMessage] = useState('')
-  const [loading, setLoading] = useState(false)
   const { data: userProfile } = useUserProfile()
 
-  useEffect(() => {
-    async function fetchPlan(){
-      setLoading(true)
-      try {
-         const plan = await getCurrentPlan(planId)
-          
-         if(!plan.success){
-            console.error("Failed to retrieve plan", plan.error)
-            setCurrentPlan(null)
-         } else {
-           setCurrentPlan(plan.data)
-           console.log("Plan fetched successfully:", plan.data)
-         }
-      } catch (error) {
-         console.error("Error fetching plan:", error)
-         setCurrentPlan(null)
-      } finally {
-         setLoading(false)
-      }
-    }
+  // Use hooks from use-payment
+  const { data: planResponse, isLoading: loading, isError: planError } = useCurrentPlan(planId)
 
-    if(planId){
-      fetchPlan() 
+  console.log('Selected plan ID:', planId, planResponse, currentPlan)
+
+  const createPayment = useCreatePaymentSession()
+
+  // Update currentPlan whenever the hook data changes
+  useEffect(() => {
+    if (!planId) {
+      setCurrentPlan(null)
+      return
+    }
+    if (planResponse) {
+      setCurrentPlan(planResponse)
     } else {
       setCurrentPlan(null)
     }
-  }, [planId]);
+  }, [planResponse, planId])
 
-  useEffect(() => {
-    // Check for payment reference in URL or localStorage to verify payment result after user returns from gateway
-    async function checkAndVerify(){
-      const params = new URLSearchParams(window.location.search)
-      const reference = params.get('reference') || params.get('trxref') || params.get('payment_reference') || null
-      if(!reference) return
-
-      setVerifying(true)
-      try {
-        const res = await verifyPayment(reference)
-        if(!res.success){
-          setVerificationStatus('failed')
-          setVerificationMessage(res.error?.message || res.error || 'Verification failed')
-        } else {
-          const status = res.data?.status || res.data?.payment_status || (res.data?.verified ? 'success' : 'failed')
-          if(status === 'success' || status === 'verified' || res.data?.payment_status === 'success'){
-            setVerificationStatus('success')
-            setVerificationMessage('Payment verified — your subscription is now active.')
-          } else {
-            setVerificationStatus('failed')
-            setVerificationMessage(res.data?.message || 'Payment not successful')
-          }
-        }
-      } catch (err) {
-        setVerificationStatus('failed')
-        setVerificationMessage(err?.message || 'Verification error')
-      } finally {
-        setVerifying(false)
-      }
-    }
-
-    checkAndVerify()
-  }, [])
-
-  const handleCheckout = async () => {
-    // Implement checkout logic 
-    setCheckoutLoading(true)
-    try {
-      console.log("Plan ID for checkout:", planId)
-      const paymentSession = await createPaymentSession(planId)
-      if(!paymentSession.success){
-        console.error("Failed to create payment session:", paymentSession.error)
-        setCheckoutLoading(false)
-        return
-      }
-      console.log("Payment session created successfully:", paymentSession.data) 
-      // Redirect to payment gateway URL
-      window.location.href = paymentSession.data.payment_url
-    } catch (error) {
-      console.error("Error creating payment session:", error)
-    } finally {
-      setCheckoutLoading(false)
-    }
+  // Helper to format price without decimals
+  const formatPrice = (price) => {
+    if (price == null || price === '') return '—'
+    const num = Number(price)
+    if (Number.isNaN(num)) return String(price)
+    return new Intl.NumberFormat('en-NG', { maximumFractionDigits: 0 }).format(Math.round(num))
   }
+
+
+
+
+  const handleCheckout = () => {
+    if (!currentPlan) return
+    createPayment.mutate(planId, {
+      onError: (err) => {
+        console.error('Failed to create payment session:', err)
+      },
+    })
+  }
+
 
 
   return (
@@ -133,21 +86,6 @@ function CheckoutPage() {
           </Link>
 
           <h1 className="mb-11 text-3xl font-semibold">Checkout</h1>
-
-          {verifying && (
-            <div className="mb-4 p-3 rounded bg-yellow-50 text-yellow-700 flex items-center gap-2">
-              <Spinner />
-              <span>Verifying payment, please wait...</span>
-            </div>
-          )}
-
-          {verificationStatus === 'success' && (
-            <div className="mb-4 p-3 rounded bg-green-50 text-green-700">✅ {verificationMessage}</div>
-          )}
-
-          {verificationStatus === 'failed' && (
-            <div className="mb-4 p-3 rounded bg-red-50 text-red-700">⚠️ {verificationMessage}</div>
-          )}
 
           <div className="space-y-6">
             <div>
@@ -172,8 +110,13 @@ function CheckoutPage() {
               </h2>
               <div className="space-y-4">
                 {loading ? (
-                  <div className="flex items-center justify-center h-48">
-                    <Spinner />
+                  <div className="flex items-start gap-4 h-48 w-full">
+                    <Skeleton className="h-24 w-72 rounded-lg" />
+                    <div className="flex-1 space-y-3 py-2">
+                      <Skeleton className="h-6 w-40" />
+                      <Skeleton className="h-4 w-60" />
+                      <Skeleton className="h-6 w-24" />
+                    </div>
                   </div>
                 ) : currentPlan ? (
                   <Card>
@@ -192,8 +135,7 @@ function CheckoutPage() {
                         </p>
                         <div className="mt-2">
                           <span className="font-semibold">
-                            NGN{' '}
-                            {currentPlan?.price?.toLocaleString('en-NG', { minimumFractionDigits: 0 })}
+                            NGN {formatPrice(currentPlan?.price)}
                           </span>
                         </div>
                       </div>
@@ -219,22 +161,22 @@ function CheckoutPage() {
                   <div className="text-sm">
                     <span className="text-gray-600 text-lg">Duration : </span>
                     <span className="text-gray-600 text-sm">
-                      {loading ? 'Loading...' : currentPlan ? (currentPlan?.plan_type === 'annual' ? '1 Year' : '1 Month') : '—'}
+                      {loading ? 'Loading...' : currentPlan ? (currentPlan?.plan_type === 'annual' ? '1 Year' : '1 Month') : (planError ? 'Error' : '—')}
                     </span>
                   </div>
                   <div className="text-sm">
                     <span className="text-gray-600 text-lg">Total Price : </span>
                     <span className="text-gray-600 text-sm">
-                      {loading ? 'Loading...' : currentPlan ? `NGN ${currentPlan?.price?.toLocaleString('en-NG', { minimumFractionDigits: 0 })}` : '—'}
+                      {loading ? 'Loading...' : currentPlan ? `NGN ${formatPrice(currentPlan?.price)}` : (planError ? 'Error' : '—')}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <Button disabled={checkoutLoading || loading || !currentPlan} className="w-full bg-[#006038] hover:bg-green-800 flex gap-2 items-center py-7 mt-16" onClick={() => handleCheckout()}>
-                {checkoutLoading ? (
+              <Button disabled={createPayment.isLoading || loading || !currentPlan} className="w-full bg-[#006038] hover:bg-green-800 flex gap-2 items-center py-7 mt-16" onClick={() => handleCheckout()}>
+                {createPayment.isPending ? (
                   <>
-                    <div className="mr-2"><Spinner /></div>
+                    <div className="mr-2 inline-block"><Skeleton className="h-4 w-12 rounded-md" /></div>
                     <span className='text-white'>Redirecting...</span>
                   </>
                 ) : (

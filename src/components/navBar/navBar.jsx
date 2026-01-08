@@ -6,7 +6,6 @@ import { Link } from '@tanstack/react-router'
 import { CiSearch } from 'react-icons/ci'
 import { FiMenu } from 'react-icons/fi'
 
-
 const defaultAvatar = '/assets/profile.png'
 
 const NavBar = ({ NavStatus }) => {

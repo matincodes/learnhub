@@ -5,8 +5,8 @@ import NavBar from '@/components/navBar/navBar'
 import Footer from '@/components/footer/footer'
 import Content from '@/components/special/content'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { getPlans } from '@/api/paymentService'
-import { useEffect, useState } from 'react'
+import { usePlans } from '@/hooks/use-payment'
+import { Skeleton } from '@/components/ui/skeleton'
 
 
 export const Route = createFileRoute('/pricing')({
@@ -14,30 +14,43 @@ export const Route = createFileRoute('/pricing')({
 })
 
 function Pricing() {
+  const { data: planData = [], isLoading, isError } = usePlans();
 
-  const [planData, setPlanData] = useState([]);
+  const getPrice = (duration) => {
+    const plan = planData.find(p => p.plan_type === duration);
+    const price = plan?.price;
+    if (price == null || price === '') return '...';
+    const num = Number(price);
+    if (Number.isNaN(num)) return String(price);
+    // Format with no decimal places and round to nearest integer
+    return new Intl.NumberFormat('en-NG', { maximumFractionDigits: 0 }).format(Math.round(num));
+  };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen">
+        <NavBar />
+        <div className="mt-20 grid place-content-center lg:flex lg:gap-12 lg:space-y-0 p-4">
+          {paymentSection.map(content => (
+            <Skeleton key={content.id} className="h-[500px] w-[300px] lg:w-[420px] rounded-2xl border-[5px] p-2" />
+          ))}
+        </div>
+        <Footer />
+      </div>
+    )
+  }
 
-  useEffect(() => {
-    async function fetchPlans() {
-      try {
-        const plans = await getPlans();
-
-        if (!plans.success) {
-          console.error('Failed to retrieve plans:', plans.error);
-          return;
-        }
-
-        setPlanData(plans.data);
-        console.log('Plans fetched successfully:', plans.data);
-      } catch (error) {
-        console.error('Error fetching plans:', error);
-      }
-    }
-
-    fetchPlans();
-  }, []);
-
+  if (isError) {
+    return (
+      <div className="min-h-screen">
+        <NavBar />
+        <div className="mt-20 grid place-content-center">
+          <p className="text-center text-red-600">Failed to load plans. Please try again later.</p>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div className="">
@@ -53,7 +66,7 @@ function Pricing() {
           {paymentSection.map(content => (
             <Card
               key={content.id}
-              className={`relative basis-[37%] rounded-2xl border-[5px] p-2 ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}
+              className={`relative basis-[37%] rounded-2xl border-[1px] p-2 ${content.id === 2 ? 'bg-dark_green text-white' : 'bg-[#F9FBFA] text-dark_green'} `}
             >
               <CardHeader className="p-0">
                 <img src={content.image} alt="" />
@@ -62,11 +75,11 @@ function Pricing() {
                 <CardContent className="lg:h-[40vh] space-y-6 flex flex-col items-center text-center justify-center">
                   <h2 className="mt-5 font-inter text-[32px] font-extrabold lg:text-[50px]">
                     {' '}
-                    NGN {planData.length > 0 ? planData.find(plan => plan.plan_type === content.durationPlan)?.price.toLocaleString('en-NG', { minimumFractionDigits: 0 }) : '...'}
+                    NGN {getPrice(content.durationPlan)}
                     <span className="font-san text-[18px] font-normal">
                       /{content.durationPlan === 'monthly' ? 'month' : 'year'}
                     </span>{' '}
-                  </h2>
+                  </h2> 
                   {/* </CardContent> */}
                   {/* <CardContent className="mt-3 flex justify-center text-center"> */}
                   <p className="w-[80%] font-san">{content.description}</p>
@@ -74,7 +87,7 @@ function Pricing() {
               </div>
               <Link
                 to="/checkout"
-                search={{ planId: planData.length > 0 ? planData.find(plan => plan.plan_type === content.durationPlan)?.id : '' }}
+                search={{ planId: planData?.length > 0 ? planData.find(plan => plan.plan_type === content.durationPlan)?.id : '' }}
               >
                 <CardFooter className="grid items-center p-0 text-center lg:relative lg:w-full">
                   <p
